@@ -14,13 +14,15 @@ class Address {
 }
 
 class User {
-  1 --> 2 UserRole userRole;
+  1 --> 0..2 UserRole userRole;
   Date accountCreation;
   username;
   email;
   password;
   * -- * Address;
   phoneNumber;
+  boolean loggedIn;
+  users * -- 1 Gallery;
 }
 
 // Abstract
@@ -30,7 +32,7 @@ class UserRole {
 
 class Artist {
   isA UserRole;
-  
+  originStory
 }
 
 class Delivery {
@@ -61,27 +63,49 @@ class Order {
   order 1 --1 PaymentCredentials paymentCredentials;
   order 1 -- 1 Customer buyer;
   order 1 -- * Item orderedItems;
-  order 1 -<@>- 1 Delivery deliveryMethod;
+  order 1 <@>- 1 Delivery deliveryMethod;
   order 1 <@>- 1 OrderConfirmation orderConfirmation;
   order 1 <@>- * Commission commission;
   int orderNumber;
   Date orderDate;
+  double itemsPrice;
   double taxes;
   double totalPrice;
+  boolean freeShipping;
+}
+
+class Collection {
+  collection 1 - * Item items;
+  description;
+  name;
+  numberOfItems;
 }
 
 class Item {
   name;
+  images
   id;
+  int height;
+  int width;
   creations * -- 1 Artist creator;
   Date creationDate;
   desription;
   item 1 -- * Category categories;
   double price;
+  Image[] images;
+  double reducedPrice;
+  boolean inStock;
+}
+
+class Dimensions {
+  double height;
+  double width;
+  double breadth;
 }
 
 class Category {
-  artisticMovementName;
+  name;
+  Image collectionThumbnail;
 }
 
 class Commission {
@@ -97,7 +121,7 @@ class ChatMessage {
 }
 
 class OrderConfirmation {
-  message;
+  String message;
   * -- 1 User receiver;
   1 -- 1 Discount discountCode;
   1 -- 1 Order order;
@@ -110,7 +134,22 @@ class Discount {
   boolean used;
 }
 
+class Wishlist {
+  wishlist 1 -- * Item wishlistItems;
+  wishlist 1 -- 1 User user;
+}
 
+class GiftCard {
+  code;
+  totalAmount;
+}
 
-
-
+class Guest {
+  email;
+  password;
+  1 -- 2 Address; addresses;
+  phoneNumber;
+  users * -- 1 Gallery;
+  1 -- 1 PaymentCredentials paymentCredentials;
+  1 -- 1 ShoppingCart shoppingCart;
+}
