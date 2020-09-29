@@ -1,0 +1,116 @@
+class Gallery {
+  gallery 1 -- * Item items;
+  gallery 1 -- 1 Address address;
+  gallery 1 -- * Commission allCommissions;
+  double totalBalance;
+}
+
+class Address {
+  street;
+  postalCode;
+  province;
+  country;
+  city;
+}
+
+class User {
+  1 --> 2 UserRole userRole;
+  Date accountCreation;
+  username;
+  email;
+  password;
+  * -- * Address;
+  phoneNumber;
+}
+
+// Abstract
+class UserRole {
+ abstract;
+}
+
+class Artist {
+  isA UserRole;
+  
+}
+
+class Delivery {
+  enum DeliveryMethod { inStorePickup, homeDelivery }; 
+    DeliveryMethod deliveryMethod;
+    double deliveryPrice;
+}
+
+class Customer {
+  isA UserRole;
+  1 -- * PaymentCredentials paymentCredentials;
+  1 -- 1 ShoppingCart shoppingCart;
+}
+
+class PaymentCredentials {
+  1 -- 1 Address billingAddress;
+  cardholderName;
+  ccNumber;
+  expirationDate;
+  int cvc;
+}
+
+class ShoppingCart {
+  shoppingCart 1 -- * Item items;
+}
+
+class Order {
+  order 1 --1 PaymentCredentials paymentCredentials;
+  order 1 -- 1 Customer buyer;
+  order 1 -- * Item orderedItems;
+  order 1 -<@>- 1 Delivery deliveryMethod;
+  order 1 <@>- 1 OrderConfirmation orderConfirmation;
+  order 1 <@>- * Commission commission;
+  int orderNumber;
+  Date orderDate;
+  double taxes;
+  double totalPrice;
+}
+
+class Item {
+  name;
+  id;
+  creations * -- 1 Artist creator;
+  Date creationDate;
+  desription;
+  item 1 -- * Category categories;
+  double price;
+}
+
+class Category {
+  artisticMovementName;
+}
+
+class Commission {
+  int commisionPercentage;
+  double commissionTotal;
+}
+
+class ChatMessage {
+  chatMessage 1 -- 1 User receiver;
+  chatMessage 1 -- 1 User sender;
+  Date sentDate;
+  String message;
+}
+
+class OrderConfirmation {
+  message;
+  * -- 1 User receiver;
+  1 -- 1 Discount discountCode;
+  1 -- 1 Order order;
+}
+
+class Discount {
+  code;
+  boolean expired;
+  Date expirationDate;
+  boolean used;
+}
+
+
+
+
+
