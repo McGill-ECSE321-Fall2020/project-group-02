@@ -14,15 +14,15 @@ class Address {
 }
 
 class User {
-  1 --> 0..2 UserRole userRole;
+  user 1 --> 0..2 UserRole userRole;
   Date accountCreation;
   username;
   email;
   password;
-  * -- * Address;
+  user * -- * Address gallery;
   phoneNumber;
   boolean loggedIn;
-  users * -- 1 Gallery;
+  users * -- 1 Gallery gallery;
 }
 
 // Abstract
@@ -32,7 +32,7 @@ class UserRole {
 
 class Artist {
   isA UserRole;
-  originStory
+  originStory;
 }
 
 class Delivery {
@@ -48,7 +48,7 @@ class Customer {
 }
 
 class PaymentCredentials {
-  1 -- 1 Address billingAddress;
+  paymentCredentials 1 -- 1 Address billingAddress;
   cardholderName;
   ccNumber;
   expirationDate;
@@ -95,6 +95,7 @@ class Item {
   Image[] images;
   double reducedPrice;
   boolean inStock;
+  galleryItem * -- 1 Gallery gallery;
 }
 
 class Dimensions {
@@ -120,11 +121,11 @@ class ChatMessage {
   String message;
 }
 
-class OrderConfirmation {
+class OrderConfirmationEmail {
   String message;
-  * -- 1 User receiver;
-  1 -- 1 Discount discountCode;
-  1 -- 1 Order order;
+  orderConfirmationEmail * -- 1 User receiver;
+  orderConfirmationEmail 1 -- 1 Discount discountCode;
+  orderConfirmationEmail 1 -- 1 Order order;
 }
 
 class Discount {
@@ -147,9 +148,9 @@ class GiftCard {
 class Guest {
   email;
   password;
-  1 -- 2 Address; addresses;
+  guest 1 --> 2 Address; addresses;
   phoneNumber;
-  users * -- 1 Gallery;
-  1 -- 1 PaymentCredentials paymentCredentials;
-  1 -- 1 ShoppingCart shoppingCart;
+  user * -- 1 Gallery gallery;
+  guest 1 -- 1 PaymentCredentials paymentCredentials;
+  guest 1 --> 1 ShoppingCart shoppingCart;
 }
