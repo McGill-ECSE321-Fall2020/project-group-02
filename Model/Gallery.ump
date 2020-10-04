@@ -1,28 +1,33 @@
-class Gallery {
-  gallery 1 -- * Item items;
-  gallery 1 -- 1 Address address;
-  gallery 1 -- * Commission allCommissions;
-  double totalBalance;
+namespace ca.mcgill.ecse321.projectgroup02.model;
+use java.util.*;
+use java.awt.Image;
+use java.sql.Date;
+
+class ArtGallerySystem {
+   1 gallery -- 1 Address galleryAddress;
+  double totalProfit;
+  1 <@>- * User users;
+  1 <@>- * Collection collections;
+  1 -- * Conversation conversations;
 }
 
 class Address {
   street;
-  postalCode;
+  postalCode; //pk
   province;
   country;
   city;
 }
 
 class User {
-  user 1 --> 0..2 UserRole userRole;
   Date accountCreation;
-  username;
+  unique username; //pk
   email;
   password;
-  user * -- * Address gallery;
+   * user -- * Address userAddress;
   phoneNumber;
   boolean loggedIn;
-  users * -- 1 Gallery gallery;
+  0..1 -- 2 UserRole userR;
 }
 
 // Abstract
@@ -39,6 +44,7 @@ class Delivery {
   enum DeliveryMethod { inStorePickup, homeDelivery }; 
     DeliveryMethod deliveryMethod;
     double deliveryPrice;
+  deliveryID; //pk
 }
 
 class Customer {
@@ -50,23 +56,26 @@ class Customer {
 class PaymentCredentials {
   paymentCredentials 1 -- 1 Address billingAddress;
   cardholderName;
-  ccNumber;
+  ccNumber; //pk
   expirationDate;
   int cvc;
 }
 
 class ShoppingCart {
-  shoppingCart 1 -- * Item items;
+  cartID; //pk
+   1 shoppingCart -- * Item items;
+   double totalPrice;
+  1 shoppingCart -- 1 User user;
 }
 
 class Order {
-  order 1 --1 PaymentCredentials paymentCredentials;
-  order 1 -- 1 Customer buyer;
-  order 1 -- * Item orderedItems;
-  order 1 <@>- 1 Delivery deliveryMethod;
-  order 1 <@>- 1 OrderConfirmation orderConfirmation;
-  order 1 <@>- * Commission commission;
-  int orderNumber;
+   1 order --1 PaymentCredentials paymentCredentials;
+   1 order -- 1 Customer buyer;
+   1 order -- * Item orderedItems;
+   1 order <@>- 1 Delivery deliveryMethod;
+  int commisionPercentage;
+  double commissionTotal;
+  orderNumber; //pk
   Date orderDate;
   double itemsPrice;
   double taxes;
@@ -75,82 +84,48 @@ class Order {
 }
 
 class Collection {
-  collection 1 - * Item items;
+   1 collection -- * Item items;
   description;
-  name;
-  numberOfItems;
+  name; //pk
+  int numberOfItems;
+  Image collectionThumbnail;
 }
 
 class Item {
   name;
   images
-  id;
+  id; //pk
   int height;
   int width;
-  creations * -- 1 Artist creator;
+  int breadth;
+   * creations -- 1 Artist creator;
   Date creationDate;
   desription;
-  item 1 -- * Category categories;
   double price;
   Image[] images;
   double reducedPrice;
   boolean inStock;
-  galleryItem * -- 1 Gallery gallery;
-}
-
-class Dimensions {
-  double height;
-  double width;
-  double breadth;
-}
-
-class Category {
-  name;
-  Image collectionThumbnail;
-}
-
-class Commission {
-  int commisionPercentage;
-  double commissionTotal;
+   * galleryItem -- 1 ArtGallerySystem gallery;
 }
 
 class ChatMessage {
-  chatMessage 1 -- 1 User receiver;
-  chatMessage 1 -- 1 User sender;
+  chatMessageID; //pk
+  1 chatMessage -- 1 User sender
   Date sentDate;
   String message;
+  * messages -- 1 Conversation conversation;
 }
 
 class OrderConfirmationEmail {
+  orderConfirmationID; //pk
   String message;
-  orderConfirmationEmail * -- 1 User receiver;
-  orderConfirmationEmail 1 -- 1 Discount discountCode;
-  orderConfirmationEmail 1 -- 1 Order order;
+   * orderConfirmationEmail -- 1 User receiver;
+   1 orderConfirmationEmail -<@> 1 Order order;
 }
 
-class Discount {
-  code;
-  boolean expired;
-  Date expirationDate;
-  boolean used;
+class Conversation
+{
+  conversationID; //pk
+  1 -- 2 User users;
 }
 
-class Wishlist {
-  wishlist 1 -- * Item wishlistItems;
-  wishlist 1 -- 1 User user;
-}
-
-class GiftCard {
-  code;
-  totalAmount;
-}
-
-class Guest {
-  email;
-  password;
-  guest 1 --> 2 Address; addresses;
-  phoneNumber;
-  user * -- 1 Gallery gallery;
-  guest 1 -- 1 PaymentCredentials paymentCredentials;
-  guest 1 --> 1 ShoppingCart shoppingCart;
-}
