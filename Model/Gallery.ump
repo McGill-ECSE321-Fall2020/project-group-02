@@ -1,7 +1,7 @@
 namespace ca.mcgill.ecse321.projectgroup02.model;
 use java.util.*;
-use java.awt.Image;
 use java.sql.Date;
+use java.awt.Image;
 
 class ArtGallerySystem {
    1 gallery -- 1 Address galleryAddress;
@@ -19,58 +19,8 @@ class Address {
   city;
 }
 
-class User {
-  Date accountCreation;
-  unique username; //pk
-  email;
-  password;
-   * user -- * Address userAddress;
-  phoneNumber;
-  boolean loggedIn;
-  0..1 -- 2 UserRole userR;
-}
-
-// Abstract
-class UserRole {
- abstract;
-}
-
-class Artist {
-  isA UserRole;
-  originStory;
-}
-
-class Delivery {
-  enum DeliveryMethod { inStorePickup, homeDelivery }; 
-    DeliveryMethod deliveryMethod;
-    double deliveryPrice;
-  deliveryID; //pk
-}
-
-class Customer {
-  isA UserRole;
-  1 -- * PaymentCredentials paymentCredentials;
-  1 -- 1 ShoppingCart shoppingCart;
-}
-
-class PaymentCredentials {
-  paymentCredentials 1 -- 1 Address billingAddress;
-  cardholderName;
-  ccNumber; //pk
-  expirationDate;
-  int cvc;
-}
-
-class ShoppingCart {
-  cartID; //pk
-   1 shoppingCart -- * Item items;
-   double totalPrice;
-  1 shoppingCart -- 1 User user;
-}
-
 class Order {
    1 order --1 PaymentCredentials paymentCredentials;
-   1 order -- 1 Customer buyer;
    1 order -- * Item orderedItems;
    1 order <@>- 1 Delivery deliveryMethod;
   int commisionPercentage;
@@ -83,17 +33,67 @@ class Order {
   boolean freeShipping;
 }
 
+class User {
+  Date accountCreation;
+  unique username; //pk
+  email;
+  password;
+   * user -- * Address userAddress;
+  phoneNumber;
+  boolean loggedIn;
+  0..1 -- 2 UserRole userR;
+  1 -- 1 ShoppingCart shoppingCart;
+}
+
+// Abstract
+class UserRole {
+ abstract;
+}
+
+class Artist {
+  isA UserRole;
+  originStory;
+}
+
+ enum DeliveryMethod { inStorePickup, homeDelivery }; 
+
+class Delivery {
+    DeliveryMethod deliveryMethod;
+    double deliveryPrice;
+  deliveryID; //pk
+}
+
+class Customer {
+  isA UserRole;
+  1 -- * PaymentCredentials paymentCredentials;
+  1 -- 1 ShoppingCart shoppingCart;
+  1 buyer -- 1 Order order;
+}
+
+class PaymentCredentials {
+  1 paymentCredentials -- 1 Address billingAddress;
+  cardholderName;
+  ccNumber; //pk
+  expirationDate;
+  int cvc;
+}
+
+class ShoppingCart {
+  cartID; //pk
+   double totalPrice;
+   1 shoppingCart -- * Item items;
+}
+
 class Collection {
    1 collection -- * Item items;
   description;
   name; //pk
   int numberOfItems;
-  Image collectionThumbnail;
+  Image thumbnail;
 }
 
 class Item {
   name;
-  images
   id; //pk
   int height;
   int width;
@@ -110,10 +110,10 @@ class Item {
 
 class ChatMessage {
   chatMessageID; //pk
-  1 chatMessage -- 1 User sender
   Date sentDate;
   String message;
   * messages -- 1 Conversation conversation;
+  1 -- 1 User;
 }
 
 class OrderConfirmationEmail {
