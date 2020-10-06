@@ -1,51 +1,17 @@
-/*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.30.1.5099.60569f335 modeling language!*/
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
-package ca.mcgill.ecse321.projectgroup02.model;
+@Entity
+public abstract class UserRole{
+private User user;
 
-/**
- * Abstract
- */
-// line 50 "../../../../../../model.ump"
-// line 152 "../../../../../../model.ump"
-public abstract class UserRole
-{
+@ManyToOne(optional=false)
+public User getUser() {
+   return this.user;
+}
 
-  //------------------------
-  // MEMBER VARIABLES
-  //------------------------
-
-  //UserRole Associations
-  private User user;
-
-  //------------------------
-  // CONSTRUCTOR
-  //------------------------
-
-  public UserRole()
-  {}
-
-  //------------------------
-  // INTERFACE
-  //------------------------
-  /* Code from template association_GetOne */
-  public User getUser()
-  {
-    return user;
-  }
-
-  public boolean hasUser()
-  {
-    boolean has = user != null;
-    return has;
-  }
-
-  public void delete()
-  {
-    if (user != null)
-    {
-      user.delete();
-    }
-  }
+public void setUser(User user) {
+   this.user = user;
+}
 
 }
