@@ -1,3 +1,5 @@
+package ca.mcgill.ecse321.projectgroup02.model;
+
 import javax.persistence.Entity;
 import java.util.Set;
 import javax.persistence.OneToMany;
@@ -9,73 +11,73 @@ import javax.persistence.Id;
 
 @Entity
 public class User{
-   private String accountCreationDate;
-
-public void setAccountCreationDate(String value) {
-    this.accountCreationDate = value;
-}
+private String accountCreationDate;
+   
+   public void setAccountCreationDate(String value) {
+this.accountCreationDate = value;
+    }
 public String getAccountCreationDate() {
-    return this.accountCreationDate;
-}
+return this.accountCreationDate;
+    }
 private String username;
 
 public void setUsername(String value) {
-    this.username = value;
-}
+this.username = value;
+    }
 public String getUsername() {
-    return this.username;
-}
+return this.username;
+    }
 private String email;
 
 public void setEmail(String value) {
-    this.email = value;
-}
+this.email = value;
+    }
 public String getEmail() {
-    return this.email;
-}
+return this.email;
+    }
 private String password;
 
 public void setPassword(String value) {
-    this.password = value;
-}
+this.password = value;
+    }
 public String getPassword() {
-    return this.password;
-}
+return this.password;
+    }
 private String phoneNumber;
 
 public void setPhoneNumber(String value) {
-    this.phoneNumber = value;
-}
+this.phoneNumber = value;
+    }
 public String getPhoneNumber() {
-    return this.phoneNumber;
-}
+return this.phoneNumber;
+    }
 private boolean isLoggedIn;
 
 public void setIsLoggedIn(boolean value) {
-    this.isLoggedIn = value;
-}
+this.isLoggedIn = value;
+    }
 public boolean isIsLoggedIn() {
-    return this.isLoggedIn;
-}
+return this.isLoggedIn;
+    }
 private ArtGallerySystem artGallerySytem;
 
 public void setArtGallerySytem(ArtGallerySystem value) {
-    this.artGallerySytem = value;
-}
+this.artGallerySytem = value;
+    }
 public ArtGallerySystem getArtGallerySytem() {
-    return this.artGallerySytem;
-}
+return this.artGallerySytem;
+    }
 private String/*No type specified!*/ shoppingCart;
 
 public void setShoppingCart(String/*No type specified!*/ value) {
-    this.shoppingCart = value;
-}
+this.shoppingCart = value;
+    }
 public String/*No type specified!*/ getShoppingCart() {
-    return this.shoppingCart;
-}
+return this.shoppingCart;
+    }
 private Set<OrderConfirmationEmail> orderConfirmationEmail;
 
-@OneToMany(mappedBy="receiver" )
+@OneToMany(mappedBy="receiver")
 public Set<OrderConfirmationEmail> getOrderConfirmationEmail() {
    return this.orderConfirmationEmail;
 }
@@ -86,7 +88,7 @@ public void setOrderConfirmationEmail(Set<OrderConfirmationEmail> orderConfirmat
 
 private Set<UserRole> userRole;
 
-@OneToMany(mappedBy="user" , cascade={CascadeType.ALL})
+@OneToMany(mappedBy="user", cascade={CascadeType.ALL})
 public Set<UserRole> getUserRole() {
    return this.userRole;
 }
@@ -119,7 +121,7 @@ public void setArtGallerySystem(ArtGallerySystem artGallerySystem) {
 
 private ShoppingCart shoppingCart1;
 
-@OneToOne(mappedBy="user" , cascade={CascadeType.ALL}, optional=false)
+@OneToOne(mappedBy="user", cascade={CascadeType.ALL}, optional=false)
 public ShoppingCart getShoppingCart1() {
    return this.shoppingCart1;
 }
@@ -130,7 +132,7 @@ public void setShoppingCart1(ShoppingCart shoppingCart1) {
 
 private Set<Order> orders;
 
-@OneToMany(mappedBy="user" , cascade={CascadeType.ALL})
+@OneToMany(mappedBy="user", cascade={CascadeType.ALL})
 public Set<Order> getOrders() {
    return this.orders;
 }
@@ -142,10 +144,10 @@ public void setOrders(Set<Order> orderss) {
 private int userId;
 
 public void setUserId(int value) {
-    this.userId = value;
-}
+this.userId = value;
+    }
 @Id
 public int getUserId() {
-    return this.userId;
-}
-}
+return this.userId;
+       }
+   }

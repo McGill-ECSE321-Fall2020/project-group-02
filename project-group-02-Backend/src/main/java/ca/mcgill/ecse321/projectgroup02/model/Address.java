@@ -1,3 +1,5 @@
+package ca.mcgill.ecse321.projectgroup02.model;
+
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import java.util.Set;
@@ -6,54 +8,54 @@ import javax.persistence.Id;
 
 @Entity
 public class Address{
-   private String street;
-
-public void setStreet(String value) {
-    this.street = value;
-}
+private String street;
+   
+   public void setStreet(String value) {
+this.street = value;
+    }
 public String getStreet() {
-    return this.street;
-}
+return this.street;
+    }
 private String postalCode;
 
 public void setPostalCode(String value) {
-    this.postalCode = value;
-}
+this.postalCode = value;
+    }
 public String getPostalCode() {
-    return this.postalCode;
-}
+return this.postalCode;
+    }
 private String province;
 
 public void setProvince(String value) {
-    this.province = value;
-}
+this.province = value;
+    }
 public String getProvince() {
-    return this.province;
-}
+return this.province;
+    }
 private String country;
 
 public void setCountry(String value) {
-    this.country = value;
-}
+this.country = value;
+    }
 public String getCountry() {
-    return this.country;
-}
+return this.country;
+    }
 private String city;
 
 public void setCity(String value) {
-    this.city = value;
-}
+this.city = value;
+    }
 public String getCity() {
-    return this.city;
-}
+return this.city;
+    }
 private ArtGallerySystem artGallerySystem;
 
 public void setArtGallerySystem(ArtGallerySystem value) {
-    this.artGallerySystem = value;
-}
+this.artGallerySystem = value;
+    }
 public ArtGallerySystem getArtGallerySystem() {
-    return this.artGallerySystem;
-}
+return this.artGallerySystem;
+    }
 private PaymentCredentials paymentCredential;
 
 @OneToOne(optional=false)
@@ -67,7 +69,7 @@ public void setPaymentCredential(PaymentCredentials paymentCredential) {
 
 private Set<User> user;
 
-@ManyToMany(mappedBy="address" )
+@ManyToMany(mappedBy="address")
 public Set<User> getUser() {
    return this.user;
 }
@@ -79,10 +81,10 @@ public void setUser(Set<User> users) {
 private int addressId;
 
 public void setAddressId(int value) {
-    this.addressId = value;
-}
+this.addressId = value;
+    }
 @Id
 public int getAddressId() {
-    return this.addressId;
-}
-}
+return this.addressId;
+       }
+   }

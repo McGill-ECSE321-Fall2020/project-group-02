@@ -1,3 +1,5 @@
+package ca.mcgill.ecse321.projectgroup02.model;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import java.util.Set;
@@ -6,38 +8,38 @@ import javax.persistence.Id;
 
 @Entity
 public class Collection{
-   private String description;
-
-public void setDescription(String value) {
-    this.description = value;
-}
+private String description;
+   
+   public void setDescription(String value) {
+this.description = value;
+    }
 public String getDescription() {
-    return this.description;
-}
+return this.description;
+    }
 private int numberOfItems;
 
 public void setNumberOfItems(int value) {
-    this.numberOfItems = value;
-}
+this.numberOfItems = value;
+    }
 public int getNumberOfItems() {
-    return this.numberOfItems;
-}
+return this.numberOfItems;
+    }
 private String name;
 
 public void setName(String value) {
-    this.name = value;
-}
+this.name = value;
+    }
 public String getName() {
-    return this.name;
-}
+return this.name;
+    }
 private String pathToImage;
 
 public void setPathToImage(String value) {
-    this.pathToImage = value;
-}
+this.pathToImage = value;
+    }
 public String getPathToImage() {
-    return this.pathToImage;
-}
+return this.pathToImage;
+    }
 private Order order;
 
 @ManyToOne(optional=false)
@@ -63,10 +65,10 @@ public void setItem(Set<Item> items) {
 private int collectionId;
 
 public void setCollectionId(int value) {
-    this.collectionId = value;
-}
+this.collectionId = value;
+    }
 @Id
 public int getCollectionId() {
-    return this.collectionId;
-}
-}
+return this.collectionId;
+       }
+   }
