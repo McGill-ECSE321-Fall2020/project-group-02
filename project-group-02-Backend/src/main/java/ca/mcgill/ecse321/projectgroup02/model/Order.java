@@ -1,4 +1,5 @@
 package ca.mcgill.ecse321.projectgroup02.model;
+import Item;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
