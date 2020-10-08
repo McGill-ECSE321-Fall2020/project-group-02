@@ -8,3 +8,7 @@
  */
 
 rootProject.name = 'project-group-02'
+
+
+
+include ':project-group-02-Backend'
