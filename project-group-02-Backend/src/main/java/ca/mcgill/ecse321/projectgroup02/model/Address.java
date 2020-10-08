@@ -3,6 +3,7 @@ package ca.mcgill.ecse321.projectgroup02.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Address{
@@ -75,6 +76,17 @@ public PaymentCredentials getPaymentCredentials() {
 
 public void setPaymentCredentials(PaymentCredentials paymentCredentials) {
    this.paymentCredentials = paymentCredentials;
+}
+
+private ApplicationUser applicationUser;
+
+@ManyToOne(optional=false)
+public ApplicationUser getApplicationUser() {
+   return this.applicationUser;
+}
+
+public void setApplicationUser(ApplicationUser applicationUser) {
+   this.applicationUser = applicationUser;
 }
 
 }

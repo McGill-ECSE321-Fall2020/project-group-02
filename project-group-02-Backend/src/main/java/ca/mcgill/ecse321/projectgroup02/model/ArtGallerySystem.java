@@ -70,15 +70,15 @@ public void setItems(Set<Item> itemss) {
    this.items = itemss;
 }
 
-private Set<ApplicationUser> user;
+private ApplicationUser user;
 
-@OneToMany(mappedBy="artGallerySystem", cascade={CascadeType.ALL})
-public Set<ApplicationUser> getUser() {
+@OneToOne(mappedBy="artGallerySystem", cascade={CascadeType.ALL}, optional=false)
+public ApplicationUser getUser() {
    return this.user;
 }
 
-public void setUser(Set<ApplicationUser> users) {
-   this.user = users;
+public void setUser(ApplicationUser user) {
+   this.user = user;
 }
 
 }

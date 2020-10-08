@@ -2,9 +2,8 @@ package ca.mcgill.ecse321.projectgroup02.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.CascadeType;
 import javax.persistence.OneToOne;
+import javax.persistence.CascadeType;
 import java.util.Set;
 import javax.persistence.OneToMany;
 
@@ -69,7 +68,7 @@ return this.applicationUserId;
     }
 private ArtGallerySystem artGallerySystem;
 
-@ManyToOne(optional=false)
+@OneToOne(optional=false)
 public ArtGallerySystem getArtGallerySystem() {
    return this.artGallerySystem;
 }
@@ -120,6 +119,17 @@ public Set<UserRole> getUserRole() {
 
 public void setUserRole(Set<UserRole> userRoles) {
    this.userRole = userRoles;
+}
+
+private Set<Address> address;
+
+@OneToMany(mappedBy="applicationUser")
+public Set<Address> getAddress() {
+   return this.address;
+}
+
+public void setAddress(Set<Address> addresss) {
+   this.address = addresss;
 }
 
 }
