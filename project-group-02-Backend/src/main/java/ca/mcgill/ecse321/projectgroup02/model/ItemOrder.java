@@ -3,13 +3,13 @@ package ca.mcgill.ecse321.projectgroup02.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
+import javax.persistence.CascadeType;
 import javax.persistence.OneToOne;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Order{
+public class ItemOrder{
 private double commissionPercentage;
    
    public void setCommissionPercentage(double value) {
@@ -26,14 +26,14 @@ this.commissionTotal = value;
 public double getCommissionTotal() {
 return this.commissionTotal;
     }
-private int orderId;
+private int itemOrderId;
 
-public void setOrderId(int value) {
-this.orderId = value;
+public void setItemOrderId(int value) {
+this.itemOrderId = value;
     }
 @Id
-public int getOrderId() {
-return this.orderId;
+public int getItemOrderId() {
+return this.itemOrderId;
     }
 private String orderDate;
 
@@ -59,31 +59,20 @@ this.taxes = value;
 public double getTaxes() {
 return this.taxes;
     }
-private Set<Collection> collection;
+private Set<Item> item;
 
-@OneToMany(mappedBy="order", cascade={CascadeType.ALL})
-public Set<Collection> getCollection() {
-   return this.collection;
+@OneToMany(mappedBy="order")
+public Set<Item> getItem() {
+   return this.item;
 }
 
-public void setCollection(Set<Collection> collections) {
-   this.collection = collections;
-}
-
-private Delivery delivery;
-
-@OneToOne(mappedBy="order", cascade={CascadeType.ALL}, optional=false)
-public Delivery getDelivery() {
-   return this.delivery;
-}
-
-public void setDelivery(Delivery delivery) {
-   this.delivery = delivery;
+public void setItem(Set<Item> items) {
+   this.item = items;
 }
 
 private OrderConfirmationEmail orderConfirmationEmail;
 
-@OneToOne(mappedBy="order", cascade={CascadeType.ALL}, optional=false)
+@OneToOne(mappedBy="itemOrder", cascade={CascadeType.ALL}, optional=false)
 public OrderConfirmationEmail getOrderConfirmationEmail() {
    return this.orderConfirmationEmail;
 }
@@ -92,26 +81,26 @@ public void setOrderConfirmationEmail(OrderConfirmationEmail orderConfirmationEm
    this.orderConfirmationEmail = orderConfirmationEmail;
 }
 
-private Set<Item> orderedItems;
+private Delivery delivery;
 
-@OneToMany
-public Set<Item> getOrderedItems() {
-   return this.orderedItems;
+@OneToOne(mappedBy="itemOrder", cascade={CascadeType.ALL}, optional=false)
+public Delivery getDelivery() {
+   return this.delivery;
 }
 
-public void setOrderedItems(Set<Item> orderedItemss) {
-   this.orderedItems = orderedItemss;
+public void setDelivery(Delivery delivery) {
+   this.delivery = delivery;
 }
 
-private User user;
+private ApplicationUser applicationUser;
 
 @ManyToOne(optional=false)
-public User getUser() {
-   return this.user;
+public ApplicationUser getApplicationUser() {
+   return this.applicationUser;
 }
 
-public void setUser(User user) {
-   this.user = user;
+public void setApplicationUser(ApplicationUser applicationUser) {
+   this.applicationUser = applicationUser;
 }
 
 }

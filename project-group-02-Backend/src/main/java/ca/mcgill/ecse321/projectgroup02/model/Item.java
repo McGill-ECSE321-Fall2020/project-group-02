@@ -3,8 +3,6 @@ package ca.mcgill.ecse321.projectgroup02.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import java.util.Set;
-import javax.persistence.ManyToMany;
 
 @Entity
 public class Item{
@@ -89,26 +87,26 @@ this.inStock = value;
 public boolean isInStock() {
 return this.inStock;
     }
-private Artist creator;
+private ArtGallerySystem artGallerySystem;
 
 @ManyToOne(optional=false)
-public Artist getCreator() {
-   return this.creator;
+public ArtGallerySystem getArtGallerySystem() {
+   return this.artGallerySystem;
 }
 
-public void setCreator(Artist creator) {
-   this.creator = creator;
+public void setArtGallerySystem(ArtGallerySystem artGallerySystem) {
+   this.artGallerySystem = artGallerySystem;
 }
 
-private Set<Collection> collection;
+private Collection collection;
 
-@ManyToMany(mappedBy="item")
-public Set<Collection> getCollection() {
+@ManyToOne(optional=false)
+public Collection getCollection() {
    return this.collection;
 }
 
-public void setCollection(Set<Collection> collections) {
-   this.collection = collections;
+public void setCollection(Collection collection) {
+   this.collection = collection;
 }
 
 private ShoppingCart shoppingCart;
@@ -122,15 +120,15 @@ public void setShoppingCart(ShoppingCart shoppingCart) {
    this.shoppingCart = shoppingCart;
 }
 
-private ArtGallerySystem artGallerySystem;
+private ItemOrder order;
 
 @ManyToOne(optional=false)
-public ArtGallerySystem getArtGallerySystem() {
-   return this.artGallerySystem;
+public ItemOrder getOrder() {
+   return this.order;
 }
 
-public void setArtGallerySystem(ArtGallerySystem artGallerySystem) {
-   this.artGallerySystem = artGallerySystem;
+public void setOrder(ItemOrder order) {
+   this.order = order;
 }
 
 }

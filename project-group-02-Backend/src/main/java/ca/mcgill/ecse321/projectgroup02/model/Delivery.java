@@ -23,15 +23,15 @@ this.deliveryId = value;
 public String getDeliveryId() {
 return this.deliveryId;
     }
-private Order order;
+private ItemOrder itemOrder;
 
 @OneToOne(optional=false)
-public Order getOrder() {
-   return this.order;
+public ItemOrder getItemOrder() {
+   return this.itemOrder;
 }
 
-public void setOrder(Order order) {
-   this.order = order;
+public void setItemOrder(ItemOrder itemOrder) {
+   this.itemOrder = itemOrder;
 }
 
 }

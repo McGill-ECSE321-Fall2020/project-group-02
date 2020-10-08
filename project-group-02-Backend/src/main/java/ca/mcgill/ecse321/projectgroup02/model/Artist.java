@@ -1,11 +1,10 @@
 package ca.mcgill.ecse321.projectgroup02.model;
 
 import javax.persistence.Entity;
-import java.util.Set;
-import javax.persistence.OneToMany;
+import javax.persistence.Id;
 
 @Entity
-public class Artist extends UserRole{
+public class Artist{
 private String description;
    
    public void setDescription(String value) {
@@ -14,15 +13,13 @@ this.description = value;
 public String getDescription() {
 return this.description;
     }
-private Set<Item> item;
+private int artistId;
 
-@OneToMany(mappedBy="creator")
-public Set<Item> getItem() {
-   return this.item;
-}
-
-public void setItem(Set<Item> items) {
-   this.item = items;
-}
-
-}
+public void setArtistId(int value) {
+this.artistId = value;
+    }
+@Id
+public int getArtistId() {
+return this.artistId;
+       }
+   }

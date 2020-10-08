@@ -1,25 +1,14 @@
 package ca.mcgill.ecse321.projectgroup02.model;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class ServiceProvider{
-private ArtGallerySystem artGallerySystem;
-
-@ManyToOne(optional=false)
-public ArtGallerySystem getArtGallerySystem() {
-   return this.artGallerySystem;
-}
-
-public void setArtGallerySystem(ArtGallerySystem artGallerySystem) {
-   this.artGallerySystem = artGallerySystem;
-}
-
 private String name;
-
-public void setName(String value) {
+   
+   public void setName(String value) {
 this.name = value;
     }
 public String getName() {
@@ -57,5 +46,16 @@ this.serviceProvider = value;
 @Id
 public int getServiceProvider() {
 return this.serviceProvider;
-       }
-   }
+    }
+private ArtGallerySystem artGallerySystem;
+
+@OneToOne(optional=false)
+public ArtGallerySystem getArtGallerySystem() {
+   return this.artGallerySystem;
+}
+
+public void setArtGallerySystem(ArtGallerySystem artGallerySystem) {
+   this.artGallerySystem = artGallerySystem;
+}
+
+}

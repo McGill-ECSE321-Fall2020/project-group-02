@@ -24,28 +24,6 @@ this.message = value;
 public String getMessage() {
 return this.message;
     }
-private User receiver;
-
-@ManyToOne(optional=false)
-public User getReceiver() {
-   return this.receiver;
-}
-
-public void setReceiver(User receiver) {
-   this.receiver = receiver;
-}
-
-private Order order;
-
-@OneToOne(optional=false)
-public Order getOrder() {
-   return this.order;
-}
-
-public void setOrder(Order order) {
-   this.order = order;
-}
-
 private NotificationHandler notificationHandler;
 
 @ManyToOne(optional=false)
@@ -55,6 +33,28 @@ public NotificationHandler getNotificationHandler() {
 
 public void setNotificationHandler(NotificationHandler notificationHandler) {
    this.notificationHandler = notificationHandler;
+}
+
+private ItemOrder itemOrder;
+
+@OneToOne(optional=false)
+public ItemOrder getItemOrder() {
+   return this.itemOrder;
+}
+
+public void setItemOrder(ItemOrder itemOrder) {
+   this.itemOrder = itemOrder;
+}
+
+private ApplicationUser applicationUser;
+
+@ManyToOne(optional=false)
+public ApplicationUser getApplicationUser() {
+   return this.applicationUser;
+}
+
+public void setApplicationUser(ApplicationUser applicationUser) {
+   this.applicationUser = applicationUser;
 }
 
 }

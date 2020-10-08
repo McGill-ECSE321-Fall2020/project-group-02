@@ -1,10 +1,8 @@
 package ca.mcgill.ecse321.projectgroup02.model;
 
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import java.util.Set;
-import javax.persistence.ManyToMany;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Address{
@@ -48,28 +46,6 @@ this.city = value;
 public String getCity() {
 return this.city;
     }
-private PaymentCredentials paymentCredential;
-
-@OneToOne(optional=false)
-public PaymentCredentials getPaymentCredential() {
-   return this.paymentCredential;
-}
-
-public void setPaymentCredential(PaymentCredentials paymentCredential) {
-   this.paymentCredential = paymentCredential;
-}
-
-private Set<User> user;
-
-@ManyToMany(mappedBy="address")
-public Set<User> getUser() {
-   return this.user;
-}
-
-public void setUser(Set<User> users) {
-   this.user = users;
-}
-
 private int addressId;
 
 public void setAddressId(int value) {
@@ -88,6 +64,17 @@ public ArtGallerySystem getArtGallerySystem() {
 
 public void setArtGallerySystem(ArtGallerySystem artGallerySystem) {
    this.artGallerySystem = artGallerySystem;
+}
+
+private PaymentCredentials paymentCredentials;
+
+@OneToOne(mappedBy="address", optional=false)
+public PaymentCredentials getPaymentCredentials() {
+   return this.paymentCredentials;
+}
+
+public void setPaymentCredentials(PaymentCredentials paymentCredentials) {
+   this.paymentCredentials = paymentCredentials;
 }
 
 }
