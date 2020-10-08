@@ -17,6 +17,14 @@ this.totalProfit = value;
 public double getTotalProfit() {
 return this.totalProfit;
     }
+private Address address;
+
+public void setAddress(Address value) {
+this.address = value;
+    }
+public Address getAddress() {
+return this.address;
+    }
 private NotificationHandler notificationHandler;
 
 @OneToOne(mappedBy="artGallerySystem", cascade={CascadeType.ALL}, optional=false)
@@ -69,16 +77,5 @@ this.artGalleryId = value;
 @Id
 public int getArtGalleryId() {
 return this.artGalleryId;
-    }
-private Address address;
-
-@OneToOne(mappedBy="artGallerySystem", cascade={CascadeType.ALL}, optional=false)
-public Address getAddress() {
-   return this.address;
-}
-
-public void setAddress(Address address) {
-   this.address = address;
-}
-
-}
+       }
+   }

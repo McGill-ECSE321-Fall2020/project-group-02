@@ -48,6 +48,14 @@ this.city = value;
 public String getCity() {
 return this.city;
     }
+private ArtGallerySystem artGallerySystem;
+
+public void setArtGallerySystem(ArtGallerySystem value) {
+this.artGallerySystem = value;
+    }
+public ArtGallerySystem getArtGallerySystem() {
+return this.artGallerySystem;
+    }
 private PaymentCredentials paymentCredential;
 
 @OneToOne(optional=false)
@@ -78,16 +86,5 @@ this.addressId = value;
 @Id
 public int getAddressId() {
 return this.addressId;
-    }
-private ArtGallerySystem artGallerySystem;
-
-@OneToOne(optional=false)
-public ArtGallerySystem getArtGallerySystem() {
-   return this.artGallerySystem;
-}
-
-public void setArtGallerySystem(ArtGallerySystem artGallerySystem) {
-   this.artGallerySystem = artGallerySystem;
-}
-
-}
+       }
+   }
