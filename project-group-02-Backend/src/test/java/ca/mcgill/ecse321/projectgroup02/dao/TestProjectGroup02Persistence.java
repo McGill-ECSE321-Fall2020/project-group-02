@@ -20,6 +20,13 @@ import ca.mcgill.ecse321.projectgroup02.model.Collection;
 import ca.mcgill.ecse321.projectgroup02.model.Customer;
 import ca.mcgill.ecse321.projectgroup02.model.Delivery;
 import ca.mcgill.ecse321.projectgroup02.model.Item;
+import ca.mcgill.ecse321.projectgroup02.model.ItemOrder;
+import ca.mcgill.ecse321.projectgroup02.model.NotificationHandler;
+import ca.mcgill.ecse321.projectgroup02.model.OrderConfirmationEmail;
+import ca.mcgill.ecse321.projectgroup02.model.PaymentCredentials;
+import ca.mcgill.ecse321.projectgroup02.model.ServiceProvider;
+import ca.mcgill.ecse321.projectgroup02.model.ShoppingCart;
+import ca.mcgill.ecse321.projectgroup02.model.UserRole;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -41,6 +48,20 @@ public class TestProjectGroup02Persistence {
 	private DeliveryRepository deliveryRepository;
 	@Autowired
 	private ItemRepository itemRepository;
+	@Autowired
+    private ItemOrderRepository itemOrderRepository;
+	@Autowired
+    private NotificationHandlerRepository notificationHandlerRepository;
+	@Autowired
+    private OrderConfirmationEmailRepository orderConfirmationEmailRepository;
+	@Autowired
+    private PaymentCredentialsRepository paymentCredentialsRepository;
+	@Autowired
+    private ServiceProviderRepository serviceProviderRepository;
+	@Autowired
+    private ShoppingCartRepository shoppingCartRepository;
+	@Autowired
+    private UserRoleRepository userRoleRepository;
 	
 	
 	
@@ -55,6 +76,13 @@ public class TestProjectGroup02Persistence {
 		customerRepository.deleteAll();
 		deliveryRepository.deleteAll();
 		itemRepository.deleteAll();
+		userRepository.deleteAll();
+		shoppingCartRepository.deleteAll();
+		serviceProviderRepository.deleteAll();
+		paymentCredentialsRepository.deleteAll();
+		orderConfirmationEmailRepository.deleteAll();
+		notificationHandlerRepository.deleteAll();
+		itemOrderRepository.deleteAll();
 		// Then we can clear the other tables
 		
 	}
@@ -249,6 +277,161 @@ public class TestProjectGroup02Persistence {
 		
 	}
 	
+	@Test
+    public void testPersistAndLoadItemOrder() {
+        int itemOrder_Id= 6;
+        
+        ItemOrder itemOrder = new ItemOrder();
+        
+        itemOrder.setItemOrderId(itemOrder_Id);
+        
+        itemOrderRepository.save(itemOrder);
+        
+        itemOrder = null;
+        
+        itemOrder = itemOrderRepository.findByitemOrderId(itemOrder_Id);
+        
+        assertNotNull(itemOrder);
+        
+        int id= itemOrder.getItemOrderId();
+        
+        assertEquals(itemOrder_Id,id);
+        
+    }
+	
+	@Test
+    public void testPersistAndLoadNotificationHandler() {
+        int notificationHandler_Id= 6;
+        
+        NotificationHandler notificationHandler = new NotificationHandler();
+        
+        notificationHandler.setNotificationHandlerId(notificationHandler_Id);
+        
+        notificationHandlerRepository.save(notificationHandler);
+        
+        notificationHandler = null;
+        
+        notificationHandler = notificationHandlerRepository.findBynotificationHandlerId(notificationHandler_Id);
+        
+        assertNotNull(notificationHandler);
+        
+        int id= notificationHandler.getNotificationHandlerId();
+        
+        assertEquals(notificationHandler_Id,id);
+        
+    }
+	
+	@Test
+    public void testPersistAndLoadOrderConfirmationEmail() {
+        int orderConfirmationEmail_Id= 6;
+        
+        OrderConfirmationEmail orderConfirmationEmail = new OrderConfirmationEmail();
+        
+        orderConfirmationEmail.setOrderConfirmationId(orderConfirmationEmail_Id);
+        
+        orderConfirmationEmailRepository.save(orderConfirmationEmail);
+        
+        orderConfirmationEmail = null;
+        
+        orderConfirmationEmail = orderConfirmationEmailRepository.findByorderConfirmationId(orderConfirmationEmail_Id);
+        
+        assertNotNull(orderConfirmationEmail);
+        
+        int id= orderConfirmationEmail.getOrderConfirmationId();
+        
+        assertEquals(orderConfirmationEmail_Id,id);
+        
+    }
+	
+	@Test
+    public void testPersistAndLoadPaymentCredentials() {
+        int paymentCredentials_Id= 6;
+        
+        PaymentCredentials paymentCredentials = new PaymentCredentials();
+        
+        paymentCredentials.setPaymentCredentialsId(paymentCredentials_Id);
+        
+        paymentCredentialsRepository.save(paymentCredentials);
+        
+        paymentCredentials = null;
+        
+        paymentCredentials = paymentCredentialsRepository.findBypaymentCredentialsId(paymentCredentials_Id);
+        
+        assertNotNull(paymentCredentials);
+        
+        int id= paymentCredentials.getPaymentCredentialsId()();
+        
+        assertEquals(paymentCredentials_Id,id);
+        
+    }
+	
+	
+	@Test
+    public void testPersistAndLoadServiceProvider() {
+        int serviceProvider_Id= 6;
+        
+        ServiceProvider serviceProvider = new ServiceProvider();
+        
+        serviceProvider.setServiceProvider(serviceProvider_Id);
+        
+        serviceProviderRepository.save(serviceProvider);
+        
+        serviceProvider = null;
+        
+        serviceProvider = serviceProviderRepository.findByserviceProvider(serviceProvider_Id);
+        
+        assertNotNull(serviceProvider);
+        
+        int id= serviceProvider.getServiceProvider();
+        
+        assertEquals(serviceProvider_Id,id);
+        
+    }
+	
+	@Test
+    public void testPersistAndLoadShoppingCart() {
+        int shoppingCart_Id= 6;
+        
+        ShoppingCart shoppingCart = new ShoppingCart();
+        
+        shoppingCart.setShoppingCartId(shoppingCart_Id);
+        
+        shoppingCartRepository.save(shoppingCart);
+        
+        shoppingCart = null;
+        
+        shoppingCart = shoppingCartRepository.findByshoppingCartId(shoppingCart_Id);
+        
+        assertNotNull(shoppingCart);
+        
+        int id= shoppingCart.getShoppingCartId();
+        
+        assertEquals(shoppingCart_Id,id);
+        
+    }
+	
+    /* UserRole class cannot be instantiated
+     *
+     * @Test public void testPersistAndLoadUserRole() { int userRole_Id= 6;
+     * 
+     * UserRole userRole = new UserRole();
+     * 
+     * userRole.setUserRoleId(userRole_Id);
+     * 
+     * userRoleRepository.save(userRole);
+     * 
+     * userRole = null;
+     * 
+     * userRole = userRoleRepository.findByuserRoleId(userRole_Id);
+     * 
+     * assertNotNull(userRole);
+     * 
+     * int id= userRole.getUserRoleId();
+     * 
+     * assertEquals(userRole_Id,id);
+     * 
+     * }
+     */
 	
 	
 	
