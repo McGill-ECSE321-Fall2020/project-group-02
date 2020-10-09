@@ -1,10 +1,17 @@
 package ca.mcgill.ecse321.projectgroup02.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.CascadeType;
 
 @Entity
+@Table(name="payment_credentials")
 public class PaymentCredentials{
 private String cardHolderName;
    
@@ -38,12 +45,14 @@ this.cvc = value;
 public String getCvc() {
 return this.cvc;
     }
+@Id
+@GeneratedValue(strategy = GenerationType.AUTO)
 private int paymentCredentialsId;
 
 public void setPaymentCredentialsId(int value) {
 this.paymentCredentialsId = value;
     }
-@Id
+
 public int getPaymentCredentialsId() {
 return this.paymentCredentialsId;
     }
