@@ -3,6 +3,8 @@ package ca.mcgill.ecse321.projectgroup02.dao;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.jupiter.api.AfterEach;
@@ -196,6 +198,16 @@ public class TestProjectGroup02Persistence {
 		
 		collection.setCollectionId(collection_Id);
 		
+		Item item = new Item();
+		
+		item.setItemId(84);
+		
+		Set<Item> itemset = new HashSet<Item>();
+		
+		itemset.add(item);
+		
+		collection.setItem(itemset);
+		
 		collectionRepository.save(collection);
 		
 		collection = null;
@@ -208,6 +220,7 @@ public class TestProjectGroup02Persistence {
 		
 		assertEquals(collection_Id,id);
 		
+		assertEquals(collection.getItem().contains(item),true);
 		
 	}
 	
