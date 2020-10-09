@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import ca.mcgill.ecse321.projectgroup02.model.ItemOrder;
 import ca.mcgill.ecse321.projectgroup02.model.OrderConfirmationEmail;
 
-public interface ItemOrderRepository extends CrudRepository<ItemOrderRepository, String> {
+public interface ItemOrderRepository extends CrudRepository<ItemOrder, String> {
 	
 	long count();
 	

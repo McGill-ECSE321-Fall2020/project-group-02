@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import ca.mcgill.ecse321.projectgroup02.model.PaymentCredentials;
 
 
-public interface PaymentCredentialsRepository extends CrudRepository<PaymentCredentialsRepository, String> {
+public interface PaymentCredentialsRepository extends CrudRepository<PaymentCredentials, String> {
 	
 	long count();
 	

@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import ca.mcgill.ecse321.projectgroup02.model.UserRole;
 
 
-public interface UserRoleRepository extends CrudRepository<UserRoleRepository, String> {
+public interface UserRoleRepository extends CrudRepository<UserRole, String> {
 	
 	long count();
 	

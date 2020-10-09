@@ -14,13 +14,13 @@ this.deliveryPrice = value;
 public double getDeliveryPrice() {
 return this.deliveryPrice;
     }
-private String deliveryId;
+private int deliveryId;
 
-public void setDeliveryId(String value) {
+public void setDeliveryId(int value) {
 this.deliveryId = value;
     }
 @Id
-public String getDeliveryId() {
+public int getDeliveryId() {
 return this.deliveryId;
     }
 private ItemOrder itemOrder;

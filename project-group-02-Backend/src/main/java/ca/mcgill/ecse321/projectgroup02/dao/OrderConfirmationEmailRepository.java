@@ -4,7 +4,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import ca.mcgill.ecse321.projectgroup02.model.OrderConfirmationEmail;
 
-public interface OrderConfirmationEmailRepository extends CrudRepository<OrderConfirmationEmailRepository, String> {
+public interface OrderConfirmationEmailRepository extends CrudRepository<OrderConfirmationEmail, String> {
 	
 	long count();
 	

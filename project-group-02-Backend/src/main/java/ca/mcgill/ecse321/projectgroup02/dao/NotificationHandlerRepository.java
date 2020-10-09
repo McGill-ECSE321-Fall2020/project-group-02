@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import ca.mcgill.ecse321.projectgroup02.model.NotificationHandler;
 
 
-public interface NotificationHandlerRepository extends CrudRepository<NotificationHandlerRepository, String> {
+public interface NotificationHandlerRepository extends CrudRepository<NotificationHandler, String> {
 	
 	long count();
 	
@@ -17,7 +17,7 @@ public interface NotificationHandlerRepository extends CrudRepository<Notificati
 	
 	void deleteAll();
 	
-	boolean existsnotificationHandlerId(int notificationHandlerId);
+	boolean existsBynotificationHandlerId(int notificationHandlerId);
 	
 	NotificationHandler save(NotificationHandler notificationHandler);
 	

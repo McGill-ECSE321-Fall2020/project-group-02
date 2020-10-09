@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import ca.mcgill.ecse321.projectgroup02.model.ServiceProvider;
 
 
-public interface ServiceProviderRepository extends CrudRepository<ServiceProviderRepository, String> {
+public interface ServiceProviderRepository extends CrudRepository<ServiceProvider, String> {
 	
 	long count();
 	

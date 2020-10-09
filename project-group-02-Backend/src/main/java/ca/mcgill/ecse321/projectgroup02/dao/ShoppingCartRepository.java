@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import ca.mcgill.ecse321.projectgroup02.model.ShoppingCart;
 
 
-public interface ShoppingCartRepository extends CrudRepository<ShoppingCartRepository, String> {
+public interface ShoppingCartRepository extends CrudRepository<ShoppingCart, String> {
 	
 	long count();
 	
