@@ -217,7 +217,13 @@ public class TestProjectGroup02Persistence {
 		
 		Customer customer = new Customer();
 		
+		PaymentCredentials paymentCredentials = new PaymentCredentials();
+		
+		paymentCredentials.setPaymentCredentialsId(85);
+		
 		customer.setCustomerId(customer_Id);
+		
+		customer.setPaymentCredentials(paymentCredentials);
 		
 		customerRepository.save(customer);
 		
@@ -231,6 +237,8 @@ public class TestProjectGroup02Persistence {
 		
 		assertEquals(customer_Id,id);
 		
+		assertEquals(customer.getPaymentCredentials().getPaymentCredentialsId(),85);
+		
 	}
 	
 	@Test
@@ -239,7 +247,13 @@ public class TestProjectGroup02Persistence {
 		
 		Delivery delivery = new Delivery();
 		
+		ItemOrder itemOrder = new ItemOrder();
+		
+		itemOrder.setItemOrderId(86);
+		
 		delivery.setDeliveryId(delivery_Id);
+		
+		delivery.setItemOrder(itemOrder);
 		
 		deliveryRepository.save(delivery);
 		
@@ -253,6 +267,8 @@ public class TestProjectGroup02Persistence {
 		
 		assertEquals(delivery_Id,id);
 		
+		assertEquals(delivery.getItemOrder().getItemOrderId(),86);
+		
 	}
 	
 	@Test
@@ -261,7 +277,13 @@ public class TestProjectGroup02Persistence {
 		
 		Item item = new Item();
 		
+		Collection collection = new Collection();
+		
+		collection.setCollectionId(87);
+		
 		item.setItemId(item_Id);
+		
+		item.setCollection(collection);
 		
 		itemRepository.save(item);
 		
@@ -274,6 +296,8 @@ public class TestProjectGroup02Persistence {
 		int id= item.getItemId();
 		
 		assertEquals(item_Id,id);
+		
+		assertEquals(item.getCollection().getCollectionId(),87);
 		
 	}
 	
