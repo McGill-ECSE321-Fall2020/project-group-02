@@ -1,13 +1,27 @@
 package ca.mcgill.ecse321.projectgroup02.model;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+
 import java.util.Set;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="shopping_cart")
 public class ShoppingCart{
+
+@Id
+@GeneratedValue(strategy = GenerationType.AUTO)
+private int shoppingCartId;
+
 private double totalPrice;
    
    public void setTotalPrice(double value) {
@@ -32,12 +46,12 @@ this.isEmpty = value;
 public boolean isIsEmpty() {
 return this.isEmpty;
     }
-private int shoppingCartId;
 
 public void setShoppingCartId(int value) {
 this.shoppingCartId = value;
     }
-@Id
+
+
 public int getShoppingCartId() {
 return this.shoppingCartId;
     }
@@ -52,9 +66,25 @@ public void setItem(Set<Item> items) {
    this.item = items;
 }
 
-private Customer customer;
 
 @OneToOne
+@JoinColumn(name = "applicationUserId")
+private ApplicationUser applicationUser;
+
+
+public ApplicationUser getApplicationUser() {
+   return this.applicationUser;
+}
+
+public void setApplicationUser(ApplicationUser applicationUser) {
+   this.applicationUser = applicationUser;
+}
+
+@OneToOne
+@JoinColumn(name = "customerId")
+private Customer customer;
+
+@OneToOne(optional=false)
 public Customer getCustomer() {
    return this.customer;
 }

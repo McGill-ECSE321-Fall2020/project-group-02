@@ -1,13 +1,18 @@
 package ca.mcgill.ecse321.projectgroup02.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.CascadeType;
 import java.util.Set;
 import javax.persistence.OneToMany;
 
 @Entity
+@Table(name="art_gallery_system")
 public class ArtGallerySystem{
 private double totalProfit;
    
@@ -17,12 +22,15 @@ this.totalProfit = value;
 public double getTotalProfit() {
 return this.totalProfit;
     }
+
+@Id
+@GeneratedValue(strategy = GenerationType.AUTO)
 private int artGalleryId;
 
 public void setArtGalleryId(int value) {
 this.artGalleryId = value;
     }
-@Id
+
 public int getArtGalleryId() {
 return this.artGalleryId;
     }
@@ -70,15 +78,16 @@ public void setItems(Set<Item> itemss) {
    this.items = itemss;
 }
 
-private ApplicationUser user;
+@OneToOne
+@JoinColumn(name = "applicationUserId")
+private ApplicationUser applicationUser;
 
-@OneToOne(mappedBy="artGallerySystem", cascade={CascadeType.ALL}, optional=false)
 public ApplicationUser getUser() {
-   return this.user;
+   return this.applicationUser;
 }
 
 public void setUser(ApplicationUser user) {
-   this.user = user;
+   this.applicationUser = user;
 }
 
 }

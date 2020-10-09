@@ -1,12 +1,20 @@
 package ca.mcgill.ecse321.projectgroup02.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 import java.util.Set;
 import javax.persistence.OneToMany;
 
 @Entity
+@Table(name="application_user")
 public class ApplicationUser{
 private String accountCreationDate;
    
@@ -56,12 +64,15 @@ this.isLoggedIn = value;
 public boolean isIsLoggedIn() {
 return this.isLoggedIn;
     }
+
+@Id
+@GeneratedValue(strategy=GenerationType.AUTO)
 private int applicationUserId;
 
 public void setApplicationUserId(int value) {
 this.applicationUserId = value;
     }
-@Id
+
 public int getApplicationUserId() {
 return this.applicationUserId;
     }
@@ -110,6 +121,7 @@ public void setAddress(Set<Address> addresss) {
    this.address = addresss;
 }
 
+@OneToOne(mappedBy = "applicationUser")
 private ArtGallerySystem artGallerySystem;
 
 @OneToOne(optional=false)
