@@ -2,9 +2,11 @@ package ca.mcgill.ecse321.projectgroup02.model;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Id;
 
 @Entity
+@Table(name="user_role")
 public abstract class UserRole{
 private ApplicationUser applicationUser;
 

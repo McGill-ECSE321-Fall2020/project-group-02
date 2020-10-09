@@ -46,7 +46,7 @@ public String getCvc() {
 return this.cvc;
     }
 @Id
-@GeneratedValue(strategy = GenerationType.AUTO)
+//@GeneratedValue(strategy = GenerationType.AUTO)
 private int paymentCredentialsId;
 
 public void setPaymentCredentialsId(int value) {
@@ -58,7 +58,10 @@ return this.paymentCredentialsId;
     }
 private Address address;
 
-@OneToOne(optional=false)
+@OneToOne
+//@JoinColumn(name= "customerId")
+private Customer customer;
+
 public Address getAddress() {
    return this.address;
 }
@@ -67,9 +70,9 @@ public void setAddress(Address address) {
    this.address = address;
 }
 
-private Customer customer;
 
-@OneToOne
+
+@OneToOne (optional=false)
 public Customer getCustomer() {
    return this.customer;
 }

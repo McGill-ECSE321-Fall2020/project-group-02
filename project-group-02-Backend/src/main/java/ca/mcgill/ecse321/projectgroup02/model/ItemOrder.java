@@ -6,9 +6,11 @@ import java.util.Set;
 import javax.persistence.OneToMany;
 import javax.persistence.CascadeType;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.ManyToOne;
 
 @Entity
+@Table(name="item_order")
 public class ItemOrder{
 private double commissionPercentage;
    

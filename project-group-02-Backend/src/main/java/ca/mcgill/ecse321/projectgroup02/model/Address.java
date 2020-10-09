@@ -1,11 +1,15 @@
 package ca.mcgill.ecse321.projectgroup02.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.ManyToOne;
 
 @Entity
+@Table(name="address")
 public class Address{
 private String street;
    
@@ -47,6 +51,9 @@ this.city = value;
 public String getCity() {
 return this.city;
     }
+
+
+//@GeneratedValue(strategy=GenerationType.AUTO)
 private int addressId;
 
 public void setAddressId(int value) {
@@ -56,7 +63,10 @@ this.addressId = value;
 public int getAddressId() {
 return this.addressId;
     }
+
+//@OneToOne(mappedBy = "address")
 private ArtGallerySystem artGallerySystem;
+
 
 @OneToOne(optional=false)
 public ArtGallerySystem getArtGallerySystem() {

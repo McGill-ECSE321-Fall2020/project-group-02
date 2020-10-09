@@ -5,8 +5,10 @@ import javax.persistence.Id;
 import java.util.Set;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="notification_handler")
 public class NotificationHandler{
 private int notificationHandlerId;
    
