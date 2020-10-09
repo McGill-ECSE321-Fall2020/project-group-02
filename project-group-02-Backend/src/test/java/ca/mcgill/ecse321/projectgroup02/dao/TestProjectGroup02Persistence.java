@@ -376,6 +376,12 @@ public class TestProjectGroup02Persistence {
         paymentCredentials.setPaymentCredentialsId(paymentCredentials_Id);
         
         paymentCredentialsRepository.save(paymentCredentials);
+
+        Customer customer = new Customer();
+        
+        customer.setCustomerId(123);
+        
+        paymentCredentials.setCustomer(customer);
         
         paymentCredentials = null;
         
@@ -387,6 +393,7 @@ public class TestProjectGroup02Persistence {
         
         assertEquals(paymentCredentials_Id,id);
         
+        assertEquals(paymentCredentials.getCustomer(), customer);        
     }
 	
 	
@@ -400,6 +407,12 @@ public class TestProjectGroup02Persistence {
         
         serviceProviderRepository.save(serviceProvider);
         
+        ArtGallerySystem gallery = new ArtGallerySystem();
+        
+        gallery.setArtGalleryId(123);
+        
+        serviceProvider.setArtGallerySystem(gallery);
+        
         serviceProvider = null;
         
         serviceProvider = serviceProviderRepository.findByserviceProviderId(serviceProvider_Id);
@@ -409,6 +422,8 @@ public class TestProjectGroup02Persistence {
         int id= serviceProvider.getServiceProviderId();
         
         assertEquals(serviceProvider_Id,id);
+        
+        assertEquals(serviceProvider.getArtGallerySystem(), gallery);
         
     }
 	
@@ -422,6 +437,12 @@ public class TestProjectGroup02Persistence {
         
         shoppingCartRepository.save(shoppingCart);
         
+        Customer customer = new Customer();
+        
+        customer.setCustomerId(123);
+        
+        shoppingCart.setCustomer(customer);
+        
         shoppingCart = null;
         
         shoppingCart = shoppingCartRepository.findByshoppingCartId(shoppingCart_Id);
@@ -431,6 +452,8 @@ public class TestProjectGroup02Persistence {
         int id= shoppingCart.getShoppingCartId();
         
         assertEquals(shoppingCart_Id,id);
+        
+        assertEquals(shoppingCart.getCustomer(), customer);
         
     }
 	
