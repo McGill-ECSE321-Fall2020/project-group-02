@@ -359,7 +359,7 @@ public class TestProjectGroup02Persistence {
         
         assertNotNull(paymentCredentials);
         
-        int id= paymentCredentials.getPaymentCredentialsId()();
+        int id= paymentCredentials.getPaymentCredentialsId();
         
         assertEquals(paymentCredentials_Id,id);
         
