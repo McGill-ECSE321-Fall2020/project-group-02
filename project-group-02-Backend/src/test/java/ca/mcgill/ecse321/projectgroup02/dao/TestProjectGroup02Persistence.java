@@ -49,6 +49,12 @@ public class TestProjectGroup02Persistence {
 		// First, we clear registrations to avoid exceptions due to inconsistencies
 		userRepository.deleteAll();
 		addressRepository.deleteAll();
+		artGallerySystemRepository.deleteAll();
+		artistRepository.deleteAll();
+		collectionRepository.deleteAll();
+		customerRepository.deleteAll();
+		deliveryRepository.deleteAll();
+		itemRepository.deleteAll();
 		// Then we can clear the other tables
 		
 	}
