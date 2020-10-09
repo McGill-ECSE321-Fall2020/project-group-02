@@ -344,6 +344,7 @@ public class TestProjectGroup02Persistence {
 		
 	}
 	
+	
 	@Test
     public void testPersistAndLoadItemOrder() {
         int itemOrder_Id= 6;
@@ -351,7 +352,17 @@ public class TestProjectGroup02Persistence {
         ItemOrder itemOrder = new ItemOrder();
         
         itemOrder.setItemOrderId(itemOrder_Id);
-        
+		
+		//testing the relational associations
+		Delivery delivery = new Delivery();
+
+		// Set the delivery id
+		delivery.setDeliveryId(70);
+
+		//adding the order in the set
+		itemOrder.setDelivery(delivery);
+		
+		// save the item order
         itemOrderRepository.save(itemOrder);
         
         itemOrder = null;
@@ -362,7 +373,14 @@ public class TestProjectGroup02Persistence {
         
         int id= itemOrder.getItemOrderId();
         
-        assertEquals(itemOrder_Id,id);
+		assertEquals(itemOrder_Id,id);
+		
+		// Get the delivery connected to the corresponding item order
+		Delivery foundDelivery = itemOrder.getDelivery();
+
+		// Test for the validity of the delivery
+		assertNotNull(foundDelivery);
+		assertEquals(delivery.getDeliveryId(), foundDelivery.getDeliveryId());
         
     }
 	
@@ -372,8 +390,23 @@ public class TestProjectGroup02Persistence {
         
         NotificationHandler notificationHandler = new NotificationHandler();
         
-        notificationHandler.setNotificationHandlerId(notificationHandler_Id);
-        
+		notificationHandler.setNotificationHandlerId(notificationHandler_Id);
+		
+		//testing the relational associations
+		OrderConfirmationEmail orderConfirmationEmail= new OrderConfirmationEmail();
+
+		orderConfirmationEmail.setOrderConfirmationId(71);
+		
+		//creating the set
+		Set<OrderConfirmationEmail> orderConfirmationEmailSet= new HashSet<OrderConfirmationEmail>();
+		
+		//adding the order in the set
+		orderConfirmationEmailSet.add(orderConfirmationEmail);
+		
+		//setting the order to the user
+		notificationHandler.setOrderConfirmationEmail(orderConfirmationEmailSet);
+
+		// save the notification handle to the repo
         notificationHandlerRepository.save(notificationHandler);
         
         notificationHandler = null;
@@ -382,10 +415,15 @@ public class TestProjectGroup02Persistence {
         
         assertNotNull(notificationHandler);
         
-        int id= notificationHandler.getNotificationHandlerId();
+        int id = notificationHandler.getNotificationHandlerId();
         
-        assertEquals(notificationHandler_Id,id);
-        
+		assertEquals(notificationHandler_Id,id);
+		
+		// test the order confirmation email relation
+		boolean retrievedOrderConfirmationEmail = notificationHandler.getOrderConfirmationEmail().isEmpty();
+		
+		// check if the order confirmation email was retrieved accordingly
+		assertEquals(retrievedOrderConfirmationEmail,false);
     }
 	
 	@Test
@@ -394,7 +432,16 @@ public class TestProjectGroup02Persistence {
         
         OrderConfirmationEmail orderConfirmationEmail = new OrderConfirmationEmail();
         
-        orderConfirmationEmail.setOrderConfirmationId(orderConfirmationEmail_Id);
+		orderConfirmationEmail.set.setOrderConfirmationId(orderConfirmationEmail_Id);
+		
+		//testing the relational associations
+		ItemOrder order= new ItemOrder();
+
+		// set the order property
+		order.setItemOrderId(69);
+		
+		//setting the order to the order confirmation
+		orderConfirmationEmail.setItemOrder(itemOrder);
         
         orderConfirmationEmailRepository.save(orderConfirmationEmail);
         
@@ -407,8 +454,16 @@ public class TestProjectGroup02Persistence {
         int id= orderConfirmationEmail.getOrderConfirmationId();
         
         assertEquals(orderConfirmationEmail_Id,id);
-        
+		
+		// Testing the presence of the order linked to the email confirmation email
+		ItemOrder retrievedOrder = orderConfirmationEmail.getItemOrder();
+		
+		// Validate the order from the database
+		assertNotNull(retrievedOrder);
+		assertEquals(order.getItemOrderId(), retrievedOrder.getItemOrderId());
+
     }
+	
 	
 	@Test
     public void testPersistAndLoadPaymentCredentials() {
