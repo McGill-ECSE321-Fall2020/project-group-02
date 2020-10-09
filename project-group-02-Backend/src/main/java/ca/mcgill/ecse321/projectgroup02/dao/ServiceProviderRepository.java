@@ -9,15 +9,15 @@ public interface ServiceProviderRepository extends CrudRepository<ServiceProvide
 	
 	long count();
 	
-	ServiceProvider findByserviceProvider(int serviceProvider);
+	ServiceProvider findByserviceProviderId(int serviceProvider);
 	
 	Iterable<ServiceProvider> findAll();
 	
-	void deleteByserviceProvider(int serviceProvider);
+	void deleteByserviceProviderId(int serviceProvider);
 	
 	void deleteAll();
 	
-	boolean existsByserviceProvider(int serviceProvider);
+	boolean existsByserviceProviderId(int serviceProvider);
 	
 	ServiceProvider save(ServiceProvider serviceProvider);
 	
