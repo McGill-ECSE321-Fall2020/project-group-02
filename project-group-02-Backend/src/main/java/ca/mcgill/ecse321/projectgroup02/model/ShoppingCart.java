@@ -52,20 +52,9 @@ public void setItem(Set<Item> items) {
    this.item = items;
 }
 
-private ApplicationUser applicationUser;
-
-@OneToOne(optional=false)
-public ApplicationUser getApplicationUser() {
-   return this.applicationUser;
-}
-
-public void setApplicationUser(ApplicationUser applicationUser) {
-   this.applicationUser = applicationUser;
-}
-
 private Customer customer;
 
-@OneToOne(optional=false)
+@OneToOne
 public Customer getCustomer() {
    return this.customer;
 }

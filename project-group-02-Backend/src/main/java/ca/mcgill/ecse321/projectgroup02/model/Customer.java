@@ -5,10 +5,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.Id;
 
 @Entity
-public class Customer{
+public class Customer extends UserRole{
 private PaymentCredentials paymentCredentials;
 
-@OneToOne(mappedBy="customer", optional=false)
+@OneToOne(mappedBy="customer")
 public PaymentCredentials getPaymentCredentials() {
    return this.paymentCredentials;
 }
@@ -19,7 +19,7 @@ public void setPaymentCredentials(PaymentCredentials paymentCredentials) {
 
 private ShoppingCart shoppingCart;
 
-@OneToOne(mappedBy="customer", optional=false)
+@OneToOne(mappedBy="customer")
 public ShoppingCart getShoppingCart() {
    return this.shoppingCart;
 }

@@ -60,7 +60,7 @@ public void setAddress(Address address) {
 
 private Customer customer;
 
-@OneToOne(optional=false)
+@OneToOne
 public Customer getCustomer() {
    return this.customer;
 }

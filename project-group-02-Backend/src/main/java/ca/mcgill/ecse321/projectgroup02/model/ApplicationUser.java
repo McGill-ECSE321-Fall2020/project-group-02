@@ -65,16 +65,6 @@ this.applicationUserId = value;
 public int getApplicationUserId() {
 return this.applicationUserId;
     }
-private ShoppingCart shoppingCart;
-
-@OneToOne(mappedBy="applicationUser", optional=false)
-public ShoppingCart getShoppingCart() {
-   return this.shoppingCart;
-}
-
-public void setShoppingCart(ShoppingCart shoppingCart) {
-   this.shoppingCart = shoppingCart;
-}
 
 private Set<ItemOrder> itemOrder;
 
