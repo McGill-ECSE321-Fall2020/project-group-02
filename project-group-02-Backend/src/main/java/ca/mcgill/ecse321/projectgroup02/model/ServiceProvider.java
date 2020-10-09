@@ -38,14 +38,14 @@ this.phoneNumber = value;
 public String getPhoneNumber() {
 return this.phoneNumber;
     }
-private int serviceProvider;
+private int serviceProviderId;
 
-public void setServiceProvider(int value) {
-this.serviceProvider = value;
+public void setServiceProviderId(int value) {
+this.serviceProviderId = value;
     }
 @Id
-public int getServiceProvider() {
-return this.serviceProvider;
+public int getServiceProviderId() {
+return this.serviceProviderId;
     }
 private ArtGallerySystem artGallerySystem;
 

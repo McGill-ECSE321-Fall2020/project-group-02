@@ -3,7 +3,6 @@ package ca.mcgill.ecse321.projectgroup02.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.CascadeType;
 import java.util.Set;
 import javax.persistence.OneToMany;
 
@@ -66,20 +65,9 @@ this.applicationUserId = value;
 public int getApplicationUserId() {
 return this.applicationUserId;
     }
-private ArtGallerySystem artGallerySystem;
-
-@OneToOne(optional=false)
-public ArtGallerySystem getArtGallerySystem() {
-   return this.artGallerySystem;
-}
-
-public void setArtGallerySystem(ArtGallerySystem artGallerySystem) {
-   this.artGallerySystem = artGallerySystem;
-}
-
 private ShoppingCart shoppingCart;
 
-@OneToOne(mappedBy="applicationUser", cascade={CascadeType.ALL}, optional=false)
+@OneToOne(mappedBy="applicationUser", optional=false)
 public ShoppingCart getShoppingCart() {
    return this.shoppingCart;
 }
@@ -130,6 +118,17 @@ public Set<Address> getAddress() {
 
 public void setAddress(Set<Address> addresss) {
    this.address = addresss;
+}
+
+private ArtGallerySystem artGallerySystem;
+
+@OneToOne(optional=false)
+public ArtGallerySystem getArtGallerySystem() {
+   return this.artGallerySystem;
+}
+
+public void setArtGallerySystem(ArtGallerySystem artGallerySystem) {
+   this.artGallerySystem = artGallerySystem;
 }
 
 }

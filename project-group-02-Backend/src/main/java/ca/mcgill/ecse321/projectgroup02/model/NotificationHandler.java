@@ -2,9 +2,9 @@ package ca.mcgill.ecse321.projectgroup02.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import java.util.Set;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class NotificationHandler{
@@ -17,17 +17,6 @@ this.notificationHandlerId = value;
 public int getNotificationHandlerId() {
 return this.notificationHandlerId;
     }
-private ArtGallerySystem artGallerySystem;
-
-@OneToOne(optional=false)
-public ArtGallerySystem getArtGallerySystem() {
-   return this.artGallerySystem;
-}
-
-public void setArtGallerySystem(ArtGallerySystem artGallerySystem) {
-   this.artGallerySystem = artGallerySystem;
-}
-
 private Set<OrderConfirmationEmail> orderConfirmationEmail;
 
 @OneToMany(mappedBy="notificationHandler")
@@ -37,6 +26,17 @@ public Set<OrderConfirmationEmail> getOrderConfirmationEmail() {
 
 public void setOrderConfirmationEmail(Set<OrderConfirmationEmail> orderConfirmationEmails) {
    this.orderConfirmationEmail = orderConfirmationEmails;
+}
+
+private ArtGallerySystem artGallerySystem;
+
+@OneToOne(optional=false)
+public ArtGallerySystem getArtGallerySystem() {
+   return this.artGallerySystem;
+}
+
+public void setArtGallerySystem(ArtGallerySystem artGallerySystem) {
+   this.artGallerySystem = artGallerySystem;
 }
 
 }

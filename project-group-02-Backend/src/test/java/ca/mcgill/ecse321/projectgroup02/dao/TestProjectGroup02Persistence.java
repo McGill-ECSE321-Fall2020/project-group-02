@@ -359,7 +359,7 @@ public class TestProjectGroup02Persistence {
         
         assertNotNull(paymentCredentials);
         
-        int id= paymentCredentials.getPaymentCredentialsId()();
+        int id= paymentCredentials.getPaymentCredentialsId();
         
         assertEquals(paymentCredentials_Id,id);
         
@@ -372,17 +372,17 @@ public class TestProjectGroup02Persistence {
         
         ServiceProvider serviceProvider = new ServiceProvider();
         
-        serviceProvider.setServiceProvider(serviceProvider_Id);
+        serviceProvider.setServiceProviderId(serviceProvider_Id);
         
         serviceProviderRepository.save(serviceProvider);
         
         serviceProvider = null;
         
-        serviceProvider = serviceProviderRepository.findByserviceProvider(serviceProvider_Id);
+        serviceProvider = serviceProviderRepository.findByserviceProviderId(serviceProvider_Id);
         
         assertNotNull(serviceProvider);
         
-        int id= serviceProvider.getServiceProvider();
+        int id= serviceProvider.getServiceProviderId();
         
         assertEquals(serviceProvider_Id,id);
         
