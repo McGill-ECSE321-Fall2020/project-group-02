@@ -28,4 +28,7 @@ Table 1: Project Contributors', roles and hours contributed for the Deliverable 
 
 
 
+Team Wiki (includes meeting minutes, use case specifications and domain model explanation):
+https://github.com/McGill-ECSE321-Fall2020/project-group-02/wiki
+
 
