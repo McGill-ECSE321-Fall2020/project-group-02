@@ -3,7 +3,6 @@ package ca.mcgill.ecse321.projectgroup02.dao;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -111,7 +110,10 @@ public class TestProjectGroup02Persistence {
 		//setting the order to the user
 		user.setItemOrder(itemOrderSet);
 		
-		//saving the user
+		//save the order to the database
+		itemOrderRepository.save(order);
+
+		//saving the user to the database
 		userRepository.save(user);
 		
 		//removing the user after persisting him/her into the database
@@ -174,6 +176,9 @@ public class TestProjectGroup02Persistence {
 		testUser.setApplicationUserId(10);
 		
 		AG_sys.setUser(testUser);
+
+		// save the relational object
+		userRepository.save(testUser);
 		
 		artGallerySystemRepository.save(AG_sys);
 			
@@ -237,6 +242,9 @@ public class TestProjectGroup02Persistence {
 		itemset.add(item);
 		
 		collection.setItem(itemset);
+
+		// save the relational object
+		itemRepository.save(item); 
 		
 		collectionRepository.save(collection);
 		
@@ -267,6 +275,9 @@ public class TestProjectGroup02Persistence {
 		customer.setCustomerId(customer_Id);
 		
 		customer.setPaymentCredentials(paymentCredentials);
+
+		// save the relational object
+		paymentCredentialsRepository.save(paymentCredentials);
 		
 		customerRepository.save(customer);
 		
@@ -298,6 +309,9 @@ public class TestProjectGroup02Persistence {
 		
 		delivery.setItemOrder(itemOrder);
 		
+		// save the relational object
+		itemOrderRepository.save(itemOrder); 
+		
 		deliveryRepository.save(delivery);
 		
 		delivery = null;
@@ -327,6 +341,9 @@ public class TestProjectGroup02Persistence {
 		item.setItemId(item_Id);
 		
 		item.setCollection(collection);
+
+		// save the relational object
+		collectionRepository.save(collection); 
 		
 		itemRepository.save(item);
 		
@@ -344,7 +361,7 @@ public class TestProjectGroup02Persistence {
 		
 	}
 	
-	
+		
 	@Test
     public void testPersistAndLoadItemOrder() {
         int itemOrder_Id= 6;
@@ -361,6 +378,9 @@ public class TestProjectGroup02Persistence {
 
 		//adding the order in the set
 		itemOrder.setDelivery(delivery);
+
+		// save the relational object
+		deliveryRepository.save(delivery);
 		
 		// save the item order
         itemOrderRepository.save(itemOrder);
@@ -406,6 +426,9 @@ public class TestProjectGroup02Persistence {
 		//setting the order to the user
 		notificationHandler.setOrderConfirmationEmail(orderConfirmationEmailSet);
 
+		// save the relational object
+		orderConfirmationEmailRepository.save(orderConfirmationEmail);
+
 		// save the notification handle to the repo
         notificationHandlerRepository.save(notificationHandler);
         
@@ -424,6 +447,8 @@ public class TestProjectGroup02Persistence {
 		
 		// check if the order confirmation email was retrieved accordingly
 		assertEquals(retrievedOrderConfirmationEmail,false);
+
+        
     }
 	
 	@Test
@@ -432,7 +457,7 @@ public class TestProjectGroup02Persistence {
         
         OrderConfirmationEmail orderConfirmationEmail = new OrderConfirmationEmail();
         
-		orderConfirmationEmail.set.setOrderConfirmationId(orderConfirmationEmail_Id);
+		orderConfirmationEmail.setOrderConfirmationId(orderConfirmationEmail_Id);
 		
 		//testing the relational associations
 		ItemOrder order= new ItemOrder();
@@ -441,7 +466,10 @@ public class TestProjectGroup02Persistence {
 		order.setItemOrderId(69);
 		
 		//setting the order to the order confirmation
-		orderConfirmationEmail.setItemOrder(itemOrder);
+		orderConfirmationEmail.setItemOrder(order);
+
+		// save the relational object
+		itemOrderRepository.save(order);
         
         orderConfirmationEmailRepository.save(orderConfirmationEmail);
         
@@ -473,14 +501,17 @@ public class TestProjectGroup02Persistence {
         
         paymentCredentials.setPaymentCredentialsId(paymentCredentials_Id);
         
-        paymentCredentialsRepository.save(paymentCredentials);
-
         Customer customer = new Customer();
         
         customer.setCustomerId(123);
         
-        paymentCredentials.setCustomer(customer);
-        
+		paymentCredentials.setCustomer(customer);
+		
+		// save the relational object
+		customerRepository.save(customer);
+
+        paymentCredentialsRepository.save(paymentCredentials);
+
         paymentCredentials = null;
         
         paymentCredentials = paymentCredentialsRepository.findBypaymentCredentialsId(paymentCredentials_Id);
@@ -503,14 +534,17 @@ public class TestProjectGroup02Persistence {
         
         serviceProvider.setServiceProviderId(serviceProvider_Id);
         
-        serviceProviderRepository.save(serviceProvider);
-        
         ArtGallerySystem gallery = new ArtGallerySystem();
         
         gallery.setArtGalleryId(123);
         
         serviceProvider.setArtGallerySystem(gallery);
-        
+		
+		// save the relational object
+		artGallerySystemRepository.save(gallery);
+
+		serviceProviderRepository.save(serviceProvider);
+
         serviceProvider = null;
         
         serviceProvider = serviceProviderRepository.findByserviceProviderId(serviceProvider_Id);
@@ -533,14 +567,17 @@ public class TestProjectGroup02Persistence {
         
         shoppingCart.setShoppingCartId(shoppingCart_Id);
         
-        shoppingCartRepository.save(shoppingCart);
-        
         Customer customer = new Customer();
         
         customer.setCustomerId(123);
         
-        shoppingCart.setCustomer(customer);
-        
+		shoppingCart.setCustomer(customer);
+		
+		// save the relational object
+		customerRepository.save(customer);
+
+        shoppingCartRepository.save(shoppingCart);
+
         shoppingCart = null;
         
         shoppingCart = shoppingCartRepository.findByshoppingCartId(shoppingCart_Id);
