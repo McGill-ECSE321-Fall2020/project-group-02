@@ -19,6 +19,7 @@ import java.util.Set;
 import javax.persistence.OneToMany;
 
 @Entity
+@Table(name="art_gallery_system")
 public class ArtGallerySystem{
 @Column(nullable = false) //Tell JPA users must be non-null
 @ElementCollection //Resolves "Failed to load ApplicationContext"
@@ -57,5 +58,45 @@ this.artGalleryId = value;
 public int getArtGalleryId() {
 return this.artGalleryId;
     }
+
+@OneToOne(optional=true)
+@JoinColumn(name = "addressId") //Tell JPA users must be non-null
+private Address address;
+
+@NotFound(action = NotFoundAction.IGNORE) 
+public Address getAddress() {
+   return this.address;
+}
+
+public void setAddress(Address address) {
+   this.address = address;
+}
+
+@OneToOne
+@JoinColumn(name = "notificationHandlerId")
+private NotificationHandler notificationHandler;
+
+@NotFound(action = NotFoundAction.IGNORE) 
+public NotificationHandler getNotificationHandler() {
+   return this.notificationHandler;
+}
+
+public void setNotificationHandler(NotificationHandler notificationHandler) {
+   this.notificationHandler = notificationHandler;
+}
+
+@Column(nullable = false) //Tell JPA users must be non-null
+@ElementCollection //Resolves "Failed to load ApplicationContext"
+private Set<Item> item;
+
+@OneToMany(mappedBy="artGallerySystem")
+@NotFound(action = NotFoundAction.IGNORE) 
+public Set<Item> getItem() {
+   return this.item;
+}
+
+public void setItem(Set<Item> items) {
+   this.item = items;
+}
 
 }
