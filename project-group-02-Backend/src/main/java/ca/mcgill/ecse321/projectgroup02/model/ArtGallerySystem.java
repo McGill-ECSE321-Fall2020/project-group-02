@@ -8,12 +8,30 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+
 import java.util.Set;
 import javax.persistence.OneToMany;
 
 @Entity
-@Table(name="art_gallery_system")
 public class ArtGallerySystem{
+@Column(nullable = false) //Tell JPA users must be non-null
+@ElementCollection //Resolves "Failed to load ApplicationContext"
+private Set<ApplicationUser> applicationUsers;
+
+@OneToMany(mappedBy="artGallerySystem")
+public Set<ApplicationUser> getApplicationUsers() {
+   return this.applicationUsers;
+}
+
+public void setApplicationUsers(Set<ApplicationUser> applicationUserss) {
+   this.applicationUsers = applicationUserss;
+   for (ApplicationUser user : applicationUserss){
+   user.setArtGallerySystem(this);
+   }
+}
+
 private double totalProfit;
    
    public void setTotalProfit(double value) {
@@ -34,60 +52,5 @@ this.artGalleryId = value;
 public int getArtGalleryId() {
 return this.artGalleryId;
     }
-private Address address;
-
-@OneToOne(mappedBy="artGallerySystem", optional=false)
-public Address getAddress() {
-   return this.address;
-}
-
-public void setAddress(Address address) {
-   this.address = address;
-}
-
-private NotificationHandler notificationHandler;
-
-@OneToOne(mappedBy="artGallerySystem", cascade={CascadeType.ALL}, optional=false)
-public NotificationHandler getNotificationHandler() {
-   return this.notificationHandler;
-}
-
-public void setNotificationHandler(NotificationHandler notificationHandler) {
-   this.notificationHandler = notificationHandler;
-}
-
-private ServiceProvider serviceProvider;
-
-@OneToOne(mappedBy="artGallerySystem", cascade={CascadeType.ALL}, optional=false)
-public ServiceProvider getServiceProvider() {
-   return this.serviceProvider;
-}
-
-public void setServiceProvider(ServiceProvider serviceProvider) {
-   this.serviceProvider = serviceProvider;
-}
-
-private Set<Item> items;
-
-@OneToMany(mappedBy="artGallerySystem", cascade={CascadeType.ALL})
-public Set<Item> getItems() {
-   return this.items;
-}
-
-public void setItems(Set<Item> itemss) {
-   this.items = itemss;
-}
-
-@OneToOne
-@JoinColumn(name = "applicationUserId")
-private ApplicationUser applicationUser;
-
-public ApplicationUser getUser() {
-   return this.applicationUser;
-}
-
-public void setUser(ApplicationUser user) {
-   this.applicationUser = user;
-}
 
 }

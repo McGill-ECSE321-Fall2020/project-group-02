@@ -1,20 +1,15 @@
 package ca.mcgill.ecse321.projectgroup02.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.ManyToOne;
 
-import java.util.Set;
-import javax.persistence.OneToMany;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 @Entity
-@Table(name="application_user")
 public class ApplicationUser{
 private String accountCreationDate;
    
@@ -64,67 +59,19 @@ this.isLoggedIn = value;
 public boolean isIsLoggedIn() {
 return this.isLoggedIn;
     }
-
-@Id
-@GeneratedValue(strategy=GenerationType.AUTO)
 private int applicationUserId;
 
 public void setApplicationUserId(int value) {
 this.applicationUserId = value;
     }
-
+@Id
 public int getApplicationUserId() {
 return this.applicationUserId;
     }
-
-private Set<ItemOrder> itemOrder;
-
-@OneToMany(mappedBy="applicationUser")
-public Set<ItemOrder> getItemOrder() {
-   return this.itemOrder;
-}
-
-public void setItemOrder(Set<ItemOrder> itemOrders) {
-   this.itemOrder = itemOrders;
-}
-
-private Set<OrderConfirmationEmail> orderConfirmationEmail;
-
-@OneToMany(mappedBy="applicationUser")
-public Set<OrderConfirmationEmail> getOrderConfirmationEmail() {
-   return this.orderConfirmationEmail;
-}
-
-public void setOrderConfirmationEmail(Set<OrderConfirmationEmail> orderConfirmationEmails) {
-   this.orderConfirmationEmail = orderConfirmationEmails;
-}
-
-private Set<UserRole> userRole;
-
-@OneToMany(mappedBy="applicationUser")
-public Set<UserRole> getUserRole() {
-   return this.userRole;
-}
-
-public void setUserRole(Set<UserRole> userRoles) {
-   this.userRole = userRoles;
-}
-
-private Set<Address> address;
-
-@OneToMany(mappedBy="applicationUser")
-public Set<Address> getAddress() {
-   return this.address;
-}
-
-public void setAddress(Set<Address> addresss) {
-   this.address = addresss;
-}
-
-@OneToOne(mappedBy = "applicationUser")
 private ArtGallerySystem artGallerySystem;
 
-@OneToOne(optional=false)
+@ManyToOne(optional=true)
+@NotFound(action = NotFoundAction.IGNORE) 
 public ArtGallerySystem getArtGallerySystem() {
    return this.artGallerySystem;
 }

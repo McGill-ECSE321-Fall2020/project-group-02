@@ -2,7 +2,6 @@ package ca.mcgill.ecse321.projectgroup02.dao;
 
 import org.springframework.data.repository.CrudRepository;
 
-import ca.mcgill.ecse321.projectgroup02.model.ApplicationUser;
 import ca.mcgill.ecse321.projectgroup02.model.ArtGallerySystem;
 
 public interface ArtGallerySystemRepository extends CrudRepository<ArtGallerySystem, String> {
@@ -20,6 +19,5 @@ public interface ArtGallerySystemRepository extends CrudRepository<ArtGallerySys
 	boolean existsByartGalleryId(int userID);
 	
 	ArtGallerySystem save(ArtGallerySystem artGallerySystem);
-	
 	
 }

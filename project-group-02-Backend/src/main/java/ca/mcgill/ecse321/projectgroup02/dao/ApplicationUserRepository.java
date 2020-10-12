@@ -21,5 +21,4 @@ public interface ApplicationUserRepository extends CrudRepository<ApplicationUse
 	
 	ApplicationUser save(ApplicationUser user);
 	
-	
 }
