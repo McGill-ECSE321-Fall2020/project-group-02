@@ -7,6 +7,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -21,6 +25,7 @@ public class ArtGallerySystem{
 private Set<ApplicationUser> applicationUsers;
 
 @OneToMany(mappedBy="artGallerySystem")
+@NotFound(action = NotFoundAction.IGNORE) 
 public Set<ApplicationUser> getApplicationUsers() {
    return this.applicationUsers;
 }

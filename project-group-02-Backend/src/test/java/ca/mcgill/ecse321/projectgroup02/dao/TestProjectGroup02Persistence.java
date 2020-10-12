@@ -29,6 +29,7 @@ public class TestProjectGroup02Persistence {
 	@AfterEach
 	public void clearDatabase() {
 		artGallerySystemRepository.deleteAll();
+		applicationUserRepository.deleteAll();
 	}
 	
 	@Test
@@ -36,28 +37,28 @@ public class TestProjectGroup02Persistence {
 		
 		ArtGallerySystem system = new ArtGallerySystem();
 		
-		ApplicationUser user = new ApplicationUser();
+		//ApplicationUser user = new ApplicationUser();
 		
 		system.setArtGalleryId(1);
 		
-		user.setApplicationUserId(2);
+		//user.setApplicationUserId(2);
 		
-		HashSet<ApplicationUser> users = new HashSet<ApplicationUser>();
+		//HashSet<ApplicationUser> users = new HashSet<ApplicationUser>();
 		
-		users.add(user);
+		//users.add(user);
 
 		/**
 		 * system.setApplicationUsers(users) must be modified to link each user to the system
 		 * See ArtGallerySystem.java line 28-33
 		 */
-		system.setApplicationUsers(users);
+		//system.setApplicationUsers(users);
 
 		/**
 		 * The user must be saved before the system
 		 * The system does not have to be saved before the user
 		 * See ApplicationUser.java line 73-74
 		 */
-		applicationUserRepository.save(user);
+		//applicationUserRepository.save(user);
 	
 		artGallerySystemRepository.save(system);
 		
@@ -65,6 +66,23 @@ public class TestProjectGroup02Persistence {
 		
 		assertEquals(system.getArtGalleryId(),1);
 		
+		clearDatabase();
+	}
+	
+	@Test
+	public void testPersistAndLoadApplicationUser() {
+		
+		ApplicationUser user = new ApplicationUser();
+
+		user.setApplicationUserId(1);
+		
+		applicationUserRepository.save(user);
+		
+		user = applicationUserRepository.findByapplicationUserId(1);
+		
+		assertEquals(user.getApplicationUserId(),1);
+
+		clearDatabase();
 	}
 	
 }
