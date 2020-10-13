@@ -26,9 +26,11 @@ import ca.mcgill.ecse321.projectgroup02.model.Collection;
 import ca.mcgill.ecse321.projectgroup02.model.Customer;
 import ca.mcgill.ecse321.projectgroup02.model.Item;
 import ca.mcgill.ecse321.projectgroup02.model.ItemOrder;
+import ca.mcgill.ecse321.projectgroup02.model.NotificationHandler;
 import ca.mcgill.ecse321.projectgroup02.model.OrderConfirmationEmail;
 import ca.mcgill.ecse321.projectgroup02.model.PaymentCredentials;
 import ca.mcgill.ecse321.projectgroup02.model.ServiceProvider;
+import ca.mcgill.ecse321.projectgroup02.model.ShoppingCart;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
@@ -56,20 +58,17 @@ public class TestProjectGroup02Persistence {
 	private PaymentCredentialsRepository paymentCredentialsRepository;
 	@Autowired
 	private ServiceProviderRepository serviceProviderRepository;
+	@Autowired
+	private ShoppingCartRepository shoppingCartRepository;
+	@Autowired
+	private NotificationHandlerRepository notificationHandlerRepository;
 
 
 	@AfterEach
 	public void clearDatabase() {
 		artGallerySystemRepository.deleteAll();
 		applicationUserRepository.deleteAll();
-		addressRepository.deleteAll();
-		artistRepository.deleteAll();
-		itemRepository.deleteAll();
-		collectionRepository.deleteAll();
-		customerRepository.deleteAll();
-		itemOrderRepository.deleteAll();
-		itemRepository.deleteAll();
-		orderConfirmationEmailRepository.deleteAll();
+		
 	}
 
 	@Test
@@ -172,7 +171,7 @@ public class TestProjectGroup02Persistence {
 
 	}
 
-	//	@Test
+	@Test
 	public void testPersistAndLoadArtist() {
 		int artistId= 2;
 
@@ -212,47 +211,47 @@ public class TestProjectGroup02Persistence {
 
 	}
 
-	//	@Test
-	//	public void testPersistAndLoadCollection() {
-	//		int collection_Id= 3;
-	//
-	//		Collection collection = new Collection();
-	//
-	//		collection.setCollectionId(collection_Id);
-	//
-	//		Item item = new Item();
-	//
-	//		item.setItemId(1);
-	//
-	//		HashSet<Item> items = new HashSet<Item>();
-	//
-	//		items.add(item);
-	//
-	//		itemRepository.save(item);
-	//		
-	//		//assertNotNull(items);
-	//		
-	//		collection.setItem(items);
-	//
-	//		collectionRepository.save(collection);
-	//		
-	//
-	//		collection = collectionRepository.findCollectionBycollectionId(collection_Id);
-	//
-	//		Item itemTest = null;
-	//		
-	//		for(Item itemIter: collection.getItem()) {
-	//			itemTest = itemIter;
-	//		}
-	//
-	//		int id= collection.getCollectionId();
-	//
-	//		assertEquals(collection_Id,id);
-	//		
-	//		assertEquals(itemTest.getItemId(),1);
-	//
-	//
-	//	}
+		@Test
+		public void testPersistAndLoadCollection() {
+			int collection_Id= 3;
+	
+			Collection collection = new Collection();
+	
+			collection.setCollectionId(collection_Id);
+	
+			Item item = new Item();
+	
+			item.setItemId(1);
+	
+			HashSet<Item> items = new HashSet<Item>();
+	
+			items.add(item);
+	
+			itemRepository.save(item);
+			
+			//assertNotNull(items);
+			
+			collection.setItem(items);
+	
+			collectionRepository.save(collection);
+			
+	
+			collection = collectionRepository.findCollectionBycollectionId(collection_Id);
+	
+			Item itemTest = null;
+			
+			for(Item itemIter: collection.getItem()) {
+				itemTest = itemIter;
+			}
+	
+			int id= collection.getCollectionId();
+	
+			assertEquals(collection_Id,id);
+			
+			assertEquals(itemTest.getItemId(),1);
+	
+	
+		}
 
 	@Test
 	public void testPersistAndLoadCustomer() {
@@ -322,65 +321,63 @@ public class TestProjectGroup02Persistence {
 		assertEquals(item.getCollection().getCollectionId(),1);
 	}
 
-	//	@Test
-	//	public void testPersistAndLoadItemOrder() {
-	//		int itemOrder_Id= 6;
-	//
-	//		ItemOrder itemOrder = new ItemOrder();
-	//
-	//		itemOrder.setItemOrderId(itemOrder_Id);
-	//		
-	//		Customer customer = new Customer();
-	//		
-	//		customer.setUserRoleId(10);
-	//		
-	//		customerRepository.save(customer);
-	//		
-	//		itemOrder.setCustomer(customer);
-	//
-	//		itemOrderRepository.save(itemOrder);
-	//
-	//		itemOrder = itemOrderRepository.findByitemOrderId(itemOrder_Id);
-	//
-	//		int id= itemOrder.getItemOrderId();
-	//
-	//		assertEquals(itemOrder_Id,id);
-	//		
-	//		assertEquals(itemOrder.getCustomer().getUserRoleId(),10);
-	//
-	//	}
+		@Test
+		public void testPersistAndLoadItemOrder() {
+			int itemOrder_Id= 6;
+	
+			ItemOrder itemOrder = new ItemOrder();
+	
+			itemOrder.setItemOrderId(itemOrder_Id);
+			
+			Customer customer = new Customer();
+			
+			customer.setUserRoleId(10);
+			
+			customerRepository.save(customer);
+			
+			itemOrder.setCustomer(customer);
+	
+			itemOrderRepository.save(itemOrder);
+	
+			itemOrder = itemOrderRepository.findByitemOrderId(itemOrder_Id);
+	
+			int id= itemOrder.getItemOrderId();
+	
+			assertEquals(itemOrder_Id,id);
+			
+			assertEquals(itemOrder.getCustomer().getUserRoleId(),10);
+	
+		}
 
-	//	@Test
-	//    public void testPersistAndLoadOrderConfirmationEmail() {
-	//        
-	//		int orderConfirmationEmail_Id= 6;
-	//        
-	//        OrderConfirmationEmail orderConfirmationEmail = new OrderConfirmationEmail();
-	//        
-	//		orderConfirmationEmail.setOrderConfirmationEmailId(orderConfirmationEmail_Id);
-	//
-	//		//ItemOrder order= new ItemOrder();
-	//
-	//		//order.setItemOrderId(69);
-	//
-	//		//orderConfirmationEmail.setItemOrder(order);
-	//
-	//		//itemOrderRepository.save(order);
-	//		
-	//		orderConfirmationEmailRepository.save(orderConfirmationEmail);
-	//
-	//		orderConfirmationEmail = orderConfirmationEmailRepository.findByorderConfirmationEmailId(orderConfirmationEmail_Id);
-	//		
-	//		assertNotNull(orderConfirmationEmail);
-	//		
-	//		int id = orderConfirmationEmail.getOrderConfirmationEmailId();
-	//		
-	//		assertEquals(id,orderConfirmationEmail_Id);
-	//		
-	//		//assertEquals(orderConfirmationEmail.getItemOrder().getItemOrderId(),69);
-	//		
-	//	
-	//    }
+//		@Test
+//	    public void testPersistAndLoadOrderConfirmationEmail() {
+//	        
+//			int orderConfirmationEmail_Id= 6;
+//	        
+//	        OrderConfirmationEmail orderConfirmationEmail = new OrderConfirmationEmail();
+//	        
+//			orderConfirmationEmail.setOrderConfirmationEmailId(orderConfirmationEmail_Id);
+//	
+//			//ItemOrder itemOrder= new ItemOrder();
+//	
+//			//itemOrder.setItemOrderId(69);
+//	
+//			//itemOrderRepository.save(itemOrder);
+//			
+//			//orderConfirmationEmail.setItemOrder(itemOrder);
+//	
+//			orderConfirmationEmailRepository.save(orderConfirmationEmail);
+//	
+//			orderConfirmationEmail = orderConfirmationEmailRepository.findByorderConfirmationEmailId(orderConfirmationEmail_Id);
+//			
+//			int id = orderConfirmationEmail.getOrderConfirmationEmailId();
+//			
+//			assertEquals(id,orderConfirmationEmail_Id);
+//			
+//			//assertEquals(orderConfirmationEmail.getItemOrder().getItemOrderId(),69);
+//			
+//		
+//	    }
 
 	@Test
 	public void testPersistAndLoadPaymentCredentials() {
@@ -417,9 +414,96 @@ public class TestProjectGroup02Persistence {
         
     }
 
+	
+	@Test
+	public void testPersistAndLoadShoppingCart() {
+		int shoppingCart_Id= 6;
+		
+		ShoppingCart shoppingCart = new ShoppingCart();
+		
+		Item item = new Item();
+		
+		item.setItemId(8);
+		
+		HashSet<Item> items = new HashSet<Item>();
+		
+		items.add(item);
+		
+		itemRepository.save(item);
+		
+		shoppingCart.setItem(items);
+
+		shoppingCart.setShoppingCartId(shoppingCart_Id);
+
+		shoppingCartRepository.save(shoppingCart);
 
 
+		shoppingCart = shoppingCartRepository.findByshoppingCartId(shoppingCart_Id);
 
+		int id= shoppingCart.getShoppingCartId();
+
+		Item foundItem = null;
+		
+		for(Item itemIter: shoppingCart.getItem()) {
+			foundItem = itemIter;
+		}
+		
+		assertEquals(foundItem.getItemId(),8);
+		
+		assertEquals(shoppingCart_Id,id);
+
+	}
+	
+	
+//	@Test
+//    public void testPersistAndLoadNotificationHandler() {
+//        
+//		ArtGallerySystem AGS = new ArtGallerySystem();
+//		
+//		AGS.setArtGalleryId(420);
+//		
+//		int notificationHandler_Id= 6;
+//        
+//        NotificationHandler notificationHandler = new NotificationHandler();
+//        
+//        notificationHandler.setNotificationHandlerId(notificationHandler_Id);
+//		
+//        notificationHandler.setArtGallerySystem(AGS);
+//        
+//		notificationHandlerRepository.save(notificationHandler);
+//		
+//		AGS.setNotificationHandler(notificationHandler);
+//		
+//		artGallerySystemRepository.save(AGS);
+//		
+//		//OrderConfirmationEmail orderConfirmationEmail= new OrderConfirmationEmail();
+//
+//		//orderConfirmationEmail.setOrderConfirmationId(71);
+//		
+//		//Set<OrderConfirmationEmail> orderConfirmationEmailSet= new HashSet<OrderConfirmationEmail>();
+//		
+//		//orderConfirmationEmailSet.add(orderConfirmationEmail);
+//		
+//		//setting the order to the user
+//	//	notificationHandler.setOrderConfirmationEmail(orderConfirmationEmailSet);
+//
+//		// save the relational object
+//		//orderConfirmationEmailRepository.save(orderConfirmationEmail);
+//        
+//        notificationHandler = notificationHandlerRepository.findBynotificationHandlerId(notificationHandler_Id);
+//        
+//        int id = notificationHandler.getNotificationHandlerId();
+//        
+//		assertEquals(notificationHandler_Id,id);
+//		
+//		// test the order confirmation email relation
+//		//boolean retrievedOrderConfirmationEmail = notificationHandler.getOrderConfirmationEmail().isEmpty();
+//		
+//		// check if the order confirmation email was retrieved accordingly
+//		//assertEquals(retrievedOrderConfirmationEmail,false);
+//
+//        
+//    }
 
 
 

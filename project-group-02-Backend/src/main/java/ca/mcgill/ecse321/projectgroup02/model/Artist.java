@@ -2,13 +2,17 @@ package ca.mcgill.ecse321.projectgroup02.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 public class Artist extends UserRole{
@@ -24,6 +28,7 @@ public String getDescription() {
 @Column(nullable = false) //Tell JPA users must be non-null
 @ElementCollection //Resolves "Failed to load ApplicationContext"
 private Set<Item> item;
+
 
 @OneToMany
 @NotFound(action = NotFoundAction.IGNORE)
