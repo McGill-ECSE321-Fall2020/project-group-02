@@ -13,7 +13,7 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 @Entity
-@Table(name="notification_handler")
+//@Table(name="notification_handler")
 public class NotificationHandler{
 	
 	@Id

@@ -13,7 +13,7 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 @Entity
-@Table(name="shopping_cart")
+//@Table(name="shopping_cart")
 public class ShoppingCart{
    private double totalPrice;
 

@@ -15,14 +15,14 @@ public class OrderConfirmationEmail{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-   private int orderConfirmationId;
+   private int itemOrderConfirmationId;
 
-public void setOrderConfirmationId(int value) {
-    this.orderConfirmationId = value;
+public void setItemOrderConfirmationId(int value) {
+    this.itemOrderConfirmationId = value;
 }
 
-public int getOrderConfirmationId() {
-    return this.orderConfirmationId;
+public int getItemOrderConfirmationId() {
+    return this.itemOrderConfirmationId;
 }
 private String message;
 
@@ -34,16 +34,16 @@ public String getMessage() {
 }
 
 @OneToOne
-@JoinColumn(name = "orderId")
-private Order order;
+@JoinColumn(name = "itemOrderId")
+private ItemOrder itemOrder;
 
 @NotFound(action = NotFoundAction.IGNORE)
-public Order getOrder() {
-   return this.order;
+public ItemOrder getItemOrder() {
+   return this.itemOrder;
 }
 
-public void setOrder(Order order) {
-   this.order = order;
+public void setItemOrder(ItemOrder itemOrder) {
+   this.itemOrder = itemOrder;
 }
 
 }

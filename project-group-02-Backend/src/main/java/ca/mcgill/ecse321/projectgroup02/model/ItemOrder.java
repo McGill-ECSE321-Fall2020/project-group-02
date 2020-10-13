@@ -15,7 +15,7 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 @Entity
-public class Order{
+public class ItemOrder{
    private double commissionPercentage;
 
 public void setCommissionPercentage(double value) {
@@ -32,22 +32,22 @@ public void setCommissionTotal(double value) {
 public double getCommissionTotal() {
     return this.commissionTotal;
 }
-private int orderId;
+private int itemOrderId;
 
-public void setOrderId(int value) {
-    this.orderId = value;
+public void setItemOrderId(int value) {
+    this.itemOrderId = value;
 }
 @Id
-public int getOrderId() {
-    return this.orderId;
+public int getItemOrderId() {
+    return this.itemOrderId;
 }
-private String orderDate;
+private String itemOrderDate;
 
-public void setOrderDate(String value) {
-    this.orderDate = value;
+public void setItemOrderDate(String value) {
+    this.itemOrderDate = value;
 }
-public String getOrderDate() {
-    return this.orderDate;
+public String getItemOrderDate() {
+    return this.itemOrderDate;
 }
 private double totalPrice;
 

@@ -19,7 +19,7 @@ import java.util.Set;
 import javax.persistence.OneToMany;
 
 @Entity
-@Table(name="art_gallery_system")
+//@Table(name="art_gallery_system")
 public class ArtGallerySystem{
 @Column(nullable = false) //Tell JPA users must be non-null
 @ElementCollection //Resolves "Failed to load ApplicationContext"

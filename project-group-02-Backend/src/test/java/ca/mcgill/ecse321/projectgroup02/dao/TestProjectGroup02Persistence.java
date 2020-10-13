@@ -37,15 +37,15 @@ public class TestProjectGroup02Persistence {
 		
 		ArtGallerySystem system = new ArtGallerySystem();
 		
-		//ApplicationUser user = new ApplicationUser();
+		ApplicationUser user = new ApplicationUser();
 		
 		system.setArtGalleryId(1);
 		
-		//user.setApplicationUserId(2);
+		user.setApplicationUserId(2);
 		
-		//HashSet<ApplicationUser> users = new HashSet<ApplicationUser>();
+		HashSet<ApplicationUser> users = new HashSet<ApplicationUser>();
 		
-		//users.add(user);
+		users.add(user);
 
 		/**
 		 * system.setApplicationUsers(users) must be modified to link each user to the system
@@ -58,7 +58,7 @@ public class TestProjectGroup02Persistence {
 		 * The system does not have to be saved before the user
 		 * See ApplicationUser.java line 73-74
 		 */
-		//applicationUserRepository.save(user);
+		applicationUserRepository.save(user);
 	
 		artGallerySystemRepository.save(system);
 		
@@ -66,7 +66,6 @@ public class TestProjectGroup02Persistence {
 		
 		assertEquals(system.getArtGalleryId(),1);
 		
-		clearDatabase();
 	}
 	
 	@Test
@@ -82,7 +81,6 @@ public class TestProjectGroup02Persistence {
 		
 		assertEquals(user.getApplicationUserId(),1);
 
-		clearDatabase();
 	}
 	
 }

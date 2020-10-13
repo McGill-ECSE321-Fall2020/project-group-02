@@ -102,16 +102,16 @@ public void setUserRole(Set<UserRole> userRoles) {
 
 @Column(nullable = false) //Tell JPA users must be non-null
 @ElementCollection //Resolves "Failed to load ApplicationContext"
-private Set<Order> order;
+private Set<ItemOrder> itemOrder;
 
 @OneToMany
 @NotFound(action = NotFoundAction.IGNORE) 
-public Set<Order> getOrder() {
-   return this.order;
+public Set<ItemOrder> getItemOrder() {
+   return this.itemOrder;
 }
 
-public void setOrder(Set<Order> orders) {
-   this.order = orders;
+public void setItemOrder(Set<ItemOrder> itemOrders) {
+   this.itemOrder = itemOrders;
 }
 
 @Column(nullable = false) //Tell JPA users must be non-null
