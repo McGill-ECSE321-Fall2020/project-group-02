@@ -17,13 +17,13 @@ public void setName(String value) {
 public String getName() {
     return this.name;
 }
-private String itemId;
+private int itemId;
 
-public void setItemId(String value) {
+public void setItemId(int value) {
     this.itemId = value;
 }
 @Id
-public String getItemId() {
+public int getItemId() {
     return this.itemId;
 }
 private double height;

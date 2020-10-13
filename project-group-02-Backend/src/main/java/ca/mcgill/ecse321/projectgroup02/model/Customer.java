@@ -57,4 +57,18 @@ public class Customer extends UserRole{
       this.orderConfirmationEmail = orderConfirmationEmails;
    }
    
+   @Column(nullable = false) //Tell JPA users must be non-null
+   @ElementCollection //Resolves "Failed to load ApplicationContext"
+   private Set<ItemOrder> itemOrder;
+
+   @OneToMany
+   @NotFound(action = NotFoundAction.IGNORE) 
+   public Set<ItemOrder> getItemOrder() {
+      return this.itemOrder;
+   }
+
+   public void setItemOrder(Set<ItemOrder> itemOrders) {
+      this.itemOrder = itemOrders;
+   }
+   
    }

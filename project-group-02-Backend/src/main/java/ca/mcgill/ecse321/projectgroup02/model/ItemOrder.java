@@ -65,16 +65,16 @@ public void setTaxes(double value) {
 public double getTaxes() {
     return this.taxes;
 }
-   private ApplicationUser applicationUser;
+   private Customer customer;
    
    @ManyToOne(optional=true)
    @NotFound(action = NotFoundAction.IGNORE) 
-   public ApplicationUser getApplicationUser() {
-      return this.applicationUser;
+   public Customer getCustomer() {
+      return this.customer;
    }
    
-   public void setApplicationUser(ApplicationUser applicationUser) {
-      this.applicationUser = applicationUser;
+   public void setCustomer(Customer customer) {
+      this.customer = customer;
    }
    
    @Enumerated(EnumType.STRING)
@@ -100,6 +100,7 @@ public double getTaxes() {
    public void setItem(Set<Item> items) {
       this.item = items;
    }
+   
    
    
    }

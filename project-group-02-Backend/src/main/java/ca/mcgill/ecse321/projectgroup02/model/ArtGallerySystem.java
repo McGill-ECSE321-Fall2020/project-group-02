@@ -36,6 +36,7 @@ public void setApplicationUsers(Set<ApplicationUser> applicationUserss) {
    for (ApplicationUser user : applicationUserss){
    user.setArtGallerySystem(this);
    }
+   
 }
 
 private double totalProfit;
@@ -97,6 +98,9 @@ public Set<Item> getItem() {
 
 public void setItem(Set<Item> items) {
    this.item = items;
+   for (Item item : items){
+	   item.setArtGallerySystem(this);
+	   }
 }
 
 }

@@ -77,7 +77,7 @@ return this.applicationUserId;
     }
 private ArtGallerySystem artGallerySystem;
 
-@ManyToOne(optional=true)
+@ManyToOne(optional=true, fetch = FetchType.EAGER)
 @NotFound(action = NotFoundAction.IGNORE) 
 public ArtGallerySystem getArtGallerySystem() {
    return this.artGallerySystem;
@@ -98,20 +98,6 @@ public Set<UserRole> getUserRole() {
 
 public void setUserRole(Set<UserRole> userRoles) {
    this.userRole = userRoles;
-}
-
-@Column(nullable = false) //Tell JPA users must be non-null
-@ElementCollection //Resolves "Failed to load ApplicationContext"
-private Set<ItemOrder> itemOrder;
-
-@OneToMany
-@NotFound(action = NotFoundAction.IGNORE) 
-public Set<ItemOrder> getItemOrder() {
-   return this.itemOrder;
-}
-
-public void setItemOrder(Set<ItemOrder> itemOrders) {
-   this.itemOrder = itemOrders;
 }
 
 @Column(nullable = false) //Tell JPA users must be non-null

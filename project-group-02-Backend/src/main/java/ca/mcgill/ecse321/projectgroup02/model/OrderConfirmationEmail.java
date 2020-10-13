@@ -15,14 +15,14 @@ public class OrderConfirmationEmail{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-   private int itemOrderConfirmationId;
+   private int orderConfirmationEmailId;
 
-public void setItemOrderConfirmationId(int value) {
-    this.itemOrderConfirmationId = value;
+public void setOrderConfirmationEmailId(int value) {
+    this.orderConfirmationEmailId = value;
 }
 
-public int getItemOrderConfirmationId() {
-    return this.itemOrderConfirmationId;
+public int getOrderConfirmationEmailId() {
+    return this.orderConfirmationEmailId;
 }
 private String message;
 
