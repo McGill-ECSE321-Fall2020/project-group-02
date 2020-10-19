@@ -77,7 +77,7 @@ return this.applicationUserId;
     }
 private ArtGallerySystem artGallerySystem;
 
-@ManyToOne(optional=true, fetch = FetchType.EAGER)
+@ManyToOne(optional=true)
 @NotFound(action = NotFoundAction.IGNORE) 
 public ArtGallerySystem getArtGallerySystem() {
    return this.artGallerySystem;
@@ -86,7 +86,6 @@ public ArtGallerySystem getArtGallerySystem() {
 public void setArtGallerySystem(ArtGallerySystem artGallerySystem) {
    this.artGallerySystem = artGallerySystem;
 }
-@Column(nullable = false) //Tell JPA users must be non-null
 @ElementCollection //Resolves "Failed to load ApplicationContext"
 private Set<UserRole> userRole;
 
@@ -100,7 +99,6 @@ public void setUserRole(Set<UserRole> userRoles) {
    this.userRole = userRoles;
 }
 
-@Column(nullable = false) //Tell JPA users must be non-null
 @ElementCollection //Resolves "Failed to load ApplicationContext"
 private Set<Address> address;
 

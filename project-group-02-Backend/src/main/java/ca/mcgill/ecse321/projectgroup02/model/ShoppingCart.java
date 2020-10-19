@@ -17,7 +17,6 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
-//@Table(name="shopping_cart")
 public class ShoppingCart{
    private double totalPrice;
 
@@ -53,7 +52,6 @@ public int getShoppingCartId() {
     return this.shoppingCartId;
 }
 
-@Column(nullable = false) //Tell JPA users must be non-null
 @ElementCollection //Resolves "Failed to load ApplicationContext"
 private Set<Item> item;
 

@@ -6,6 +6,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
@@ -25,10 +26,8 @@ public String getDescription() {
     return this.description;
 }
 
-@Column(nullable = false) //Tell JPA users must be non-null
 @ElementCollection //Resolves "Failed to load ApplicationContext"
 private Set<Item> item;
-
 
 @OneToMany
 @NotFound(action = NotFoundAction.IGNORE)
@@ -40,4 +39,5 @@ public void setItem(Set<Item> items) {
    this.item = items;
    
 }
+
 }

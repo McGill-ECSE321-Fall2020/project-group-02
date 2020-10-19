@@ -47,7 +47,6 @@ public String getCity() {
     return this.city;
 }
 
-@Column(name="addressId")
 private int addressId;
 
 public void setAddressId(int value) {

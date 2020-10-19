@@ -87,7 +87,6 @@ public double getTaxes() {
        return this.delivery;
    }
    
-   @Column(nullable = false) //Tell JPA users must be non-null
    @ElementCollection //Resolves "Failed to load ApplicationContext"
    private Set<Item> item;
    

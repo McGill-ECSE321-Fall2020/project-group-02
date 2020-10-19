@@ -28,8 +28,6 @@ import ca.mcgill.ecse321.projectgroup02.model.Collection;
 import ca.mcgill.ecse321.projectgroup02.model.Customer;
 import ca.mcgill.ecse321.projectgroup02.model.Item;
 import ca.mcgill.ecse321.projectgroup02.model.ItemOrder;
-import ca.mcgill.ecse321.projectgroup02.model.NotificationHandler;
-import ca.mcgill.ecse321.projectgroup02.model.OrderConfirmationEmail;
 import ca.mcgill.ecse321.projectgroup02.model.PaymentCredentials;
 import ca.mcgill.ecse321.projectgroup02.model.ServiceProvider;
 import ca.mcgill.ecse321.projectgroup02.model.ShoppingCart;
@@ -55,15 +53,11 @@ public class TestProjectGroup02Persistence {
 	@Autowired
 	private ItemOrderRepository itemOrderRepository;
 	@Autowired
-	private OrderConfirmationEmailRepository orderConfirmationEmailRepository;
-	@Autowired
 	private PaymentCredentialsRepository paymentCredentialsRepository;
 	@Autowired
 	private ServiceProviderRepository serviceProviderRepository;
 	@Autowired
 	private ShoppingCartRepository shoppingCartRepository;
-	@Autowired
-	private NotificationHandlerRepository notificationHandlerRepository;
 
 
 	@AfterTestClass
@@ -76,11 +70,9 @@ public class TestProjectGroup02Persistence {
 		collectionRepository.deleteAll();
 		customerRepository.deleteAll();
 		itemOrderRepository.deleteAll();
-		orderConfirmationEmailRepository.deleteAll();
 		paymentCredentialsRepository.deleteAll();
 		serviceProviderRepository.deleteAll();
 		shoppingCartRepository.deleteAll();
-		notificationHandlerRepository.deleteAll();
 	}
 
 	@Test
@@ -361,36 +353,6 @@ public class TestProjectGroup02Persistence {
 	
 		}
 
-//		@Test
-//	    public void testPersistAndLoadOrderConfirmationEmail() {
-//	        
-//			int orderConfirmationEmail_Id= 6;
-//	        
-//	        OrderConfirmationEmail orderConfirmationEmail = new OrderConfirmationEmail();
-//	        
-//			orderConfirmationEmail.setOrderConfirmationEmailId(orderConfirmationEmail_Id);
-//	
-//			//ItemOrder itemOrder= new ItemOrder();
-//	
-//			//itemOrder.setItemOrderId(69);
-//	
-//			//itemOrderRepository.save(itemOrder);
-//			
-//			//orderConfirmationEmail.setItemOrder(itemOrder);
-//	
-//			orderConfirmationEmailRepository.save(orderConfirmationEmail);
-//	
-//			orderConfirmationEmail = orderConfirmationEmailRepository.findByorderConfirmationEmailId(orderConfirmationEmail_Id);
-//			
-//			int id = orderConfirmationEmail.getOrderConfirmationEmailId();
-//			
-//			assertEquals(id,orderConfirmationEmail_Id);
-//			
-//			//assertEquals(orderConfirmationEmail.getItemOrder().getItemOrderId(),69);
-//			
-//		
-//	    }
-
 	@Test
 	public void testPersistAndLoadPaymentCredentials() {
 		int paymentCredentials_Id= 6;
@@ -467,56 +429,6 @@ public class TestProjectGroup02Persistence {
 	}
 	
 	
-//	@Test
-//    public void testPersistAndLoadNotificationHandler() {
-//        
-//		ArtGallerySystem AGS = new ArtGallerySystem();
-//		
-//		AGS.setArtGalleryId(420);
-//		
-//		int notificationHandler_Id= 6;
-//        
-//        NotificationHandler notificationHandler = new NotificationHandler();
-//        
-//        notificationHandler.setNotificationHandlerId(notificationHandler_Id);
-//		
-//        notificationHandler.setArtGallerySystem(AGS);
-//        
-//		notificationHandlerRepository.save(notificationHandler);
-//		
-//		AGS.setNotificationHandler(notificationHandler);
-//		
-//		artGallerySystemRepository.save(AGS);
-//		
-//		//OrderConfirmationEmail orderConfirmationEmail= new OrderConfirmationEmail();
-//
-//		//orderConfirmationEmail.setOrderConfirmationId(71);
-//		
-//		//Set<OrderConfirmationEmail> orderConfirmationEmailSet= new HashSet<OrderConfirmationEmail>();
-//		
-//		//orderConfirmationEmailSet.add(orderConfirmationEmail);
-//		
-//		//setting the order to the user
-//	//	notificationHandler.setOrderConfirmationEmail(orderConfirmationEmailSet);
-//
-//		// save the relational object
-//		//orderConfirmationEmailRepository.save(orderConfirmationEmail);
-//        
-//        notificationHandler = notificationHandlerRepository.findBynotificationHandlerId(notificationHandler_Id);
-//        
-//        int id = notificationHandler.getNotificationHandlerId();
-//        
-//		assertEquals(notificationHandler_Id,id);
-//		
-//		// test the order confirmation email relation
-//		//boolean retrievedOrderConfirmationEmail = notificationHandler.getOrderConfirmationEmail().isEmpty();
-//		
-//		// check if the order confirmation email was retrieved accordingly
-//		//assertEquals(retrievedOrderConfirmationEmail,false);
-//
-//        
-//    }
-
 
 
 

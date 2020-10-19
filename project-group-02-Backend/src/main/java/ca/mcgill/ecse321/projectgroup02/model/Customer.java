@@ -3,6 +3,7 @@ package ca.mcgill.ecse321.projectgroup02.model;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 
 import java.util.Set;
@@ -15,7 +16,6 @@ import org.hibernate.annotations.NotFoundAction;
 @Entity
 public class Customer extends UserRole{
    
-	@Column(nullable = false) //Tell JPA users must be non-null
 	@ElementCollection //Resolves "Failed to load ApplicationContext"
 	private Set<PaymentCredentials> paymentCredentials;
    
@@ -29,7 +29,6 @@ public class Customer extends UserRole{
       this.paymentCredentials = paymentCredentialss;
    }
    
-   @Column(nullable = false) //Tell JPA users must be non-null
    @ElementCollection //Resolves "Failed to load ApplicationContext"
    private Set<ShoppingCart> shoppingCart;
    
@@ -43,21 +42,6 @@ public class Customer extends UserRole{
       this.shoppingCart = shoppingCarts;
    }
    
-   @Column(nullable = false) //Tell JPA users must be non-null
-   @ElementCollection //Resolves "Failed to load ApplicationContext"
-   private Set<OrderConfirmationEmail> orderConfirmationEmail;
-   
-   @OneToMany
-   @NotFound(action = NotFoundAction.IGNORE)
-   public Set<OrderConfirmationEmail> getOrderConfirmationEmail() {
-      return this.orderConfirmationEmail;
-   }
-   
-   public void setOrderConfirmationEmail(Set<OrderConfirmationEmail> orderConfirmationEmails) {
-      this.orderConfirmationEmail = orderConfirmationEmails;
-   }
-   
-   @Column(nullable = false) //Tell JPA users must be non-null
    @ElementCollection //Resolves "Failed to load ApplicationContext"
    private Set<ItemOrder> itemOrder;
 
@@ -70,5 +54,5 @@ public class Customer extends UserRole{
    public void setItemOrder(Set<ItemOrder> itemOrders) {
       this.itemOrder = itemOrders;
    }
-   
+ 
    }
