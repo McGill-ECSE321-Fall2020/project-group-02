@@ -57,9 +57,6 @@ public class Collection{
 
 	public void setItem(Set<Item> items) {
 		this.item = items;
-//		for (Item item: items) {
-//			item.setCollection(this);
-//		}
 	}
 
 }

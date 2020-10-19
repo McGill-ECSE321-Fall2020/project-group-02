@@ -31,9 +31,6 @@ public Set<ApplicationUser> getApplicationUsers() {
 
 public void setApplicationUsers(Set<ApplicationUser> applicationUserss) {
    this.applicationUsers = applicationUserss;
-   for (ApplicationUser user : applicationUserss){
-   user.setArtGallerySystem(this);
-   }
    
 }
 
@@ -81,9 +78,6 @@ public Set<Item> getItem() {
 
 public void setItem(Set<Item> items) {
    this.item = items;
-   for (Item item : items){
-	   item.setArtGallerySystem(this);
-	   }
 }
 
 }
