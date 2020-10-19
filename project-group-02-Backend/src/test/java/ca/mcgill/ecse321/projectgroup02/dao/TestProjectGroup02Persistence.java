@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.event.annotation.AfterTestClass;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import ca.mcgill.ecse321.projectgroup02.model.Address;
@@ -64,11 +66,21 @@ public class TestProjectGroup02Persistence {
 	private NotificationHandlerRepository notificationHandlerRepository;
 
 
-	@AfterEach
+	@AfterTestClass
 	public void clearDatabase() {
 		artGallerySystemRepository.deleteAll();
 		applicationUserRepository.deleteAll();
-		
+		addressRepository.deleteAll();
+		artistRepository.deleteAll();
+		itemRepository.deleteAll();
+		collectionRepository.deleteAll();
+		customerRepository.deleteAll();
+		itemOrderRepository.deleteAll();
+		orderConfirmationEmailRepository.deleteAll();
+		paymentCredentialsRepository.deleteAll();
+		serviceProviderRepository.deleteAll();
+		shoppingCartRepository.deleteAll();
+		notificationHandlerRepository.deleteAll();
 	}
 
 	@Test
