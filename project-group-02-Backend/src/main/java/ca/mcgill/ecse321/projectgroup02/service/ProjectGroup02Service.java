@@ -1,6 +1,9 @@
 package ca.mcgill.ecse321.projectgroup02.service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,7 @@ import ca.mcgill.ecse321.projectgroup02.dao.ShoppingCartRepository;
 import ca.mcgill.ecse321.projectgroup02.model.ApplicationUser;
 import ca.mcgill.ecse321.projectgroup02.model.Customer;
 import ca.mcgill.ecse321.projectgroup02.model.PaymentCredentials;
+import ca.mcgill.ecse321.projectgroup02.model.ShoppingCart;
 import ca.mcgill.ecse321.projectgroup02.model.UserRole;
 
 @Service
@@ -180,10 +184,7 @@ public class ProjectGroup02Service {
       applicationUserRepository.save(user);
       return true;
     }
-    applicationUserRepository.save(user);
     return false;
   }
-
-
-
+  
 }
