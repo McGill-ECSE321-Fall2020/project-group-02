@@ -1,5 +1,8 @@
 package ca.mcgill.ecse321.projectgroup02.service;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,7 @@ import ca.mcgill.ecse321.projectgroup02.dao.ShoppingCartRepository;
 import ca.mcgill.ecse321.projectgroup02.model.ApplicationUser;
 import ca.mcgill.ecse321.projectgroup02.model.Customer;
 import ca.mcgill.ecse321.projectgroup02.model.PaymentCredentials;
+import ca.mcgill.ecse321.projectgroup02.model.ShoppingCart;
 import ca.mcgill.ecse321.projectgroup02.model.UserRole;
 
 @Service
@@ -147,5 +151,36 @@ public class ProjectGroup02Service {
           }        
         return false;
     }
+    
+    @Transactional
+    public ShoppingCart createShoppingCart(Customer customer) {
+    	ShoppingCart shoppingCart = new ShoppingCart();
+    	HashSet<ShoppingCart> shoppingCarts = new HashSet<ShoppingCart>();
+    	customer.setShoppingCart(shoppingCarts);
+    	shoppingCartRepository.save(shoppingCart);
+    	return shoppingCart;
+    }
+    
+    @Transactional
+    public ShoppingCart getShoppingCart(Customer customer) {
+    	ShoppingCart shoppingCart = (ShoppingCart) customer.getShoppingCart();
+    	return shoppingCart;
+    }
+    
+    
+    @Transactional
+    public List<ShoppingCart> getAllShoppingCarts() {
+    	shoppingCartRepository.findAll();
+    	return toList(shoppingCartRepository.findAll());
+    }
+    
+
+	private <T> List<T> toList(Iterable<T> iterable){
+		List<T> resultList = new ArrayList<T>();
+		for (T t : iterable) {
+			resultList.add(t);
+		}
+		return resultList;
+	}
     
 }
