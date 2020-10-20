@@ -2,16 +2,11 @@ package ca.mcgill.ecse321.projectgroup02.model;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
@@ -110,6 +105,19 @@ public Set<Address> getAddress() {
 
 public void setAddress(Set<Address> addresss) {
    this.address = addresss;
+}
+
+@ElementCollection //Resolves "Failed to load ApplicationContext"
+private Set<PaymentCredentials> paymentCredentials;
+
+@OneToMany
+@NotFound(action = NotFoundAction.IGNORE) 
+public Set<PaymentCredentials> PaymentCredentials() {
+   return this.paymentCredentials;
+}
+
+public void setPaymentCredentials(Set<PaymentCredentials> paymentCredential) {
+   this.paymentCredentials = paymentCredentials;
 }
 
 
