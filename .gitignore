@@ -1,3 +1,4 @@
 .gradle/
 build/
 project-group-02-Backend/gradlew.bat
+project-group-02-Backend/bin
