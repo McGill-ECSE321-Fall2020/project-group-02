@@ -19,6 +19,7 @@ import ca.mcgill.ecse321.projectgroup02.dao.PaymentCredentialsRepository;
 import ca.mcgill.ecse321.projectgroup02.dao.ServiceProviderRepository;
 import ca.mcgill.ecse321.projectgroup02.dao.ShoppingCartRepository;
 import ca.mcgill.ecse321.projectgroup02.model.ApplicationUser;
+import ca.mcgill.ecse321.projectgroup02.model.ArtGallerySystem;
 import ca.mcgill.ecse321.projectgroup02.model.Artist;
 import ca.mcgill.ecse321.projectgroup02.model.Collection;
 import ca.mcgill.ecse321.projectgroup02.model.Customer;
@@ -221,7 +222,7 @@ public class ProjectGroup02Service {
    * @author Asmaa
    */
   @Transactional
-  public Item createItem(Artist artist, String name, double height, double width, String creationDate, double price, Collection collection, int id) throws Exception {
+  public Item createItem(ArtGallerySystem system, Artist artist, String name, double height, double width, String creationDate, double price, Collection collection, int id) throws Exception {
 	  Iterable<Item> items = itemRepository.findAll();
 	  for(Item item: items) {
 		  if(name.equals(item.getName())) {
@@ -229,6 +230,7 @@ public class ProjectGroup02Service {
 		  }
 	  }
   	Item item = new Item();
+  	artistRepository.save(artist);
   	item.setArtist(artist);
   	item.setName(name);
   	item.setInStock(true);
@@ -238,6 +240,7 @@ public class ProjectGroup02Service {
   	item.setCreationDate(creationDate);
   	item.setCollection(collection);
   	item.setItemId(id);
+  	item.setArtGallerySystem(system);
   	itemRepository.save(item);
   	return item;
   }
@@ -270,23 +273,8 @@ public class ProjectGroup02Service {
    * @throws Exception
    * @author Asmaa
    */
-  public ArrayList<Item> getItemsByArtist(Artist artist) throws Exception{
-	  Iterable<Item> items = itemRepository.findAll();
-	  ArrayList<Item> listOfItems = null;
-	  boolean artistExists = false;
-	  for(Item item: items) {
-		  if(artist.equals(item.getArtist())) {
-			  artistExists = true;
-		        listOfItems.add(item);
-		  }
-	  }
-	  if(artistExists == false) {
-			 throw new Exception("Artist does not exist.");
-	  }
-	 if(listOfItems == null) {
-		 throw new Exception("Artist does not have any items.");
-	 }
-	  return listOfItems;
+  public Iterable<Item> getItemsByArtist(Artist artist) throws Exception{
+	  return (artist.getItem());
   }
   
   /**
