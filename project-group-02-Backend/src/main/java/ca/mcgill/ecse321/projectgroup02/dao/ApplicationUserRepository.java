@@ -7,6 +7,6 @@ import ca.mcgill.ecse321.projectgroup02.model.ApplicationUser;
 @Repository
 public interface ApplicationUserRepository extends CrudRepository<ApplicationUser, String> {
 
-	ApplicationUser findByapplicationUserId(int userID);
+	ApplicationUser findByUsername(String username);
 
 }

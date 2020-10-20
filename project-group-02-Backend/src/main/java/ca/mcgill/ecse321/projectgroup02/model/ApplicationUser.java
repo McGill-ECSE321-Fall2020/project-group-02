@@ -26,6 +26,7 @@ private String username;
 public void setUsername(String value) {
 this.username = value;
     }
+@Id
 public String getUsername() {
 return this.username;
     }
@@ -60,15 +61,6 @@ this.isLoggedIn = value;
     }
 public boolean isIsLoggedIn() {
 return this.isLoggedIn;
-    }
-private int applicationUserId;
-
-public void setApplicationUserId(int value) {
-this.applicationUserId = value;
-    }
-@Id
-public int getApplicationUserId() {
-return this.applicationUserId;
     }
 private ArtGallerySystem artGallerySystem;
 
@@ -106,20 +98,5 @@ public Set<Address> getAddress() {
 public void setAddress(Set<Address> addresss) {
    this.address = addresss;
 }
-
-@ElementCollection //Resolves "Failed to load ApplicationContext"
-private Set<PaymentCredentials> paymentCredentials;
-
-@OneToMany
-@NotFound(action = NotFoundAction.IGNORE) 
-public Set<PaymentCredentials> PaymentCredentials() {
-   return this.paymentCredentials;
-}
-
-public void setPaymentCredentials(Set<PaymentCredentials> paymentCredential) {
-   this.paymentCredentials = paymentCredentials;
-}
-
-
 
 }

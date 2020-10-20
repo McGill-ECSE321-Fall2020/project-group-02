@@ -8,7 +8,7 @@ import ca.mcgill.ecse321.projectgroup02.model.PaymentCredentials;
 public interface PaymentCredentialsRepository extends CrudRepository<PaymentCredentials, String> {
 	
 
-	PaymentCredentials findBypaymentCredentialsId(int paymentCredentialsId);
+	PaymentCredentials findByCcNumber(String ccNumber);
 
 	
 }
