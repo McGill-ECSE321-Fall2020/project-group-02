@@ -153,15 +153,6 @@ public class ProjectGroup02Service {
     }
     
     @Transactional
-    public ShoppingCart createShoppingCart(Customer customer) {
-    	ShoppingCart shoppingCart = new ShoppingCart();
-    	HashSet<ShoppingCart> shoppingCarts = new HashSet<ShoppingCart>();
-    	customer.setShoppingCart(shoppingCarts);
-    	shoppingCartRepository.save(shoppingCart);
-    	return shoppingCart;
-    }
-    
-    @Transactional
     public ShoppingCart getShoppingCart(Customer customer) {
     	ShoppingCart shoppingCart = (ShoppingCart) customer.getShoppingCart();
     	return shoppingCart;
