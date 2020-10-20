@@ -26,6 +26,7 @@ private String username;
 public void setUsername(String value) {
 this.username = value;
     }
+@Id
 public String getUsername() {
 return this.username;
     }
@@ -66,7 +67,6 @@ private int applicationUserId;
 public void setApplicationUserId(int value) {
 this.applicationUserId = value;
     }
-@Id
 public int getApplicationUserId() {
 return this.applicationUserId;
     }

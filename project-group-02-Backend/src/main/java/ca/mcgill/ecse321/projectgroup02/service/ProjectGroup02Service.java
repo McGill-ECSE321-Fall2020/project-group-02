@@ -1,4 +1,5 @@
 package ca.mcgill.ecse321.projectgroup02.service;
+import java.util.Collection;
 import java.util.HashSet;
 
 import javax.transaction.Transactional;
@@ -24,70 +25,129 @@ import ca.mcgill.ecse321.projectgroup02.model.UserRole;
 
 @Service
 public class ProjectGroup02Service {
-	@Autowired
-	private ArtGallerySystemRepository artGallerySystemRepository;
-	@Autowired
-	private ApplicationUserRepository applicationUserRepository;
-	@Autowired
-	private AddressRepository addressRepository;
-	@Autowired
-	private ArtistRepository artistRepository;
-	@Autowired
-	private ItemRepository itemRepository;
-	@Autowired
-	private CollectionRepository collectionRepository;
-	@Autowired
-	private CustomerRepository customerRepository;
-	@Autowired
-	private ItemOrderRepository itemOrderRepository;
-	@Autowired
-	private PaymentCredentialsRepository paymentCredentialsRepository;
-	@Autowired
-	private ServiceProviderRepository serviceProviderRepository;
-	@Autowired
-	private ShoppingCartRepository shoppingCartRepository;
-	
-	@Transactional
-	public ApplicationUser createUser(int id, String username, String email, String password, HashSet<UserRole> role, HashSet<Address> address) {
-		ApplicationUser user = new ApplicationUser();
-		user.setUserRole(role);
-		user.setApplicationUserId(id);
-		user.setUsername(username);
-		user.setEmail(email);
-		user.setPassword(password);
-		user.setAccountCreationDate(java.time.LocalDate.now().toString());
-		user.setAddress(address);
-		return user;
-	}
-	
-	@Transactional
-	public ApplicationUser getUser(int id) {
-		return applicationUserRepository.findByapplicationUserId(id);
-	}
-	
-	@Transactional
-	public Iterable<ApplicationUser> getAllUsers() {
-		return (applicationUserRepository.findAll());
-	}
-	
-	@Transactional
-	public ApplicationUser updateUserCredentials(ApplicationUser user, HashSet<PaymentCredentials> paymentCredentials) {
-		user.setPaymentCredentials(paymentCredentials);
-		return user;
-	}
-	
-	@Transactional
-	public ApplicationUser updateUser(ApplicationUser user, int id, String username, String email, String password, 
-			HashSet<UserRole> role, HashSet<Address> address, HashSet<PaymentCredentials> paymentCredentials) {
-		user.setUserRole(role);
-		user.setApplicationUserId(id);
-		user.setUsername(username);
-		user.setEmail(email);
-		user.setPassword(password);
-		user.setAccountCreationDate(java.time.LocalDate.now().toString());
-		user.setAddress(address);
-		user.setPaymentCredentials(paymentCredentials);
-		return user;
-	}
-	
+    @Autowired
+    private ArtGallerySystemRepository artGallerySystemRepository;
+    @Autowired
+    private ApplicationUserRepository applicationUserRepository;
+    @Autowired
+    private AddressRepository addressRepository;
+    @Autowired
+    private ArtistRepository artistRepository;
+    @Autowired
+    private ItemRepository itemRepository;
+    @Autowired
+    private CollectionRepository collectionRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
+    @Autowired
+    private ItemOrderRepository itemOrderRepository;
+    @Autowired
+    private PaymentCredentialsRepository paymentCredentialsRepository;
+    @Autowired
+    private ServiceProviderRepository serviceProviderRepository;
+    @Autowired
+    private ShoppingCartRepository shoppingCartRepository;
+    
+    /**
+     * @param username
+     * @param email
+     * @param password
+     * @return Instance of ApplicationUser if the method successfully created the user
+     * @throws Exception 
+     */
+    @Transactional
+    public ApplicationUser createUser(String username, String email, String password) throws Exception {
+        
+        try {
+          validateRegistrationInput(username, email, password);
+        }catch(Exception e) {
+          throw new Exception(e.getMessage());
+        }
+      
+        ApplicationUser user = new ApplicationUser();
+        Iterable<ApplicationUser> users = applicationUserRepository.findAll();
+        int size = 0;
+        for (ApplicationUser user_ : users) {
+          size++;
+          if (user_.getEmail().equals(email) || user_.getUsername().equals(username)) {
+            throw new Exception("Username/Email already in use");
+          }
+        }
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setAccountCreationDate(java.time.LocalDate.now().toString());
+        user.setApplicationUserId(size);
+        applicationUserRepository.save(user);
+        return user;
+    }
+    
+    private void validateRegistrationInput(String username, String email, String password) throws Exception {
+          if (username.length() < 8)
+            throw new Exception("Username must have at least 8 characters");
+          if (!email.contains("@"))
+            throw new Exception("Email is not valid");
+          if (password.length() < 8)
+            throw new Exception("Password must have at least 8 characters");
+    }
+    
+    @Transactional
+    public ApplicationUser getUser(int id) {
+        return applicationUserRepository.findByapplicationUserId(id);
+    }
+    
+    @Transactional
+    public Iterable<ApplicationUser> getAllUsers() {
+        return (applicationUserRepository.findAll());
+    }
+    
+    @Transactional
+    public ApplicationUser updateUserCredentials(int id, 
+            HashSet<PaymentCredentials> paymentCredentials) {
+        ApplicationUser user = applicationUserRepository.findByapplicationUserId(id);
+        
+        user.setPaymentCredentials(paymentCredentials);
+        applicationUserRepository.save(user);
+        return user;
+    }
+    
+    @Transactional
+    public ApplicationUser updateUserRole(int id, 
+            HashSet<UserRole> role) {
+        ApplicationUser user = applicationUserRepository.findByapplicationUserId(id);
+        
+        user.setUserRole(role);
+        applicationUserRepository.save(user);
+        return user;
+    }
+    
+    @Transactional
+    public void logoutUser(int id) {
+      ApplicationUser user = applicationUserRepository.findByapplicationUserId(id);
+      user.setIsLoggedIn(false);
+    }
+    
+    @Transactional
+    public void loginUser(int id) {
+       ApplicationUser user = applicationUserRepository.findByapplicationUserId(id);
+       user.setIsLoggedIn(true);
+    }
+    
+    @Transactional
+    public boolean loginUser(String username, String password) {
+      Iterable<ApplicationUser> users = applicationUserRepository.findAll();
+      boolean authentificationTest = false;
+      
+       for (ApplicationUser user : users) {
+         if (user.getUsername().equals(username)) {
+            if (user.getPassword().equals(password)) {
+              user.setIsLoggedIn(true);
+              authentificationTest = true;
+              }
+            break;
+          }
+       }
+       return authentificationTest;
+    }
+    
 }
