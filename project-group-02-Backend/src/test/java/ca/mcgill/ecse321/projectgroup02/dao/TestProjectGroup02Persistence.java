@@ -127,7 +127,7 @@ public class TestProjectGroup02Persistence {
 
 		Address address= new Address();
 
-		address.setAddressId(2);
+		address.setPostalCode("2");
 
 		HashSet<Address> addresses = new HashSet<Address>();
 
@@ -149,7 +149,7 @@ public class TestProjectGroup02Persistence {
 			testAddress= addressIter;
 		}
 
-		assertEquals(testAddress.getAddressId(),2);
+		assertEquals(testAddress.getPostalCode(),"2");
 
 		assertEquals(user.getUsername(),"1");
 
@@ -158,17 +158,17 @@ public class TestProjectGroup02Persistence {
 	@Test
 	public void testPersistAndLoadAddress() {
 
-		int addressID = 15;
+		String addressID = "15";
 
 		Address adrs = new Address();
 
-		adrs.setAddressId(addressID);
+		adrs.setPostalCode(addressID);
 
 		addressRepository.save(adrs);
 
-		adrs = addressRepository.findAddressByaddressId(addressID);
+		adrs = addressRepository.findByPostalCode(addressID);
 
-		int id = adrs.getAddressId();
+		String id = adrs.getPostalCode();
 
 		assertEquals(addressID, id);
 

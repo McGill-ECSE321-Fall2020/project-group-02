@@ -19,6 +19,7 @@ private String postalCode;
 public void setPostalCode(String value) {
     this.postalCode = value;
 }
+@Id
 public String getPostalCode() {
     return this.postalCode;
 }
@@ -47,13 +48,4 @@ public String getCity() {
     return this.city;
 }
 
-private int addressId;
-
-public void setAddressId(int value) {
-    this.addressId = value;
-}
-@Id
-public int getAddressId() {
-    return this.addressId;
-}
 }

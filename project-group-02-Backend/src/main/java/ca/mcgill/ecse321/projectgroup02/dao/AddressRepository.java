@@ -7,6 +7,6 @@ import ca.mcgill.ecse321.projectgroup02.model.Address;
 @Repository
 public interface AddressRepository extends CrudRepository<Address, String>{
 	
-	Address findAddressByaddressId(int id);
+	Address findByPostalCode(String postalCode);
 	
 }

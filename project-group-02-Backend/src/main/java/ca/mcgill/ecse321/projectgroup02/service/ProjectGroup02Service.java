@@ -1,9 +1,6 @@
 package ca.mcgill.ecse321.projectgroup02.service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
-
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,10 +15,10 @@ import ca.mcgill.ecse321.projectgroup02.dao.ItemRepository;
 import ca.mcgill.ecse321.projectgroup02.dao.PaymentCredentialsRepository;
 import ca.mcgill.ecse321.projectgroup02.dao.ServiceProviderRepository;
 import ca.mcgill.ecse321.projectgroup02.dao.ShoppingCartRepository;
+import ca.mcgill.ecse321.projectgroup02.model.Address;
 import ca.mcgill.ecse321.projectgroup02.model.ApplicationUser;
 import ca.mcgill.ecse321.projectgroup02.model.Customer;
 import ca.mcgill.ecse321.projectgroup02.model.PaymentCredentials;
-import ca.mcgill.ecse321.projectgroup02.model.ShoppingCart;
 import ca.mcgill.ecse321.projectgroup02.model.UserRole;
 
 @Service
@@ -122,7 +119,7 @@ public class ProjectGroup02Service {
    * @author ryadammar1
    */
   @Transactional
-  public ApplicationUser updateUserCredentials(String username, String cardHolderName, String ccNumber,
+  public PaymentCredentials updateUserCredentials(String username, String cardHolderName, String ccNumber,
       String expirationDate, String cvc) throws Exception {
     ApplicationUser user = applicationUserRepository.findByUsername(username);
     Customer customer = null;
@@ -146,7 +143,7 @@ public class ProjectGroup02Service {
     paymentCredentialsRepository.save(paymentCredentials);
     customerRepository.save(customer);
     applicationUserRepository.save(user);
-    return user;
+    return paymentCredentials;
   }
 
   /**
@@ -185,6 +182,34 @@ public class ProjectGroup02Service {
       return true;
     }
     return false;
+  }
+  
+  /**
+   * Adds address information to a user.
+   * 
+   * @param username
+   * @param street
+   * @param postalCode
+   * @param province
+   * @param country
+   * @param city
+   * @throws Exception
+   * @author ryadammar1
+   */
+  @Transactional
+  public Address updateUserAddress(String username, String street, String postalCode, String province, String country, String city) throws Exception {
+    ApplicationUser user = applicationUserRepository.findByUsername(username);
+    Address address = new Address();
+    address.setCity(city);
+    address.setCountry(country);
+    address.setPostalCode(postalCode);
+    address.setProvince(province);
+    address.setStreet(street);
+    user.getAddress().add(address);
+    
+    addressRepository.save(address);
+    applicationUserRepository.save(user);
+    return address;
   }
   
 }
