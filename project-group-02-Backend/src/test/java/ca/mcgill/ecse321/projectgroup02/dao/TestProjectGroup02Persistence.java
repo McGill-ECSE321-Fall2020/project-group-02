@@ -217,11 +217,11 @@ public class TestProjectGroup02Persistence {
 
 		@Test
 		public void testPersistAndLoadCollection() {
-			int collection_Id= 3;
+			String collection_Id= "3";
 	
 			Collection collection = new Collection();
 	
-			collection.setCollectionId(collection_Id);
+			collection.setName(collection_Id);
 	
 			Item item = new Item();
 	
@@ -240,7 +240,7 @@ public class TestProjectGroup02Persistence {
 			collectionRepository.save(collection);
 			
 	
-			collection = collectionRepository.findCollectionBycollectionId(collection_Id);
+			collection = collectionRepository.findByName(collection_Id);
 	
 			Item itemTest = null;
 			
@@ -248,7 +248,7 @@ public class TestProjectGroup02Persistence {
 				itemTest = itemIter;
 			}
 	
-			int id= collection.getCollectionId();
+			String id= collection.getName();
 	
 			assertEquals(collection_Id,id);
 			
@@ -307,7 +307,7 @@ public class TestProjectGroup02Persistence {
 
 		Collection collection = new Collection();
 
-		collection.setCollectionId(1);
+		collection.setName("1");
 
 		collectionRepository.save(collection);
 
@@ -322,7 +322,7 @@ public class TestProjectGroup02Persistence {
 
 		assertEquals(item_Id,id);
 
-		assertEquals(item.getCollection().getCollectionId(),1);
+		assertEquals(item.getCollection().getName(),"1");
 	}
 
 		@Test

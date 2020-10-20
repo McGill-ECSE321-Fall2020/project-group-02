@@ -9,7 +9,7 @@ import ca.mcgill.ecse321.projectgroup02.model.Collection;
 public interface CollectionRepository extends CrudRepository<Collection, String>{
 
 
-	Collection findCollectionBycollectionId(int id);
+	Collection findByName(String name);
 	
 
 	

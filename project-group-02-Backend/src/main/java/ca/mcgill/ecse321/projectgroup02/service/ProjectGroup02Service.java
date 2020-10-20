@@ -20,6 +20,7 @@ import ca.mcgill.ecse321.projectgroup02.model.ApplicationUser;
 import ca.mcgill.ecse321.projectgroup02.model.Artist;
 import ca.mcgill.ecse321.projectgroup02.model.Collection;
 import ca.mcgill.ecse321.projectgroup02.model.Customer;
+import ca.mcgill.ecse321.projectgroup02.model.DeliveryMethod;
 import ca.mcgill.ecse321.projectgroup02.model.Item;
 import ca.mcgill.ecse321.projectgroup02.model.PaymentCredentials;
 import ca.mcgill.ecse321.projectgroup02.model.UserRole;
@@ -231,10 +232,11 @@ public class ProjectGroup02Service {
 
   /**
    * Creates an item based on the input, assigns it to the user.
-   * The use must be an artist.
+   * The user must be an artist.
    * The item's name must be unique in the artist's list of uploaded art.
    * The item's unique id is encoded based on its name and the artist's username.
    * 
+   * @author ryadammar1
    * @param username
    * @param name
    * @param height
@@ -248,7 +250,7 @@ public class ProjectGroup02Service {
    * @throws Exception
    */
   @Transactional
-  public void UploadArtwork(String username, String name, double height, double width, double breadth, String creationDate, String description, double price, String link, Collection collection) throws Exception {
+  public void UploadArtwork(String username, String name, double height, double width, double breadth, String creationDate, String description, double price, String link, String collection) throws Exception {
     ApplicationUser user = applicationUserRepository.findByUsername(username);
     Artist artist = null;
     for (UserRole role : user.getUserRole()) {
@@ -277,13 +279,22 @@ public class ProjectGroup02Service {
     item.setDescription(description);
     item.setPrice(price);
     item.setPathToImage(link);
-    item.setCollection(collection);
+    try {
+    item.setCollection(collectionRepository.findByName(collection));
+    }catch (Exception e) {
+      throw new Exception("Collection+" +collection+" does not exist.");
+    }
     
     artist.getItem().add(item);
     item.setArtist(artist);
     
     itemRepository.save(item);
     artistRepository.save(artist);
+    
+  }
+  
+  @Transactional
+  public void buyArtwork(String nameOfItem, String usernameOfArtist, String usernameOfClient, DeliveryMethod deliveryMethod) {
     
   }
 

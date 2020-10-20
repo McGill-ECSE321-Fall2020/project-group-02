@@ -25,6 +25,7 @@ public class Collection{
 	public void setName(String value) {
 		this.name = value;
 	}
+    @Id
 	public String getName() {
 		return this.name;
 	}
@@ -35,15 +36,6 @@ public class Collection{
 	}
 	public String getPathToImage() {
 		return this.pathToImage;
-	}
-	private int collectionId;
-
-	public void setCollectionId(int value) {
-		this.collectionId = value;
-	}
-	@Id
-	public int getCollectionId() {
-		return this.collectionId;
 	}
 
 	@ElementCollection //Resolves "Failed to load ApplicationContext"
