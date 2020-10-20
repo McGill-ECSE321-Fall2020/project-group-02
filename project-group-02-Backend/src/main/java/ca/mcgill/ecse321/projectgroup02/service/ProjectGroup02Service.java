@@ -62,9 +62,7 @@ public class ProjectGroup02Service {
       
         ApplicationUser user = new ApplicationUser();
         Iterable<ApplicationUser> users = applicationUserRepository.findAll();
-        int size = 0;
         for (ApplicationUser user_ : users) {
-          size++;
           if (user_.getEmail().equals(email) || user_.getUsername().equals(username)) {
             throw new Exception("Username/Email already in use");
           }
@@ -73,23 +71,22 @@ public class ProjectGroup02Service {
         user.setEmail(email);
         user.setPassword(password);
         user.setAccountCreationDate(java.time.LocalDate.now().toString());
-        user.setApplicationUserId(size);
         applicationUserRepository.save(user);
         return user;
     }
     
     private void validateRegistrationInput(String username, String email, String password) throws Exception {
-          if (username.length() < 8)
-            throw new Exception("Username must have at least 8 characters");
-          if (!email.contains("@"))
-            throw new Exception("Email is not valid");
-          if (password.length() < 8)
-            throw new Exception("Password must have at least 8 characters");
+        if (username.length() < 8)
+          throw new Exception("Username must have at least 8 characters");
+        if (!email.contains("@"))
+          throw new Exception("Email is not valid");
+        if (password.length() < 8)
+          throw new Exception("Password must have at least 8 characters");
     }
     
     @Transactional
-    public ApplicationUser getUser(int id) {
-        return applicationUserRepository.findByapplicationUserId(id);
+    public ApplicationUser getUser(String username) {
+        return applicationUserRepository.findByUsername(username);
     }
     
     @Transactional
@@ -97,11 +94,10 @@ public class ProjectGroup02Service {
         return (applicationUserRepository.findAll());
     }
     
-    // Missing ID assignment, I will try to change the primary key (Ryad)
     @Transactional
-    public ApplicationUser updateUserCredentials(int id, 
+    public ApplicationUser updateUserCredentials(String username, 
             String cardHolderName, String ccNumber, String expirationDate, String cvc) throws Exception {
-        ApplicationUser user = applicationUserRepository.findByapplicationUserId(id);
+        ApplicationUser user = applicationUserRepository.findByUsername(username);
         Customer customer = null;
         
         for (UserRole role : user.getUserRole()) {
@@ -127,9 +123,9 @@ public class ProjectGroup02Service {
     }
     
     @Transactional
-    public ApplicationUser updateUserRole(int id, 
+    public ApplicationUser updateUserRole(String username, 
             HashSet<UserRole> role) {
-        ApplicationUser user = applicationUserRepository.findByapplicationUserId(id);
+        ApplicationUser user = applicationUserRepository.findByUsername(username);
         
         user.setUserRole(role);
         applicationUserRepository.save(user);
@@ -137,32 +133,19 @@ public class ProjectGroup02Service {
     }
     
     @Transactional
-    public void logoutUser(int id) {
-      ApplicationUser user = applicationUserRepository.findByapplicationUserId(id);
-      user.setIsLoggedIn(false);
-    }
-    
-    @Transactional
-    public void loginUser(int id) {
-       ApplicationUser user = applicationUserRepository.findByapplicationUserId(id);
-       user.setIsLoggedIn(true);
+    public void logoutUser(String username) {
+        ApplicationUser user = applicationUserRepository.findByUsername(username);
+        user.setIsLoggedIn(false);
     }
     
     @Transactional
     public boolean loginUser(String username, String password) {
-      Iterable<ApplicationUser> users = applicationUserRepository.findAll();
-      boolean authentificationTest = false;
-      
-       for (ApplicationUser user : users) {
-         if (user.getUsername().equals(username)) {
-            if (user.getPassword().equals(password)) {
-              user.setIsLoggedIn(true);
-              authentificationTest = true;
-              }
-            break;
-          }
-       }
-       return authentificationTest;
+        ApplicationUser user = applicationUserRepository.findByUsername(username);
+        if (user.getPassword().equals(password)) {
+          user.setIsLoggedIn(true);
+          return true;
+          }        
+        return false;
     }
     
 }

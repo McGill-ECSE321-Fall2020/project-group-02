@@ -18,6 +18,7 @@ private String ccNumber;
 public void setCcNumber(String value) {
     this.ccNumber = value;
 }
+@Id
 public String getCcNumber() {
     return this.ccNumber;
 }
@@ -37,13 +38,5 @@ public void setCvc(String value) {
 public String getCvc() {
     return this.cvc;
 }
-private int paymentCredentialsId;
 
-public void setPaymentCredentialsId(int value) {
-    this.paymentCredentialsId = value;
-}
-@Id
-public int getPaymentCredentialsId() {
-    return this.paymentCredentialsId;
-}
 }

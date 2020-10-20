@@ -84,7 +84,7 @@ public class TestProjectGroup02Persistence {
 
 		system.setArtGalleryId(1);
 
-		user.setApplicationUserId(2);
+		user.setUsername("2");
 
 		HashSet<ApplicationUser> users = new HashSet<ApplicationUser>();
 
@@ -114,7 +114,7 @@ public class TestProjectGroup02Persistence {
 		for(ApplicationUser userIter: system.getApplicationUsers()) {
 			user2 = userIter;
 		}
-		assertEquals(user2.getApplicationUserId(),2);
+		assertEquals(user2.getUsername(),"2");
 
 		assertEquals(system.getArtGalleryId(),1);
 
@@ -133,7 +133,7 @@ public class TestProjectGroup02Persistence {
 
 		addresses.add(address);
 
-		user.setApplicationUserId(1);
+		user.setUsername("1");
 
 		addressRepository.save(address);
 
@@ -141,7 +141,7 @@ public class TestProjectGroup02Persistence {
 
 		applicationUserRepository.save(user);
 
-		user = applicationUserRepository.findByapplicationUserId(1);
+		user = applicationUserRepository.findByUsername("1");
 
 		Address testAddress = null;
 
@@ -151,7 +151,7 @@ public class TestProjectGroup02Persistence {
 
 		assertEquals(testAddress.getAddressId(),2);
 
-		assertEquals(user.getApplicationUserId(),1);
+		assertEquals(user.getUsername(),"1");
 
 	}
 
@@ -355,17 +355,17 @@ public class TestProjectGroup02Persistence {
 
 	@Test
 	public void testPersistAndLoadPaymentCredentials() {
-		int paymentCredentials_Id= 6;
+		String paymentCredentials_Id= "6";
 
 		PaymentCredentials paymentCredentials = new PaymentCredentials();
 
-		paymentCredentials.setPaymentCredentialsId(paymentCredentials_Id);
+		paymentCredentials.setCcNumber(paymentCredentials_Id);
 
 		paymentCredentialsRepository.save(paymentCredentials);
 
-		paymentCredentials = paymentCredentialsRepository.findBypaymentCredentialsId(paymentCredentials_Id);
+		paymentCredentials = paymentCredentialsRepository.findByCcNumber(paymentCredentials_Id);
 
-		int id = paymentCredentials.getPaymentCredentialsId();
+		String id = paymentCredentials.getCcNumber();
 
 		assertEquals(id, paymentCredentials_Id);
 
