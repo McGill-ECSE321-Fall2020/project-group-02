@@ -1,8 +1,6 @@
 package ca.mcgill.ecse321.projectgroup02.service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,9 +17,11 @@ import ca.mcgill.ecse321.projectgroup02.dao.ServiceProviderRepository;
 import ca.mcgill.ecse321.projectgroup02.dao.ShoppingCartRepository;
 import ca.mcgill.ecse321.projectgroup02.model.Address;
 import ca.mcgill.ecse321.projectgroup02.model.ApplicationUser;
+import ca.mcgill.ecse321.projectgroup02.model.Artist;
+import ca.mcgill.ecse321.projectgroup02.model.Collection;
 import ca.mcgill.ecse321.projectgroup02.model.Customer;
+import ca.mcgill.ecse321.projectgroup02.model.Item;
 import ca.mcgill.ecse321.projectgroup02.model.PaymentCredentials;
-import ca.mcgill.ecse321.projectgroup02.model.ShoppingCart;
 import ca.mcgill.ecse321.projectgroup02.model.UserRole;
 
 @Service
@@ -52,11 +52,11 @@ public class ProjectGroup02Service {
   /**
    * Registers user based on information inputed. Verifies the validity of the information inputed.
    * 
+   * @author ryadammar1
    * @param username
    * @param email
    * @param password
    * @throws Exception
-   * @author ryadammar1
    */
   @Transactional
   public ApplicationUser createUser(String username, String email, String password) throws Exception {
@@ -79,17 +79,18 @@ public class ProjectGroup02Service {
     user.setPassword(password);
     user.setAccountCreationDate(java.time.LocalDate.now().toString());
     applicationUserRepository.save(user);
+    
     return user;
   }
 
   /**
    * Throws an exception for any user input that is not valid during registration.
    * 
+   * @author ryadammar1
    * @param username
    * @param email
    * @param password
    * @throws Exception
-   * @author ryadammar1
    */
   private void validateRegistrationInput(String username, String email, String password) throws Exception {
     if (username.length() < 8)
@@ -98,6 +99,9 @@ public class ProjectGroup02Service {
       throw new Exception("Email is not valid");
     if (password.length() < 8)
       throw new Exception("Password must have at least 8 characters");
+    if (applicationUserRepository.existsByUsername(username))
+      ;
+    throw new Exception("Username unavailable");
   }
 
   @Transactional
@@ -113,13 +117,13 @@ public class ProjectGroup02Service {
   /**
    * Adds payment credentials information to a user. Verifies that the user is a customer.
    * 
+   * @author ryadammar1
    * @param username
    * @param cardHolderName
    * @param ccNumber
    * @param expirationDate
    * @param cvc
    * @throws Exception
-   * @author ryadammar1
    */
   @Transactional
   public PaymentCredentials updateUserCredentials(String username, String cardHolderName, String ccNumber,
@@ -152,9 +156,9 @@ public class ProjectGroup02Service {
   /**
    * Sets the role(s) of a user based on the role(s) inputed
    * 
+   * @author ryadammar1
    * @param username
    * @param roles=
-   * @author ryadammar1
    */
   @Transactional
   public ApplicationUser updateUserRole(String username, UserRole... roles) {
@@ -168,6 +172,10 @@ public class ProjectGroup02Service {
     return user;
   }
 
+  /**
+   * @author ryadammar1
+   * @param username
+   */
   @Transactional
   public void logoutUser(String username) {
     ApplicationUser user = applicationUserRepository.findByUsername(username);
@@ -176,6 +184,11 @@ public class ProjectGroup02Service {
     applicationUserRepository.save(user);
   }
 
+  /**
+   * @author ryadammar1
+   * @param username
+   * @param password
+   */
   @Transactional
   public boolean loginUser(String username, String password) {
     ApplicationUser user = applicationUserRepository.findByUsername(username);
@@ -186,10 +199,11 @@ public class ProjectGroup02Service {
     }
     return false;
   }
-  
+
   /**
    * Adds address information to a user.
    * 
+   * @author ryadammar1
    * @param username
    * @param street
    * @param postalCode
@@ -197,10 +211,10 @@ public class ProjectGroup02Service {
    * @param country
    * @param city
    * @throws Exception
-   * @author ryadammar1
    */
   @Transactional
-  public Address updateUserAddress(String username, String street, String postalCode, String province, String country, String city) throws Exception {
+  public Address updateUserAddress(String username, String street, String postalCode, String province, String country,
+      String city) throws Exception {
     ApplicationUser user = applicationUserRepository.findByUsername(username);
     Address address = new Address();
     address.setCity(city);
@@ -209,29 +223,68 @@ public class ProjectGroup02Service {
     address.setProvince(province);
     address.setStreet(street);
     user.getAddress().add(address);
-    
+
     addressRepository.save(address);
     applicationUserRepository.save(user);
     return address;
   }
-  
+
+  /**
+   * Creates an item based on the input, assigns it to the user.
+   * The use must be an artist.
+   * The item's name must be unique in the artist's list of uploaded art.
+   * The item's unique id is encoded based on its name and the artist's username.
+   * 
+   * @param username
+   * @param name
+   * @param height
+   * @param width
+   * @param breadth
+   * @param creationDate
+   * @param description
+   * @param price
+   * @param link
+   * @param collection
+   * @throws Exception
+   */
   @Transactional
-  public ShoppingCart getShoppingCart(Customer customer) {
-  	ShoppingCart shoppingCart = (ShoppingCart) customer.getShoppingCart();
-  	return shoppingCart;
+  public void UploadArtwork(String username, String name, double height, double width, double breadth, String creationDate, String description, double price, String link, Collection collection) throws Exception {
+    ApplicationUser user = applicationUserRepository.findByUsername(username);
+    Artist artist = null;
+    for (UserRole role : user.getUserRole()) {
+      if (role instanceof Artist)
+        artist = (Artist) role;
+    }
+
+    if (artist == null)
+      throw new Exception("User must be an artist");
+    
+    for (Item item : artist.getItem()) {
+      if (item.getName().equals(name))
+        throw new Exception("Artist's items' name must be unique");
+    }
+    
+    Item item = new Item();
+    
+    String id = username+name;
+    item.setItemId(id.hashCode()); // Encoding the id
+    
+    item.setName(name);
+    item.setHeight(height);
+    item.setWidth(width);
+    item.setBreadth(breadth);
+    item.setCreationDate(creationDate);
+    item.setDescription(description);
+    item.setPrice(price);
+    item.setPathToImage(link);
+    item.setCollection(collection);
+    
+    artist.getItem().add(item);
+    item.setArtist(artist);
+    
+    itemRepository.save(item);
+    artistRepository.save(artist);
+    
   }
-  
-  @Transactional
-  public List<ShoppingCart> getAllShoppingCarts() {
-  	shoppingCartRepository.findAll();
-  	return toList(shoppingCartRepository.findAll());
-  }
-	private <T> List<T> toList(Iterable<T> iterable){
-		List<T> resultList = new ArrayList<T>();
-		for (T t : iterable) {
-			resultList.add(t);
-		}
-		return resultList;
-	}
-  
+
 }

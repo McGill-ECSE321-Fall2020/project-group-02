@@ -9,4 +9,5 @@ public interface ApplicationUserRepository extends CrudRepository<ApplicationUse
 
 	ApplicationUser findByUsername(String username);
 
+	boolean existsByUsername(String username);
 }

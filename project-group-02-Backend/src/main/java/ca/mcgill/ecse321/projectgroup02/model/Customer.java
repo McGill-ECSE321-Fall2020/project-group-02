@@ -29,17 +29,16 @@ public class Customer extends UserRole{
       this.paymentCredentials = paymentCredentialss;
    }
    
-   @ElementCollection //Resolves "Failed to load ApplicationContext"
-   private Set<ShoppingCart> shoppingCart;
+   private ShoppingCart shoppingCart;
    
-   @OneToMany
+   @OneToOne
    @NotFound(action = NotFoundAction.IGNORE)
-   public Set<ShoppingCart> getShoppingCart() {
+   public ShoppingCart getShoppingCart() {
       return this.shoppingCart;
    }
    
-   public void setShoppingCart(Set<ShoppingCart> shoppingCarts) {
-      this.shoppingCart = shoppingCarts;
+   public void setShoppingCart(ShoppingCart shoppingCart) {
+      this.shoppingCart = shoppingCart;
    }
    
    @ElementCollection //Resolves "Failed to load ApplicationContext"
