@@ -1,12 +1,8 @@
 package ca.mcgill.ecse321.projectgroup02.service;
-import java.util.Collection;
 import java.util.HashSet;
-
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import ca.mcgill.ecse321.projectgroup02.dao.AddressRepository;
 import ca.mcgill.ecse321.projectgroup02.dao.ApplicationUserRepository;
 import ca.mcgill.ecse321.projectgroup02.dao.ArtGallerySystemRepository;
@@ -18,8 +14,8 @@ import ca.mcgill.ecse321.projectgroup02.dao.ItemRepository;
 import ca.mcgill.ecse321.projectgroup02.dao.PaymentCredentialsRepository;
 import ca.mcgill.ecse321.projectgroup02.dao.ServiceProviderRepository;
 import ca.mcgill.ecse321.projectgroup02.dao.ShoppingCartRepository;
-import ca.mcgill.ecse321.projectgroup02.model.Address;
 import ca.mcgill.ecse321.projectgroup02.model.ApplicationUser;
+import ca.mcgill.ecse321.projectgroup02.model.Customer;
 import ca.mcgill.ecse321.projectgroup02.model.PaymentCredentials;
 import ca.mcgill.ecse321.projectgroup02.model.UserRole;
 
@@ -101,12 +97,31 @@ public class ProjectGroup02Service {
         return (applicationUserRepository.findAll());
     }
     
+    // Missing ID assignment, I will try to change the primary key (Ryad)
     @Transactional
     public ApplicationUser updateUserCredentials(int id, 
-            HashSet<PaymentCredentials> paymentCredentials) {
+            String cardHolderName, String ccNumber, String expirationDate, String cvc) throws Exception {
         ApplicationUser user = applicationUserRepository.findByapplicationUserId(id);
+        Customer customer = null;
         
-        user.setPaymentCredentials(paymentCredentials);
+        for (UserRole role : user.getUserRole()) {
+          if (role instanceof Customer)
+            customer = (Customer) role;
+        }
+        
+        if (customer == null) 
+          throw new Exception("User must be a customer");
+        
+        PaymentCredentials paymentCredentials = new PaymentCredentials();
+        paymentCredentials.setCardHolderName(cardHolderName);
+        paymentCredentials.setCcNumber(ccNumber);
+        paymentCredentials.setCvc(cvc);
+        paymentCredentials.setExpirationDate(expirationDate);
+        
+        customer.getPaymentCredentials().add(paymentCredentials);
+
+        paymentCredentialsRepository.save(paymentCredentials);
+        customerRepository.save(customer);
         applicationUserRepository.save(user);
         return user;
     }
