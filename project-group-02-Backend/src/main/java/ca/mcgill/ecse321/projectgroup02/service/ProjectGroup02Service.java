@@ -303,5 +303,46 @@ public class ProjectGroup02Service {
 	  return item;
   }
   
+  /**
+   * Adding an Item to a shoppingCart
+   * @param item
+   * @param customer
+   * @return true if successful
+   * @author Asmaa
+   */
   
+  public boolean addItemToShoppingCart(Item item, Customer customer) {
+	  ShoppingCart shoppingCart = customer.getShoppingCart(); // ASSOCIATION MODIFIED BY RYAD
+	  HashSet<Item> items = new HashSet<Item>();
+	  items.add(item);
+	  shoppingCart.setItem(items);
+	  shoppingCart.setIsEmpty(false);
+	  shoppingCartRepository.save(shoppingCart);
+	  return true;
+  }
+  /**
+   * Removing an item from a shopping cart
+   * @param item
+   * @param customer
+   * @return true if item is removed successfully, false if not
+   * @author Asmaa
+   */
+  public boolean removeItemFromShoppingCart(Item item, Customer customer) {
+	  ShoppingCart shoppingCart = customer.getShoppingCart();
+	  Set<Item> items = customer.getShoppingCart().getItem();   // ASSOCIATION MODIFIED BY RYAD
+	  boolean found = false;
+	  for(Item item1:items) {
+		  if(item1.equals(item)) {
+			  found = true;
+			  item1 = null;
+		  }
+	  }
+	  if(found == false) {
+		  throw new Exception("Item does not exist!");
+	  }
+	  
+	  shoppingCartRepository.save(shoppingCart);
+
+	  return found;
+  }
 }
