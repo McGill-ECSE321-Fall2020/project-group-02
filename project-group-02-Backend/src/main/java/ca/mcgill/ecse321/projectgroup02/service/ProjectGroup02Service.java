@@ -187,4 +187,26 @@ public class ProjectGroup02Service {
     return false;
   }
   
+  @Transactional
+  public ShoppingCart getShoppingCart(Customer customer) {
+  	ShoppingCart shoppingCart = (ShoppingCart) customer.getShoppingCart();
+  	return shoppingCart;
+  }
+  
+  
+  @Transactional
+  public List<ShoppingCart> getAllShoppingCarts() {
+  	shoppingCartRepository.findAll();
+  	return toList(shoppingCartRepository.findAll());
+  }
+  
+
+	private <T> List<T> toList(Iterable<T> iterable){
+		List<T> resultList = new ArrayList<T>();
+		for (T t : iterable) {
+			resultList.add(t);
+		}
+		return resultList;
+	}
+  
 }
