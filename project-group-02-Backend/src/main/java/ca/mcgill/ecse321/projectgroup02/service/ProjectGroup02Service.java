@@ -217,7 +217,7 @@ public class ProjectGroup02Service {
    * Creates an item for an artist and sets its attributes
    * @param artist
    * @param name
-   * @return
+   * @return Item
    * @throws Exception
    * @author Asmaa
    */
@@ -248,7 +248,7 @@ public class ProjectGroup02Service {
    * Returns Item by its name
    * 
    * @param name
-   * @return
+   * @return Item
    * @throws Exception
    * @author Asmaa
    */
@@ -269,7 +269,7 @@ public class ProjectGroup02Service {
   /**
    * Returns all items from the same artist
    * @param artist
-   * @return
+   * @return Iterable<Item>
    * @throws Exception
    * @author Asmaa
    */
@@ -283,8 +283,9 @@ public class ProjectGroup02Service {
    * @param width
    * @param height
    * @param price
-   * @return
+   * @return Item
  * @throws Exception 
+ * @author Asmaa
    */
   public Item updateItem(String name, double width, double height, double price, Artist artist, int id) throws Exception {
 	  Item item = itemRepository.findItemByitemId(id);
