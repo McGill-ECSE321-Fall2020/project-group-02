@@ -19,7 +19,10 @@ import ca.mcgill.ecse321.projectgroup02.dao.PaymentCredentialsRepository;
 import ca.mcgill.ecse321.projectgroup02.dao.ServiceProviderRepository;
 import ca.mcgill.ecse321.projectgroup02.dao.ShoppingCartRepository;
 import ca.mcgill.ecse321.projectgroup02.model.ApplicationUser;
+import ca.mcgill.ecse321.projectgroup02.model.Artist;
+import ca.mcgill.ecse321.projectgroup02.model.Collection;
 import ca.mcgill.ecse321.projectgroup02.model.Customer;
+import ca.mcgill.ecse321.projectgroup02.model.Item;
 import ca.mcgill.ecse321.projectgroup02.model.PaymentCredentials;
 import ca.mcgill.ecse321.projectgroup02.model.ShoppingCart;
 import ca.mcgill.ecse321.projectgroup02.model.UserRole;
@@ -186,27 +189,130 @@ public class ProjectGroup02Service {
     }
     return false;
   }
-  
+  /**
+   * Returns the shoppingCart of a customer
+   * @param customer
+   * @return ShoppingCart
+   * @author Asmaa
+   */
   @Transactional
   public ShoppingCart getShoppingCart(Customer customer) {
-  	ShoppingCart shoppingCart = (ShoppingCart) customer.getShoppingCart();
+  	ShoppingCart shoppingCart = customer.getShoppingCart();  // NEED TO MODIFY THE ASSOCIATION HERE
   	return shoppingCart;
   }
   
-  
+  /**
+   * Returns all the shoppingCarts currently in the system.
+   * @return Iterable<ShoppingCart>
+   * @author Asmaa
+   */
   @Transactional
-  public List<ShoppingCart> getAllShoppingCarts() {
+  public Iterable<ShoppingCart> getAllShoppingCarts() {
   	shoppingCartRepository.findAll();
-  	return toList(shoppingCartRepository.findAll());
+  	return (shoppingCartRepository.findAll());
   }
   
+  /**
+   * Creates an item for an artist and sets its attributes
+   * @param artist
+   * @param name
+   * @return
+   * @throws Exception
+   * @author Asmaa
+   */
+  @Transactional
+  public Item createItem(Artist artist, String name, double height, double width, String creationDate, double price, Collection collection, int id) throws Exception {
+	  Iterable<Item> items = itemRepository.findAll();
+	  for(Item item: items) {
+		  if(name.equals(item.getName())) {
+		        throw new Exception("Name of item already used!");
+		  }
+	  }
+  	Item item = new Item();
+  	item.setArtist(artist);
+  	item.setName(name);
+  	item.setInStock(true);
+  	item.setHeight(height);
+  	item.setWidth(width);
+  	item.setPrice(price);
+  	item.setCreationDate(creationDate);
+  	item.setCollection(collection);
+  	item.setItemId(id);
+  	itemRepository.save(item);
+  	return item;
+  }
+  /**
+   * Returns Item by its name
+   * 
+   * @param name
+   * @return
+   * @throws Exception
+   * @author Asmaa
+   */
+  public Item getItemByName(String name) throws Exception {
+	  Iterable<Item> items = itemRepository.findAll();
+	  Item item1 = null;
+	  for(Item item: items) {
+		  if(name.equals(item.getName())) {
+		        item1 = item;
+		  }
+	  }
+	  if(item1 == null) {
+		  throw new Exception("Item does not exist!");
+	  }
+	  return item1;
+  }
+  
+  /**
+   * Returns all items from the same artist
+   * @param artist
+   * @return
+   * @throws Exception
+   * @author Asmaa
+   */
+  public ArrayList<Item> getItemsByArtist(Artist artist) throws Exception{
+	  Iterable<Item> items = itemRepository.findAll();
+	  ArrayList<Item> listOfItems = null;
+	  boolean artistExists = false;
+	  for(Item item: items) {
+		  if(artist.equals(item.getArtist())) {
+			  artistExists = true;
+		        listOfItems.add(item);
+		  }
+	  }
+	  if(artistExists == false) {
+			 throw new Exception("Artist does not exist.");
+	  }
+	 if(listOfItems == null) {
+		 throw new Exception("Artist does not have any items.");
+	 }
+	  return listOfItems;
+  }
+  
+  /**
+   * Update all attributes of an item
+   * @param name
+   * @param width
+   * @param height
+   * @param price
+   * @return
+ * @throws Exception 
+   */
+  public Item updateItem(String name, double width, double height, double price, Artist artist, int id) throws Exception {
+	  Item item = itemRepository.findItemByitemId(id);
 
-	private <T> List<T> toList(Iterable<T> iterable){
-		List<T> resultList = new ArrayList<T>();
-		for (T t : iterable) {
-			resultList.add(t);
-		}
-		return resultList;
-	}
+	  if(item == null) {
+		  throw new Exception("Item does not exist!");
+	  }
+	  item.setArtist(artist);
+	  item.setHeight(height);
+	  item.setItemId(id);
+	  item.setWidth(width);
+	  item.setPrice(price);
+	  
+	  itemRepository.save(item);
+	  return item;
+  }
+  
   
 }
