@@ -286,7 +286,6 @@ public class ProjectGroup02Service {
    */
   @Transactional
   public boolean UploadArtwork(String username, String name, double height, double width, double breadth, String creationDate, String description, double price, String imageUrl, String collection) throws Exception {
-    ApplicationUser user = applicationUserRepository.findByUsername(username);
     Artist artist;
     
     try {
@@ -370,7 +369,7 @@ public class ProjectGroup02Service {
   }
 
   /**
-   * Retrieves user's shopping cart and add item.
+   * Retrieves user's shopping cart and adds an item.
    * User must be a customer.
    * 
    * @author Ryad Ammar
@@ -400,6 +399,48 @@ public class ProjectGroup02Service {
   }
   
   /**
+   * Retrieves user's shopping cart and removes an item.
+   * User must be a customer.
+   * 
+   * @author Ryad Ammar
+   * @param usernameOfClient
+   * @param nameOfItem
+   * @param usernameOfArtist
+   * @throws Exception
+   */
+  @Transactional
+  public boolean removeFromShoppingCart (String usernameOfClient, String nameOfItem, String usernameOfArtist) throws Exception {
+    Item item = itemRepository.findItemByitemId((usernameOfArtist+nameOfItem).hashCode());
+    ApplicationUser user = applicationUserRepository.findByUsername(usernameOfClient);
+    Customer customer;
+    
+    try {
+      customer = customerRepository.findCustomerByuserRoleId((usernameOfClient+"customer").hashCode());
+    } catch(Exception e) {
+      throw new Exception("User must be a customer");
+    }
+    
+    customer.getShoppingCart().getItem().remove(item);
+    
+    customerRepository.save(customer);
+    applicationUserRepository.save(user);
+    
+    return true;
+  }
+  
+  public List<Item> getItemsFromShoppingCart(String usernameOfClient) throws Exception{
+    Customer customer;
+    
+    try {
+      customer = customerRepository.findCustomerByuserRoleId((usernameOfClient+"customer").hashCode());
+    } catch(Exception e) {
+      throw new Exception("User must be a customer");
+    }
+    
+    return toList(customer.getShoppingCart().getItem());
+  }
+  
+  /**
    * Creates new order based on input information and customer's current shopping cart state.
    * Adds commissions to the system's total profit.
    * Adds to the artists' balance.
@@ -415,7 +456,6 @@ public class ProjectGroup02Service {
   @Transactional
   public ItemOrder checkout(String username, DeliveryMethod deliveryMethod) throws Exception {
     
-    ApplicationUser user = applicationUserRepository.findByUsername(username);
     ArtGallerySystem artGallerySystem = null;
      
     for (ArtGallerySystem ags : artGallerySystemRepository.findAll())
