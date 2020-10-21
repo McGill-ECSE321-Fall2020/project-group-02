@@ -334,7 +334,7 @@ public class ProjectGroup02Service {
 	  for(Item item1:items) {
 		  if(item1.equals(item)) {
 			  found = true;
-			  item1 = null;
+			  items.remove(item1);
 		  }
 	  }
 	  if(found == false) {
