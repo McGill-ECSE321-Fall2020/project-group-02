@@ -1,22 +1,7 @@
 package ca.mcgill.ecse321.projectgroup02.dto;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-
 import java.util.Collections;
 import java.util.Set;
-import javax.persistence.OneToMany;
 
 public class ArtGallerySystemDTO{
 	private Set<ApplicationUserDTO> applicationUsers;

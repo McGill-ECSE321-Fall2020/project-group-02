@@ -17,7 +17,6 @@ import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-@Entity
 public class ShoppingCartDTO{
 	private double totalPrice;
 	private double numberOfItems;
