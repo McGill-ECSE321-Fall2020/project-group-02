@@ -436,7 +436,7 @@ public class ProjectGroup02Service {
     } catch(Exception e) {
       throw new Exception("User must be a customer");
     }
-    
+     
     return toList(customer.getShoppingCart().getItem());
   }
   
