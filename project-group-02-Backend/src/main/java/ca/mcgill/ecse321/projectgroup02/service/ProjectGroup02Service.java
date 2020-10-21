@@ -182,7 +182,7 @@ public class ProjectGroup02Service {
         ShoppingCart shoppingCart = new ShoppingCart();
         
         shoppingCart.setShoppingCartId((username+"sc").hashCode()); //Generates the ID using hashCode encoding
-        customer.setUserRoleId((username+"custmer").hashCode());
+        customer.setUserRoleId((username+"customer").hashCode());
         customer.setShoppingCart(shoppingCart);
         customer.setApplicationUser(user);
         
@@ -384,15 +384,13 @@ public class ProjectGroup02Service {
   public boolean addToShoppingCart (String usernameOfClient, String nameOfItem, String usernameOfArtist) throws Exception {
     Item item = itemRepository.findItemByitemId((usernameOfArtist+nameOfItem).hashCode());
     ApplicationUser user = applicationUserRepository.findByUsername(usernameOfClient);
-    Customer customer = null;
+    Customer customer;
     
-    for (UserRole role : user.getUserRole()) {
-      if (role instanceof Customer)
-        customer = (Customer) role;
-    }
-    
-    if (customer == null)
+    try {
+      customer = customerRepository.findCustomerByuserRoleId((usernameOfClient+"customer").hashCode());
+    } catch(Exception e) {
       throw new Exception("User must be a customer");
+    }
     
     customer.getShoppingCart().getItem().add(item);
 
