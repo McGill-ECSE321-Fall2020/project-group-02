@@ -79,8 +79,8 @@ public class ProjectGroup02Service {
     ApplicationUser user = new ApplicationUser();
     Iterable<ApplicationUser> users = applicationUserRepository.findAll();
     for (ApplicationUser user_ : users) {
-      if (user_.getEmail().equals(email) || user_.getUsername().equals(username)) {
-        throw new Exception("Username/Email already in use");
+      if (user_.getEmail().equals(email)) {
+        throw new Exception("Email already in use");
       }
     }
     user.setUsername(username);
@@ -91,7 +91,7 @@ public class ProjectGroup02Service {
     
     return user;
   }
-
+  
   /**
    * Throws an exception for any user input that is not valid during registration.
    * 
@@ -108,9 +108,8 @@ public class ProjectGroup02Service {
       throw new Exception("Email is not valid");
     if (password.length() < 8)
       throw new Exception("Password must have at least 8 characters");
-    if (applicationUserRepository.existsByUsername(username));
-    
-    throw new Exception("Username unavailable");
+    if (applicationUserRepository.existsByUsername(username))
+      throw new Exception("Username unavailable");
   }
 
   @Transactional
@@ -138,15 +137,13 @@ public class ProjectGroup02Service {
   public PaymentCredentials updateUserCredentials(String username, String cardHolderName, String ccNumber,
       String expirationDate, String cvc) throws Exception {
     ApplicationUser user = applicationUserRepository.findByUsername(username);
-    Customer customer = null;
-
-    for (UserRole role : user.getUserRole()) {
-      if (role instanceof Customer)
-        customer = (Customer) role;
-    }
-
-    if (customer == null)
+    Customer customer;
+    
+    try {
+      customer = customerRepository.findCustomerByuserRoleId((username+"customer").hashCode());
+    } catch(Exception e) {
       throw new Exception("User must be a customer");
+    }
 
     PaymentCredentials paymentCredentials = new PaymentCredentials();
     paymentCredentials.setCardHolderName(cardHolderName);
@@ -172,7 +169,7 @@ public class ProjectGroup02Service {
    * @param roles=
    */
   @Transactional
-  public ApplicationUser updateUserRole(String username, String... roles) {
+  public ApplicationUser setUserRole(String username, String... roles) {
     ApplicationUser user = applicationUserRepository.findByUsername(username);
     HashSet<UserRole> roles_ = new HashSet<UserRole>();
     
@@ -202,7 +199,7 @@ public class ProjectGroup02Service {
         roles_.add(artist);
       }
     }
-
+    
     user.setUserRole(roles_);
     applicationUserRepository.save(user);
     return user;
@@ -285,25 +282,25 @@ public class ProjectGroup02Service {
    * @throws Exception
    */
   @Transactional
-  public boolean UploadArtwork(String username, String name, double height, double width, double breadth, String creationDate, String description, double price, String imageUrl, String collection) throws Exception {
+  public boolean uploadArtwork(String username, String artworkName, double height, double width, double breadth, String creationDate, String description, double price, String imageUrl, String collection) throws Exception {
     Artist artist;
     
     try {
       artist = artistRepository.findByuserRoleId((username+"artist").hashCode());
     } catch(Exception e) {
-      throw new Exception("User must be a customer");
+      throw new Exception("User must be a artist");
     }
     
     for (Item item : artist.getItem()) {
-      if (item.getName().equals(name))
+      if (item.getName().equals(artworkName))
         throw new Exception("Artist's items' name must be unique");
     }
     
     Item item = new Item();
     
-    item.setItemId((username+name).hashCode()); // Generate the ID using hashCode encoding
+    item.setItemId((username+artworkName).hashCode()); // Generate the ID using hashCode encoding
     
-    item.setName(name);
+    item.setName(artworkName);
     item.setHeight(height);
     item.setWidth(width);
     item.setBreadth(breadth);
@@ -392,6 +389,7 @@ public class ProjectGroup02Service {
     
     customer.getShoppingCart().getItem().add(item);
 
+    shoppingCartRepository.save(customer.getShoppingCart());
     customerRepository.save(customer);
     applicationUserRepository.save(user);
     
@@ -422,6 +420,7 @@ public class ProjectGroup02Service {
     
     customer.getShoppingCart().getItem().remove(item);
     
+    shoppingCartRepository.save(customer.getShoppingCart());
     customerRepository.save(customer);
     applicationUserRepository.save(user);
     
@@ -448,6 +447,7 @@ public class ProjectGroup02Service {
    * The customer must have enough balance.
    * The bought items are removed from the shop
    * 
+   * @author Ryad Ammar
    * @param username
    * @param deliveryMethod
    * @throws Exception
@@ -484,17 +484,16 @@ public class ProjectGroup02Service {
       totalPrice += item.getPrice();
     
     if (customer.getApplicationUser().getBalance() < (1+taxePercentage)*totalPrice)
-      throw new Exception("Insufisant funds");
+      throw new Exception("Insufficient funds");
     
     for (Item item : customer.getShoppingCart().getItem()) {
       addToBalance(item.getArtist().getApplicationUser(), (1-commissionPercentage) * item.getPrice());
       addToBalance(artGallerySystem, commissionPercentage * item.getPrice());
       
       order.getItem().add(item);
-      itemRepository.delete(item); // Item is removed from the shop after its bought
     }
     
-    addToBalance(customer.getApplicationUser(), (1+taxePercentage)*totalPrice);
+    addToBalance(customer.getApplicationUser(), -(1+taxePercentage)*totalPrice);
    
     itemOrderRepository.save(order);
     
@@ -509,21 +508,19 @@ public class ProjectGroup02Service {
    * @param applicationUser
    * @param value
    */
-  public void addToBalance(ApplicationUser applicationUser, double value) {
+  private void addToBalance(ApplicationUser applicationUser, double value) {
     double balance = applicationUser.getBalance() + value;
     applicationUser.setBalance(balance);
     
     applicationUserRepository.save(applicationUser);
   }
   
-  public void addToBalance(ArtGallerySystem system, double value) {
+  private void addToBalance(ArtGallerySystem system, double value) {
     double balance = system.getTotalProfit() + value;
     system.setTotalProfit(balance);
     
     artGallerySystemRepository.save(system);
   }
-  
-  //public add balance
   
   /**
    * Helper method.
