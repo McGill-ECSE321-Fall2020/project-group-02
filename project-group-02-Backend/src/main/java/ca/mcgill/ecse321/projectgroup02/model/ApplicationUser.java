@@ -30,6 +30,14 @@ this.username = value;
 public String getUsername() {
 return this.username;
     }
+private double balance;
+
+public void setBalance(double value) {
+this.balance = value;
+    }
+public double getBalance() {
+return this.balance;
+    }
 private String email;
 
 public void setEmail(String value) {

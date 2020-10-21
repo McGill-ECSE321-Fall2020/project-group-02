@@ -8,6 +8,5 @@ import ca.mcgill.ecse321.projectgroup02.model.Item;
 public interface ItemRepository extends CrudRepository<Item, String>{
 
 	Item findItemByitemId(int id);
-
 	
 }

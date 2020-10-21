@@ -18,30 +18,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 public class ShoppingCart{
-   private double totalPrice;
 
-public void setTotalPrice(double value) {
-    this.totalPrice = value;
-}
-public double getTotalPrice() {
-    return this.totalPrice;
-}
-private double numberOfItems;
-
-public void setNumberOfItems(double value) {
-    this.numberOfItems = value;
-}
-public double getNumberOfItems() {
-    return this.numberOfItems;
-}
-private boolean isEmpty;
-
-public void setIsEmpty(boolean value) {
-    this.isEmpty = value;
-}
-public boolean isIsEmpty() {
-    return this.isEmpty;
-}
 private int shoppingCartId;
 
 public void setShoppingCartId(int value) {
