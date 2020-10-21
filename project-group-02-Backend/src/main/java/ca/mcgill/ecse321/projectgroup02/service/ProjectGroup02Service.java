@@ -287,14 +287,13 @@ public class ProjectGroup02Service {
   @Transactional
   public boolean UploadArtwork(String username, String name, double height, double width, double breadth, String creationDate, String description, double price, String imageUrl, String collection) throws Exception {
     ApplicationUser user = applicationUserRepository.findByUsername(username);
-    Artist artist = null;
-    for (UserRole role : user.getUserRole()) {
-      if (role instanceof Artist)
-        artist = (Artist) role;
+    Artist artist;
+    
+    try {
+      artist = artistRepository.findByuserRoleId((username+"artist").hashCode());
+    } catch(Exception e) {
+      throw new Exception("User must be a customer");
     }
-
-    if (artist == null)
-      throw new Exception("User must be an artist");
     
     for (Item item : artist.getItem()) {
       if (item.getName().equals(name))
@@ -424,16 +423,14 @@ public class ProjectGroup02Service {
     
     if (artGallerySystem == null)
       throw new Exception("ArtGallerySystem is null");
+   
+    Customer customer;
     
-    Customer customer = null;
-    
-    for (UserRole role : user.getUserRole()) {
-      if (role instanceof Customer)
-        customer = (Customer) role;
-    }
-    
-    if (customer == null)
+    try {
+      customer = customerRepository.findCustomerByuserRoleId((username+"customer").hashCode());
+    } catch(Exception e) {
       throw new Exception("User must be a customer");
+    }
     
     ItemOrder order = new ItemOrder();
     order.setCustomer(customer);
