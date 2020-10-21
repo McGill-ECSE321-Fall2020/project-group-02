@@ -408,13 +408,15 @@ public class ProjectGroup02Service {
    * Adds to the artists' balance.
    * Removes from the customers total balance.
    * The customer must have enough balance.
+   * The bought items are removed from the shop
    * 
    * @param username
    * @param deliveryMethod
    * @throws Exception
+   * @return ItemOrder
    */
   @Transactional
-  public void checkout(String username, DeliveryMethod deliveryMethod) throws Exception {
+  public ItemOrder checkout(String username, DeliveryMethod deliveryMethod) throws Exception {
     
     ApplicationUser user = applicationUserRepository.findByUsername(username);
     ArtGallerySystem artGallerySystem = null;
@@ -454,11 +456,14 @@ public class ProjectGroup02Service {
       addToBalance(artGallerySystem, commissionPercentage * item.getPrice());
       
       order.getItem().add(item);
+      itemRepository.delete(item); // Item is removed from the shop after its bought
     }
     
     addToBalance(customer.getApplicationUser(), (1+taxePercentage)*totalPrice);
    
     itemOrderRepository.save(order);
+    
+    return order;
   }
   
   /**
