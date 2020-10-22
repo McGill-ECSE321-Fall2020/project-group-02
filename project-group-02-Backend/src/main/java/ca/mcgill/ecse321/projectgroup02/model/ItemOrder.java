@@ -35,15 +35,7 @@ public String getItemOrderDate() {
     return this.itemOrderDate;
 }
 
-//private double totalPrice;
-//
-//public void setTotalPrice(double total) {
-//	this.totalPrice = total;
-//}
-//
-//public double getTotalPrice() {
-//	return this.totalPrice;
-//}
+
    private Customer customer;
    
    @ManyToOne(optional=true)
@@ -79,6 +71,14 @@ public String getItemOrderDate() {
       this.item = items;
    }
    
-   
+   private double totalPrice;
+
+   public void setTotalPrice(double total) {
+   	this.totalPrice = total;
+   }
+
+   public double getTotalPrice() {
+   	return this.totalPrice;
+   }
    
    }

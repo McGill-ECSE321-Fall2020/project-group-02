@@ -29,6 +29,16 @@ public int getShoppingCartId() {
     return this.shoppingCartId;
 }
 
+private double totalPrice;
+
+public void setTotalPrice(double total) {
+	this.totalPrice = total;
+}
+
+public double getTotalPrice() {
+	return this.totalPrice;
+}
+
 @ElementCollection //Resolves "Failed to load ApplicationContext"
 private Set<Item> item;
 

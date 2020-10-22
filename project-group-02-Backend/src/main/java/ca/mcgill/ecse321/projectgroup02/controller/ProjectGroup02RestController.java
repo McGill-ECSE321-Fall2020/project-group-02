@@ -140,7 +140,17 @@ public class ProjectGroup02RestController {
 		if(sc == null) {
 			throw new IllegalArgumentException("There is no such Shopping Cart!");
 		}
-		ShoppingCartDTO scDTO = new ShoppingCartDTO(sc.getShoppingCartId());
+		
+		Set<Item> iSet = sc.getItem();
+		Set<ItemDTO> iDTOSet = new HashSet<ItemDTO>();
+		
+		for(Item i : iSet) {
+			ItemDTO iDTO = convertToDto(i);
+			iDTOSet.add(iDTO);
+			
+		}
+		
+		ShoppingCartDTO scDTO = new ShoppingCartDTO(sc.getShoppingCartId(), sc.getTotalPrice(), iDTOSet);
 		
 		return scDTO;
 	}
@@ -159,7 +169,17 @@ public class ProjectGroup02RestController {
 		if(a == null) {
 			throw new IllegalArgumentException("There is no such Artist");
 		}
-		ArtistDTO aDTO = new ArtistDTO(a.getDescription());
+		
+		Set<Item> iSet = a.getItem();
+		Set<ItemDTO> iDTOSet = new HashSet<ItemDTO>();
+		
+		for(Item i : iSet) {
+			ItemDTO iDTO = convertToDto(i);
+			iDTOSet.add(iDTO);
+			
+		}
+		
+		ArtistDTO aDTO = new ArtistDTO(a.getDescription(), iDTOSet);
 		
 		return aDTO;
 	}
@@ -178,7 +198,17 @@ public class ProjectGroup02RestController {
 		if(c == null) {
 			throw new IllegalArgumentException("There is no such Collection");
 		}
-		CollectionDTO cDTO = new CollectionDTO(c.getName(), c.getDescription(), c.getPathToImage());
+		
+		Set<Item> iSet = c.getItem();
+		Set<ItemDTO> iDTOSet = new HashSet<ItemDTO>();
+		
+		for(Item i : iSet) {
+			ItemDTO iDTO = convertToDto(i);
+			iDTOSet.add(iDTO);
+			
+		}
+		
+		CollectionDTO cDTO = new CollectionDTO(c.getName(), c.getDescription(), c.getPathToImage(), iDTOSet);
 		
 		return cDTO;
 	}
@@ -192,6 +222,9 @@ public class ProjectGroup02RestController {
 	   * @throws Exception
 	   * @return cDTO
 	   */
+	
+	//TODO	ADD ITEM ORDER ASSOCIATION
+	
 	
 	private CustomerDTO convertToDto(Customer c) {
 		if(c == null) {
@@ -241,12 +274,21 @@ public class ProjectGroup02RestController {
 			
 		}
 		
+		Set<Item> iSet = ags.getItem();
+		Set<ItemDTO> iDTOSet = new HashSet<ItemDTO>();
+		
+		for(Item i : iSet) {
+			ItemDTO iDTO = convertToDto(i);
+			iDTOSet.add(iDTO);
+			
+		}
+		
 		Address a = ags.getAddress();
 		
 		AddressDTO aDTO = convertToDto(a);
 		
 		
-		ArtGallerySystemDTO agsDTO = new ArtGallerySystemDTO(uDTOSet, ags.getTotalProfit(), ags.getArtGalleryId(), aDTO);
+		ArtGallerySystemDTO agsDTO = new ArtGallerySystemDTO(uDTOSet, ags.getTotalProfit(), ags.getArtGalleryId(), aDTO, iDTOSet);
 		
 		return agsDTO;
 	}
