@@ -296,35 +296,35 @@ public class ProjectGroup02RestController {
 	   * @return ioDTO
 	   */
 	
-	private ItemOrderDTO convertToDto(ItemOrder io) {
-		if(io == null) {
-			throw new IllegalArgumentException("There is no such Item");
-		}
-		
-		
-		
-		
-		Customer c = io.getCustomer();
-		
-		CustomerDTO cDTO = convertToDto(c);
-		
-		Set<Item> iSet = io.getItem();
-		Set<ItemDTO> iDTOSet = new HashSet<ItemDTO>();
-		
-		for(Item i : iSet) {
-			ItemDTO idto = convertToDto(i);
-			iDTOSet.add(idto);
-			
-		}
-		
-		
-		double commissionTotal = this.commissionPercentage*io.getTotalPrice();
-		
-	//	ItemOrderDTO ioDTO = new ItemOrderDTO(io.getItemOrderId(), this.commissionPercentage, commissionTotal, io.getItemOrderDate(),
-	//			io.getTotalPrice(), this.taxePercentage, cDTO, new DeliveryMethodDTO(), iDTOSet);										//*****DISCUSS TAXES WITH VADIM*****
-		ItemOrderDTO ioDTO = null;
-		return ioDTO;
-	}
+//	private ItemOrderDTO convertToDto(ItemOrder io) {
+//		if(io == null) {
+//			throw new IllegalArgumentException("There is no such Item");
+//		}
+//		
+//		
+//		
+//		
+//		Customer c = io.getCustomer();
+//		
+//		CustomerDTO cDTO = convertToDto(c);
+//		
+//		Set<Item> iSet = io.getItem();
+//		Set<ItemDTO> iDTOSet = new HashSet<ItemDTO>();
+//		
+//		for(Item i : iSet) {
+//			ItemDTO idto = convertToDto(i);
+//			iDTOSet.add(idto);
+//			
+//		}
+//		
+//		
+//		double commissionTotal = this.commissionPercentage*io.getTotalPrice();
+//		
+//		ItemOrderDTO ioDTO = new ItemOrderDTO(io.getItemOrderId(), this.commissionPercentage, commissionTotal, io.getItemOrderDate(),
+//				io.getTotalPrice(), this.taxePercentage, cDTO, new DeliveryMethodDTO(), iDTOSet);										//*****DISCUSS TAXES WITH VADIM*****
+//		
+//		return ioDTO;
+//	}
 	
 	
 }
