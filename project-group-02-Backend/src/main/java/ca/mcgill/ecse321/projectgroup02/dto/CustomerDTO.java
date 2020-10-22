@@ -10,48 +10,49 @@ import org.hibernate.annotations.NotFoundAction;
 public class CustomerDTO extends UserRoleDTO{
 
 	private Set<PaymentCredentialsDTO> paymentCredentials;
-	private Set<ShoppingCartDTO> shoppingCarts;
+	private ShoppingCartDTO shoppingCart;
 	private Set<ItemOrderDTO> itemOrders;
 
 	@SuppressWarnings("unchecked")
 	public CustomerDTO() {
-		ShoppingCartDTO newShoppingCart = new ShoppingCartDTO();
-		Set<ShoppingCartDTO> shopCarts = new HashSet<ShoppingCartDTO>();
-		shopCarts.add(newShoppingCart);
 		
-		this.shoppingCarts = shopCarts;
+		
+		this.shoppingCart = new ShoppingCartDTO();
 		this.itemOrders = Collections.EMPTY_SET;
 		this.paymentCredentials = Collections.EMPTY_SET;
 
 	}
 	
-	public CustomerDTO(Set<PaymentCredentialsDTO> paymentCredentials, Set<ShoppingCartDTO> shoppingCarts, Set<ItemOrderDTO> itemOrders) {
+	public CustomerDTO(Set<PaymentCredentialsDTO> paymentCredentials, ShoppingCartDTO shoppingCart, Set<ItemOrderDTO> itemOrders) {
 		this.paymentCredentials = paymentCredentials;
-		this.shoppingCarts = shoppingCarts;
-		this.itemOrders = itemOrders;
-	}
-	
-	public CustomerDTO(Set<PaymentCredentialsDTO> paymentCredentials, Set<ItemOrderDTO> itemOrders ) {
-		ShoppingCartDTO newShoppingCart = new ShoppingCartDTO();
-		Set<ShoppingCartDTO> shopCarts = new HashSet<ShoppingCartDTO>();
-		shopCarts.add(newShoppingCart);
-		
-		this.paymentCredentials = paymentCredentials;
-		this.shoppingCarts = shopCarts;
+		this.shoppingCart = shoppingCart;
 		this.itemOrders = itemOrders;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public CustomerDTO(Set<PaymentCredentialsDTO> paymentCredentials) {
-		ShoppingCartDTO newShoppingCart = new ShoppingCartDTO();
-		Set<ShoppingCartDTO> shopCarts = new HashSet<ShoppingCartDTO>();
-		shopCarts.add(newShoppingCart);
-		
+	public CustomerDTO(Set<PaymentCredentialsDTO> paymentCredentials, ShoppingCartDTO shoppingCart) {
+	
 		this.paymentCredentials = paymentCredentials;
-		this.shoppingCarts = shopCarts;
+		this.shoppingCart = shoppingCart;
 		this.itemOrders = Collections.EMPTY_SET;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public CustomerDTO(ShoppingCartDTO shoppingCart, int n) {
+		
+		this.paymentCredentials = Collections.EMPTY_SET;
+		this.shoppingCart = shoppingCart;
+		this.itemOrders = Collections.EMPTY_SET;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public CustomerDTO(Set<PaymentCredentialsDTO> paymentCredentials) {
+		
+		
+		this.paymentCredentials = paymentCredentials;
+		this.shoppingCart = new ShoppingCartDTO();
+		this.itemOrders = Collections.EMPTY_SET;
+	}
 	
 	public Set<PaymentCredentialsDTO> getPaymentCredentials() {
 		return this.paymentCredentials;
@@ -61,12 +62,12 @@ public class CustomerDTO extends UserRoleDTO{
 		this.paymentCredentials = paymentCredentialss;
 	}
 
-	public Set<ShoppingCartDTO> getShoppingCart() {
-		return this.shoppingCarts;
+	public ShoppingCartDTO getShoppingCart() {
+		return this.shoppingCart;
 	}
 
-	public void setShoppingCart(Set<ShoppingCartDTO> shoppingCarts) {
-		this.shoppingCarts = shoppingCarts;
+	public void setShoppingCart(ShoppingCartDTO shoppingCarts) {
+		this.shoppingCart = shoppingCarts;
 	}
 
 	public Set<ItemOrderDTO> getItemOrder() {

@@ -26,6 +26,16 @@ public class ApplicationUserDTO{
 		this.artGallerySystem = artGallerySystem;
 		this.address = new HashSet<AddressDTO>();
 	}
+	
+	public ApplicationUserDTO(String accountCreationDate, String username, String email, String password, String phoneNumber) {
+		this.accountCreationDate = accountCreationDate;
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.phoneNumber = phoneNumber;
+		this.artGallerySystem = new ArtGallerySystemDTO();
+		this.address = new HashSet<AddressDTO>();
+	}
 
 	public ApplicationUserDTO(String accountCreationDate, String username, String email, String password, String phoneNumber, ArtGallerySystemDTO artGallerySystem, Set<AddressDTO> address) {
 		this.accountCreationDate = accountCreationDate;

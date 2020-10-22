@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.projectgroup02.dto;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 public class ArtGallerySystemDTO{
@@ -16,6 +17,14 @@ public class ArtGallerySystemDTO{
 		this.artGalleryId = artGalleryId;
 		this.address = address;
 		this.items = items;
+	}
+	
+	public ArtGallerySystemDTO(Set<ApplicationUserDTO> users, double totalProfit, int artGalleryId, AddressDTO address) {
+		this.applicationUsers = users;
+		this.totalProfit = totalProfit;
+		this.artGalleryId = artGalleryId;
+		this.address = address;
+		this.items = new HashSet<ItemDTO>();
 	}
 	
 	public ArtGallerySystemDTO() {}
