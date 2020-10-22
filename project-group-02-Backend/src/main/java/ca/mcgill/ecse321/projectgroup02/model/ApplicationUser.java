@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.projectgroup02.model;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -84,7 +85,7 @@ public void setArtGallerySystem(ArtGallerySystem artGallerySystem) {
 @ElementCollection //Resolves "Failed to load ApplicationContext"
 private Set<UserRole> userRole;
 
-@OneToMany
+@OneToMany(cascade=CascadeType.ALL)
 @NotFound(action = NotFoundAction.IGNORE) 
 public Set<UserRole> getUserRole() {
    return this.userRole;

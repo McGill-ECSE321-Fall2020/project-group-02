@@ -71,14 +71,6 @@ public String getItemOrderDate() {
       this.item = items;
    }
    
-   private double totalPrice;
-
-   public void setTotalPrice(double total) {
-   	this.totalPrice = total;
-   }
-
-   public double getTotalPrice() {
-   	return this.totalPrice;
-   }
+ 
    
    }

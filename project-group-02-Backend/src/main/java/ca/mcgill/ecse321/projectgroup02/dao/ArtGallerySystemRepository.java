@@ -7,7 +7,7 @@ import ca.mcgill.ecse321.projectgroup02.model.ArtGallerySystem;
 @Repository
 public interface ArtGallerySystemRepository extends CrudRepository<ArtGallerySystem, String> {
 
-	ArtGallerySystem findByartGalleryId(int userID);
+	ArtGallerySystem findByartGalleryId(int artGalleryID);
 
 	
 }
