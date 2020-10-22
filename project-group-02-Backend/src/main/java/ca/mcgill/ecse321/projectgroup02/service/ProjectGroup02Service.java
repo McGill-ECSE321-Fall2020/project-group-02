@@ -21,11 +21,13 @@ import ca.mcgill.ecse321.projectgroup02.model.Address;
 import ca.mcgill.ecse321.projectgroup02.model.ApplicationUser;
 import ca.mcgill.ecse321.projectgroup02.model.ArtGallerySystem;
 import ca.mcgill.ecse321.projectgroup02.model.Artist;
+import ca.mcgill.ecse321.projectgroup02.model.Collection;
 import ca.mcgill.ecse321.projectgroup02.model.Customer;
 import ca.mcgill.ecse321.projectgroup02.model.DeliveryMethod;
 import ca.mcgill.ecse321.projectgroup02.model.Item;
 import ca.mcgill.ecse321.projectgroup02.model.ItemOrder;
 import ca.mcgill.ecse321.projectgroup02.model.PaymentCredentials;
+import ca.mcgill.ecse321.projectgroup02.model.ServiceProvider;
 import ca.mcgill.ecse321.projectgroup02.model.ShoppingCart;
 import ca.mcgill.ecse321.projectgroup02.model.UserRole;
 
@@ -55,9 +57,41 @@ public class ProjectGroup02Service {
   private ShoppingCartRepository shoppingCartRepository;
 
   // CONSTANT VARIABLES
+
   public final double commissionPercentage = 0.05;
   public final double taxePercentage = 0.15;
-  
+
+  /**
+   * Creates an art gallery system. Inputs an address and the administrator registration information.
+   * 
+   * @author Ryad Ammar
+   * @throws Exception
+   */
+  @Transactional
+  public ArtGallerySystem createGallery(int Id, String street, String postalCode, String province, String country,
+      String city, String adminUsername, String adminPassword, String adminEmail) throws Exception {
+    ArtGallerySystem gallery = new ArtGallerySystem();
+
+    Address address = new Address();
+    address.setCity(city);
+    address.setCountry(country);
+    address.setPostalCode(postalCode);
+    address.setProvince(province);
+    address.setStreet(street);
+
+    addressRepository.save(address);
+
+    ApplicationUser admin = createAdmin(adminUsername, adminPassword, adminEmail);
+
+    gallery.getApplicationUsers().add(admin);
+    gallery.setArtGalleryId(Id);
+    gallery.setAddress(address);
+
+    artGallerySystemRepository.save(gallery);
+
+    return gallery;
+  }
+
   /**
    * Registers user based on information inputed. Verifies the validity of the information inputed.
    * 
@@ -88,28 +122,8 @@ public class ProjectGroup02Service {
     user.setPassword(password);
     user.setAccountCreationDate(java.time.LocalDate.now().toString());
     applicationUserRepository.save(user);
-    
+
     return user;
-  }
-  
-  /**
-   * Throws an exception for any user input that is not valid during registration.
-   * 
-   * @author Ryad Ammar
-   * @param username
-   * @param email
-   * @param password
-   * @throws Exception
-   */
-  private void validateRegistrationInput(String username, String email, String password) throws Exception {
-    if (username.length() < 8)
-      throw new Exception("Username must have at least 8 characters");
-    if (!email.contains("@"))
-      throw new Exception("Email is not valid");
-    if (password.length() < 8)
-      throw new Exception("Password must have at least 8 characters");
-    if (applicationUserRepository.existsByUsername(username))
-      throw new Exception("Username unavailable");
   }
 
   @Transactional
@@ -138,10 +152,10 @@ public class ProjectGroup02Service {
       String expirationDate, String cvc) throws Exception {
     ApplicationUser user = applicationUserRepository.findByUsername(username);
     Customer customer;
-    
+
     try {
-      customer = customerRepository.findCustomerByuserRoleId((username+"customer").hashCode());
-    } catch(Exception e) {
+      customer = customerRepository.findCustomerByuserRoleId((username + "customer").hashCode());
+    } catch (Exception e) {
       throw new Exception("User must be a customer");
     }
 
@@ -160,9 +174,8 @@ public class ProjectGroup02Service {
   }
 
   /**
-   * Sets the role(s) of a user based on the role(s) inputed.
-   * If the role "customer" is assigned, assign a shopping cart to the customer.
-   * Roles and shopping carts ID are generated based on the username.
+   * Sets the role(s) of a user based on the role(s) inputed. If the role "customer" is assigned, assign a shopping cart
+   * to the customer. Roles and shopping carts ID are generated based on the username.
    * 
    * @author Ryad Ammar
    * @param username
@@ -172,34 +185,34 @@ public class ProjectGroup02Service {
   public ApplicationUser setUserRole(String username, String... roles) {
     ApplicationUser user = applicationUserRepository.findByUsername(username);
     HashSet<UserRole> roles_ = new HashSet<UserRole>();
-    
+
     for (String role : roles) {
-      if(role.equalsIgnoreCase("customer")) {
+      if (role.equalsIgnoreCase("customer")) {
         Customer customer = new Customer();
         ShoppingCart shoppingCart = new ShoppingCart();
-        
-        shoppingCart.setShoppingCartId((username+"sc").hashCode()); //Generates the ID using hashCode encoding
-        customer.setUserRoleId((username+"customer").hashCode());
+
+        shoppingCart.setShoppingCartId((username + "sc").hashCode()); // Generates the ID using hashCode encoding
+        customer.setUserRoleId((username + "customer").hashCode());
         customer.setShoppingCart(shoppingCart);
         customer.setApplicationUser(user);
-        
+
         shoppingCartRepository.save(shoppingCart);
         customerRepository.save(customer);
-        
+
         roles_.add(customer);
       }
-      
-      if(role.equalsIgnoreCase("artist")) {
+
+      if (role.equalsIgnoreCase("artist")) {
         Artist artist = new Artist();
-        artist.setUserRoleId((username+"artist").hashCode());
+        artist.setUserRoleId((username + "artist").hashCode());
         artist.setApplicationUser(user);
-        
+
         artistRepository.save(artist);
-        
+
         roles_.add(artist);
       }
     }
-    
+
     user.setUserRole(roles_);
     applicationUserRepository.save(user);
     return user;
@@ -232,7 +245,7 @@ public class ProjectGroup02Service {
     }
     return false;
   }
-
+  
   /**
    * Adds address information to a user.
    * 
@@ -263,10 +276,9 @@ public class ProjectGroup02Service {
   }
 
   /**
-   * Creates an item based on the input, assigns it to the user.
-   * The user must be an artist.
-   * The item's name must be unique in the artist's list of uploaded art.
-   * The item's unique id is encoded based on its name and the artist's username.
+   * Creates an item based on the input, assigns it to the user. The user must be an artist. The item's name must be
+   * unique in the artist's list of uploaded art. The item's unique id is encoded based on its name and the artist's
+   * username.
    * 
    * @author Ryad Ammar
    * @param username
@@ -282,24 +294,25 @@ public class ProjectGroup02Service {
    * @throws Exception
    */
   @Transactional
-  public boolean uploadArtwork(String username, String artworkName, double height, double width, double breadth, String creationDate, String description, double price, String imageUrl, String collection) throws Exception {
+  public boolean uploadArtwork(String username, String artworkName, double height, double width, double breadth,
+      String creationDate, String description, double price, String imageUrl, String collection) throws Exception {
     Artist artist;
-    
+
     try {
-      artist = artistRepository.findByuserRoleId((username+"artist").hashCode());
-    } catch(Exception e) {
+      artist = artistRepository.findByuserRoleId((username + "artist").hashCode());
+    } catch (Exception e) {
       throw new Exception("User must be a artist");
     }
-    
+
     for (Item item : artist.getItem()) {
       if (item.getName().equals(artworkName))
         throw new Exception("Artist's items' name must be unique");
     }
-    
+
     Item item = new Item();
-    
-    item.setItemId((username+artworkName).hashCode()); // Generate the ID using hashCode encoding
-    
+
+    item.setItemId((username + artworkName).hashCode()); // Generate the ID using hashCode encoding
+
     item.setName(artworkName);
     item.setHeight(height);
     item.setWidth(width);
@@ -309,65 +322,67 @@ public class ProjectGroup02Service {
     item.setPrice(price);
     item.setPathToImage(imageUrl);
     try {
-    item.setCollection(collectionRepository.findByName(collection));
-    }catch (Exception e) {
-      throw new Exception("Collection+" +collection+" does not exist.");
+      item.setCollection(collectionRepository.findByName(collection));
+    } catch (Exception e) {
+      throw new Exception("Collection+" + collection + " does not exist.");
     }
-    
+
     artist.getItem().add(item);
     item.setArtist(artist);
-    
+
     itemRepository.save(item);
     artistRepository.save(artist);
-    
+
     return true;
   }
   
-  // Does not support filtered & sorted item list queries yet
-  
+
   /**
-   * @author Ryad Ammar
-   * @return all items
-   */
-  @Transactional
-  public List<Item> getAllItems() {
-    return toList(itemRepository.findAll());
-  }
-  
-  /**
-   * @author Ryad Ammar
-   * @return all items filtered
-   */
-  @Transactional
-  public List<Item> getAllItemsFiltered(String filter) {
-    return Filter(itemRepository.findAll(), filter);
-  }
-  
-  /**
-   * @author Ryad Ammar
-   * @return all items sorted
-   */
-  @Transactional
-  public List<Item> getAllItemsSorted(String sort) {
-    return Sort(itemRepository.findAll(), sort);
-  }
-  
-  /**
-   * Helper methods for getAllItemsFiltered & getAllItemsSorted
+   * Deletes an item from the database.
+   * Can only be executed if the user is a service provider.
    * 
    * @author Ryad Ammar
+   * @param username
+   * @param nameOfItem
+   * @param usernameOfArtist
+   * @throws Exception
    */
-  private List<Item> Sort(Iterable<Item> items, String sort) {
-    return null;
-  }
-
-  private List<Item> Filter(Iterable<Item> items, String filter) {
-    return null;
+  @Transactional
+  public void deleteItem(String username, String nameOfItem, String usernameOfArtist) throws Exception {
+    try {
+      @SuppressWarnings("unused")
+      ServiceProvider admin = serviceProviderRepository.findByuserRoleId((username+"admin").hashCode());
+    } catch(Exception e) {
+      throw new Exception("User must be a service provider to manage invertory");
+    }
+    Item item = itemRepository.findItemByitemId((usernameOfArtist + nameOfItem).hashCode());
+    itemRepository.delete(item);
   }
 
   /**
-   * Retrieves user's shopping cart and adds an item.
-   * User must be a customer.
+   * Creates a collection based on input.
+   * 
+   * @author Ryad Ammar
+   * @param name
+   * @param description
+   * @param imageUrl
+   * @return Collection
+   */
+  @Transactional
+  public Collection createCollection(String name, String description, String imageUrl) {
+    Collection collection = new Collection();
+
+    collection.setName(name);
+    collection.setDescription(description);
+    collection.setPathToImage(imageUrl);
+
+    collectionRepository.save(collection);
+
+    return collection;
+  }
+
+  /**
+   * Retrieves user's shopping cart and adds an item. User must be a customer.
    * 
    * @author Ryad Ammar
    * @param usernameOfClient
@@ -376,29 +391,29 @@ public class ProjectGroup02Service {
    * @throws Exception
    */
   @Transactional
-  public boolean addToShoppingCart (String usernameOfClient, String nameOfItem, String usernameOfArtist) throws Exception {
-    Item item = itemRepository.findItemByitemId((usernameOfArtist+nameOfItem).hashCode());
+  public boolean addToShoppingCart(String usernameOfClient, String nameOfItem, String usernameOfArtist)
+      throws Exception {
+    Item item = itemRepository.findItemByitemId((usernameOfArtist + nameOfItem).hashCode());
     ApplicationUser user = applicationUserRepository.findByUsername(usernameOfClient);
     Customer customer;
-    
+
     try {
-      customer = customerRepository.findCustomerByuserRoleId((usernameOfClient+"customer").hashCode());
-    } catch(Exception e) {
+      customer = customerRepository.findCustomerByuserRoleId((usernameOfClient + "customer").hashCode());
+    } catch (Exception e) {
       throw new Exception("User must be a customer");
     }
-    
+
     customer.getShoppingCart().getItem().add(item);
 
     shoppingCartRepository.save(customer.getShoppingCart());
     customerRepository.save(customer);
     applicationUserRepository.save(user);
-    
+
     return true;
   }
-  
+
   /**
-   * Retrieves user's shopping cart and removes an item.
-   * User must be a customer.
+   * Retrieves user's shopping cart and removes an item. User must be a customer.
    * 
    * @author Ryad Ammar
    * @param usernameOfClient
@@ -407,45 +422,50 @@ public class ProjectGroup02Service {
    * @throws Exception
    */
   @Transactional
-  public boolean removeFromShoppingCart (String usernameOfClient, String nameOfItem, String usernameOfArtist) throws Exception {
-    Item item = itemRepository.findItemByitemId((usernameOfArtist+nameOfItem).hashCode());
+  public boolean removeFromShoppingCart(String usernameOfClient, String nameOfItem, String usernameOfArtist)
+      throws Exception {
+    Item item = itemRepository.findItemByitemId((usernameOfArtist + nameOfItem).hashCode());
     ApplicationUser user = applicationUserRepository.findByUsername(usernameOfClient);
     Customer customer;
-    
+
     try {
-      customer = customerRepository.findCustomerByuserRoleId((usernameOfClient+"customer").hashCode());
-    } catch(Exception e) {
+      customer = customerRepository.findCustomerByuserRoleId((usernameOfClient + "customer").hashCode());
+    } catch (Exception e) {
       throw new Exception("User must be a customer");
     }
-    
+
     customer.getShoppingCart().getItem().remove(item);
-    
+
     shoppingCartRepository.save(customer.getShoppingCart());
     customerRepository.save(customer);
     applicationUserRepository.save(user);
-    
+
     return true;
   }
-  
-  public List<Item> getItemsFromShoppingCart(String usernameOfClient) throws Exception{
+
+  /**
+   * Returns a list of items from a shoppingCart.
+   * 
+   * @param usernameOfClient
+   * @throws Exception
+   */
+  @Transactional
+  public List<Item> getItemsFromShoppingCart(String usernameOfClient) throws Exception {
     Customer customer;
-    
+
     try {
-      customer = customerRepository.findCustomerByuserRoleId((usernameOfClient+"customer").hashCode());
-    } catch(Exception e) {
+      customer = customerRepository.findCustomerByuserRoleId((usernameOfClient + "customer").hashCode());
+    } catch (Exception e) {
       throw new Exception("User must be a customer");
     }
-     
+
     return toList(customer.getShoppingCart().getItem());
   }
-  
+
   /**
-   * Creates new order based on input information and customer's current shopping cart state.
-   * Adds commissions to the system's total profit.
-   * Adds to the artists' balance.
-   * Removes from the customers total balance.
-   * The customer must have enough balance.
-   * The bought items are removed from the shop
+   * Creates new order based on input information and customer's current shopping cart state. Adds commissions to the
+   * system's total profit. Adds to the artists' balance. Removes from the customers total balance. The customer must
+   * have enough balance. The bought items are removed from the shop
    * 
    * @author Ryad Ammar
    * @param username
@@ -455,54 +475,102 @@ public class ProjectGroup02Service {
    */
   @Transactional
   public ItemOrder checkout(String username, DeliveryMethod deliveryMethod) throws Exception {
-    
-    ArtGallerySystem artGallerySystem = null;
-     
-    for (ArtGallerySystem ags : artGallerySystemRepository.findAll())
-      artGallerySystem = ags;
-    
-    if (artGallerySystem == null)
-      throw new Exception("ArtGallerySystem is null");
-   
+    ArtGallerySystem artGallerySystem = getGallery();
+
     Customer customer;
-    
+
     try {
-      customer = customerRepository.findCustomerByuserRoleId((username+"customer").hashCode());
-    } catch(Exception e) {
+      customer = customerRepository.findCustomerByuserRoleId((username + "customer").hashCode());
+    } catch (Exception e) {
       throw new Exception("User must be a customer");
     }
-    
+
     ItemOrder order = new ItemOrder();
     order.setCustomer(customer);
     order.setDelivery(deliveryMethod);
     order.setItemOrderDate(java.time.LocalDate.now().toString());
-    order.setItemOrderId((username+"order").hashCode());
-    
+    order.setItemOrderId((username + "order").hashCode());
+
     double totalPrice = 0;
-    
+
     for (Item item : customer.getShoppingCart().getItem())
       totalPrice += item.getPrice();
-    
-    if (customer.getApplicationUser().getBalance() < (1+taxePercentage)*totalPrice)
+
+    if (customer.getApplicationUser().getBalance() < (1 + taxePercentage) * totalPrice)
       throw new Exception("Insufficient funds");
-    
+
     for (Item item : customer.getShoppingCart().getItem()) {
-      addToBalance(item.getArtist().getApplicationUser(), (1-commissionPercentage) * item.getPrice());
+      addToBalance(item.getArtist().getApplicationUser(), (1 - commissionPercentage) * item.getPrice());
       addToBalance(artGallerySystem, commissionPercentage * item.getPrice());
-      
+
       order.getItem().add(item);
     }
-    
-    addToBalance(customer.getApplicationUser(), -(1+taxePercentage)*totalPrice);
-   
+
+    addToBalance(customer.getApplicationUser(), -(1 + taxePercentage) * totalPrice);
+
     itemOrderRepository.save(order);
-    
+
     return order;
   }
-  
+
   /**
-   * Helper methods for checkout. 
-   * Adds value to user's/system's balance.
+   * Returns the total profit of the gallery system.
+   * 
+   * @author Ryad Ammar
+   * @throws Exception
+   */
+  @Transactional
+  private double getArtGalleryProfit() throws Exception {
+    return getGallery().getTotalProfit();
+  }
+
+  /**
+   * Returns the total profit of a user.
+   * 
+   * @author Ryad Ammar
+   * @throws Exception
+   */
+  @Transactional
+  private double getUserBalance(String username) {
+    return applicationUserRepository.findByUsername(username).getBalance();
+  }
+
+  /**
+   * Returns the total profit of a user.
+   * 
+   * @author Ryad Ammar
+   * @throws Exception
+   */
+  @Transactional
+  private void setUserBalance(String username, double value) {
+    applicationUserRepository.findByUsername(username).setBalance(value);
+  }
+
+  // HELPER METHODS
+
+  /**
+   * Helper method to assist creation of a user Throws an exception for any user input that is not valid during
+   * registration.
+   * 
+   * @author Ryad Ammar
+   * @param username
+   * @param email
+   * @param password
+   * @throws Exception
+   */
+  private void validateRegistrationInput(String username, String email, String password) throws Exception {
+    if (username.length() < 8)
+      throw new Exception("Username must have at least 8 characters");
+    if (!email.contains("@"))
+      throw new Exception("Email is not valid");
+    if (password.length() < 8)
+      throw new Exception("Password must have at least 8 characters");
+    if (applicationUserRepository.existsByUsername(username))
+      throw new Exception("Username unavailable");
+  }
+
+  /**
+   * Helper methods for checkout. Adds value to user's/system's balance.
    * 
    * @author Ryad Ammar
    * @param applicationUser
@@ -511,25 +579,63 @@ public class ProjectGroup02Service {
   private void addToBalance(ApplicationUser applicationUser, double value) {
     double balance = applicationUser.getBalance() + value;
     applicationUser.setBalance(balance);
-    
+
     applicationUserRepository.save(applicationUser);
   }
-  
+
   private void addToBalance(ArtGallerySystem system, double value) {
     double balance = system.getTotalProfit() + value;
     system.setTotalProfit(balance);
-    
+
     artGallerySystemRepository.save(system);
   }
-  
+
   /**
-   * Helper method.
-   * Converts iterables to lists.
+   * Helper method to returns the ArtGallerySystem of the database.
+   * 
+   * @author Ryad Ammar
+   * @throws Exception
+   */
+  public ArtGallerySystem getGallery() throws Exception {
+    for (ArtGallerySystem ags : artGallerySystemRepository.findAll())
+      return ags;
+    throw new Exception("ArtGallery does not exist");
+  }
+
+
+  /**
+   * Helper method to assist creation of gallery system. Creates an administrator.
+   * 
+   * @author Ryad Ammar
+   * @param username
+   * @param email
+   * @param password
+   * @throws Exception
+   */
+  public ApplicationUser createAdmin(String username, String email, String password) throws Exception {
+
+    ApplicationUser admin = createUser(username, email, password);
+    ServiceProvider serviceprovider = new ServiceProvider();
+    HashSet<UserRole> adminRoles = new HashSet<UserRole>();
+
+    serviceprovider.setApplicationUser(admin);
+    serviceprovider.setUserRoleId((username+"admin").hashCode());
+    adminRoles.add(serviceprovider);
+    admin.setUserRole(adminRoles);
+
+    serviceProviderRepository.save(serviceprovider);
+    applicationUserRepository.save(admin);
+
+    return admin;
+  }
+
+  /**
+   * Helper method. Converts iterables to lists.
    * 
    * @author Ryad Ammar
    * @param <T>
    * @param iterable
-   * @return list 
+   * @return list
    */
   private <T> List<T> toList(Iterable<T> iterable) {
     List<T> resultList = new ArrayList<T>();
