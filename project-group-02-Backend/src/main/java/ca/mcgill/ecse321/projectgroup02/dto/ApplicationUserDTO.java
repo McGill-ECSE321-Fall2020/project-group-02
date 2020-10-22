@@ -77,7 +77,11 @@ public class ApplicationUserDTO{
 		return this.address;
 	}
 
-	public Set<AddressDTO> setAddresses() {
-		return this.address;
+//	public Set<AddressDTO> setAddresses() {
+//		return this.address;
+//	}
+	
+	public void setAddresses(Set<AddressDTO> address) {
+		this.address = address;
 	}
 }

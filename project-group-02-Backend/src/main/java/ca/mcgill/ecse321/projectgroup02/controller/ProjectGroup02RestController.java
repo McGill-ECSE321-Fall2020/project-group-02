@@ -1,10 +1,14 @@
 package ca.mcgill.ecse321.projectgroup02.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.projectgroup02.dto.ApplicationUserDTO;
@@ -19,14 +23,15 @@ public class ProjectGroup02RestController {
 	private ProjectGroup02Service service;
 	
 	@GetMapping(value = { "/user", "/user/" })
-	public List<PersonDto> getAllPersons() {
-		return service.getAllPersons().stream().map(p -> convertToDto(p)).collect(Collectors.toList());
+	public List<ApplicationUserDTO> getAllUsers() {
+		return service.getAllUsers().stream().map(p -> convertToDto(p)).collect(Collectors.toList());
 	}
 
 	@PostMapping(value = { "/persons/{name}", "/persons/{name}/" })
-	public PersonDto createPerson(@PathVariable("name") String name) throws IllegalArgumentException {
-		Person person = service.createPerson(name);
-		return convertToDto(person);
+	public ApplicationUserDTO createPerson(@PathVariable("name") String username, @RequestParam String email, @RequestParam String password) 
+	throws Exception {
+		ApplicationUser user = service.createUser(username, email, password);
+		return convertToDto(user);
 	}
 	
 	
@@ -35,7 +40,7 @@ public class ProjectGroup02RestController {
 			throw new IllegalArgumentException("There is no such Application User!");
 		}
 		ApplicationUserDTO userDto = new ApplicationUserDTO(u.getAccountCreationDate(), u.getUsername(), u.getEmail(), u.getPassword(), u.getPhoneNumber(), null);
-		userDto.setEvents(createEventDtosForPerson(u));
+		//userDto.setAddresses(u.getAddress());;
 		return userDto;
 	}
 	
