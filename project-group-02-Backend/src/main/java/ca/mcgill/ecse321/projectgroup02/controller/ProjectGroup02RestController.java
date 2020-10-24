@@ -96,6 +96,11 @@ public class ProjectGroup02RestController {
 		return convertToDto(service.getUser(username));
 	}
 	
+	//TODO: Fix  the String...roles thing from the service layer of the setUserRole method
+	@PostMapping(value = { "/set-user-role/{username}/{roles}" , "/set-user-role/{username}/{roles}/"})
+	public ApplicationUserDTO setUserRole(@PathVariable("username") String username, @PathVariable("roles") String role) {
+		return convertToDto(service.setUserRole(username, role));
+	}
 	
 	@PostMapping(value = { "/update-payment-credentials/{username}/{cardname}/{ccnumber}/{expdate}/{cvc}", "/update-payment-credentials/{username}/{cardname}/{ccnumber}/{expdate}/{cvc}/" })
 	public PaymentCredentialsDTO updateUserCredentials(@PathVariable("username") String name,@PathVariable("cardname") String cName, @PathVariable("ccnumber") String ccNumber, @PathVariable("expdate") String eDate, @PathVariable("cvc") String cvc) 
@@ -104,6 +109,15 @@ public class ProjectGroup02RestController {
 		return convertToDto(service.updateUserCredentials(name, cName, ccNumber, eDate, cvc));
 	}
 	
+	@PostMapping(value = { "/update-user-address/{username}/{street}/{postalcode}/{province}/{country}/{city}", "/update-user-address/{username}/{street}/{postalcode}/{province}/{country}/{city}/"})
+	public AddressDTO updateUserAddress(@PathVariable("username") String username, @PathVariable("street") String street, @PathVariable("postalcode") String postalcode, @PathVariable("province") String province, @PathVariable("country") String country, @PathVariable("city") String city) throws Exception {
+		return convertToDto(service.updateUserAddress(username, street, postalcode, province, country, city));
+	}
+	
+	@PostMapping(value = {"/user-login/{username}/{password}" , "/user-login/{username}/{password}/"})
+	public boolean loginUser(@PathVariable("username") String username, @PathVariable("password") String pw) {
+		return service.loginUser(username, pw);
+	}
 	
 
 	/**

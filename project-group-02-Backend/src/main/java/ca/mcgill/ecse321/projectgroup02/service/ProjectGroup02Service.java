@@ -282,7 +282,19 @@ public class ProjectGroup02Service {
     address.setPostalCode(postalCode);
     address.setProvince(province);
     address.setStreet(street);
-    user.getAddress().add(address);
+    
+    Set<Address> addresses = new HashSet<Address>();
+    
+    if( user.getAddress()==null) {
+
+    	addresses.add(address);
+    	user.setAddress(addresses);
+    }
+    
+    else {
+    	user.getAddress().add(address);
+    }
+    
 
     addressRepository.save(address);
     applicationUserRepository.save(user);
