@@ -76,12 +76,8 @@ public class ProjectGroup02RestController {
 
 	}
 
-
-	@GetMapping(value = { "/users", "/users/" })
-	public List<ApplicationUserDTO> getAllUsers() {
-		return service.getAllUsers().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
-	}
-
+	
+	
 	@PostMapping(value = { "/create-user/{name}/{email}/{pw}", "/create-user/{name}/{email}/{pw}/" })
 	public ApplicationUserDTO createUser(@PathVariable("name") String username,@PathVariable("email") String email, @PathVariable("pw") String password) 
 			throws Exception {
@@ -89,8 +85,26 @@ public class ProjectGroup02RestController {
 		return convertToDto(user);
 	}
 
+	@GetMapping(value = { "/users", "/users/" })
+	public List<ApplicationUserDTO> getAllUsers() {
+		return service.getAllUsers().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
+	}
+	
+	@GetMapping(value = { "/user-by-name/{username}", "/user-by-name/{username}/" })
+	public ApplicationUserDTO getUserByUsername(@PathVariable("username") String username) {
 
-
+		return convertToDto(service.getUser(username));
+	}
+	
+	
+	@PostMapping(value = { "/update-payment-credentials/{username}/{cardname}/{ccnumber}/{expdate}/{cvc}", "/update-payment-credentials/{username}/{cardname}/{ccnumber}/{expdate}/{cvc}/" })
+	public PaymentCredentialsDTO updateUserCredentials(@PathVariable("username") String name,@PathVariable("cardname") String cName, @PathVariable("ccnumber") String ccNumber, @PathVariable("expdate") String eDate, @PathVariable("cvc") String cvc) 
+			throws Exception {
+		
+		return convertToDto(service.updateUserCredentials(name, cName, ccNumber, eDate, cvc));
+	}
+	
+	
 
 	/**
 	 * Converts an ApplicationUser object into an ApplicationUserDTO object and 
