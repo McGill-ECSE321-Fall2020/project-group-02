@@ -26,6 +26,7 @@ import ca.mcgill.ecse321.projectgroup02.dto.ItemDTO;
 import ca.mcgill.ecse321.projectgroup02.dto.ItemOrderDTO;
 import ca.mcgill.ecse321.projectgroup02.dto.PaymentCredentialsDTO;
 import ca.mcgill.ecse321.projectgroup02.dto.ShoppingCartDTO;
+import ca.mcgill.ecse321.projectgroup02.dto.UserRoleDTO;
 import ca.mcgill.ecse321.projectgroup02.model.Address;
 import ca.mcgill.ecse321.projectgroup02.model.ApplicationUser;
 import ca.mcgill.ecse321.projectgroup02.model.ArtGallerySystem;
@@ -37,6 +38,7 @@ import ca.mcgill.ecse321.projectgroup02.model.Item;
 import ca.mcgill.ecse321.projectgroup02.model.ItemOrder;
 import ca.mcgill.ecse321.projectgroup02.model.PaymentCredentials;
 import ca.mcgill.ecse321.projectgroup02.model.ShoppingCart;
+import ca.mcgill.ecse321.projectgroup02.model.UserRole;
 import ca.mcgill.ecse321.projectgroup02.service.ProjectGroup02Service;
 
 
@@ -45,8 +47,7 @@ import ca.mcgill.ecse321.projectgroup02.service.ProjectGroup02Service;
 @RestController
 public class ProjectGroup02RestController {
 
-	@Autowired
-	private ArtGallerySystemRepository artGallerySystemRepository;
+
 
 
 	//public ArtGallerySystes ags;
@@ -61,15 +62,15 @@ public class ProjectGroup02RestController {
 			@PathVariable("country") String country, @PathVariable("city") String city,@PathVariable("adminUsername") String adminUsername,@PathVariable("adminPassword") String adminPassword,@PathVariable("adminEmail") String adminEmail) 
 					throws Exception {
 		ArtGallerySystem ags = service.createGallery(street, postalCode, province, country, city, adminUsername, adminPassword, adminEmail);
-		
-		
-
-		return convertToDto(ags);
+				
+		ArtGallerySystemDTO agsDTO = convertToDto(ags);
+	
+		return agsDTO;
 
 
 	}
 
-	@GetMapping(value = { "/art-gallery-system/1", "/art-gallery-system/1/" })
+	@GetMapping(value = { "/art-gallery-system", "/art-gallery-system/" })
 	public ArtGallerySystemDTO getArtGallerySystem() throws Exception {
 		return convertToDto(service.getGallery());
 
@@ -81,8 +82,8 @@ public class ProjectGroup02RestController {
 		return service.getAllUsers().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
 	}
 
-	@PostMapping(value = { "/users/{name}", "/users/{name}/" })
-	public ApplicationUserDTO createUser(@PathVariable("name") String username, @RequestParam String email, @RequestParam String password) 
+	@PostMapping(value = { "/create-user/{name}/{email}/{pw}", "/create-user/{name}/{email}/{pw}/" })
+	public ApplicationUserDTO createUser(@PathVariable("name") String username,@PathVariable("email") String email, @PathVariable("pw") String password) 
 			throws Exception {
 		ApplicationUser user = service.createUser(username, email, password);
 		return convertToDto(user);
@@ -106,18 +107,46 @@ public class ProjectGroup02RestController {
 			throw new IllegalArgumentException("There is no such Application User!");
 		}
 
-		//		ArtGallerySystem ags = new ArtGallerySystem();
-		//		Set<ApplicationUser> userSet = ags.getApplicationUsers();
-		//		userSet.add(u);
-		//		ags.setApplicationUsers(userSet);
-		//		u.setArtGallerySystem(ags);
-		//ArtGallerySystem ags = u.getArtGallerySystem();
+		Set<AddressDTO> adSetDTO = new HashSet<AddressDTO>();
+		
+		try {
+			for(Address ad : u.getAddress()) {
+				AddressDTO adDTO = convertToDto(ad);
+				adSetDTO.add(adDTO);
+			}
+		} catch(Exception e) {
+			
+		}
+		
+		Set<UserRoleDTO> usSetDTO = new HashSet<UserRoleDTO>();
+		
+		try {
+			
+			for(UserRole ur : u.getUserRole()) {
+				UserRoleDTO usDTO = new UserRoleDTO(ur.getUserRoleId());
+				usSetDTO.add(usDTO);
+			}
+		} catch(Exception e) {
+			
+		}
 
-		//ArtGallerySystemDTO agsDTO = convertToDto(u.getArtGallerySystem());
-
-
-		ApplicationUserDTO userDto = new ApplicationUserDTO(u.getAccountCreationDate(), u.getUsername(), u.getEmail(), u.getPassword(), u.getPhoneNumber());
-
+		
+		
+		ApplicationUserDTO userDto;
+		
+		if(u.getAddress() != null && u.getUserRole() != null) {
+			
+				userDto = new ApplicationUserDTO(u.getAccountCreationDate(), u.getUsername(), u.getEmail(), u.getPassword(), u.getPhoneNumber(), adSetDTO, usSetDTO);
+			
+		} else if(u.getAddress() != null) {
+			userDto = new ApplicationUserDTO(u.getAccountCreationDate(), u.getUsername(), u.getEmail(), u.getPassword(), u.getPhoneNumber(), adSetDTO, 1);
+		} else if(u.getUserRole() != null) {
+			userDto = new ApplicationUserDTO(u.getAccountCreationDate(), u.getUsername(), u.getEmail(), u.getPassword(), u.getPhoneNumber(), usSetDTO);
+		} else {
+			userDto = new ApplicationUserDTO(u.getAccountCreationDate(), u.getUsername(), u.getEmail(), u.getPassword(), u.getPhoneNumber());
+		}
+		
+		
 
 		return userDto;
 
@@ -373,35 +402,54 @@ public class ProjectGroup02RestController {
 	 * @return ioDTO
 	 */
 
-	//	private ItemOrderDTO convertToDto(ItemOrder io) {
-	//		if(io == null) {
-	//			throw new IllegalArgumentException("There is no such Item");
-	//		}
-	//		
-	//		
-	//		
-	//		
-	//		Customer c = io.getCustomer();
-	//		
-	//		CustomerDTO cDTO = convertToDto(c);
-	//		
-	//		Set<Item> iSet = io.getItem();
-	//		Set<ItemDTO> iDTOSet = new HashSet<ItemDTO>();
-	//		
-	//		for(Item i : iSet) {
-	//			ItemDTO idto = convertToDto(i);
-	//			iDTOSet.add(idto);
-	//			
-	//		}
-	//		
-	//		
-	//		double commissionTotal = this.commissionPercentage*io.getTotalPrice();
-	//		
-	//		ItemOrderDTO ioDTO = new ItemOrderDTO(io.getItemOrderId(), this.commissionPercentage, commissionTotal, io.getItemOrderDate(),
-	//				io.getTotalPrice(), this.taxePercentage, cDTO, new DeliveryMethodDTO(), iDTOSet);										//*****DISCUSS TAXES WITH VADIM*****
-	//		
-	//		return ioDTO;
-	//	}
+		private ItemOrderDTO convertToDto(ItemOrder io) throws Exception {
+			if(io == null) {
+				throw new IllegalArgumentException("There is no such Item");
+			}
+			
+			
+			
+			
+			Customer c = io.getCustomer();
+			
+			CustomerDTO cDTO = convertToDto(c);
+			
+			Set<Item> iSet = io.getItem();
+			Set<ItemDTO> iDTOSet = new HashSet<ItemDTO>();
+			
+			for(Item i : iSet) {
+				ItemDTO idto = convertToDto(i);
+				iDTOSet.add(idto);
+				
+			}
+			
+			DeliveryMethod dm = io.getDelivery();
+			DeliveryMethodDTO dmDTO;
+			
+			String Sdm = dm.toString();
+			
+			switch(Sdm) {
+			
+			case "INSTOREPICKUP": 
+				dmDTO = DeliveryMethodDTO.INSTOREPICKUP;
+				break;
+				
+			case "HOMEDELIVERY":
+				dmDTO = DeliveryMethodDTO.HOMEDELIVERY;
+				break;
+				
+			default:
+				throw new Exception("Wrong delivery method");
+				
+			}
+			
+			ItemOrderDTO ioDTO = new ItemOrderDTO(io.getItemOrderId(),io.getItemOrderDate(), cDTO, dmDTO, iDTOSet);										//*****DISCUSS TAXES WITH VADIM*****
+			
+			return ioDTO;
+		}
+	
+	
+	
 
 
 }

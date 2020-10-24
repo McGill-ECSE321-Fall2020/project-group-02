@@ -16,7 +16,7 @@ import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-public class ArtistDTO extends UserRoleDTO{
+public class ArtistDTO {
 	private String description;
 	private Set<ItemDTO> items;
 

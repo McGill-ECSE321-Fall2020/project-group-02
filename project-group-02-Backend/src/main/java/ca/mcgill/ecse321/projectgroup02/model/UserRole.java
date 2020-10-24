@@ -9,7 +9,7 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 @Entity
-public abstract class UserRole{
+public class UserRole{
 	  
 	private int userRoleId;
 	

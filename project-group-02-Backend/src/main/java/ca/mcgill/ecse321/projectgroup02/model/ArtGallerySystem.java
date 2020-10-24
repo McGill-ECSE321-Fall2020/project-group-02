@@ -59,7 +59,7 @@ public class ArtGallerySystem{
 		return this.artGalleryId;
 	}
 
-	@OneToOne(optional=true)
+	@OneToOne(optional=true, cascade=CascadeType.PERSIST)
 	private Address address;
 
 	@NotFound(action = NotFoundAction.IGNORE) 

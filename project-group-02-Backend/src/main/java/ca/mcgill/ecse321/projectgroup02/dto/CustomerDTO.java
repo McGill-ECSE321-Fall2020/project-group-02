@@ -7,7 +7,7 @@ import java.util.Set;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
-public class CustomerDTO extends UserRoleDTO{
+public class CustomerDTO {
 
 	private Set<PaymentCredentialsDTO> paymentCredentials;
 	private ShoppingCartDTO shoppingCart;

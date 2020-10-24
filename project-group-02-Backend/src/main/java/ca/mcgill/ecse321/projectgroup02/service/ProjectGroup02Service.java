@@ -3,6 +3,8 @@ package ca.mcgill.ecse321.projectgroup02.service;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -79,8 +81,8 @@ public class ProjectGroup02Service {
     address.setProvince(province);
     address.setStreet(street);
 
-    addressRepository.save(address);
-    artGallerySystemRepository.save(gallery);
+   // addressRepository.save(address);
+    //artGallerySystemRepository.save(gallery);
     
     ApplicationUser admin = createAdmin(adminUsername, adminEmail, adminPassword);
     
@@ -92,6 +94,7 @@ public class ProjectGroup02Service {
     gallery.setApplicationUsers(users);
     gallery.setAddress(address);
     
+    //addressRepository.save(address);
     applicationUserRepository.save(admin);
     artGallerySystemRepository.save(gallery);
     
@@ -119,20 +122,19 @@ public class ProjectGroup02Service {
     ApplicationUser user = new ApplicationUser();
     Iterable<ApplicationUser> users = applicationUserRepository.findAll();
     for (ApplicationUser user_ : users) {
-      try {
+     
     	if (user_.getEmail().equals(email)) {
         throw new Exception("Email already in use");
       }
-      }
-      catch (Exception e) {
-    	  throw new Exception("TURTLES");
-      }
+      
     }
-    user.setArtGallerySystem(getGallery());
+    //user.setArtGallerySystem(getGallery());
     user.setUsername(username);
     user.setEmail(email);
     user.setPassword(password);
     user.setAccountCreationDate(java.time.LocalDate.now().toString());
+    user.setUserRole(new HashSet<UserRole>());
+    user.setAddress(new HashSet<Address>());
     applicationUserRepository.save(user);
 
     return user;

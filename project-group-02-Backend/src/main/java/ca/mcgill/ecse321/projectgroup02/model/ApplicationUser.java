@@ -71,17 +71,17 @@ this.isLoggedIn = value;
 public boolean isIsLoggedIn() {
 return this.isLoggedIn;
     }
-private ArtGallerySystem artGallerySystem;
-
-@ManyToOne(optional=true)
-@NotFound(action = NotFoundAction.IGNORE) 
-public ArtGallerySystem getArtGallerySystem() {
-   return this.artGallerySystem;
-}
-
-public void setArtGallerySystem(ArtGallerySystem artGallerySystem) {
-   this.artGallerySystem = artGallerySystem;
-}
+//private ArtGallerySystem artGallerySystem;
+//
+//@ManyToOne(optional=true)
+//@NotFound(action = NotFoundAction.IGNORE) 
+//public ArtGallerySystem getArtGallerySystem() {
+//   return this.artGallerySystem;
+//}
+//
+//public void setArtGallerySystem(ArtGallerySystem artGallerySystem) {
+//   this.artGallerySystem = artGallerySystem;
+//}
 @ElementCollection //Resolves "Failed to load ApplicationContext"
 private Set<UserRole> userRole;
 
