@@ -47,11 +47,6 @@ import ca.mcgill.ecse321.projectgroup02.service.ProjectGroup02Service;
 @RestController
 public class ProjectGroup02RestController {
 
-
-
-
-	//public ArtGallerySystes ags;
-
 	@Autowired
 	private ProjectGroup02Service service;
 
@@ -62,9 +57,9 @@ public class ProjectGroup02RestController {
 			@PathVariable("country") String country, @PathVariable("city") String city,@PathVariable("adminUsername") String adminUsername,@PathVariable("adminPassword") String adminPassword,@PathVariable("adminEmail") String adminEmail) 
 					throws Exception {
 		ArtGallerySystem ags = service.createGallery(street, postalCode, province, country, city, adminUsername, adminPassword, adminEmail);
-				
+
 		ArtGallerySystemDTO agsDTO = convertToDto(ags);
-	
+
 		return agsDTO;
 	}
 
@@ -73,8 +68,6 @@ public class ProjectGroup02RestController {
 		return convertToDto(service.getGallery());
 	}
 
-	
-	
 	@PostMapping(value = { "/create-user/{name}/{email}/{pw}", "/create-user/{name}/{email}/{pw}/" })
 	public ApplicationUserDTO createUser(@PathVariable("name") String username,@PathVariable("email") String email, @PathVariable("pw") String password) 
 			throws Exception {
@@ -82,58 +75,86 @@ public class ProjectGroup02RestController {
 		return convertToDto(user);
 	}
 
-	
 	@GetMapping(value = { "/users", "/users/" })
 	public List<ApplicationUserDTO> getAllUsers() {
 		return service.getAllUsers().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
 	}
-	
-	
+
 	@GetMapping(value = { "/user-by-name/{username}", "/user-by-name/{username}/" })
 	public ApplicationUserDTO getUserByUsername(@PathVariable("username") String username) {
 
 		return convertToDto(service.getUser(username));
 	}
-	
-	
-	//TODO: Fix  the String...roles thing from the service layer of the setUserRole method
+
+	//TODO: Fix  the String...roles thing from the service layer of the setUserRole method - WE CAN MODIFY THE METHOD TO RECEIVE ONLY ONE USER_ROLE IN THE SERVICE LAYER as when the user is registering, he/she is choosing only one role for the whole account
 	@PostMapping(value = { "/set-user-role/{username}/{roles}" , "/set-user-role/{username}/{roles}/"})
 	public ApplicationUserDTO setUserRole(@PathVariable("username") String username, @PathVariable("roles") String role) {
 		return convertToDto(service.setUserRole(username, role));
 	}
-	
-	
+
+
 	@PostMapping(value = { "/update-payment-credentials/{username}/{cardname}/{ccnumber}/{expdate}/{cvc}", "/update-payment-credentials/{username}/{cardname}/{ccnumber}/{expdate}/{cvc}/" })
-	public PaymentCredentialsDTO updateUserCredentials(@PathVariable("username") String name,@PathVariable("cardname") String cName, @PathVariable("ccnumber") String ccNumber, @PathVariable("expdate") String eDate, @PathVariable("cvc") String cvc) 
-			throws Exception {
-		
+	public PaymentCredentialsDTO updateUserCredentials(@PathVariable("username") String name,@PathVariable("cardname") String cName, @PathVariable("ccnumber") String ccNumber, @PathVariable("expdate") String eDate, @PathVariable("cvc") String cvc) throws Exception {
 		return convertToDto(service.updateUserCredentials(name, cName, ccNumber, eDate, cvc));
 	}
-	
-	
+
+
 	@PostMapping(value = { "/update-user-address/{username}/{street}/{postalcode}/{province}/{country}/{city}", "/update-user-address/{username}/{street}/{postalcode}/{province}/{country}/{city}/"})
 	public AddressDTO updateUserAddress(@PathVariable("username") String username, @PathVariable("street") String street, @PathVariable("postalcode") String postalcode, @PathVariable("province") String province, @PathVariable("country") String country, @PathVariable("city") String city) throws Exception {
 		return convertToDto(service.updateUserAddress(username, street, postalcode, province, country, city));
 	}
-	
-	
+
 	@PostMapping(value = {"/user-login/{username}/{password}" , "/user-login/{username}/{password}/"})
 	public boolean loginUser(@PathVariable("username") String username, @PathVariable("password") String pw) {
 		return service.loginUser(username, pw);
 	}
-	
-	
+
 	@PostMapping(value = {"/user-logout/{username}" , "/user-logout/{username}/"})
 	public void logoutUser(@PathVariable("username") String username) {
 		service.logoutUser(username);
 	}
-	
+
+	@GetMapping(value = {"/{username}/shopping-cart', '/{username}/shopping-cart/"})
+	public List<ItemDTO> getItemsFromShoppingCart(@PathVariable("username") String username) throws Exception {
+		return service.getItemsFromShoppingCart(username).stream().map(item -> convertToDto(item)).collect(Collectors.toList());
+	}
+
+	@PostMapping(value = {"/{username}/checkout/{deliveryMethod}", "/{username}/checkout/{deliveryMethod}/"})
+	public ItemOrderDTO checkout(@PathVariable("username") String username, @PathVariable("deliveryMethod") String deliveryMethod) throws Exception {
+		return convertToDto(service.checkout(username, deliveryMethod));
+	}
+
+	@PostMapping(value = {"/{username}/shopping-cart/remove-item/{itemName}/{artistusername}", "/{username}/shopping-cart/remove-item/{itemName}/{artistUsername}/"})
+	public boolean addToShoppingCart(@PathVariable("username") String username, @PathVariable("itemName") String itemName, @PathVariable("artistUsername") String artistUsername) throws Exception {
+		return service.addToShoppingCart(username, itemName, artistUsername);
+	}
+
+	@PostMapping(value = {"/{username}/shopping-cart/remove-item/{itemName}/{artistusername}", "/{username}/shopping-cart/remove-item/{itemName}/{artistUsername}/"})
+	public boolean removeFromShoppingCart(@PathVariable("username") String username, @PathVariable("itemName") String itemName, @PathVariable("artistUsername") String artistUsername) throws Exception {
+		return service.removeFromShoppingCart(username, itemName, artistUsername);
+	}
+
+	@PostMapping(value = {"/create-collection/{collectionName}", "/create-collection/{collectionName}/"})
+	public CollectionDTO createCollection(@PathVariable("collectionName") String collectionName, @RequestParam("collectionDescription") String collectionDescription, @RequestParam("collectionImageUrl") String collectionImageUrl) throws Exception {
+		return convertToDTO(service.createCollection(collectionName, collectionDescription, collectionImageUrl));
+	}
+
+	@PostMapping(value = {"/{username}/delete-item-from-gallery/{itemName}/{artistusername}", "/{username}/delete-item-from-gallery/{itemName}/{artistUsername}/"})
+	public boolean deleteItemFromGallery(@PathVariable("username") String username, @PathVariable("itemName") String itemName, @PathVariable("artistUsername") String artistUsername) throws Exception {
+		return service.deleteItemFromGallery(username, itemName, artistUsername);
+	}
+
+	@PostMapping(value = {"/{username}/upload-artwork/{collection}/{artworkName}"})
+	public boolean uploadArtwork(@PathVariable("username") String username, @PathVariable("artworkName") String artworkName, @RequestParam("height") double height, @RequestParam("width") double width, @RequestParam("breadth") double breadth,
+			@RequestParam("creationDate") String creationDate, @RequestParam("description") String description, @RequestParam("price")  double price, @RequestParam("iamgeUrl") String imageUrl,  @PathVariable("collection") String collectionName) throws Exception {
+		return service.uploadArtwork(username, artworkName, height, width, breadth, creationDate, description, price, imageUrl, collectionName);
+	}
 
 	/**
 	 * Converts an ApplicationUser object into an ApplicationUserDTO object and 
 	 * makes all the necessary links with the associations.
 	 * 
-	 * @author Gurdarshan Singh
+	 * @author Gurdarshan Singh, Ahmad Siddiqi, Vadim Tuchila
 	 * @param u
 	 * @throws Exception
 	 * @return userDTO
@@ -145,36 +166,32 @@ public class ProjectGroup02RestController {
 		}
 
 		Set<AddressDTO> adSetDTO = new HashSet<AddressDTO>();
-		
+
 		try {
 			for(Address ad : u.getAddress()) {
 				AddressDTO adDTO = convertToDto(ad);
 				adSetDTO.add(adDTO);
 			}
 		} catch(Exception e) {
-			
+
 		}
-		
+
 		Set<UserRoleDTO> usSetDTO = new HashSet<UserRoleDTO>();
-		
+
 		try {
-			
+
 			for(UserRole ur : u.getUserRole()) {
 				UserRoleDTO usDTO = new UserRoleDTO(ur.getUserRoleId());
 				usSetDTO.add(usDTO);
 			}
 		} catch(Exception e) {
-			
+
 		}
 
-		
-		
 		ApplicationUserDTO userDto;
-		
+
 		if(u.getAddress() != null && u.getUserRole() != null) {
-			
-				userDto = new ApplicationUserDTO(u.getAccountCreationDate(), u.getUsername(), u.getEmail(), u.getPassword(), u.getPhoneNumber(), adSetDTO, usSetDTO);
-			
+			userDto = new ApplicationUserDTO(u.getAccountCreationDate(), u.getUsername(), u.getEmail(), u.getPassword(), u.getPhoneNumber(), adSetDTO, usSetDTO);
 		} else if(u.getAddress() != null) {
 			userDto = new ApplicationUserDTO(u.getAccountCreationDate(), u.getUsername(), u.getEmail(), u.getPassword(), u.getPhoneNumber(), adSetDTO, 1);
 		} else if(u.getUserRole() != null) {
@@ -182,11 +199,7 @@ public class ProjectGroup02RestController {
 		} else {
 			userDto = new ApplicationUserDTO(u.getAccountCreationDate(), u.getUsername(), u.getEmail(), u.getPassword(), u.getPhoneNumber());
 		}
-		
-		
-
 		return userDto;
-
 	}
 
 	/**
@@ -314,6 +327,7 @@ public class ProjectGroup02RestController {
 		return cDTO;
 	}
 
+
 	/**
 	 * Converts a Customer object into a CustomerDTO object and 
 	 * makes all the necessary links with the associations.
@@ -398,7 +412,7 @@ public class ProjectGroup02RestController {
 	 * Converts an Item object into an ItemDTO object and 
 	 * makes all the necessary links with the associations.
 	 * 
-	 * @author Gurdarshan Singh
+	 * @author Gurdarshan Singh, Ahmad Siddiqi, Vadim Tuchila
 	 * @param i
 	 * @throws Exception
 	 * @return iDTO
@@ -433,60 +447,74 @@ public class ProjectGroup02RestController {
 	 * Converts an ItemOrder object into an ItemOrderDTO object and 
 	 * makes all the necessary links with the associations.
 	 * 
-	 * @author Gurdarshan Singh
+	 * @author Gurdarshan Singh, Ahmad Siddiqi, Vadim Tuchila
 	 * @param io
 	 * @throws Exception
 	 * @return ioDTO
 	 */
 
-		private ItemOrderDTO convertToDto(ItemOrder io) throws Exception {
-			if(io == null) {
-				throw new IllegalArgumentException("There is no such Item");
-			}
-			
-			
-			
-			
-			Customer c = io.getCustomer();
-			
-			CustomerDTO cDTO = convertToDto(c);
-			
-			Set<Item> iSet = io.getItem();
-			Set<ItemDTO> iDTOSet = new HashSet<ItemDTO>();
-			
-			for(Item i : iSet) {
-				ItemDTO idto = convertToDto(i);
-				iDTOSet.add(idto);
-				
-			}
-			
-			DeliveryMethod dm = io.getDelivery();
-			DeliveryMethodDTO dmDTO;
-			
-			String Sdm = dm.toString();
-			
-			switch(Sdm) {
-			
-			case "INSTOREPICKUP": 
-				dmDTO = DeliveryMethodDTO.INSTOREPICKUP;
-				break;
-				
-			case "HOMEDELIVERY":
-				dmDTO = DeliveryMethodDTO.HOMEDELIVERY;
-				break;
-				
-			default:
-				throw new Exception("Wrong delivery method");
-				
-			}
-			
-			ItemOrderDTO ioDTO = new ItemOrderDTO(io.getItemOrderId(),io.getItemOrderDate(), cDTO, dmDTO, iDTOSet);										//*****DISCUSS TAXES WITH VADIM*****
-			
-			return ioDTO;
+	private ItemOrderDTO convertToDto(ItemOrder io) throws Exception {
+		if(io == null) {
+			throw new IllegalArgumentException("There is no such Item");
 		}
-	
-	
-	
+
+		Customer c = io.getCustomer();
+
+		CustomerDTO cDTO = convertToDto(c);
+
+		Set<Item> iSet = io.getItem();
+		Set<ItemDTO> iDTOSet = new HashSet<ItemDTO>();
+
+		for(Item i : iSet) {
+			ItemDTO idto = convertToDto(i);
+			iDTOSet.add(idto);
+
+		}
+
+		DeliveryMethod dm = io.getDelivery();
+		DeliveryMethodDTO dmDTO;
+
+		String Sdm = dm.toString();
+
+		switch(Sdm) {
+
+		case "INSTOREPICKUP": 
+			dmDTO = DeliveryMethodDTO.INSTOREPICKUP;
+			break;
+
+		case "HOMEDELIVERY":
+			dmDTO = DeliveryMethodDTO.HOMEDELIVERY;
+			break;
+
+		default:
+			throw new Exception("Wrong delivery method");
+
+		}
+
+		ItemOrderDTO ioDTO = new ItemOrderDTO(io.getItemOrderId(),io.getItemOrderDate(), cDTO, dmDTO, iDTOSet);
+
+		return ioDTO;
+	}
+
+	/**
+	 * Converts a collection object to a collection DTO object and makes all the 
+	 * necessary association links with other objects
+	 * @author Vadim Tuchila
+	 * @param createCollection
+	 * @return collectionDTO
+	 */
+	private CollectionDTO convertToDTO(Collection collection) {
+		if (collection == null) {
+			throw new IllegalArgumentException("An error occured with collection management");
+		}
+
+		CollectionDTO collectionDTO = new CollectionDTO(collection.getName(), collection.getDescription(), collection.getPathToImage());
+
+		return collectionDTO;
+	}
+
+
+
 
 
 }
