@@ -124,7 +124,7 @@ public class ProjectGroup02RestController {
 		return convertToDto(service.checkout(username, deliveryMethod));
 	}
 
-	@PostMapping(value = {"/{username}/shopping-cart/remove-item/{itemName}/{artistusername}", "/{username}/shopping-cart/remove-item/{itemName}/{artistUsername}/"})
+	@PostMapping(value = {"/{username}/shopping-cart/add-item/{itemName}/{artistusername}", "/{username}/shopping-cart/remove-item/{itemName}/{artistUsername}/"})
 	public boolean addToShoppingCart(@PathVariable("username") String username, @PathVariable("itemName") String itemName, @PathVariable("artistUsername") String artistUsername) throws Exception {
 		return service.addToShoppingCart(username, itemName, artistUsername);
 	}
@@ -144,7 +144,7 @@ public class ProjectGroup02RestController {
 		return service.deleteItemFromGallery(username, itemName, artistUsername);
 	}
 
-	@PostMapping(value = {"/{username}/upload-artwork/{collection}/{artworkName}"})
+	@PostMapping(value = {"/{username}/upload-artwork/{collection}/{artworkName}/"})
 	public boolean uploadArtwork(@PathVariable("username") String username, @PathVariable("artworkName") String artworkName, @RequestParam("height") double height, @RequestParam("width") double width, @RequestParam("breadth") double breadth,
 			@RequestParam("creationDate") String creationDate, @RequestParam("description") String description, @RequestParam("price")  double price, @RequestParam("iamgeUrl") String imageUrl,  @PathVariable("collection") String collectionName) throws Exception {
 		return service.uploadArtwork(username, artworkName, height, width, breadth, creationDate, description, price, imageUrl, collectionName);
