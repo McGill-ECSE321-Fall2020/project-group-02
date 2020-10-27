@@ -145,6 +145,9 @@ public class ProjectGroup02Service {
 
 	@Transactional
 	public ApplicationUser getUser(String username) {
+		//ApplicationUser ap = applicationUserRepository.findByUsername(username);
+		//applicationUserRepository.save(ap);
+		//return ap;
 		return applicationUserRepository.findByUsername(username);
 	}
 
