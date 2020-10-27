@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.projectgroup02.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
@@ -79,6 +80,7 @@ public class TestProjectGroup02Service {
 	private static final int AGS_KEY = 1;
 	private static final int NONEXISTING__AGS_KEY = 0;
 
+	private static final String GALLERY_KEY = "TestGallery";
 	private static final String APPLICATION_USER_KEY = "TestApplicationUser";
 	private static final String NONEXISTING_USER_KEY = "NotAnApplicationUser";
 
@@ -86,9 +88,9 @@ public class TestProjectGroup02Service {
 	public void setMockOutput() {
 		// mock for ArtGallerySystem
 		lenient().when(artGallerySystemRepository.findByartGalleryId(anyInt())).thenAnswer((InvocationOnMock invocation) -> {
-			if (invocation.getArgument(0).equals(AGS_KEY)) {
+			if (invocation.getArgument(0).equals(GALLERY_KEY)) {
 				ArtGallerySystem ags = new ArtGallerySystem();
-				ags.setArtGalleryId(1);
+				ags.setArtGalleryId(AGS_KEY);
 				return ags;
 			} else {
 				return null;
@@ -125,7 +127,29 @@ public class TestProjectGroup02Service {
 
 	}
 
-	public void testCreateArtGallery() {
-
+	@Test
+	public void testCreateArtGallery() throws Exception {
+		//assertEquals(null,service.getGallery());
+		String street = "sherbroke";
+		String postalCode = "H4J4H8";
+		String province = "Quebec";
+		String country = "Canada";
+		String city = "Montreal";
+		String adminUsername = "Asmaa";
+		String adminPassword = "asmaamcgill";
+		String adminEmail = "asmaa@gmail.com";
+		
+		ArtGallerySystem ags = null;
+		
+		try {
+		ags = service.createGallery(street, postalCode, province, country, city, adminUsername, adminPassword, adminEmail);
+		} catch (IllegalArgumentException e) {
+			fail();
+		}
+		
+		assertNotNull(ags);
+		assertEquals(street, ags.getAddress().getStreet());
+		
+		
 	}
 }
