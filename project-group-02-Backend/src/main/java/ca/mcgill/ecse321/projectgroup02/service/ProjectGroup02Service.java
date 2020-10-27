@@ -642,7 +642,7 @@ public class ProjectGroup02Service {
 	 * @throws Exception
 	 */
 	@Transactional
-	private double getArtGalleryProfit() throws Exception {
+	public double getArtGalleryProfit() throws Exception {
 		return getGallery().getTotalProfit();
 	}
 
@@ -653,7 +653,7 @@ public class ProjectGroup02Service {
 	 * @throws Exception
 	 */
 	@Transactional
-	private double getUserBalance(String username) {
+	public double getUserBalance(String username) {
 		return applicationUserRepository.findByUsername(username).getBalance();
 	}
 
@@ -664,7 +664,7 @@ public class ProjectGroup02Service {
 	 * @throws Exception
 	 */
 	@Transactional
-	private void setUserBalance(String username, double value) {
+	public void setUserBalance(String username, double value) {
 		applicationUserRepository.findByUsername(username).setBalance(value);
 	}
 
@@ -698,14 +698,14 @@ public class ProjectGroup02Service {
 	 * @param applicationUser
 	 * @param value
 	 */
-	private void addToBalance(ApplicationUser applicationUser, double value) {
+	public void addToBalance(ApplicationUser applicationUser, double value) {
 		double balance = applicationUser.getBalance() + value;
 		applicationUser.setBalance(balance);
 
 		applicationUserRepository.save(applicationUser);
 	}
 
-	private void addToBalance(ArtGallerySystem system, double value) {
+	public void addToBalance(ArtGallerySystem system, double value) {
 		double balance = system.getTotalProfit() + value;
 		system.setTotalProfit(balance);
 
