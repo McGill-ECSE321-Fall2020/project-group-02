@@ -96,7 +96,7 @@ public class TestProjectGroup02Service {
 				return null;
 			}
 		});
-
+/*
 		// mock for ApplicationUser
 		lenient().when(applicationUserRepository.findByUsername(anyString())).thenAnswer((InvocationOnMock invocation) -> {
 			if (invocation.getArgument(0).equals(AGS_KEY)) {
@@ -106,7 +106,7 @@ public class TestProjectGroup02Service {
 			} else {
 				return null;
 			}
-		});
+		});*/
 
 		// Return the parameter object when anything is saved
 		Answer<?> returnParameterAsAnswer = (InvocationOnMock invocation) -> {
@@ -128,6 +128,43 @@ public class TestProjectGroup02Service {
 	}
 
 	@Test
+	public void testCreateUser() throws Exception {
+		String error = null;
+
+		ApplicationUser user = null;
+		try {
+		user = service.createUser("asmaa", "asmaa@gmail.com", "asmaamcgill");
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertNotNull(user);
+		assertEquals("asmaa", user.getUsername());
+		assertEquals("asmaa@gmail.com", user.getEmail());
+		assertEquals("asmaamcgill", user.getPassword());
+
+
+	}
+	/*
+	@Test
+	public void testCreateAdmin() throws Exception {
+		String error = null;
+
+		ApplicationUser admin = null;
+		try {
+			admin = service.createAdmin("asmaa", "asmaa@gmail.com", "asmaamcgill");
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		
+		assertNotNull(admin);
+		assertEquals("asmaa", admin.getUsername());
+		assertEquals("asmaa@gmail.com", admin.getEmail());
+		assertEquals("asmaamcgill", admin.getPassword());
+
+
+	}
+	/*
+	@Test
 	public void testCreateArtGallery() throws Exception {
 		//assertEquals(null,service.getGallery());
 		String street = "sherbroke";
@@ -144,12 +181,27 @@ public class TestProjectGroup02Service {
 		try {
 		ags = service.createGallery(street, postalCode, province, country, city, adminUsername, adminPassword, adminEmail);
 		} catch (IllegalArgumentException e) {
-			fail();
+			fail(); //KEEP IT AS FAIL
 		}
 		
 		assertNotNull(ags);
 		assertEquals(street, ags.getAddress().getStreet());
+		assertEquals(postalCode, ags.getAddress().getPostalCode());
+		assertEquals(province, ags.getAddress().getProvince());
+		assertEquals(country, ags.getAddress().getCountry());
+		assertEquals(postalCode, ags.getAddress().getPostalCode());
+		assertEquals(city, ags.getAddress().getCity());
+		
+		for(ApplicationUser ap : ags.getApplicationUsers()) {
+			if(ap instac)
+			assertEquals(ap.get)
+			return null;
+		}
+		assertEquals(adminUsername, ags.ge);
+
+
+
 		
 		
-	}
+	}*/
 }
