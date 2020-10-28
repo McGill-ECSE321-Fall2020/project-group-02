@@ -374,62 +374,7 @@ public class ProjectGroup02Service {
 		return true;
 	}
 
-	/**
-	 * This method allows the admin (service provider) to upload a new artwork to
-	 * the gallery. The item's name must be unique in the artist's list of uploaded
-	 * arts. The item's unique id is encoded based on its name and the artist's
-	 * username.
-	 * 
-	 * @author Ryad Ammar, Vadim Tuchila
-	 * @param username     admin's username
-	 * @param name
-	 * @param height
-	 * @param width
-	 * @param breadth
-	 * @param creationDate
-	 * @param description
-	 * @param price
-	 * @param link
-	 * @param collection
-	 * @throws Exception
-	 *//*
-		 * @Transactional public boolean uploadArtwortByAdmin(String usernameAdmin,
-		 * String usernameArtist, String artworkName, double height, double width,
-		 * double breadth, String creationDate, String description, double price, String
-		 * imageUrl, String collection) throws Exception { ServiceProvider admin; Artist
-		 * artist;
-		 * 
-		 * try { admin = serviceProviderRepository.findByuserRoleId((usernameAdmin +
-		 * "admin").hashCode()); } catch (Exception e) { throw new
-		 * Exception("User must be an admin to upload the artwork"); }
-		 * 
-		 * try { artist = artistRepository.findByuserRoleId((usernameArtist +
-		 * "artist").hashCode()); } catch (Exception e) { throw new
-		 * Exception("User must be an artist"); }
-		 * 
-		 * for (Item item : artist.getItem()) { if (item.getName().equals(artworkName))
-		 * throw new Exception("Artist's items' name must be unique"); }
-		 * 
-		 * Item item = new Item();
-		 * 
-		 * item.setItemId((usernameArtist + artworkName).hashCode()); // Generate the ID
-		 * using hashCode encoding
-		 * 
-		 * item.setName(artworkName); item.setHeight(height); item.setWidth(width);
-		 * item.setBreadth(breadth); item.setCreationDate(creationDate);
-		 * item.setDescription(description); item.setPrice(price);
-		 * item.setPathToImage(imageUrl); try {
-		 * item.setCollection(collectionRepository.findByName(collection)); } catch
-		 * (Exception e) { throw new Exception("Collection+" + collection +
-		 * " does not exist."); }
-		 * 
-		 * artist.getItem().add(item); item.setArtist(artist);
-		 * 
-		 * itemRepository.save(item); artistRepository.save(artist);
-		 * 
-		 * return true; }
-		 */
-
+	
 	/**
 	 * Deletes an item from the database. Can only be executed if the user is a
 	 * service provider.
