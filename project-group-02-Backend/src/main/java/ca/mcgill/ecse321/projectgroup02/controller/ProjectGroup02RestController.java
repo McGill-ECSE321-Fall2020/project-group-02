@@ -86,10 +86,9 @@ public class ProjectGroup02RestController {
 		return convertToDto(service.getUser(username));
 	}
 
-	//TODO: Fix  the String...roles thing from the service layer of the setUserRole method - WE CAN MODIFY THE METHOD TO RECEIVE ONLY ONE USER_ROLE IN THE SERVICE LAYER as when the user is registering, he/she is choosing only one role for the whole account
-	@PostMapping(value = { "/set-user-role/{username}/{roles}" , "/set-user-role/{username}/{roles}/"})
-	public ApplicationUserDTO setUserRole(@PathVariable("username") String username, @PathVariable("roles") String role) {
-		return convertToDto(service.setUserRole(username, role));
+	@PostMapping(value = { "/set-user-role/{username}" , "/set-user-role/{username}/"})
+	public ApplicationUserDTO setUserRole(@PathVariable("username") String username, @RequestParam ("roles") String... roles) {
+		return convertToDto(service.setUserRole(username, roles));
 	}
 
 
@@ -338,9 +337,6 @@ public class ProjectGroup02RestController {
 	 * @return cDTO
 	 */
 
-	//TODO	ADD ITEM ORDER ASSOCIATION
-
-
 	private CustomerDTO convertToDto(Customer c) {
 		if(c == null) {
 			throw new IllegalArgumentException("There is no such Customer");
@@ -468,7 +464,6 @@ public class ProjectGroup02RestController {
 		for(Item i : iSet) {
 			ItemDTO idto = convertToDto(i);
 			iDTOSet.add(idto);
-
 		}
 
 		DeliveryMethod dm = io.getDelivery();
