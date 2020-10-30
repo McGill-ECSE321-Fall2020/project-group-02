@@ -24,5 +24,51 @@ dependencies {
 
 }
 
+test {
+	useJUnitPlatform()
+}
 
+
+
+
+task integrationTest(type: Exec) {
+	
+	workingDir '../'
+
+	commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080'
+	
+	
+	//these methods all work just have to figure how to call each of them asynchronusly 
+	
+	//commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/art-gallery-system/Auclair/H3G2A9/Quebec/Canada/Montreal/AhmadSiddiqi/12345abcABC/ahmad.Siddiqi@hotmail.com'
+	
+	//commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/art-gallery-system'
+	
+	//commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/create-user/AhmadSiddiqi/ahmadSiddiqi@gmail.com/123abcABC'
+	
+	//commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/create-user/GURDYBOYSS/GURDYBOY@gmail.com/456abcABC'
+	
+	//commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/users'
+	
+	//commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/user-by-name/AhmadSiddiqi'
+	
+	 
+	//commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/set-user-role/AhmadSiddiqi?roles=Customer'
+	
+	//commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/update-payment-credentials/AhmadSiddiqi/AhmadSiddiqi/1253698/2020-10-29/666'
+	
+	//commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/update-user-address/AhmadSiddiqi/RueAuclair/he4hf6/QC/Canada/Brossard'
+	
+	//commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/user-by-name/AhmadSiddiqi'
+	
+	//commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/user-login/AhmadSiddiqi/123abcABCC'
+	
+	//commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/user-logout/AhmadSiddiqi'
+	
+	
+	//commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/AhmadSiddiqi/shopping-cart'
+	
+	//commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080
+	
+}
 	
