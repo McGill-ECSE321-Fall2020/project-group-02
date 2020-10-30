@@ -24,43 +24,5 @@ dependencies {
 
 }
 
-test {
-	useJUnitPlatform()
-}
 
-task integrationTest(type: Exec) {
-    workingDir "../"
 	
-	commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080'
-    
-	//commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/art-gallery-system/BeverlyStreet/H7Q7B6/Quebec/Canada/LosAngeles/adminUsername/myPassword/vdsds@ms.com'
-	
-	commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/art-gallery-system'
-	
-	//commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/create-user/AhmadSiddiqi/ahmadSiddiqi@gmail.com/123abcABC'
-	
-	//commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/create-user/GURDYBOYSS/GURDYBOY@gmail.com/456abcABC'
-	
-	//commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/users'
-	
-	//commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/user-by-name/AhmadSiddiqi'
-	
-	//Ask vadim about String..roles 
-	//commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/set-user-role/AhmadSiddiqi?roles=Customer'
-	//thesetwo dont work because of the String..roles as to update the payment credentials the user needs t be a customer
-	//commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/update-payment-credentials/AhmadSiddiqi/AhmadSiddiqi/1253698/2020-10-29/666'
-	
-	//commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/update-user-address/AhmadSiddiqi/RueAuclair/he4hf6/QC/Canada/Brossard'
-	
-	//commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/user-by-name/AhmadSiddiqi'
-	
-	//commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/user-login/AhmadSiddiqi/123abcABCC'
-	
-	//commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/user-logout/AhmadSiddiqi'
-	
-	//doesnt work since we havent set the customer
-	//commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/AhmadSiddiqi/shopping-cart'
-	
-	//commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080
-	
-}

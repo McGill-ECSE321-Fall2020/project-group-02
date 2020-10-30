@@ -86,9 +86,9 @@ public class ProjectGroup02RestController {
 		return convertToDto(service.getUser(username));
 	}
 
-	//TODO: Fix  the String...roles thing from the service layer of the setUserRole method - WE CAN MODIFY THE METHOD TO RECEIVE ONLY ONE USER_ROLE IN THE SERVICE LAYER as when the user is registering, he/she is choosing only one role for the whole account
-	@PostMapping(value = { "/set-user-role/{username}/{roles}" , "/set-user-role/{username}/{roles}/"})
-	public ApplicationUserDTO setUserRole(@PathVariable("username") String username, @PathVariable("roles") String role) {
+	
+	@PostMapping(value = { "/set-user-role/{username}" , "/set-user-role/{username}/"})
+	public ApplicationUserDTO setUserRole(@PathVariable("username") String username, @PathVariable("roles") String... role) {
 		return convertToDto(service.setUserRole(username, role));
 	}
 
@@ -206,7 +206,7 @@ public class ProjectGroup02RestController {
 	 * Converts an Address object into an AddressDTO object and 
 	 * makes all the necessary links with the associations.
 	 * 
-	 * @author Gurdarshan Singh
+	 * @author Gurdarshan Singh, Ahmad Siddiqi,
 	 * @param a
 	 * @throws Exception
 	 * @return adDTO
@@ -225,7 +225,7 @@ public class ProjectGroup02RestController {
 	 * Converts a PaymentCredentials object into a PaymentCredentialsDTO object and 
 	 * makes all the necessary links with the associations.
 	 * 
-	 * @author Gurdarshan Singh
+	 * @author Gurdarshan Singh, Ahmad Siddiqi,
 	 * @param pc
 	 * @throws Exception
 	 * @return pcDTO
@@ -244,7 +244,7 @@ public class ProjectGroup02RestController {
 	 * Converts a ShoppingCart object into a ShoppingCartDTO object and 
 	 * makes all the necessary links with the associations.
 	 * 
-	 * @author Gurdarshan Singh
+	 * @author Gurdarshan Singh, Ahmad Siddiqi,
 	 * @param sc
 	 * @throws Exception
 	 * @return scDTO
@@ -273,7 +273,7 @@ public class ProjectGroup02RestController {
 	 * Converts an Artist object into an ArtistDTO object and 
 	 * makes all the necessary links with the associations.
 	 * 
-	 * @author Gurdarshan Singh
+	 * @author Gurdarshan Singh, Ahmad Siddiqi,
 	 * @param a
 	 * @throws Exception
 	 * @return aDTO
@@ -302,7 +302,7 @@ public class ProjectGroup02RestController {
 	 * Converts a Collection object into a CollectionDTO object and 
 	 * makes all the necessary links with the associations.
 	 * 
-	 * @author Gurdarshan Singh
+	 * @author Gurdarshan Singh, Ahmad Siddiqi,
 	 * @param c
 	 * @throws Exception
 	 * @return cDTO
@@ -332,7 +332,7 @@ public class ProjectGroup02RestController {
 	 * Converts a Customer object into a CustomerDTO object and 
 	 * makes all the necessary links with the associations.
 	 * 
-	 * @author Gurdarshan Singh
+	 * @author Gurdarshan Singh, Ahmad Siddiqi,
 	 * @param c
 	 * @throws Exception
 	 * @return cDTO
@@ -369,7 +369,7 @@ public class ProjectGroup02RestController {
 	 * Converts an ArtGallerySystem object into an ArtGallerySystemDTO object and 
 	 * makes all the necessary links with the associations.
 	 * 
-	 * @author Gurdarshan Singh
+	 * @author Gurdarshan Singh, Ahmad Siddiqi,
 	 * @param ags
 	 * @throws Exception
 	 * @return agsDTO
