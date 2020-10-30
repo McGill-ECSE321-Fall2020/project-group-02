@@ -31,7 +31,7 @@ test {
 
 
 
-task integrationTest(type: Exec) {
+task integrationTest() {
 	doLast{
 		exec {
 			workingDir '../'
@@ -110,4 +110,8 @@ task integrationTest(type: Exec) {
 	//commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080
 	
 }
+
+
+
+
 	
