@@ -62,7 +62,7 @@ task integrationTest() {
     		}
     	exec {
       		workingDir '../'
-      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/set-user-role/AhmadSiddiqi?roles=Customer'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/set-user-role/AhmadSiddiqi?roles[]=Customer'
     		}
     	exec {
       		workingDir '../'

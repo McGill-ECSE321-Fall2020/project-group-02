@@ -84,6 +84,7 @@ public class ProjectGroup02Service {
     address.setPostalCode(postalCode);
     address.setProvince(province);
     address.setStreet(street);
+    gallery.setArtGalleryId(1);
 
     addressRepository.save(address);
     artGallerySystemRepository.save(gallery);
@@ -98,7 +99,6 @@ public class ProjectGroup02Service {
     gallery.setApplicationUsers(users);
     gallery.setAddress(address);
 
-    // addressRepository.save(address);
     applicationUserRepository.save(admin);
     artGallerySystemRepository.save(gallery);
 
