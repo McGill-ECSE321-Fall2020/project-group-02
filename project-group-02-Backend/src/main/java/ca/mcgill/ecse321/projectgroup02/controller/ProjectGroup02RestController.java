@@ -278,7 +278,7 @@ public class ProjectGroup02RestController {
 	 * @throws Exception
 	 * @return aDTO
 	 */
-
+	//TODO infinite loop with item
 	private ArtistDTO convertToDto(Artist a) {
 		if(a == null) {
 			throw new IllegalArgumentException("There is no such Artist");
@@ -308,6 +308,7 @@ public class ProjectGroup02RestController {
 	 * @return cDTO
 	 */
 
+	//TODO infinite loop with item
 	private CollectionDTO convertToDto(Collection c) {
 		if(c == null) {
 			throw new IllegalArgumentException("There is no such Collection");

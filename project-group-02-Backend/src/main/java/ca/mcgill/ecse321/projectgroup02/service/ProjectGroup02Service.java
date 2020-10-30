@@ -1,12 +1,14 @@
 package ca.mcgill.ecse321.projectgroup02.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ca.mcgill.ecse321.projectgroup02.dao.AddressRepository;
 import ca.mcgill.ecse321.projectgroup02.dao.ApplicationUserRepository;
@@ -58,6 +60,7 @@ public class ProjectGroup02Service {
   private ServiceProviderRepository serviceProviderRepository;
   @Autowired
   private ShoppingCartRepository shoppingCartRepository;
+ 
 
   // CONSTANT VARIABLES
 
@@ -365,7 +368,8 @@ public class ProjectGroup02Service {
 
     artist.getItem().add(item);
     item.setArtist(artist);
-
+    
+    collectionRepository.save(collectionRepository.findByName(collection));
     itemRepository.save(item);
     artistRepository.save(artist);
 
@@ -581,6 +585,103 @@ public class ProjectGroup02Service {
   }
 
   /**
+   * Sorts items by price in ascending order.
+   * 
+   * @author Gurdarshan Singh
+   * @return items
+   */
+  public List<Item> sortByPriceAsc(){
+
+	  List<Item> items = toList(itemRepository.findAll());
+	  sortPrice(items, 0, items.size()-1);
+	  
+	  return items;
+  }
+  
+  /**
+   * Sorts items by price in descending order.
+   * 
+   * @author Gurdarshan Singh
+   * @return items
+   */
+  public List<Item> sortByPriceDesc(){
+
+	  List<Item> items = toList(itemRepository.findAll());
+	  sortPrice(items, 0, items.size()-1);
+	  Collections.reverse(items);
+	  
+	  return items; 
+  }
+  
+  /**
+   * Filters items by their collection.
+   * 
+   * @author Gurdarshan Singh
+   * @return filteredItems
+   */
+  public List<Item> filterByCollection(String collection){
+	 
+	  List<Item> items = toList(itemRepository.findAll());
+	  
+	  List<Item> filteredItems = new ArrayList<Item>();
+	  
+	  for(Item i : items) {
+		  
+		  if(i.getCollection().getName().equalsIgnoreCase(collection)) {
+			  filteredItems.add(i);
+		  }
+	  }
+
+	  return filteredItems;
+  }
+  
+  /**
+   * Filters items by their artist.
+   * 
+   * @author Gurdarshan Singh
+   * @return filteredItems
+   */
+  public List<Item> filterByArtist(String artist){
+		 
+	  List<Item> items = toList(itemRepository.findAll());
+	  
+	  List<Item> filteredItems = new ArrayList<Item>();
+	  
+	  for(Item i : items) {
+		  
+		  if(i.getArtist().getApplicationUser().getUsername().equalsIgnoreCase(artist)) {
+			  filteredItems.add(i);
+		  }
+	  }
+
+	  return filteredItems;
+  }
+  
+  /**
+   * Filters items by their price.
+   * 
+   * @author Gurdarshan Singh
+   * @return filteredItems
+   */
+  public List<Item> filterByPrice(int p1, int p2){
+		 
+	  List<Item> items = toList(itemRepository.findAll());
+	  
+	  List<Item> filteredItems = new ArrayList<Item>();
+	  
+	  for(Item i : items) {
+		  
+		  if(i.getPrice()>=p1 && i.getPrice()<=p2) {
+			  filteredItems.add(i);
+		  }
+	  }
+
+	  return filteredItems;
+  }
+  
+  
+  
+  /**
    * Returns the total profit of the gallery system.
    * 
    * @author Ryad Ammar
@@ -711,4 +812,57 @@ public class ProjectGroup02Service {
     }
     return resultList;
   }
+  
+
+   private int partitionPrice(List<Item> items, int low, int high) 
+   { 
+       Item pivot = items.get(high);  
+       int i = (low-1); // index of smaller element 
+       for (int j=low; j<high; j++) 
+       { 
+           // If current element is smaller than the pivot 
+           if (items.get(j).getPrice() < pivot.getPrice()) 
+           { 
+               i++; 
+ 
+               // swap arr[i] and arr[j] 
+               Item temp = items.get(i); 
+               items.set(i, items.get(j));
+               items.set(j, temp);
+           } 
+       } 
+ 
+       // swap arr[i+1] and arr[high] (or pivot) 
+       Item temp = items.get(i+1); 
+       items.set(i+1, items.get(high));
+       items.set(high, temp);
+ 
+       return i+1; 
+   } 
+ 
+/**
+ * Sorts items in ascending order according to their price.
+ * Implementation of QuickSort.
+ * 
+ * @author Gurdarshan Singh
+ * @param items
+ * @param low
+ * @param high
+ */
+   private void sortPrice(List<Item> items, int low, int high) 
+   { 
+       if (low < high) 
+       { 
+           
+           int pi = partitionPrice(items, low, high); 
+ 
+          
+           sortPrice(items, low, pi-1); 
+           sortPrice(items, pi+1, high); 
+       } 
+   }
+       
+       
+      
+      
 }
