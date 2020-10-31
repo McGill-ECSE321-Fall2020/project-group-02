@@ -247,8 +247,8 @@ public class ProjectGroup02Service {
    * @param username
    */
   @Transactional
-  public ApplicationUser logoutUser(String username) {
-    ApplicationUser user = applicationUserRepository.findByUsername(username);
+  public ApplicationUser logoutUser(String uname) {
+    ApplicationUser user = applicationUserRepository.findByUsername(uname);
     user.setIsLoggedIn(false);
 
     applicationUserRepository.save(user);
@@ -264,8 +264,8 @@ public class ProjectGroup02Service {
    * @param password
    */
   @Transactional
-  public boolean loginUser(String username, String password) {
-    ApplicationUser user = applicationUserRepository.findByUsername(username);
+  public boolean loginUser(String uname, String password) {
+    ApplicationUser user = applicationUserRepository.findByUsername(uname);
     if (user.getPassword().equals(password)) {
       user.setIsLoggedIn(true);
       applicationUserRepository.save(user);

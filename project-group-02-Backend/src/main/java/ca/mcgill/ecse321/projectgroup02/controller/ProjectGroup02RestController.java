@@ -88,8 +88,8 @@ public class ProjectGroup02RestController {
 
 	
 	@PostMapping(value = { "/set-user-role/{username}" , "/set-user-role/{username}/"})
-	public ApplicationUserDTO setUserRole(@PathVariable("username") String username, @PathVariable("roles") String... role) {
-		return convertToDto(service.setUserRole(username, role));
+	public ApplicationUserDTO setUserRole(@PathVariable("username") String username, @RequestParam("roles") String... roles) {
+		return convertToDto(service.setUserRole(username, roles));
 	}
 
 
