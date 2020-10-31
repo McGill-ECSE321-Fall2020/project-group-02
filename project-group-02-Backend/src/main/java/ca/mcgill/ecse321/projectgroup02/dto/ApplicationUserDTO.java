@@ -20,7 +20,7 @@ public class ApplicationUserDTO{
 
 	public ApplicationUserDTO() {}
 
-	public ApplicationUserDTO(String accountCreationDate, String username, String email, String password, String phoneNumber, Set<UserRoleDTO> ur) {
+	public ApplicationUserDTO(String accountCreationDate, String username, String email, String password, String phoneNumber, Set<UserRoleDTO> ur, boolean isLoggedIn) {
 		this.accountCreationDate = accountCreationDate;
 		this.username = username;
 		this.email = email;
@@ -29,10 +29,11 @@ public class ApplicationUserDTO{
 		//this.artGallerySystem = artGallerySystem;
 		this.address = new HashSet<AddressDTO>();
 		this.userRoles= ur; 
+		this.isLoggedIn = isLoggedIn;
 		
 	}
 	
-	public ApplicationUserDTO(String accountCreationDate, String username, String email, String password, String phoneNumber, Set<AddressDTO> adr, int i) {
+	public ApplicationUserDTO(String accountCreationDate, String username, String email, String password, String phoneNumber, Set<AddressDTO> adr, int i, boolean isLoggedIn) {
 		this.accountCreationDate = accountCreationDate;
 		this.username = username;
 		this.email = email;
@@ -41,7 +42,7 @@ public class ApplicationUserDTO{
 		//this.artGallerySystem = artGallerySystem;
 		this.address = adr;
 		this.userRoles= new HashSet<UserRoleDTO>(); 
-		
+		this.isLoggedIn = isLoggedIn;		
 	}
 	
 //	public ApplicationUserDTO(String accountCreationDate, String username, String email, String password, String phoneNumber, Set<UserRoleDTO> ur) {
@@ -55,7 +56,7 @@ public class ApplicationUserDTO{
 //		this.userRoles= ur; 
 //	}
 	
-	public ApplicationUserDTO(String accountCreationDate, String username, String email, String password, String phoneNumber) {
+	public ApplicationUserDTO(String accountCreationDate, String username, String email, String password, String phoneNumber, boolean isLoggedIn) {
 		this.accountCreationDate = accountCreationDate;
 		this.username = username;
 		this.email = email;
@@ -63,10 +64,11 @@ public class ApplicationUserDTO{
 		this.phoneNumber = phoneNumber;
 		//this.artGallerySystem = new ArtGallerySystemDTO();
 		this.address = new HashSet<AddressDTO>();
-		
+		this.isLoggedIn = isLoggedIn;
+	
 	}
 
-	public ApplicationUserDTO(String accountCreationDate, String username, String email, String password, String phoneNumber,Set<AddressDTO> address, Set<UserRoleDTO> ur) {
+	public ApplicationUserDTO(String accountCreationDate, String username, String email, String password, String phoneNumber,Set<AddressDTO> address, Set<UserRoleDTO> ur, boolean isLoggedIn) {
 		this.accountCreationDate = accountCreationDate;
 		this.username = username;
 		this.email = email;
@@ -75,7 +77,8 @@ public class ApplicationUserDTO{
 		//this.artGallerySystem = artGallerySystem;
 		this.address = address;
 		this.userRoles= ur; 
-	}
+		this.isLoggedIn = isLoggedIn;
+}
 
 	public String getAccountCreationDate() {
 		return this.accountCreationDate;

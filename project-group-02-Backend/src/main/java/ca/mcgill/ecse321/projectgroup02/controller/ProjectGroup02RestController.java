@@ -87,7 +87,7 @@ public class ProjectGroup02RestController {
 		return convertToDto(service.getUser(username));
 	}
 
-	
+
 	@PostMapping(value = { "/set-user-role/{username}" , "/set-user-role/{username}/"})
 	public ApplicationUserDTO setUserRole(@PathVariable("username") String username, @RequestParam("roles") String... roles) {
 		return convertToDto(service.setUserRole(username, roles));
@@ -111,30 +111,10 @@ public class ProjectGroup02RestController {
 	}
 
 	@PostMapping(value = {"/user-logout/{username}" , "/user-logout/{username}/"})
-	public void logoutUser(@PathVariable("username") String username) {
-		service.logoutUser(username);
+	public boolean logoutUser(@PathVariable("username") String username) {
+		return service.logoutUser(username).isIsLoggedIn();
 	}
-
-	@GetMapping(value = {"/{username}/shopping-cart', '/{username}/shopping-cart/"})
-	public List<ItemDTO> getItemsFromShoppingCart(@PathVariable("username") String username) throws Exception {
-		return service.getItemsFromShoppingCart(username).stream().map(item -> convertToDto(item)).collect(Collectors.toList());
-	}
-
-	@PostMapping(value = {"/{username}/checkout/{deliveryMethod}", "/{username}/checkout/{deliveryMethod}/"})
-	public ItemOrderDTO checkout(@PathVariable("username") String username, @PathVariable("deliveryMethod") String deliveryMethod) throws Exception {
-		return convertToDto(service.checkout(username, deliveryMethod));
-	}
-
-	@PostMapping(value = {"/{username}/shopping-cart/add-item/{itemName}/{artistusername}", "/{username}/shopping-cart/remove-item/{itemName}/{artistUsername}/"})
-	public ShoppingCartDTO addToShoppingCart(@PathVariable("username") String username, @PathVariable("itemName") String itemName, @PathVariable("artistUsername") String artistUsername) throws Exception {
-		return convertToDto(service.addToShoppingCart(username, itemName, artistUsername));
-	}
-
-	@PostMapping(value = {"/{username}/shopping-cart/remove-item/{itemName}/{artistusername}", "/{username}/shopping-cart/remove-item/{itemName}/{artistUsername}/"})
-	public ShoppingCartDTO removeFromShoppingCart(@PathVariable("username") String username, @PathVariable("itemName") String itemName, @PathVariable("artistUsername") String artistUsername) throws Exception {
-		return convertToDto(service.removeFromShoppingCart(username, itemName, artistUsername));
-	}
-
+	
 	@PostMapping(value = {"/create-collection/{collectionName}", "/create-collection/{collectionName}/"})
 	public CollectionDTO createCollection(@PathVariable("collectionName") String collectionName, @RequestParam("collectionDescription") String collectionDescription, @RequestParam("collectionImageUrl") String collectionImageUrl) throws Exception {
 		return convertToDto((service.createCollection(collectionName, collectionDescription, collectionImageUrl)));
@@ -146,68 +126,94 @@ public class ProjectGroup02RestController {
 	}
 
 	@PostMapping(value = {"/{username}/upload-artwork/{collection}/{artworkName}, /{username}/upload-artwork/{collection}/{artworkName}/"})
-	public ItemDTO uploadArtwork(@PathVariable("username") String username, @PathVariable("artworkName") String artworkName, @RequestParam("height") double height, @RequestParam("width") double width, @RequestParam("breadth") double breadth,
-			@RequestParam("creationDate") String creationDate, @RequestParam("description") String description, @RequestParam("price")  double price, @RequestParam("iamgeUrl") String imageUrl,  @PathVariable("collection") String collectionName) throws Exception {
+	public ItemDTO uploadArtwork(@PathVariable("username") String username, @PathVariable("collection") String collectionName, @PathVariable("artworkName") String artworkName, @RequestParam("height") double height, @RequestParam("width") double width, @RequestParam("breadth") double breadth,
+			@RequestParam("creationDate") String creationDate, @RequestParam("description") String description, @RequestParam("price")  double price, @RequestParam("imageUrl") String imageUrl) throws Exception {
 		return convertToDto(service.uploadArtwork(username, artworkName, height, width, breadth, creationDate, description, price, imageUrl, collectionName));
 	}
+
+	@PostMapping(value = {"/{username}/shopping-cart/add-item/{itemName}/{artistusername}", "/{username}/shopping-cart/remove-item/{itemName}/{artistUsername}/"})
+	public ShoppingCartDTO addToShoppingCart(@PathVariable("username") String username, @PathVariable("itemName") String itemName, @PathVariable("artistUsername") String artistUsername) throws Exception {
+		return convertToDto(service.addToShoppingCart(username, itemName, artistUsername));
+	}
+
+	@PostMapping(value = {"/{username}/shopping-cart/remove-item/{itemName}/{artistusername}", "/{username}/shopping-cart/remove-item/{itemName}/{artistUsername}/"})
+	public ShoppingCartDTO removeFromShoppingCart(@PathVariable("username") String username, @PathVariable("itemName") String itemName, @PathVariable("artistUsername") String artistUsername) throws Exception {
+		return convertToDto(service.removeFromShoppingCart(username, itemName, artistUsername));
+	}
 	
+	@PostMapping(value = {"/{username}/checkout/{deliveryMethod}", "/{username}/checkout/{deliveryMethod}/"})
+	public ItemOrderDTO checkout(@PathVariable("username") String username, @PathVariable("deliveryMethod") String deliveryMethod) throws Exception {
+		return convertToDto(service.checkout(username, deliveryMethod));
+	}
+	
+	@GetMapping(value = {"/{username}/shopping-cart', '/{username}/shopping-cart/"})
+	public List<ItemDTO> getItemsFromShoppingCart(@PathVariable("username") String username) throws Exception {
+		List<Item> items = service.getItemsFromShoppingCart(username);
+		List<ItemDTO> itemsDTO = new ArrayList<ItemDTO>();
+
+		for (Item myItem : items) {
+			itemsDTO.add(convertToDto(myItem));
+		}
+		return itemsDTO;
+	}
+
 	@PostMapping(value = {"/{collection}/sort-by-price-asc"})
 	public List<ItemDTO> sortByPriceAsc(@PathVariable("collection") String collection) throws Exception {
 		List<Item> items = service.sortByPriceAsc(collection);
 		List<ItemDTO> itemsDTO = new ArrayList<ItemDTO>();
-		
+
 		for (Item myItem : items) {
 			itemsDTO.add(convertToDto(myItem));
 		}
 		return itemsDTO;
 	}
-	
+
 	@PostMapping(value = {"/{collection}/sort-by-price-desc"})
 	public List<ItemDTO> sortByPriceDesc(@PathVariable("collection") String collection) throws Exception {
 		List<Item> items = service.sortByPriceDesc(collection);
 		List<ItemDTO> itemsDTO = new ArrayList<ItemDTO>();
-		
+
 		for (Item myItem : items) {
 			itemsDTO.add(convertToDto(myItem));
 		}
 		return itemsDTO;
 	}
-	
+
 	@PostMapping(value = {"/{collection}, /{collection}/"})
 	public List<ItemDTO> filterByCollection(@PathVariable("collection") String collection) throws Exception {
 		List<Item> items = service.filterByCollection(collection);
 		List<ItemDTO> itemsDTO = new ArrayList<ItemDTO>();
-		
+
 		for (Item myItem : items) {
 			itemsDTO.add(convertToDto(myItem));
 		}
 		return itemsDTO;
 	}
-	
+
 	@PostMapping(value = {"/{collection}/{price-from}/{price-to}, /{collection}/{price-from}/{price-to}/"})
 	public List<ItemDTO> filterByPrice(@PathVariable("collection") String collection, @PathVariable("price-from") int priceFrom, @PathVariable("price-to") int priceTo) throws Exception {
 		List<Item> items = service.filterByPrice(priceFrom, priceTo, collection);
 		List<ItemDTO> itemsDTO = new ArrayList<ItemDTO>();
-		
+
 		for (Item myItem : items) {
 			itemsDTO.add(convertToDto(myItem));
 		}
 		return itemsDTO;
 	}
-	
+
 	@PostMapping(value = {"/{collection}/{artist}, /{collection}/{artist}/"})
 	public List<ItemDTO> filterByArtist(@PathVariable("collection") String collection, @PathVariable("artist") String artist) throws Exception {
 		List<Item> items = service.filterByArtist(artist, collection);
 		List<ItemDTO> itemsDTO = new ArrayList<ItemDTO>();
-		
+
 		for (Item myItem : items) {
 			itemsDTO.add(convertToDto(myItem));
 		}
 		return itemsDTO;
 	}
-	
-	
-	
+
+
+
 
 	/**
 	 * Converts an ApplicationUser object into an ApplicationUserDTO object and 
@@ -250,13 +256,13 @@ public class ProjectGroup02RestController {
 		ApplicationUserDTO userDto;
 
 		if(u.getAddress() != null && u.getUserRole() != null) {
-			userDto = new ApplicationUserDTO(u.getAccountCreationDate(), u.getUsername(), u.getEmail(), u.getPassword(), u.getPhoneNumber(), adSetDTO, usSetDTO);
+			userDto = new ApplicationUserDTO(u.getAccountCreationDate(), u.getUsername(), u.getEmail(), u.getPassword(), u.getPhoneNumber(), adSetDTO, usSetDTO, u.isIsLoggedIn());
 		} else if(u.getAddress() != null) {
-			userDto = new ApplicationUserDTO(u.getAccountCreationDate(), u.getUsername(), u.getEmail(), u.getPassword(), u.getPhoneNumber(), adSetDTO, 1);
+			userDto = new ApplicationUserDTO(u.getAccountCreationDate(), u.getUsername(), u.getEmail(), u.getPassword(), u.getPhoneNumber(), adSetDTO, 1, u.isIsLoggedIn());
 		} else if(u.getUserRole() != null) {
-			userDto = new ApplicationUserDTO(u.getAccountCreationDate(), u.getUsername(), u.getEmail(), u.getPassword(), u.getPhoneNumber(), usSetDTO);
+			userDto = new ApplicationUserDTO(u.getAccountCreationDate(), u.getUsername(), u.getEmail(), u.getPassword(), u.getPhoneNumber(), usSetDTO, u.isIsLoggedIn());
 		} else {
-			userDto = new ApplicationUserDTO(u.getAccountCreationDate(), u.getUsername(), u.getEmail(), u.getPassword(), u.getPhoneNumber());
+			userDto = new ApplicationUserDTO(u.getAccountCreationDate(), u.getUsername(), u.getEmail(), u.getPassword(), u.getPhoneNumber(), u.isIsLoggedIn());
 		}
 		return userDto;
 	}
@@ -343,16 +349,7 @@ public class ProjectGroup02RestController {
 			throw new IllegalArgumentException("There is no such Artist");
 		}
 
-		Set<Item> iSet = a.getItem();
-		Set<ItemDTO> iDTOSet = new HashSet<ItemDTO>();
-
-		for(Item i : iSet) {
-			ItemDTO iDTO = convertToDto(i);
-			iDTOSet.add(iDTO);
-
-		}
-
-		ArtistDTO aDTO = new ArtistDTO(a.getDescription(), iDTOSet);
+		ArtistDTO aDTO = new ArtistDTO(a.getDescription());
 
 		return aDTO;
 	}
@@ -373,16 +370,7 @@ public class ProjectGroup02RestController {
 			throw new IllegalArgumentException("There is no such Collection");
 		}
 
-		Set<Item> iSet = c.getItem();
-		Set<ItemDTO> iDTOSet = new HashSet<ItemDTO>();
-
-		for(Item i : iSet) {
-			ItemDTO iDTO = convertToDto(i);
-			iDTOSet.add(iDTO);
-
-		}
-
-		CollectionDTO cDTO = new CollectionDTO(c.getName(), c.getDescription(), c.getPathToImage(), iDTOSet);
+		CollectionDTO cDTO = new CollectionDTO(c.getName(), c.getDescription(), c.getPathToImage());
 
 		return cDTO;
 	}
@@ -397,10 +385,6 @@ public class ProjectGroup02RestController {
 	 * @throws Exception
 	 * @return cDTO
 	 */
-
-	//TODO	ADD ITEM ORDER ASSOCIATION
-
-
 	private CustomerDTO convertToDto(Customer c) {
 		if(c == null) {
 			throw new IllegalArgumentException("There is no such Customer");
@@ -420,7 +404,7 @@ public class ProjectGroup02RestController {
 		ShoppingCartDTO spDTO = convertToDto(sp);
 
 
-		CustomerDTO cDTO = new CustomerDTO(pcDTOSet, spDTO );
+		CustomerDTO cDTO = new CustomerDTO(pcDTOSet, spDTO);
 
 		return cDTO;
 	}
@@ -455,7 +439,6 @@ public class ProjectGroup02RestController {
 		for(Item i : iSet) {
 			ItemDTO iDTO = convertToDto(i);
 			iDTOSet.add(iDTO);
-
 		}
 
 		Address a = ags.getAddress();

@@ -139,6 +139,7 @@ public class ProjectGroup02Service {
     user.setAccountCreationDate(java.time.LocalDate.now().toString());
     user.setUserRole(new HashSet<UserRole>());
     user.setAddress(new HashSet<Address>());
+    user.setIsLoggedIn(false);
     applicationUserRepository.save(user);
 
     return user;
@@ -217,7 +218,6 @@ public class ProjectGroup02Service {
         customer.setUserRoleId((username + "customer").hashCode());
         customer.setShoppingCart(shoppingCart);
         customer.setApplicationUser(user);
-
         shoppingCartRepository.save(shoppingCart);
         customerRepository.save(customer);
 
@@ -268,10 +268,9 @@ public class ProjectGroup02Service {
     ApplicationUser user = applicationUserRepository.findByUsername(uname);
     if (user.getPassword().equals(password)) {
       user.setIsLoggedIn(true);
-      applicationUserRepository.save(user);
-      return true;
     }
-    return false;
+    applicationUserRepository.save(user);
+    return user.isIsLoggedIn();
   }
 
   /**

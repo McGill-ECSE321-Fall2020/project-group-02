@@ -99,6 +99,30 @@ task integrationTest() {
     	exec {
       		workingDir '../'
       		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/user-by-name/AhmadSiddiqi'
+    		}	à
+       	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/create-collection/Spider-women?collectionDescription=Marvellous+Collection&collectionImageUrl=https://plasticwoman.com'
+    	}	
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/GURDYBOYSS/upload-artwork/Spider-women/PlasticWoman?height=20&width=30&breadth=5&creationDate=2020-10-31&description=This+is+not+a+plastic+woman&price=35000&imageUrl=https://artimage.com'
+    	}	
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/AhmadSiddiqi/shopping-cart/add-item/PlasticWoman/GURDYBOYSS'
+    		}	
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/AhmadSiddiqi/shopping-cart'
+    		}	
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/AhmadSiddiqi/checkout/HOMEDELIVERY'
+    		}	
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/user-by-name/AhmadSiddiqi'
     		}	
     	}
 
