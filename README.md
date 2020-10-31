@@ -25,6 +25,29 @@ Table 1: Project Contributors', roles and hours contributed for the Deliverable 
 |                    | Project Documentation |                   |
 +--------------------+-----------------------+-------------------+
 
+pre>
+Table 2: Project Contributors', roles and hours contributed for the Deliverable 2 (see the table in Raw format)
++--------------------+-----------------------+-------------------+
+|    Contributors    |         Roles         | Hours Contributed |
++--------------------+-----------------------+-------------------+
+| Mohamed Ryad Ammar |   Software Developer  |         55        |
+|                    |     Software Tester   |                   |
+|                    | Technical Coordinator |                   |
++--------------------+-----------------------+-------------------+
+|   Asmaa Jerroumi   |   Software Developer  |         52        |
+|                    |     Software Tester   |                   |
+|                    | Project Documentation |                   |
++--------------------+-----------------------+-------------------+
+|    Ahmad Siddiqi   |   Software Developer  |         52        |
+|                    |    Software Tester    |                   |
+|                    |    Project Manager    |                   |
++--------------------+-----------------------+-------------------+
+|  Gurdarshan Singh  |   Software Developer  |         52        |
+|                    |    Software Manager   |                   |
++--------------------+-----------------------+-------------------+
+|    Vadim Tuchila   |   Software Developer  |         52        |
+|                    | Project Documentation |                   |
++--------------------+-----------------------+-------------------+
 
 
 
