@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.projectgroup02.controller;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -144,11 +145,69 @@ public class ProjectGroup02RestController {
 		return service.deleteItemFromGallery(username, itemName, artistUsername);
 	}
 
-	@PostMapping(value = {"/{username}/upload-artwork/{collection}/{artworkName}/"})
+	@PostMapping(value = {"/{username}/upload-artwork/{collection}/{artworkName}, /{username}/upload-artwork/{collection}/{artworkName}/"})
 	public ItemDTO uploadArtwork(@PathVariable("username") String username, @PathVariable("artworkName") String artworkName, @RequestParam("height") double height, @RequestParam("width") double width, @RequestParam("breadth") double breadth,
 			@RequestParam("creationDate") String creationDate, @RequestParam("description") String description, @RequestParam("price")  double price, @RequestParam("iamgeUrl") String imageUrl,  @PathVariable("collection") String collectionName) throws Exception {
 		return convertToDto(service.uploadArtwork(username, artworkName, height, width, breadth, creationDate, description, price, imageUrl, collectionName));
 	}
+	
+	@PostMapping(value = {"/{collection}/sort-by-price-asc"})
+	public List<ItemDTO> sortByPriceAsc(@PathVariable("collection") String collection) throws Exception {
+		List<Item> items = service.sortByPriceAsc(collection);
+		List<ItemDTO> itemsDTO = new ArrayList<ItemDTO>();
+		
+		for (Item myItem : items) {
+			itemsDTO.add(convertToDto(myItem));
+		}
+		return itemsDTO;
+	}
+	
+	@PostMapping(value = {"/{collection}/sort-by-price-desc"})
+	public List<ItemDTO> sortByPriceDesc(@PathVariable("collection") String collection) throws Exception {
+		List<Item> items = service.sortByPriceDesc(collection);
+		List<ItemDTO> itemsDTO = new ArrayList<ItemDTO>();
+		
+		for (Item myItem : items) {
+			itemsDTO.add(convertToDto(myItem));
+		}
+		return itemsDTO;
+	}
+	
+	@PostMapping(value = {"/{collection}, /{collection}/"})
+	public List<ItemDTO> filterByCollection(@PathVariable("collection") String collection) throws Exception {
+		List<Item> items = service.filterByCollection(collection);
+		List<ItemDTO> itemsDTO = new ArrayList<ItemDTO>();
+		
+		for (Item myItem : items) {
+			itemsDTO.add(convertToDto(myItem));
+		}
+		return itemsDTO;
+	}
+	
+	@PostMapping(value = {"/{collection}/{price-from}/{price-to}, /{collection}/{price-from}/{price-to}/"})
+	public List<ItemDTO> filterByPrice(@PathVariable("collection") String collection, @PathVariable("price-from") int priceFrom, @PathVariable("price-to") int priceTo) throws Exception {
+		List<Item> items = service.filterByPrice(priceFrom, priceTo, collection);
+		List<ItemDTO> itemsDTO = new ArrayList<ItemDTO>();
+		
+		for (Item myItem : items) {
+			itemsDTO.add(convertToDto(myItem));
+		}
+		return itemsDTO;
+	}
+	
+	@PostMapping(value = {"/{collection}/{artist}, /{collection}/{artist}/"})
+	public List<ItemDTO> filterByArtist(@PathVariable("collection") String collection, @PathVariable("artist") String artist) throws Exception {
+		List<Item> items = service.filterByArtist(artist, collection);
+		List<ItemDTO> itemsDTO = new ArrayList<ItemDTO>();
+		
+		for (Item myItem : items) {
+			itemsDTO.add(convertToDto(myItem));
+		}
+		return itemsDTO;
+	}
+	
+	
+	
 
 	/**
 	 * Converts an ApplicationUser object into an ApplicationUserDTO object and 

@@ -590,9 +590,9 @@ public class ProjectGroup02Service {
    * @author Gurdarshan Singh
    * @return items
    */
-  public List<Item> sortByPriceAsc(){
+  public List<Item> sortByPriceAsc(String collection){
 
-	  List<Item> items = toList(itemRepository.findAll());
+	  List<Item> items = filterByCollection(collection);
 	  sortPrice(items, 0, items.size()-1);
 	  
 	  return items;
@@ -604,9 +604,9 @@ public class ProjectGroup02Service {
    * @author Gurdarshan Singh
    * @return items
    */
-  public List<Item> sortByPriceDesc(){
+  public List<Item> sortByPriceDesc(String collection){
 
-	  List<Item> items = toList(itemRepository.findAll());
+	  List<Item> items = filterByCollection(collection);
 	  sortPrice(items, 0, items.size()-1);
 	  Collections.reverse(items);
 	  
@@ -641,9 +641,9 @@ public class ProjectGroup02Service {
    * @author Gurdarshan Singh
    * @return filteredItems
    */
-  public List<Item> filterByArtist(String artist){
+  public List<Item> filterByArtist(String artist, String collection){
 		 
-	  List<Item> items = toList(itemRepository.findAll());
+	  List<Item> items = toList(filterByCollection(collection));
 	  
 	  List<Item> filteredItems = new ArrayList<Item>();
 	  
@@ -663,9 +663,9 @@ public class ProjectGroup02Service {
    * @author Gurdarshan Singh
    * @return filteredItems
    */
-  public List<Item> filterByPrice(int p1, int p2){
+  public List<Item> filterByPrice(int p1, int p2, String collection){
 		 
-	  List<Item> items = toList(itemRepository.findAll());
+	  List<Item> items = toList(filterByCollection(collection));
 	  
 	  List<Item> filteredItems = new ArrayList<Item>();
 	  

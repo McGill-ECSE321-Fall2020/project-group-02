@@ -294,7 +294,17 @@ public class TestProjectGroup02Service {
 		a3.setApplicationUser(au3);
 		item3.setArtist(a3);
 
+		Item item4 = new Item();
+		item4.setPrice(200);
+		item4.setCollection(c2);
+		ApplicationUser au4 = new ApplicationUser();
+		au4.setUsername("Vadim");
+		Artist a4 = new Artist();
+		a4.setApplicationUser(au4);
+		item4.setArtist(a4);
+		
 		items.add(item2);
+		items.add(item4);
 		items.add(item3);
 		items.add(item);
 
@@ -585,11 +595,11 @@ public class TestProjectGroup02Service {
 	@Test
 	public void testSortedByPriceAsc() throws Exception {
 
-		List<Item> sortedItems = service.sortByPriceAsc();
+		List<Item> sortedItems = service.sortByPriceAsc("testing");
 		int itemPrice = 100;
 		for (Item i : sortedItems) {
-
 			assertEquals(i.getPrice(), itemPrice);
+			assertEquals(i.getCollection().getName(), "testing");
 			itemPrice = itemPrice + 50;
 		}
 	}
@@ -597,11 +607,11 @@ public class TestProjectGroup02Service {
 	@Test
 	public void testSortedByPriceDesc() throws Exception {
 
-		List<Item> sortedItems = service.sortByPriceDesc();
+		List<Item> sortedItems = service.sortByPriceDesc("testing");
 		int itemPrice = 200;
 		for (Item i : sortedItems) {
-
 			assertEquals(i.getPrice(), itemPrice);
+			assertEquals(i.getCollection().getName(), "testing");
 			itemPrice = itemPrice - 50;
 		}
 	}
@@ -612,7 +622,6 @@ public class TestProjectGroup02Service {
 		List<Item> filteredItems = service.filterByCollection("testing");
 
 		for (Item i : filteredItems) {
-
 			assertEquals(i.getCollection().getName(), "testing");
 		}
 	}
@@ -620,23 +629,22 @@ public class TestProjectGroup02Service {
 	@Test
 	public void testFilteredByArtist() throws Exception {
 
-		List<Item> filteredItems = service.filterByArtist("Ahmad");
+		List<Item> filteredItems = service.filterByArtist("Ahmad", "testing");
 
 		for (Item i : filteredItems) {
-
 			assertEquals(i.getArtist().getApplicationUser().getUsername(), "Ahmad");
+			assertEquals(i.getCollection().getName(), "testing");
 		}
 	}
 
 	@Test
 	public void testFilteredByPrice() throws Exception {
 
-		List<Item> filteredItems = service.filterByPrice(100, 150);
+		List<Item> filteredItems = service.filterByPrice(100, 150, "testing");
 
 		for (Item i : filteredItems) {
-
 			assertTrue(i.getPrice() >= 100 && i.getPrice() <= 150);
-
+			assertEquals(i.getCollection().getName(), "testing");
 		}
 
 	}
