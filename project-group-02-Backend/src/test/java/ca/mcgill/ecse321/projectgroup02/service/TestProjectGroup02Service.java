@@ -114,6 +114,7 @@ public class TestProjectGroup02Service {
 						ApplicationUser user = new ApplicationUser();
 						user.setUsername(USER_KEY);
 						user.setPassword(PASSWORD_KEY);
+						user.setBalance(0);
 						return user;
 					} else {
 						return null;
@@ -221,6 +222,7 @@ public class TestProjectGroup02Service {
 		lenient().when(collectionRepository.findByName(anyString())).thenAnswer((InvocationOnMock invocation) -> {
 			Collection collection = new Collection();
 			collection.setName(invocation.getArgument(0));
+			collection.setItem(new HashSet<Item>());
 			return collection;
 		});
 
@@ -245,7 +247,11 @@ public class TestProjectGroup02Service {
 
 	private HashSet<ArtGallerySystem> createArtGallerySystemsStub() {
 		HashSet<ArtGallerySystem> agss = new HashSet<ArtGallerySystem>();
-		agss.add(new ArtGallerySystem());
+		ArtGallerySystem ags = new ArtGallerySystem();
+		HashSet<Item> items = new HashSet<Item>();
+		items.add(new Item());
+		ags.setItem(items);
+		agss.add(ags);
 		return agss;
 	}
 
@@ -646,7 +652,15 @@ public class TestProjectGroup02Service {
 			assertTrue(i.getPrice() >= 100 && i.getPrice() <= 150);
 			assertEquals(i.getCollection().getName(), "testing");
 		}
+	}
+	
+	@Test
+	public void testSetUserBalance() throws Exception {
 
+		ApplicationUser au = service.setUserBalance(USER_KEY, 400000);
+		
+		assertEquals(au.getBalance(), 400000);
+		
 	}
 
 }

@@ -98,8 +98,12 @@ task integrationTest() {
     		}
     	exec {
       		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/set-balance/AhmadSiddiqi/400000000'
+    		}
+    	exec {
+      		workingDir '../'
       		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/user-by-name/AhmadSiddiqi'
-    		}	à
+    		}		
        	exec {
       		workingDir '../'
       		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/create-collection/Spider-women?collectionDescription=Marvellous+Collection&collectionImageUrl=https://plasticwoman.com'
@@ -116,14 +120,22 @@ task integrationTest() {
       		workingDir '../'
       		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/AhmadSiddiqi/shopping-cart'
     		}	
-    	exec {
-      		workingDir '../'
-      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/AhmadSiddiqi/checkout/HOMEDELIVERY'
-    		}	
-    	exec {
-      		workingDir '../'
-      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/user-by-name/AhmadSiddiqi'
-    		}	
+    	//exec {
+      	//	workingDir '../'
+      	//	commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/AhmadSiddiqi/shopping-cart/remove-item/PlasticWoman/GURDYBOYSS'
+    	//	}	
+    	//exec {
+      	//	workingDir '../'
+      	//	commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/RyadAmmar/delete-item-from-gallery/PlasticWoman/GURDYBOYSS'
+    	//	}	
+    	//exec {
+      	//	workingDir '../'
+      //		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/AhmadSiddiqi/checkout/HOMEDELIVERY'
+    	//	}	
+    	//exec {
+      	//	workingDir '../'
+      		//commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/user-by-name/AhmadSiddiqi'
+    		//}	
     	}
 
 	

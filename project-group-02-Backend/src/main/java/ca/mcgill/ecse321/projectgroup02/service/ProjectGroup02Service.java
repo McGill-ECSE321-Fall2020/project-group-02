@@ -359,6 +359,7 @@ public class ProjectGroup02Service {
     item.setDescription(description);
     item.setPrice(price);
     item.setPathToImage(imageUrl);
+    item.setInStock(true);
     try {
       item.setCollection(collectionRepository.findByName(collection));
     } catch (Exception e) {
@@ -367,10 +368,15 @@ public class ProjectGroup02Service {
 
     artist.getItem().add(item);
     item.setArtist(artist);
+    item.setArtGallerySystem(getGallery());
+    getGallery().getItem().add(item);
+    collectionRepository.findByName(collection).getItem().add(item);
+    
     
     collectionRepository.save(collectionRepository.findByName(collection));
     itemRepository.save(item);
     artistRepository.save(artist);
+    artGallerySystemRepository.save(getGallery());
 
     return item;
   }
@@ -393,10 +399,28 @@ public class ProjectGroup02Service {
       throw new Exception("User must be a service provider to manage invertory");
     
     Item item = itemRepository.findItemByitemId((usernameOfArtist + nameOfItem).hashCode());
+    
+    for(ApplicationUser u : getGallery().getApplicationUsers()) {
+    	
+    	try {
+    	Customer c = customerRepository.findCustomerByuserRoleId((u.getUsername() + "customer").hashCode());
+    	
+    	for(Item i : c.getShoppingCart().getItem()) {
+    		if(i.getName().equalsIgnoreCase(nameOfItem) && i.getArtist().getApplicationUser().getUsername().equalsIgnoreCase(usernameOfArtist)) {
+    			c.getShoppingCart().getItem().remove(i);
+    		}
+    	}
+    	} catch(Exception e) {
+    		
+    	}
+    }
+    	
     itemRepository.delete(item);
+    item.getArtGallerySystem().getItem().remove(item);
+    artGallerySystemRepository.save(getGallery());
 
     return true;
-  }
+    }
 
   /**
    * Creates a collection based on input.
@@ -414,6 +438,7 @@ public class ProjectGroup02Service {
     collection.setName(collectionName);
     collection.setDescription(description);
     collection.setPathToImage(imageUrl);
+    collection.setItem(new HashSet<Item>());
 
     collectionRepository.save(collection);
 
@@ -552,24 +577,19 @@ public class ProjectGroup02Service {
 
     double totalPrice = 0;
 
-    for (Item item : customer.getShoppingCart().getItem())
+    for (Item item : customer.getShoppingCart().getItem()) {
       totalPrice += item.getPrice();
-    
+    }
     if (customer.getApplicationUser().getBalance() < (1 + taxPercentage) * totalPrice)
       throw new Exception("Insufficient funds");
 
     for (Item item : customer.getShoppingCart().getItem()) {
-      removeFromShoppingCart(username, item.getName(), item.getArtist().getApplicationUser().getUsername()); // remove
-                                                                                                             // the
-                                                                                                             // item
-                                                                                                             // from
-                                                                                                             // the
-                                                                                                             // customer's
-                                                                                                             // shopping
-                                                                                                             // cart
+      removeFromShoppingCart(username, item.getName(), item.getArtist().getApplicationUser().getUsername());
+      item.setInStock(false);
       addToBalance(item.getArtist().getApplicationUser(), (1 - commissionPercentage) * item.getPrice());
       addToBalance(artGallerySystem, commissionPercentage * item.getPrice());
       artistRepository.save(item.getArtist());
+      applicationUserRepository.save(item.getArtist().getApplicationUser());
       order.getItem().add(item);
       itemRepository.save(item);
     }
@@ -577,9 +597,10 @@ public class ProjectGroup02Service {
     addToBalance(customer.getApplicationUser(), -(1 + taxPercentage) * totalPrice); // reduce customer's balance
 
     customerRepository.save(customer);
+    applicationUserRepository.save(customer.getApplicationUser());
     itemOrderRepository.save(order);
     artGallerySystemRepository.save(artGallerySystem);
-
+  
     return order;
   }
 
@@ -709,8 +730,11 @@ public class ProjectGroup02Service {
    * @throws Exception
    */
   @Transactional
-  public void setUserBalance(String username, double value) {
-    applicationUserRepository.findByUsername(username).setBalance(value);
+  public ApplicationUser setUserBalance(String username, double value) {
+	ApplicationUser au = applicationUserRepository.findByUsername(username);
+    au.setBalance(value);
+    applicationUserRepository.save(au);
+    return au;
   }
 
   // HELPER METHODS

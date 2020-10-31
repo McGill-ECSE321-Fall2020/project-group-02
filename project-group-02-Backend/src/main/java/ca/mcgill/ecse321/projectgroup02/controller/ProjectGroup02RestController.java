@@ -47,6 +47,8 @@ import ca.mcgill.ecse321.projectgroup02.service.ProjectGroup02Service;
 @CrossOrigin(origins = "*")
 @RestController
 public class ProjectGroup02RestController {
+	
+	private ArtGallerySystemDTO agsDTO;
 
 	@Autowired
 	private ProjectGroup02Service service;
@@ -59,20 +61,21 @@ public class ProjectGroup02RestController {
 					throws Exception {
 		ArtGallerySystem ags = service.createGallery(street, postalCode, province, country, city, adminUsername, adminPassword, adminEmail);
 
-		ArtGallerySystemDTO agsDTO = convertToDto(ags);
+		agsDTO = convertToDto(ags);
 
 		return agsDTO;
 	}
 
 	@GetMapping(value = { "/art-gallery-system", "/art-gallery-system/" })
 	public ArtGallerySystemDTO getArtGallerySystem() throws Exception {
-		return convertToDto(service.getGallery());
+		return agsDTO;
 	}
 
 	@PostMapping(value = { "/create-user/{name}/{email}/{pw}", "/create-user/{name}/{email}/{pw}/" })
 	public ApplicationUserDTO createUser(@PathVariable("name") String username,@PathVariable("email") String email, @PathVariable("pw") String password) 
 			throws Exception {
 		ApplicationUser user = service.createUser(username, email, password);
+		agsDTO.getApplicationUsers().add(convertToDto(user));
 		return convertToDto(user);
 	}
 
@@ -115,38 +118,44 @@ public class ProjectGroup02RestController {
 		return service.logoutUser(username).isIsLoggedIn();
 	}
 	
+	@PostMapping(value = {"/set-balance/{username}/{amount}", "/set-balance/{username}/{amount}/"})
+	public ApplicationUserDTO setUserBalance(@PathVariable("username") String username, @PathVariable("amount") Double amount) throws Exception {
+	return convertToDto(service.setUserBalance(username, amount));
+	}
+	
 	@PostMapping(value = {"/create-collection/{collectionName}", "/create-collection/{collectionName}/"})
 	public CollectionDTO createCollection(@PathVariable("collectionName") String collectionName, @RequestParam("collectionDescription") String collectionDescription, @RequestParam("collectionImageUrl") String collectionImageUrl) throws Exception {
 		return convertToDto((service.createCollection(collectionName, collectionDescription, collectionImageUrl)));
 	}
-
-	@PostMapping(value = {"/{username}/delete-item-from-gallery/{itemName}/{artistusername}", "/{username}/delete-item-from-gallery/{itemName}/{artistUsername}/"})
+	//TODO test
+	@PostMapping(value = {"/{username}/delete-item-from-gallery/{itemName}/{artistUsername}", "/{username}/delete-item-from-gallery/{itemName}/{artistUsername}/"})
 	public boolean deleteItemFromGallery(@PathVariable("username") String username, @PathVariable("itemName") String itemName, @PathVariable("artistUsername") String artistUsername) throws Exception {
 		return service.deleteItemFromGallery(username, itemName, artistUsername);
 	}
 
-	@PostMapping(value = {"/{username}/upload-artwork/{collection}/{artworkName}, /{username}/upload-artwork/{collection}/{artworkName}/"})
+	@PostMapping(value = {"/{username}/upload-artwork/{collection}/{artworkName}", "/{username}/upload-artwork/{collection}/{artworkName}/"})
 	public ItemDTO uploadArtwork(@PathVariable("username") String username, @PathVariable("collection") String collectionName, @PathVariable("artworkName") String artworkName, @RequestParam("height") double height, @RequestParam("width") double width, @RequestParam("breadth") double breadth,
 			@RequestParam("creationDate") String creationDate, @RequestParam("description") String description, @RequestParam("price")  double price, @RequestParam("imageUrl") String imageUrl) throws Exception {
 		return convertToDto(service.uploadArtwork(username, artworkName, height, width, breadth, creationDate, description, price, imageUrl, collectionName));
 	}
 
-	@PostMapping(value = {"/{username}/shopping-cart/add-item/{itemName}/{artistusername}", "/{username}/shopping-cart/remove-item/{itemName}/{artistUsername}/"})
+	@PostMapping(value = {"/{username}/shopping-cart/add-item/{itemName}/{artistUsername}", "/{username}/shopping-cart/add-item/{itemName}/{artistUsername}/"})
 	public ShoppingCartDTO addToShoppingCart(@PathVariable("username") String username, @PathVariable("itemName") String itemName, @PathVariable("artistUsername") String artistUsername) throws Exception {
 		return convertToDto(service.addToShoppingCart(username, itemName, artistUsername));
 	}
-
-	@PostMapping(value = {"/{username}/shopping-cart/remove-item/{itemName}/{artistusername}", "/{username}/shopping-cart/remove-item/{itemName}/{artistUsername}/"})
+	//TODO test
+	@PostMapping(value = {"/{username}/shopping-cart/remove-item/{itemName}/{artistUsername}", "/{username}/shopping-cart/remove-item/{itemName}/{artistUsername}/"})
 	public ShoppingCartDTO removeFromShoppingCart(@PathVariable("username") String username, @PathVariable("itemName") String itemName, @PathVariable("artistUsername") String artistUsername) throws Exception {
 		return convertToDto(service.removeFromShoppingCart(username, itemName, artistUsername));
 	}
 	
+	//TODO test
 	@PostMapping(value = {"/{username}/checkout/{deliveryMethod}", "/{username}/checkout/{deliveryMethod}/"})
 	public ItemOrderDTO checkout(@PathVariable("username") String username, @PathVariable("deliveryMethod") String deliveryMethod) throws Exception {
 		return convertToDto(service.checkout(username, deliveryMethod));
 	}
 	
-	@GetMapping(value = {"/{username}/shopping-cart', '/{username}/shopping-cart/"})
+	@GetMapping(value = {"/{username}/shopping-cart", "/{username}/shopping-cart/"})
 	public List<ItemDTO> getItemsFromShoppingCart(@PathVariable("username") String username) throws Exception {
 		List<Item> items = service.getItemsFromShoppingCart(username);
 		List<ItemDTO> itemsDTO = new ArrayList<ItemDTO>();
@@ -156,8 +165,8 @@ public class ProjectGroup02RestController {
 		}
 		return itemsDTO;
 	}
-
-	@PostMapping(value = {"/{collection}/sort-by-price-asc"})
+	//TODO test
+	@PostMapping(value = {"/{collection}/sort-by-price-asc", "/{collection}/sort-by-price-asc/"})
 	public List<ItemDTO> sortByPriceAsc(@PathVariable("collection") String collection) throws Exception {
 		List<Item> items = service.sortByPriceAsc(collection);
 		List<ItemDTO> itemsDTO = new ArrayList<ItemDTO>();
@@ -167,8 +176,8 @@ public class ProjectGroup02RestController {
 		}
 		return itemsDTO;
 	}
-
-	@PostMapping(value = {"/{collection}/sort-by-price-desc"})
+	//TODO test
+	@PostMapping(value = {"/{collection}/sort-by-price-desc", "/{collection}/sort-by-price-desc/"})
 	public List<ItemDTO> sortByPriceDesc(@PathVariable("collection") String collection) throws Exception {
 		List<Item> items = service.sortByPriceDesc(collection);
 		List<ItemDTO> itemsDTO = new ArrayList<ItemDTO>();
@@ -178,8 +187,8 @@ public class ProjectGroup02RestController {
 		}
 		return itemsDTO;
 	}
-
-	@PostMapping(value = {"/{collection}, /{collection}/"})
+	//TODO test
+	@PostMapping(value = {"/{collection}", "/{collection}/"})
 	public List<ItemDTO> filterByCollection(@PathVariable("collection") String collection) throws Exception {
 		List<Item> items = service.filterByCollection(collection);
 		List<ItemDTO> itemsDTO = new ArrayList<ItemDTO>();
@@ -189,8 +198,8 @@ public class ProjectGroup02RestController {
 		}
 		return itemsDTO;
 	}
-
-	@PostMapping(value = {"/{collection}/{price-from}/{price-to}, /{collection}/{price-from}/{price-to}/"})
+	//TODO test
+	@PostMapping(value = {"/{collection}/{price-from}/{price-to}", "/{collection}/{price-from}/{price-to}/"})
 	public List<ItemDTO> filterByPrice(@PathVariable("collection") String collection, @PathVariable("price-from") int priceFrom, @PathVariable("price-to") int priceTo) throws Exception {
 		List<Item> items = service.filterByPrice(priceFrom, priceTo, collection);
 		List<ItemDTO> itemsDTO = new ArrayList<ItemDTO>();
@@ -200,8 +209,8 @@ public class ProjectGroup02RestController {
 		}
 		return itemsDTO;
 	}
-
-	@PostMapping(value = {"/{collection}/{artist}, /{collection}/{artist}/"})
+	//TODO test
+	@PostMapping(value = {"/{collection}/{artist}", "/{collection}/{artist}/"})
 	public List<ItemDTO> filterByArtist(@PathVariable("collection") String collection, @PathVariable("artist") String artist) throws Exception {
 		List<Item> items = service.filterByArtist(artist, collection);
 		List<ItemDTO> itemsDTO = new ArrayList<ItemDTO>();
@@ -254,16 +263,29 @@ public class ProjectGroup02RestController {
 		}
 
 		ApplicationUserDTO userDto;
-
+		if(agsDTO != null) {
 		if(u.getAddress() != null && u.getUserRole() != null) {
-			userDto = new ApplicationUserDTO(u.getAccountCreationDate(), u.getUsername(), u.getEmail(), u.getPassword(), u.getPhoneNumber(), adSetDTO, usSetDTO, u.isIsLoggedIn());
+			userDto = new ApplicationUserDTO(u.getAccountCreationDate(), u.getUsername(), u.getEmail(), u.getPassword(), u.getPhoneNumber(), adSetDTO, usSetDTO, u.isIsLoggedIn(), agsDTO, u.getBalance());
 		} else if(u.getAddress() != null) {
-			userDto = new ApplicationUserDTO(u.getAccountCreationDate(), u.getUsername(), u.getEmail(), u.getPassword(), u.getPhoneNumber(), adSetDTO, 1, u.isIsLoggedIn());
+			userDto = new ApplicationUserDTO(u.getAccountCreationDate(), u.getUsername(), u.getEmail(), u.getPassword(), u.getPhoneNumber(), adSetDTO, 1, u.isIsLoggedIn(), agsDTO, u.getBalance());
 		} else if(u.getUserRole() != null) {
-			userDto = new ApplicationUserDTO(u.getAccountCreationDate(), u.getUsername(), u.getEmail(), u.getPassword(), u.getPhoneNumber(), usSetDTO, u.isIsLoggedIn());
+			userDto = new ApplicationUserDTO(u.getAccountCreationDate(), u.getUsername(), u.getEmail(), u.getPassword(), u.getPhoneNumber(), usSetDTO, u.isIsLoggedIn(), agsDTO, u.getBalance());
 		} else {
-			userDto = new ApplicationUserDTO(u.getAccountCreationDate(), u.getUsername(), u.getEmail(), u.getPassword(), u.getPhoneNumber(), u.isIsLoggedIn());
+			userDto = new ApplicationUserDTO(u.getAccountCreationDate(), u.getUsername(), u.getEmail(), u.getPassword(), u.getPhoneNumber(), u.isIsLoggedIn(), agsDTO, u.getBalance());
 		}
+		} else {
+			if(u.getAddress() != null && u.getUserRole() != null) {
+				userDto = new ApplicationUserDTO(u.getAccountCreationDate(), u.getUsername(), u.getEmail(), u.getPassword(), u.getPhoneNumber(), adSetDTO, usSetDTO, u.isIsLoggedIn(), u.getBalance());
+			} else if(u.getAddress() != null) {
+				userDto = new ApplicationUserDTO(u.getAccountCreationDate(), u.getUsername(), u.getEmail(), u.getPassword(), u.getPhoneNumber(), adSetDTO, 1, u.isIsLoggedIn(), u.getBalance());
+			} else if(u.getUserRole() != null) {
+				userDto = new ApplicationUserDTO(u.getAccountCreationDate(), u.getUsername(), u.getEmail(), u.getPassword(), u.getPhoneNumber(), usSetDTO, u.isIsLoggedIn(), u.getBalance());
+			} else {
+				userDto = new ApplicationUserDTO(u.getAccountCreationDate(), u.getUsername(), u.getEmail(), u.getPassword(), u.getPhoneNumber(), u.isIsLoggedIn(), u.getBalance());
+			}
+			
+		}
+		
 		return userDto;
 	}
 
@@ -343,13 +365,13 @@ public class ProjectGroup02RestController {
 	 * @throws Exception
 	 * @return aDTO
 	 */
-	//TODO infinite loop with item
+	
 	private ArtistDTO convertToDto(Artist a) {
 		if(a == null) {
 			throw new IllegalArgumentException("There is no such Artist");
 		}
-
-		ArtistDTO aDTO = new ArtistDTO(a.getDescription());
+		
+		ArtistDTO aDTO = new ArtistDTO();
 
 		return aDTO;
 	}
@@ -433,20 +455,12 @@ public class ProjectGroup02RestController {
 
 		}
 
-		Set<Item> iSet = ags.getItem();
-		Set<ItemDTO> iDTOSet = new HashSet<ItemDTO>();
-
-		for(Item i : iSet) {
-			ItemDTO iDTO = convertToDto(i);
-			iDTOSet.add(iDTO);
-		}
-
 		Address a = ags.getAddress();
 
 		AddressDTO aDTO = convertToDto(a);
 
 
-		ArtGallerySystemDTO agsDTO = new ArtGallerySystemDTO(uDTOSet, ags.getTotalProfit(), ags.getArtGalleryId(), aDTO, iDTOSet);
+		ArtGallerySystemDTO agsDTO = new ArtGallerySystemDTO(uDTOSet, ags.getTotalProfit(), ags.getArtGalleryId(), aDTO);
 
 		return agsDTO;
 	}
@@ -468,21 +482,43 @@ public class ProjectGroup02RestController {
 
 
 		Artist a = i.getArtist();
-
 		ArtistDTO aDTO = convertToDto(a);
 
 		Collection c = i.getCollection();
-
 		CollectionDTO cDTO = convertToDto(c);
-
-		ArtGallerySystem ags = i.getArtGallerySystem();
-
-		ArtGallerySystemDTO agsDTO = convertToDto(ags);
 
 
 		ItemDTO iDTO = new ItemDTO(i.getItemId(), i.getName(), i.getHeight(), i.getWidth(), i.getBreadth(), i.getCreationDate(),
-				i.getDescription(), i.getPrice(), i.isInStock(), aDTO, cDTO, agsDTO);
-
+				i.getDescription(), i.getPrice(), i.isInStock(),agsDTO, i.getPathToImage());
+		
+		HashSet<ItemDTO> itemsA = new HashSet<ItemDTO>();
+		if(!i.getArtist().getItem().isEmpty()) {
+		for(Item item : i.getArtist().getItem()) {
+			ItemDTO oldItemDTO = new ItemDTO(item.getItemId(), item.getName(), item.getHeight(), item.getWidth(), item.getBreadth(), item.getCreationDate(),
+				item.getDescription(), item.getPrice(), item.isInStock(),agsDTO, item.getPathToImage());
+			itemsA.add(oldItemDTO);
+			
+		}
+		}
+		
+		itemsA.add(iDTO);
+		aDTO.setItems(itemsA);
+		
+		
+		HashSet<ItemDTO> itemsC = new HashSet<ItemDTO>();
+		if(!i.getCollection().getItem().isEmpty()) {
+		for(Item item : i.getCollection().getItem()) {
+			ItemDTO oldItemDTO = new ItemDTO(item.getItemId(), item.getName(), item.getHeight(), item.getWidth(), item.getBreadth(), item.getCreationDate(),
+				item.getDescription(), item.getPrice(), item.isInStock(),agsDTO, item.getPathToImage());
+			itemsC.add(oldItemDTO);
+			
+		}
+		}
+		itemsC.add(iDTO);
+		cDTO.setItems(itemsC);
+		
+		
+		
 		return iDTO;
 	}
 

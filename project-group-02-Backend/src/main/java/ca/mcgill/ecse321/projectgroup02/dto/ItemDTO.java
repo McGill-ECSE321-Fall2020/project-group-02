@@ -13,6 +13,7 @@ public class ItemDTO{
 	private ArtistDTO artist;
 	private CollectionDTO collection;
 	private ArtGallerySystemDTO artGallerySystem;
+	private String pathToImage;
 
 
 	public ItemDTO() {}
@@ -28,7 +29,8 @@ public class ItemDTO{
 			boolean inStock,
 			ArtistDTO artist,
 			CollectionDTO collection,
-			ArtGallerySystemDTO artGallerySystem) {
+			ArtGallerySystemDTO artGallerySystem, 
+			String imageUrl) {
 		
 		this.itemId = itemId;
 		this.name = name;
@@ -42,6 +44,34 @@ public class ItemDTO{
 		this.artist = artist;
 		this.collection = collection;
 		this.artGallerySystem = artGallerySystem;
+		this.pathToImage = imageUrl;
+	}
+	
+	public ItemDTO(int itemId,
+			String name,
+			double height,
+			double width,
+			double breadth,
+			String creationDate,
+			String description,
+			double price,
+			boolean inStock,
+			ArtGallerySystemDTO artGallerySystem, 
+			String imageUrl) {
+		
+		this.itemId = itemId;
+		this.name = name;
+		this.height = height;
+		this.width = width;
+		this.breadth = breadth;
+		this.creationDate = creationDate;
+		this.description = description;
+		this.price = price;
+		this.inStock = inStock;
+		this.artist = null;
+		this.collection = null;
+		this.artGallerySystem = artGallerySystem;
+		this.pathToImage = imageUrl;
 	}
 	
 	public ItemDTO(int itemId,
@@ -54,7 +84,8 @@ public class ItemDTO{
 			double price,
 			boolean inStock,
 			ArtistDTO artist,
-			CollectionDTO collection) {
+			CollectionDTO collection, 
+			String imageUrl) {
 		
 		this.itemId = itemId;
 		this.name = name;
@@ -68,6 +99,7 @@ public class ItemDTO{
 		this.artist = artist;
 		this.collection = collection;
 		this.artGallerySystem = null;
+		this.pathToImage = imageUrl;
 	}
 	
 	public ItemDTO(int itemId,
@@ -80,7 +112,8 @@ public class ItemDTO{
 			double price,
 			boolean inStock,
 			ArtistDTO artist,
-			ArtGallerySystemDTO artGallerySystem) {
+			ArtGallerySystemDTO artGallerySystem, 
+			String imageUrl) {
 		
 		this.itemId = itemId;
 		this.name = name;
@@ -94,6 +127,7 @@ public class ItemDTO{
 		this.artist = artist;
 		this.collection = null;
 		this.artGallerySystem = artGallerySystem;
+		this.pathToImage = imageUrl;
 	}
 	
 	public ItemDTO(int itemId,
@@ -106,7 +140,8 @@ public class ItemDTO{
 			double price,
 			boolean inStock,
 			CollectionDTO collection,
-			ArtGallerySystemDTO artGallerySystem) {
+			ArtGallerySystemDTO artGallerySystem, 
+			String imageUrl) {
 		
 		this.itemId = itemId;
 		this.name = name;
@@ -120,6 +155,7 @@ public class ItemDTO{
 		this.artist = null;
 		this.collection = collection;
 		this.artGallerySystem = artGallerySystem;
+		this.pathToImage = imageUrl;
 	}
 
 	public ItemDTO(int itemId,
@@ -130,7 +166,8 @@ public class ItemDTO{
 			String creationDate,
 			String description,
 			double price,
-			boolean inStock) {
+			boolean inStock, 
+			String imageUrl) {
 		
 		this.itemId = itemId;
 		this.name = name;
@@ -144,6 +181,7 @@ public class ItemDTO{
 		this.artist = null;
 		this.collection = null;
 		this.artGallerySystem = null;
+		this.pathToImage = imageUrl;
 	}
 
 
@@ -178,7 +216,7 @@ public class ItemDTO{
 	public double getPrice() {
 		return this.price;
 	}
-	private String pathToImage;
+	
 
 	public String getPathToImage() {
 		return this.pathToImage;

@@ -17,24 +17,19 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 public class ArtistDTO {
-	private String description;
 	private Set<ItemDTO> items;
 
-	public ArtistDTO() {}
+	
 
 	@SuppressWarnings("unchecked")
-	public ArtistDTO(String description) {
-		this(description, Collections.EMPTY_SET);	   
+	public ArtistDTO() {
+		this(Collections.EMPTY_SET);	   
 	}
 	
-	public ArtistDTO(String description, Set<ItemDTO> items) {
-		this.description = description;
+	public ArtistDTO(Set<ItemDTO> items) {
 		this.items = items;	   
 	}
 
-	public String getDescription() {
-		return this.description;
-	}
 
 	public Set<ItemDTO> getItems() {
 		return this.items;
