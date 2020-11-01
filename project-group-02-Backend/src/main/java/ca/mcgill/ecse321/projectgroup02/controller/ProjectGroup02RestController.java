@@ -135,8 +135,8 @@ public class ProjectGroup02RestController {
 
 	@PostMapping(value = {"/{username}/upload-artwork/{collection}/{artworkName}", "/{username}/upload-artwork/{collection}/{artworkName}/"})
 	public ItemDTO uploadArtwork(@PathVariable("username") String username, @PathVariable("collection") String collectionName, @PathVariable("artworkName") String artworkName, @RequestParam("height") double height, @RequestParam("width") double width, @RequestParam("breadth") double breadth,
-			@RequestParam("creationDate") String creationDate, @RequestParam("description") String description, @RequestParam("price")  double price, @RequestParam("imageUrl") String imageUrl) throws Exception {
-		return convertToDto(service.uploadArtwork(username, artworkName, height, width, breadth, creationDate, description, price, imageUrl, collectionName));
+	@RequestParam("creationDate") String creationDate, @RequestParam("description") String description, @RequestParam("price") double price, @RequestParam("imageUrl") String imageUrl) throws Exception {
+	return convertToDto(service.uploadArtwork(username, artworkName, height, width, breadth, creationDate, description, price, imageUrl, collectionName));
 	}
 
 	@PostMapping(value = {"/{username}/shopping-cart/add-item/{itemName}/{artistUsername}", "/{username}/shopping-cart/add-item/{itemName}/{artistUsername}/"})

@@ -60,7 +60,7 @@ public class ProjectGroup02Service {
   private ServiceProviderRepository serviceProviderRepository;
   @Autowired
   private ShoppingCartRepository shoppingCartRepository;
- 
+
 
   // CONSTANT VARIABLES
 
@@ -371,8 +371,8 @@ public class ProjectGroup02Service {
     item.setArtGallerySystem(getGallery());
     getGallery().getItem().add(item);
     collectionRepository.findByName(collection).getItem().add(item);
-    
-    
+
+
     collectionRepository.save(collectionRepository.findByName(collection));
     itemRepository.save(item);
     artistRepository.save(artist);
@@ -395,23 +395,42 @@ public class ProjectGroup02Service {
   public boolean deleteItemFromGallery(String username, String nameOfItem, String usernameOfArtist) throws Exception {
     ServiceProvider admin = serviceProviderRepository.findByuserRoleId((username + "admin").hashCode());
 
-    if(admin == null)
+    if (admin == null)
       throw new Exception("User must be a service provider to manage invertory");
-    
+
     Item item = itemRepository.findItemByitemId((usernameOfArtist + nameOfItem).hashCode());
-    	
-    for(Item i : item.getArtGallerySystem().getItem()) {
-    	if(i.getName().equals(item.getName()) && i.getArtist().getApplicationUser().getUsername().equals(item.getArtist().getApplicationUser().getUsername())) {
-    		item.getArtGallerySystem().getItem().remove(i);
-    		break;
-    	}
-    	
+    Set<Item> items = getGallery().getItem();
+
+    for (Item i : items) {
+      if (i.getName().equalsIgnoreCase(item.getName()) && i.getArtist().getApplicationUser().getUsername()
+          .equalsIgnoreCase(item.getArtist().getApplicationUser().getUsername())) {
+        items.remove(i);
+        break;
+      }
     }
+    
+    for (ApplicationUser u : getGallery().getApplicationUsers()) {
+      Customer c = customerRepository.findCustomerByuserRoleId((u.getUsername() + "customer").hashCode());
+      for (Item i : c.getShoppingCart().getItem()) {
+        if (i.getName().equalsIgnoreCase(nameOfItem)
+            && i.getArtist().getApplicationUser().getUsername().equalsIgnoreCase(usernameOfArtist)) {
+          c.getShoppingCart().getItem().remove(i);
+        }
+      }
+    }
+
     itemRepository.delete(item);
     artGallerySystemRepository.save(getGallery());
 
-    return true;
+    for (Item i : items) {
+      if (i.getName().equalsIgnoreCase(item.getName()) && i.getArtist().getApplicationUser().getUsername()
+          .equalsIgnoreCase(item.getArtist().getApplicationUser().getUsername())) {
+        return false;
+      }
     }
+
+    return true;
+  }
 
   /**
    * Creates a collection based on input.
@@ -451,7 +470,7 @@ public class ProjectGroup02Service {
     Item item = itemRepository.findItemByitemId((usernameOfArtist + nameOfItem).hashCode());
     ApplicationUser user = applicationUserRepository.findByUsername(usernameOfClient);
     Customer customer;
-      
+
     try {
       customer = customerRepository.findCustomerByuserRoleId((usernameOfClient + "customer").hashCode());
     } catch (Exception e) {
@@ -591,7 +610,7 @@ public class ProjectGroup02Service {
     applicationUserRepository.save(customer.getApplicationUser());
     itemOrderRepository.save(order);
     artGallerySystemRepository.save(artGallerySystem);
-  
+
     return order;
   }
 
@@ -601,97 +620,97 @@ public class ProjectGroup02Service {
    * @author Gurdarshan Singh
    * @return items
    */
-  public List<Item> sortByPriceAsc(String collection){
+  public List<Item> sortByPriceAsc(String collection) {
 
-	  List<Item> items = filterByCollection(collection);
-	  sortPrice(items, 0, items.size()-1);
-	  
-	  return items;
+    List<Item> items = filterByCollection(collection);
+    sortPrice(items, 0, items.size() - 1);
+
+    return items;
   }
-  
+
   /**
    * Sorts items by price in descending order.
    * 
    * @author Gurdarshan Singh
    * @return items
    */
-  public List<Item> sortByPriceDesc(String collection){
+  public List<Item> sortByPriceDesc(String collection) {
 
-	  List<Item> items = filterByCollection(collection);
-	  sortPrice(items, 0, items.size()-1);
-	  Collections.reverse(items);
-	  
-	  return items; 
+    List<Item> items = filterByCollection(collection);
+    sortPrice(items, 0, items.size() - 1);
+    Collections.reverse(items);
+
+    return items;
   }
-  
+
   /**
    * Filters items by their collection.
    * 
    * @author Gurdarshan Singh
    * @return filteredItems
    */
-  public List<Item> filterByCollection(String collection){
-	 
-	  List<Item> items = toList(itemRepository.findAll());
-	  
-	  List<Item> filteredItems = new ArrayList<Item>();
-	  
-	  for(Item i : items) {
-		  
-		  if(i.getCollection().getName().equalsIgnoreCase(collection)) {
-			  filteredItems.add(i);
-		  }
-	  }
+  public List<Item> filterByCollection(String collection) {
 
-	  return filteredItems;
+    List<Item> items = toList(itemRepository.findAll());
+
+    List<Item> filteredItems = new ArrayList<Item>();
+
+    for (Item i : items) {
+
+      if (i.getCollection().getName().equalsIgnoreCase(collection)) {
+        filteredItems.add(i);
+      }
+    }
+
+    return filteredItems;
   }
-  
+
   /**
    * Filters items by their artist.
    * 
    * @author Gurdarshan Singh
    * @return filteredItems
    */
-  public List<Item> filterByArtist(String artist, String collection){
-		 
-	  List<Item> items = toList(filterByCollection(collection));
-	  
-	  List<Item> filteredItems = new ArrayList<Item>();
-	  
-	  for(Item i : items) {
-		  
-		  if(i.getArtist().getApplicationUser().getUsername().equalsIgnoreCase(artist)) {
-			  filteredItems.add(i);
-		  }
-	  }
+  public List<Item> filterByArtist(String artist, String collection) {
 
-	  return filteredItems;
+    List<Item> items = toList(filterByCollection(collection));
+
+    List<Item> filteredItems = new ArrayList<Item>();
+
+    for (Item i : items) {
+
+      if (i.getArtist().getApplicationUser().getUsername().equalsIgnoreCase(artist)) {
+        filteredItems.add(i);
+      }
+    }
+
+    return filteredItems;
   }
-  
+
   /**
    * Filters items by their price.
    * 
    * @author Gurdarshan Singh
    * @return filteredItems
    */
-  public List<Item> filterByPrice(int p1, int p2, String collection){
-		 
-	  List<Item> items = toList(filterByCollection(collection));
-	  
-	  List<Item> filteredItems = new ArrayList<Item>();
-	  
-	  for(Item i : items) {
-		  
-		  if(i.getPrice()>=p1 && i.getPrice()<=p2) {
-			  filteredItems.add(i);
-		  }
-	  }
+  public List<Item> filterByPrice(int p1, int p2, String collection) {
 
-	  return filteredItems;
+    List<Item> items = toList(filterByCollection(collection));
+
+    List<Item> filteredItems = new ArrayList<Item>();
+
+    for (Item i : items) {
+
+      if (i.getPrice() >= p1 && i.getPrice() <= p2) {
+        filteredItems.add(i);
+      }
+    }
+
+    return filteredItems;
   }
-  
-  
-  
+
+
+
   /**
    * Returns the total profit of the gallery system.
    * 
@@ -722,7 +741,7 @@ public class ProjectGroup02Service {
    */
   @Transactional
   public ApplicationUser setUserBalance(String username, double value) {
-	ApplicationUser au = applicationUserRepository.findByUsername(username);
+    ApplicationUser au = applicationUserRepository.findByUsername(username);
     au.setBalance(value);
     applicationUserRepository.save(au);
     return au;
@@ -826,57 +845,50 @@ public class ProjectGroup02Service {
     }
     return resultList;
   }
-  
 
-   private int partitionPrice(List<Item> items, int low, int high) 
-   { 
-       Item pivot = items.get(high);  
-       int i = (low-1); // index of smaller element 
-       for (int j=low; j<high; j++) 
-       { 
-           // If current element is smaller than the pivot 
-           if (items.get(j).getPrice() < pivot.getPrice()) 
-           { 
-               i++; 
- 
-               // swap arr[i] and arr[j] 
-               Item temp = items.get(i); 
-               items.set(i, items.get(j));
-               items.set(j, temp);
-           } 
-       } 
- 
-       // swap arr[i+1] and arr[high] (or pivot) 
-       Item temp = items.get(i+1); 
-       items.set(i+1, items.get(high));
-       items.set(high, temp);
- 
-       return i+1; 
-   } 
- 
-/**
- * Sorts items in ascending order according to their price.
- * Implementation of QuickSort.
- * 
- * @author Gurdarshan Singh
- * @param items
- * @param low
- * @param high
- */
-   private void sortPrice(List<Item> items, int low, int high) 
-   { 
-       if (low < high) 
-       { 
-           
-           int pi = partitionPrice(items, low, high); 
- 
-          
-           sortPrice(items, low, pi-1); 
-           sortPrice(items, pi+1, high); 
-       } 
-   }
-       
-       
-      
-      
+
+  private int partitionPrice(List<Item> items, int low, int high) {
+    Item pivot = items.get(high);
+    int i = (low - 1); // index of smaller element
+    for (int j = low; j < high; j++) {
+      // If current element is smaller than the pivot
+      if (items.get(j).getPrice() < pivot.getPrice()) {
+        i++;
+
+        // swap arr[i] and arr[j]
+        Item temp = items.get(i);
+        items.set(i, items.get(j));
+        items.set(j, temp);
+      }
+    }
+
+    // swap arr[i+1] and arr[high] (or pivot)
+    Item temp = items.get(i + 1);
+    items.set(i + 1, items.get(high));
+    items.set(high, temp);
+
+    return i + 1;
+  }
+
+  /**
+   * Sorts items in ascending order according to their price. Implementation of QuickSort.
+   * 
+   * @author Gurdarshan Singh
+   * @param items
+   * @param low
+   * @param high
+   */
+  private void sortPrice(List<Item> items, int low, int high) {
+    if (low < high) {
+
+      int pi = partitionPrice(items, low, high);
+
+
+      sortPrice(items, low, pi - 1);
+      sortPrice(items, pi + 1, high);
+    }
+  }
+
+
+
 }

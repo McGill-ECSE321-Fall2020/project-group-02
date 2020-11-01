@@ -91,7 +91,6 @@ public boolean isInStock() {
     return this.inStock;
 }
 
-
 private Artist artist;
 
 @ManyToOne(optional=true)
