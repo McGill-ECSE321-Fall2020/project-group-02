@@ -251,6 +251,7 @@ public class TestProjectGroup02Service {
 		HashSet<Item> items = new HashSet<Item>();
 		items.add(new Item());
 		ags.setItem(items);
+		
 		agss.add(ags);
 		return agss;
 	}

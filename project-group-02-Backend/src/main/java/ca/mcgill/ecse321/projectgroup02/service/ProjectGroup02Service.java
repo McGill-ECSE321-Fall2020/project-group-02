@@ -399,24 +399,15 @@ public class ProjectGroup02Service {
       throw new Exception("User must be a service provider to manage invertory");
     
     Item item = itemRepository.findItemByitemId((usernameOfArtist + nameOfItem).hashCode());
-    
-    for(ApplicationUser u : getGallery().getApplicationUsers()) {
     	
-    	try {
-    	Customer c = customerRepository.findCustomerByuserRoleId((u.getUsername() + "customer").hashCode());
+    for(Item i : item.getArtGallerySystem().getItem()) {
+    	if(i.getName().equals(item.getName()) && i.getArtist().getApplicationUser().getUsername().equals(item.getArtist().getApplicationUser().getUsername())) {
+    		item.getArtGallerySystem().getItem().remove(i);
+    		break;
+    	}
     	
-    	for(Item i : c.getShoppingCart().getItem()) {
-    		if(i.getName().equalsIgnoreCase(nameOfItem) && i.getArtist().getApplicationUser().getUsername().equalsIgnoreCase(usernameOfArtist)) {
-    			c.getShoppingCart().getItem().remove(i);
-    		}
-    	}
-    	} catch(Exception e) {
-    		
-    	}
     }
-    	
     itemRepository.delete(item);
-    item.getArtGallerySystem().getItem().remove(item);
     artGallerySystemRepository.save(getGallery());
 
     return true;
