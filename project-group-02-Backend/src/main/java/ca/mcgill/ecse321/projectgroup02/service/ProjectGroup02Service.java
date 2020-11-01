@@ -8,7 +8,6 @@ import java.util.Set;
 
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ca.mcgill.ecse321.projectgroup02.dao.AddressRepository;
 import ca.mcgill.ecse321.projectgroup02.dao.ApplicationUserRepository;
@@ -21,7 +20,6 @@ import ca.mcgill.ecse321.projectgroup02.dao.ItemRepository;
 import ca.mcgill.ecse321.projectgroup02.dao.PaymentCredentialsRepository;
 import ca.mcgill.ecse321.projectgroup02.dao.ServiceProviderRepository;
 import ca.mcgill.ecse321.projectgroup02.dao.ShoppingCartRepository;
-import ca.mcgill.ecse321.projectgroup02.dto.DeliveryMethodDTO;
 import ca.mcgill.ecse321.projectgroup02.model.Address;
 import ca.mcgill.ecse321.projectgroup02.model.ApplicationUser;
 import ca.mcgill.ecse321.projectgroup02.model.ArtGallerySystem;
@@ -149,12 +147,23 @@ public class ProjectGroup02Service {
 
     return user;
   }
-
+  
+  /**
+   * Returns the user from the Art Gallery System
+   * @author Ryad Ammar
+   * @param username
+   * @return user
+   */
   @Transactional
   public ApplicationUser getUser(String username) {
     return applicationUserRepository.findByUsername(username);
   }
-
+  
+  /**
+   * Returns all the users from the Art Gallery System
+   * @author Ryad Ammar
+   * @return users
+   */
   @Transactional
   public List<ApplicationUser> getAllUsers() {
     return toList(applicationUserRepository.findAll());
@@ -543,7 +552,7 @@ public class ProjectGroup02Service {
 
   /**
    * Returns a list of items from a shoppingCart.
-   * 
+   * @author Ryad Ammar
    * @param usernameOfClient
    * @throws Exception
    */
@@ -770,9 +779,9 @@ public class ProjectGroup02Service {
     applicationUserRepository.save(au);
     return au;
   }
-
-  // HELPER METHODS
-
+  //////////////////////
+  // HELPER METHODS/////
+  //////////////////////
   /**
    * Helper method to assist creation of a user Throws an exception for any user input that is not valid during
    * registration.

@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import ca.mcgill.ecse321.projectgroup02.dao.AddressRepository;
-import ca.mcgill.ecse321.projectgroup02.dao.ArtGallerySystemRepository;
+
 import ca.mcgill.ecse321.projectgroup02.dto.AddressDTO;
 import ca.mcgill.ecse321.projectgroup02.dto.ApplicationUserDTO;
 import ca.mcgill.ecse321.projectgroup02.dto.ArtGallerySystemDTO;
@@ -53,6 +52,21 @@ public class ProjectGroup02RestController {
   @Autowired
   private ProjectGroup02Service service;
 
+  /**
+   * Creates an Art Gallery System 
+   * @author ahmad
+   * 
+   * @param street
+   * @param postalCode
+   * @param province
+   * @param country
+   * @param city
+   * @param adminUsername
+   * @param adminPassword
+   * @param adminEmail
+   * @return agsDTO
+   * @throws Exception
+   */
   @PostMapping(value = {
       "/art-gallery-system/{street}/{pc}/{province}/{country}/{city}/{adminUsername}/{adminPassword}/{adminEmail}",
       "/art-gallery-system/{street}/{pc}/{province}/{country}/{city}/{adminUsername}/{adminPassword}/{adminEmail}/"})
@@ -69,12 +83,28 @@ public class ProjectGroup02RestController {
 
     return agsDTO;
   }
-
+  
+  /**
+   * Gets an Art Galery System
+   * @author ahmad
+   * @return agsDTO
+   * @throws Exception
+   */
   @GetMapping(value = {"/art-gallery-system", "/art-gallery-system/"})
   public ArtGallerySystemDTO getArtGallerySystem() throws Exception {
     return agsDTO;
   }
 
+  /**
+   * Creates an application user
+   *
+   * @author ahmad
+   * @param username
+   * @param email
+   * @param password
+   * @return userDTO
+   * @throws Exception
+   */
   @PostMapping(value = {"/create-user/{name}/{email}/{pw}", "/create-user/{name}/{email}/{pw}/"})
   public ApplicationUserDTO createUser(@PathVariable("name") String username, @PathVariable("email") String email,
       @PathVariable("pw") String password) throws Exception {
@@ -82,26 +112,56 @@ public class ProjectGroup02RestController {
     agsDTO.getApplicationUsers().add(convertToDto(user));
     return convertToDto(user);
   }
-
+  
+  /**
+   * Gets all the users from the Art Gallery System
+   * 
+   * @author ahmad
+   * @return list of all userDTO
+   */
   @GetMapping(value = {"/users", "/users/"})
   public List<ApplicationUserDTO> getAllUsers() {
     return service.getAllUsers().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
   }
-
+  
+  /**
+   * Returns the user from the Art Gallery
+   * @author ahmad
+   * @param username
+   * @return userDTO
+   */
   @GetMapping(value = {"/user-by-name/{username}", "/user-by-name/{username}/"})
   public ApplicationUserDTO getUserByUsername(@PathVariable("username") String username) {
 
     return convertToDto(service.getUser(username));
   }
 
-
+  /**
+   * Sets a user role of the user
+   * 
+   * @author ahmad
+   * @param username
+   * @param roles
+   * @return userDTO
+   */
   @PostMapping(value = {"/set-user-role/{username}", "/set-user-role/{username}/"})
   public ApplicationUserDTO setUserRole(@PathVariable("username") String username,
       @RequestParam("roles") String... roles) {
     return convertToDto(service.setUserRole(username, roles));
   }
 
-
+  /**
+   * Updates the payment credentials of a user
+   * 
+   * @author ahmad
+   * @param name
+   * @param cName
+   * @param ccNumber
+   * @param eDate
+   * @param cvc
+   * @return payementCredentialDTO
+   * @throws Exception
+   */
   @PostMapping(value = {"/update-payment-credentials/{username}/{cardname}/{ccnumber}/{expdate}/{cvc}",
       "/update-payment-credentials/{username}/{cardname}/{ccnumber}/{expdate}/{cvc}/"})
   public PaymentCredentialsDTO updateUserCredentials(@PathVariable("username") String name,
@@ -110,7 +170,19 @@ public class ProjectGroup02RestController {
     return convertToDto(service.updateUserCredentials(name, cName, ccNumber, eDate, cvc));
   }
 
-
+  /**
+   * Updates the address of the user
+   * 
+   * @author ahmad
+   * @param username
+   * @param street
+   * @param postalcode
+   * @param province
+   * @param country
+   * @param city
+   * @return AddressDTO
+   * @throws Exception
+   */
   @PostMapping(value = {"/update-user-address/{username}/{street}/{postalcode}/{province}/{country}/{city}",
       "/update-user-address/{username}/{street}/{postalcode}/{province}/{country}/{city}/"})
   public AddressDTO updateUserAddress(@PathVariable("username") String username, @PathVariable("street") String street,
@@ -118,23 +190,52 @@ public class ProjectGroup02RestController {
       @PathVariable("country") String country, @PathVariable("city") String city) throws Exception {
     return convertToDto(service.updateUserAddress(username, street, postalcode, province, country, city));
   }
-
+  
+  /**
+   * Logs in a user
+   * @author ahmad
+   * @param username
+   * @param pw
+   * @return boolean
+   */
   @PostMapping(value = {"/user-login/{username}/{password}", "/user-login/{username}/{password}/"})
   public boolean loginUser(@PathVariable("username") String username, @PathVariable("password") String pw) {
     return service.loginUser(username, pw);
   }
-
+  
+  /**
+   * Logs out a user
+   * 
+   * @author Ahmad
+   * @param username
+   * @return boolean
+   */
   @PostMapping(value = {"/user-logout/{username}", "/user-logout/{username}/"})
   public boolean logoutUser(@PathVariable("username") String username) {
     return service.logoutUser(username).isIsLoggedIn();
   }
-
+  
+  /**
+   * Sets the balance of a given user
+   * 
+   * @author Vadim, Gurdashan, Ahmad
+   * @param username
+   * @param amount
+   * @return ApplicationUserDTO
+   * @throws Exception
+   */
   @PostMapping(value = {"/set-balance/{username}/{amount}", "/set-balance/{username}/{amount}/"})
   public ApplicationUserDTO setUserBalance(@PathVariable("username") String username,
       @PathVariable("amount") Double amount) throws Exception {
     return convertToDto(service.setUserBalance(username, amount));
   }
-
+  
+  /*
+   * Creates a collection
+   * 
+   * @author Vadim, Gurdashan, Ahmad
+   * @return CollectionDTO
+   */
   @PostMapping(value = {"/create-collection/{collectionName}", "/create-collection/{collectionName}/"})
   public CollectionDTO createCollection(@PathVariable("collectionName") String collectionName,
       @RequestParam("collectionDescription") String collectionDescription,
@@ -142,7 +243,16 @@ public class ProjectGroup02RestController {
     return convertToDto((service.createCollection(collectionName, collectionDescription, collectionImageUrl)));
   }
 
-  // TODO test
+  /**
+   * Deletes the item from the art gallery
+   * 
+   * @author Vadim, Gurdashan, Ahmad 
+   * @param username
+   * @param itemName
+   * @param artistUsername
+   * @return boolean
+   * @throws Exception
+   */
   @PostMapping(value = {"/{username}/delete-item-from-gallery/{itemName}/{artistUsername}",
       "/{username}/delete-item-from-gallery/{itemName}/{artistUsername}/"})
   public boolean deleteItemFromGallery(@PathVariable("username") String username,
@@ -151,6 +261,23 @@ public class ProjectGroup02RestController {
     return service.deleteItemFromGallery(username, itemName, artistUsername);
   }
 
+  /**
+   * Uploads Artwork to the art Gallery
+   * 
+   * @author Vadim, Gurdashan, Ahmad
+   * @param username
+   * @param collectionName
+   * @param artworkName
+   * @param height
+   * @param width
+   * @param breadth
+   * @param creationDate
+   * @param description
+   * @param price
+   * @param imageUrl
+   * @return ItemDTO
+   * @throws Exception
+   */
   @PostMapping(value = {"/{username}/upload-artwork/{collection}/{artworkName}",
       "/{username}/upload-artwork/{collection}/{artworkName}/"})
   public ItemDTO uploadArtwork(@PathVariable("username") String username,
@@ -162,7 +289,17 @@ public class ProjectGroup02RestController {
     return convertToDto(service.uploadArtwork(username, artworkName, height, width, breadth, creationDate, description,
         price, imageUrl, collectionName));
   }
-
+  
+  /**
+   * Adds item to the shopping cart
+   * 
+   * @author Vadim, Gurdashan, Ahmad
+   * @param username
+   * @param itemName
+   * @param artistUsername
+   * @return
+   * @throws Exception
+   */
   @PostMapping(value = {"/{username}/shopping-cart/add-item/{itemName}/{artistUsername}",
       "/{username}/shopping-cart/add-item/{itemName}/{artistUsername}/"})
   public ShoppingCartDTO addToShoppingCart(@PathVariable("username") String username,
@@ -171,7 +308,15 @@ public class ProjectGroup02RestController {
     return convertToDto(service.addToShoppingCart(username, itemName, artistUsername));
   }
 
-  // TODO test
+  /**
+   * @author Vadim, Gurdarshan, Ahmad
+   * 
+   * @param username
+   * @param itemName
+   * @param artistUsername
+   * @return ShoppingCartDTO
+   * @throws Exception
+   */
   @PostMapping(value = {"/{username}/shopping-cart/remove-item/{itemName}/{artistUsername}",
       "/{username}/shopping-cart/remove-item/{itemName}/{artistUsername}/"})
   public ShoppingCartDTO removeFromShoppingCart(@PathVariable("username") String username,
@@ -481,7 +626,7 @@ public class ProjectGroup02RestController {
    * @return cDTO
    */
 
-  // TODO infinite loop with item
+  
   private CollectionDTO convertToDto(Collection c) {
     if (c == null) {
       throw new IllegalArgumentException("There is no such Collection");

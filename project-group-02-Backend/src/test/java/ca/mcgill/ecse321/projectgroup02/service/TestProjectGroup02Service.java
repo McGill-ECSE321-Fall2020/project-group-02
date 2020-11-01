@@ -102,7 +102,9 @@ public class TestProjectGroup02Service {
   // MOCKS
 
   @BeforeEach
-
+  /**
+   * Setting up the mocks 
+   */
   public void setMockOutput() {
     lenient().when(artGallerySystemRepository.findAll()).thenReturn(createArtGallerySystemsStub());
     lenient().when(collectionRepository.findAll()).thenReturn(createCollectionStub());
@@ -242,7 +244,12 @@ public class TestProjectGroup02Service {
     lenient().when(serviceProviderRepository.save(any(ServiceProvider.class))).thenAnswer(returnParameterAsAnswer);
     lenient().when(shoppingCartRepository.save(any(ShoppingCart.class))).thenAnswer(returnParameterAsAnswer);
   }
-
+  
+  /**
+   * Creating a collection stub
+   * @author Ryad Ammar
+   * @return collections
+   */
   private Iterable<Collection> createCollectionStub() {
     HashSet<Collection> collections = new HashSet<Collection>();
     Collection col = new Collection();
@@ -250,7 +257,12 @@ public class TestProjectGroup02Service {
     collections.add(col);
     return collections;
   }
-
+  
+  /**
+   * Creating an ArtGallery stub
+   * @author Ryad Ammar
+   * @return ags
+   */
   private HashSet<ArtGallerySystem> createArtGallerySystemsStub() {
     HashSet<ArtGallerySystem> agss = new HashSet<ArtGallerySystem>();
     ArtGallerySystem ags = new ArtGallerySystem();
@@ -269,7 +281,12 @@ public class TestProjectGroup02Service {
     agss.add(ags);
     return agss;
   }
-
+  
+  /**
+   * Creating an Application Users stub
+   * @author Ryad Ammar
+   * @return users
+   */
   private HashSet<ApplicationUser> createApplicationUsersStub() {
     HashSet<ApplicationUser> appusers = new HashSet<ApplicationUser>();
     ApplicationUser user = new ApplicationUser();
@@ -278,7 +295,11 @@ public class TestProjectGroup02Service {
     appusers.add(user);
     return appusers;
   }
-
+  /**
+   * Creating Item stub
+   * @author Ryad Ammar
+   * @return items
+   */
   private HashSet<Item> createItemsStub() {
     HashSet<Item> items = new HashSet<Item>();
 
