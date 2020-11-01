@@ -86,12 +86,14 @@ public class ProjectGroup02Service {
     address.setStreet(street);
     gallery.setArtGalleryId(1);
 
+    HashSet<ApplicationUser> users = new HashSet<ApplicationUser>();
+    gallery.setApplicationUsers(users);
+
     addressRepository.save(address);
     artGallerySystemRepository.save(gallery);
 
     ApplicationUser admin = createAdmin(adminUsername, adminEmail, adminPassword);
 
-    HashSet<ApplicationUser> users = new HashSet<ApplicationUser>();
     users.add(admin);
     HashSet<Item> items = new HashSet<Item>();
 
@@ -141,6 +143,9 @@ public class ProjectGroup02Service {
     user.setAddress(new HashSet<Address>());
     user.setIsLoggedIn(false);
     applicationUserRepository.save(user);
+
+    getGallery().getApplicationUsers().add(user);
+    artGallerySystemRepository.save(getGallery());
 
     return user;
   }
@@ -362,6 +367,7 @@ public class ProjectGroup02Service {
     item.setInStock(true);
     try {
       item.setCollection(collectionRepository.findByName(collection));
+      collectionRepository.findByName(collection).getItem().add(item);
     } catch (Exception e) {
       throw new Exception("Collection+" + collection + " does not exist.");
     }
@@ -370,8 +376,6 @@ public class ProjectGroup02Service {
     item.setArtist(artist);
     item.setArtGallerySystem(getGallery());
     getGallery().getItem().add(item);
-    collectionRepository.findByName(collection).getItem().add(item);
-
 
     collectionRepository.save(collectionRepository.findByName(collection));
     itemRepository.save(item);
@@ -408,15 +412,27 @@ public class ProjectGroup02Service {
         break;
       }
     }
-    
-    for (ApplicationUser u : getGallery().getApplicationUsers()) {
+
+    for (ApplicationUser u : applicationUserRepository.findAll()) {
       Customer c = customerRepository.findCustomerByuserRoleId((u.getUsername() + "customer").hashCode());
-      for (Item i : c.getShoppingCart().getItem()) {
-        if (i.getName().equalsIgnoreCase(nameOfItem)
-            && i.getArtist().getApplicationUser().getUsername().equalsIgnoreCase(usernameOfArtist)) {
-          c.getShoppingCart().getItem().remove(i);
+      if (c != null)
+        for (Item i : c.getShoppingCart().getItem()) {
+          if (i.getName().equalsIgnoreCase(nameOfItem)
+              && i.getArtist().getApplicationUser().getUsername().equalsIgnoreCase(usernameOfArtist)) {
+            c.getShoppingCart().getItem().remove(i);
+          }
         }
-      }
+    }
+
+    for (ApplicationUser u : applicationUserRepository.findAll()) {
+      Artist a = artistRepository.findByuserRoleId((u.getUsername() + "artist").hashCode());
+      if (a != null)
+        for (Item i : a.getItem()) {
+          if (i.getName().equalsIgnoreCase(nameOfItem)
+              && i.getArtist().getApplicationUser().getUsername().equalsIgnoreCase(usernameOfArtist)) {
+            a.getItem().remove(i);
+          }
+        }
     }
 
     itemRepository.delete(item);
@@ -430,6 +446,10 @@ public class ProjectGroup02Service {
     }
 
     return true;
+  }
+
+  public List<Collection> getCollections() {
+    return toList(collectionRepository.findAll());
   }
 
   /**
@@ -473,6 +493,7 @@ public class ProjectGroup02Service {
 
     try {
       customer = customerRepository.findCustomerByuserRoleId((usernameOfClient + "customer").hashCode());
+      customer.getClass();
     } catch (Exception e) {
       throw new Exception("User must be a customer");
     }
@@ -504,6 +525,7 @@ public class ProjectGroup02Service {
 
     try {
       customer = customerRepository.findCustomerByuserRoleId((usernameOfClient + "customer").hashCode());
+      customer.getClass();
     } catch (Exception e) {
       throw new Exception("User must be a customer");
     }
@@ -531,6 +553,7 @@ public class ProjectGroup02Service {
 
     try {
       customer = customerRepository.findCustomerByuserRoleId((usernameOfClient + "customer").hashCode());
+      customer.getClass();
     } catch (Exception e) {
       throw new Exception("User must be a customer");
     }
@@ -557,6 +580,7 @@ public class ProjectGroup02Service {
 
     try {
       customer = customerRepository.findCustomerByuserRoleId((username + "customer").hashCode());
+      customer.getClass();
     } catch (Exception e) {
       throw new Exception("User must be a customer");
     }

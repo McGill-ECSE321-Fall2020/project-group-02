@@ -106,80 +106,75 @@ task integrationTest() {
     		}		
        	exec {
       		workingDir '../'
-      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/create-collection/Spider-women?collectionDescription=Marvellous+Collection&collectionImageUrl=https://plasticwoman.com'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/create-collection/Spider-spoons?collectionDescription=Marvellous+Collection&collectionImageUrl=https://plasticspoon.com'
     	}	
     	exec {
       		workingDir '../'
-      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/GURDYBOYSS/upload-artwork/Spider-women/PlasticWoman?height=20&width=30&breadth=5&creationDate=2020-10-31&description=This+is+not+a+plastic+woman&price=35000&imageUrl=https://artimage.com'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/GURDYBOYSS/upload-artwork/Spider-spoons/PlasticSpoon?height=20&width=30&breadth=5&creationDate=2020-10-31&description=This+is+not+a+plastic+spoon&price=35000&imageUrl=https://artimage.com'
     	}	
     	exec {
       		workingDir '../'
-      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/AhmadSiddiqi/shopping-cart/add-item/PlasticWoman/GURDYBOYSS'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/AhmadSiddiqi/shopping-cart/add-item/PlasticSpoon/GURDYBOYSS'
     		}	
     	exec {
       		workingDir '../'
       		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/AhmadSiddiqi/shopping-cart'
     		}	
-    	//exec {
-      	//	workingDir '../'
-      	//	commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/AhmadSiddiqi/shopping-cart/remove-item/PlasticWoman/GURDYBOYSS'
-    	//	}	
-    	//exec {
-      	//	workingDir '../'
-      	//	commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/RyadAmmar/delete-item-from-gallery/PlasticWoman/GURDYBOYSS'
-    	//	}	
-    	//exec {
-      	//	workingDir '../'
-      //		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/AhmadSiddiqi/checkout/HOMEDELIVERY'
-    	//	}	
-    	//exec {
-      	//	workingDir '../'
-      		//commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/user-by-name/AhmadSiddiqi'
-    		//}	
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/AhmadSiddiqi/shopping-cart/remove-item/PlasticSpoon/GURDYBOYSS'
+    		}	
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/RyadAmmar/delete-item-from-gallery/PlasticSpoon/GURDYBOYSS'
+    		}	
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/AhmadSiddiqi/checkout/HOMEDELIVERY'
+    		}	
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/user-by-name/AhmadSiddiqi'
+    		}	
     		
     		exec {
 	      		workingDir '../'
-	      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/GURDYBOYSS/upload-artwork/Spider-women/PlasticWoman?height=20&width=30&breadth=5&creationDate=2020-10-31&description=This+is+not+a+plastic+woman&price=35000&imageUrl=https://artimage.com'
+	      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/GURDYBOYSS/upload-artwork/Spider-spoons/PlasticSpoon?height=20&width=30&breadth=5&creationDate=2020-10-31&description=This+is+not+a+plastic+spoon&price=35000&imageUrl=https://artimage.com'
 	    	}	
 	    	exec {
 	      		workingDir '../'
-	      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/GURDYBOYSS/upload-artwork/Spider-women/MetalMartian?height=20&width=30&breadth=5&creationDate=2020-10-31&description=This+is+a+metal+alien&price=67000&imageUrl=https://artimage.com'
+	      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/GURDYBOYSS/upload-artwork/Spider-spoons/MetalMartian?height=20&width=30&breadth=5&creationDate=2020-10-31&description=This+is+a+metal+alien&price=67000&imageUrl=https://artimage.com'
 	    	}	
 	    	exec {
 	      		workingDir '../'
-	      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/GURDYBOYSS/upload-artwork/Spider-women/UraniumMusk?height=20&width=30&breadth=5&creationDate=2030-09-31&description=Mind+desintegration+is+key&price=110000&imageUrl=https://artimage.com'
+	      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/GURDYBOYSS/upload-artwork/Spider-spoons/UraniumMusk?height=20&width=30&breadth=5&creationDate=2030-09-31&description=Mind+desintegration+is+key&price=110000&imageUrl=https://artimage.com'
 	    	}	
     		exec {
 	      		workingDir '../'
-	      		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/Spider-women'
+	      		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/Spider-spoons'
     		}	
     		exec {
 	      		workingDir '../'
-	      		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/Spider-women/sort-by-price-asc'
+	      		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/Spider-spoons/sort-by-price-asc'
     		}	
     		exec {
 	      		workingDir '../'
-	      		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/Spider-women/sort-by-price-desc'
+	      		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/Spider-spoons/sort-by-price-desc'
     		}	
     		exec {
 	      		workingDir '../'
-	      		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/Spider-women/0/70000'
+	      		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/Spider-spoons/0/70000'
     		}
     		exec {
 	      		workingDir '../'
-	      		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/Spider-women/GURDYBOYSS'
-    		}	
+	      		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/Spider-spoons/GURDYBOYSS'
+    		}
+    		exec {
+	      		workingDir '../'
+	      		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/collections'
+    		}
+    		
     	}
-
-	
-	
-	
-
-	
-	
-	//commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/AhmadSiddiqi/shopping-cart'
-	
-	//commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080
 	
 }
 

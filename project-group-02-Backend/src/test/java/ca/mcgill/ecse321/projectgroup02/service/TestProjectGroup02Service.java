@@ -105,6 +105,7 @@ public class TestProjectGroup02Service {
 
   public void setMockOutput() {
     lenient().when(artGallerySystemRepository.findAll()).thenReturn(createArtGallerySystemsStub());
+    lenient().when(collectionRepository.findAll()).thenReturn(createCollectionStub());
     lenient().when(applicationUserRepository.findAll()).thenReturn(createApplicationUsersStub());
     lenient().when(applicationUserRepository.existsByUsername(USER_USERNAME)).thenReturn(true);
     lenient().when(itemRepository.findAll()).thenReturn(createItemsStub());
@@ -242,6 +243,14 @@ public class TestProjectGroup02Service {
     lenient().when(shoppingCartRepository.save(any(ShoppingCart.class))).thenAnswer(returnParameterAsAnswer);
   }
 
+  private Iterable<Collection> createCollectionStub() {
+    HashSet<Collection> collections = new HashSet<Collection>();
+    Collection col = new Collection();
+    col.setName("fork");
+    collections.add(col);
+    return collections;
+  }
+
   private HashSet<ArtGallerySystem> createArtGallerySystemsStub() {
     HashSet<ArtGallerySystem> agss = new HashSet<ArtGallerySystem>();
     ArtGallerySystem ags = new ArtGallerySystem();
@@ -256,7 +265,7 @@ public class TestProjectGroup02Service {
     items.add(item);
     ags.setItem(items);
     ags.setApplicationUsers(new HashSet<ApplicationUser>());
-    
+
     agss.add(ags);
     return agss;
   }
@@ -656,6 +665,13 @@ public class TestProjectGroup02Service {
       assertTrue(i.getPrice() >= 100 && i.getPrice() <= 150);
       assertEquals(i.getCollection().getName(), "testing");
     }
+  }
+
+  @Test
+  public void testGetCollections() {
+    Iterable<Collection> cols = service.getCollections();
+    for (Collection col : cols)
+      assertEquals(col.getName(), "fork");
   }
 
   @Test
