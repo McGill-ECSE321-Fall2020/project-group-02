@@ -180,13 +180,25 @@ public class ProjectGroup02RestController {
     return convertToDto(service.removeFromShoppingCart(username, itemName, artistUsername));
   }
 
-  // TODO test
+  /**
+   * Checkout an order by a username
+   * @param username customer's username
+   * @param deliveryMethod delivery method selected
+   * @return itemOrderDTO processed order
+   * @throws Exception
+   */
   @PostMapping(value = {"/{username}/checkout/{deliveryMethod}", "/{username}/checkout/{deliveryMethod}/"})
   public ItemOrderDTO checkout(@PathVariable("username") String username,
       @PathVariable("deliveryMethod") String deliveryMethod) throws Exception {
     return convertToDto(service.checkout(username, deliveryMethod));
   }
 
+  /**
+   * Returns all items present inside the shopping cart of a certain user that is a customer
+   * @param username
+   * @return itemsDTO items inside the user's (customer's) shopping
+   * @throws Exception
+   */
   @GetMapping(value = {"/{username}/shopping-cart", "/{username}/shopping-cart/"})
   public List<ItemDTO> getItemsFromShoppingCart(@PathVariable("username") String username) throws Exception {
     List<Item> items = service.getItemsFromShoppingCart(username);
@@ -198,12 +210,22 @@ public class ProjectGroup02RestController {
     return itemsDTO;
   }
 
+  /**
+   * Returns all the collections present inside the art gallery
+   * @return collectionDTOs all collections in the art gallery
+   */
   @GetMapping(value = {"/collections", "/collections/"})
   public List<CollectionDTO> getAllCollections() {
     return service.getCollections().stream().map(u -> convertToDto(u)).collect(Collectors.toList());
   }
 
-  // TODO test
+  /**
+   * Sort item by ascending price
+   * @author Vadim Tuchila
+   * @param collection collection 
+   * @return itemsDTO items sorted by price in ascending order
+   * @throws Exception
+   */
   @GetMapping(value = {"/{collection}/sort-by-price-asc", "/{collection}/sort-by-price-asc/"})
   public List<ItemDTO> sortByPriceAsc(@PathVariable("collection") String collection) throws Exception {
     List<Item> items = service.sortByPriceAsc(collection);
@@ -215,7 +237,13 @@ public class ProjectGroup02RestController {
     return itemsDTO;
   }
 
-  // TODO test
+  /**
+   * Sort item by descending price
+   * @author Vadim Tuchila
+   * @param collection collection 
+   * @return itemsDTO items sorted by price in descending order
+   * @throws Exception
+   */
   @GetMapping(value = {"/{collection}/sort-by-price-desc", "/{collection}/sort-by-price-desc/"})
   public List<ItemDTO> sortByPriceDesc(@PathVariable("collection") String collection) throws Exception {
     List<Item> items = service.sortByPriceDesc(collection);
@@ -227,7 +255,13 @@ public class ProjectGroup02RestController {
     return itemsDTO;
   }
 
-  // TODO test
+  /**
+   * Filter items by collection (show all items inside of a collection)
+   * @author Vadim Tuchila
+   * @param collection collection 
+   * @return itemsDTO items inside of the collection
+   * @throws Exception
+   */
   @GetMapping(value = {"/{collection}", "/{collection}/"})
   public List<ItemDTO> filterByCollection(@PathVariable("collection") String collection) throws Exception {
     List<Item> items = service.filterByCollection(collection);
@@ -239,7 +273,15 @@ public class ProjectGroup02RestController {
     return itemsDTO;
   }
 
-  // TODO test
+  /**
+   * All items in the specified price range
+   * @author Vadim Tuchila
+   * @param collection collection 
+   * @param priceFrom starting price of price range
+   * @param priceTo end price of price range
+   * @return itemsDTO items inside the specified price range
+   * @throws Exception
+   */
   @GetMapping(value = {"/{collection}/{price-from}/{price-to}", "/{collection}/{price-from}/{price-to}/"})
   public List<ItemDTO> filterByPrice(@PathVariable("collection") String collection,
       @PathVariable("price-from") int priceFrom, @PathVariable("price-to") int priceTo) throws Exception {
@@ -252,7 +294,13 @@ public class ProjectGroup02RestController {
     return itemsDTO;
   }
 
-  // TODO test
+  /**
+   * Returns all items uploaded by an artist
+   * @param collection collection
+   * @param artist artist
+   * @return itemsDTO items filtered by artist
+   * @throws Exception
+   */
   @GetMapping(value = {"/{collection}/{artist}", "/{collection}/{artist}/"})
   public List<ItemDTO> filterByArtist(@PathVariable("collection") String collection,
       @PathVariable("artist") String artist) throws Exception {
@@ -264,8 +312,6 @@ public class ProjectGroup02RestController {
     }
     return itemsDTO;
   }
-
-
 
   /**
    * Converts an ApplicationUser object into an ApplicationUserDTO object and makes all the necessary links with the
@@ -343,7 +389,7 @@ public class ProjectGroup02RestController {
   /**
    * Converts an Address object into an AddressDTO object and makes all the necessary links with the associations.
    * 
-   * @author Gurdarshan Singh, Ahmad Siddiqi,
+   * @author Gurdarshan Singh, Ahmad Siddiqi,Vadim Tuchila
    * @param a
    * @throws Exception
    * @return adDTO
@@ -362,7 +408,7 @@ public class ProjectGroup02RestController {
    * Converts a PaymentCredentials object into a PaymentCredentialsDTO object and makes all the necessary links with the
    * associations.
    * 
-   * @author Gurdarshan Singh, Ahmad Siddiqi,
+   * @author Gurdarshan Singh, Ahmad Siddiqi,Vadim Tuchila
    * @param pc
    * @throws Exception
    * @return pcDTO
@@ -382,7 +428,7 @@ public class ProjectGroup02RestController {
    * Converts a ShoppingCart object into a ShoppingCartDTO object and makes all the necessary links with the
    * associations.
    * 
-   * @author Gurdarshan Singh, Ahmad Siddiqi,
+   * @author Gurdarshan Singh, Ahmad Siddiqi,Vadim Tuchila
    * @param sc
    * @throws Exception
    * @return scDTO
@@ -410,7 +456,7 @@ public class ProjectGroup02RestController {
   /**
    * Converts an Artist object into an ArtistDTO object and makes all the necessary links with the associations.
    * 
-   * @author Gurdarshan Singh, Ahmad Siddiqi,
+   * @author Gurdarshan Singh, Ahmad Siddiqi,Vadim Tuchila
    * @param a
    * @throws Exception
    * @return aDTO
@@ -429,7 +475,7 @@ public class ProjectGroup02RestController {
   /**
    * Converts a Collection object into a CollectionDTO object and makes all the necessary links with the associations.
    * 
-   * @author Gurdarshan Singh, Ahmad Siddiqi,
+   * @author Gurdarshan Singh, Ahmad Siddiqi,Vadim Tuchila
    * @param c
    * @throws Exception
    * @return cDTO
@@ -450,7 +496,7 @@ public class ProjectGroup02RestController {
   /**
    * Converts a Customer object into a CustomerDTO object and makes all the necessary links with the associations.
    * 
-   * @author Gurdarshan Singh, Ahmad Siddiqi,
+   * @author Gurdarshan Singh, Ahmad Siddiqi,Vadim Tuchila
    * @param c
    * @throws Exception
    * @return cDTO
@@ -483,7 +529,7 @@ public class ProjectGroup02RestController {
    * Converts an ArtGallerySystem object into an ArtGallerySystemDTO object and makes all the necessary links with the
    * associations.
    * 
-   * @author Gurdarshan Singh, Ahmad Siddiqi,
+   * @author Gurdarshan Singh, Ahmad Siddiqi,Vadim Tuchila
    * @param ags
    * @throws Exception
    * @return agsDTO
@@ -545,8 +591,6 @@ public class ProjectGroup02RestController {
       itemsA.add(oldItemDTO);
     }
 
-    // iDTO.setArtist(aDTO);
-    // iDTO.setCollection(cDTO);
     itemsA.add(iDTO);
     aDTO.setItems(itemsA);
 
