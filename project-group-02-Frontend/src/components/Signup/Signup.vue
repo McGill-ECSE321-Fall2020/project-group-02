@@ -1,7 +1,12 @@
 <template>
     <div class="vue-template vertical-center inner-block">
         <form>
-            <h3>Sign In</h3>
+            <h3>Sign Up</h3>
+
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" class="form-control form-control-lg"/>
+            </div>
 
             <div class="form-group">
                 <label>Email address</label>
@@ -13,20 +18,12 @@
                 <input type="password" class="form-control form-control-lg" />
             </div>
 
-            <button type="submit" class="btn btn-dark btn-lg btn-block">Sign In</button>
+            <button type="submit" class="btn btn-dark btn-lg btn-block">Sign Up</button>
 
-            <p class="forgot-password text-right mt-2 mb-4">
-                <router-link to="/forgot-password">Forgot password ?</router-link>
+            <p class="forgot-password text-right">
+                Already registered
+                <router-link :to="{name: 'Login'}">sign in?</router-link>
             </p>
-
-            <div class="social-icons">
-                <ul>
-                    <li><a href="#"><i class="fa fa-google"></i></a></li>
-                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                </ul>
-            </div>
-
         </form>
     </div>
 </template>
