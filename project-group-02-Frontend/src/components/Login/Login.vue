@@ -33,8 +33,10 @@
 
 <script>
     export default {
-        data() {
-            return {}
+      name: 'login',
+      data () {
+        return {
         }
+      }
     }
 </script>

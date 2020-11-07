@@ -30,8 +30,10 @@
 
 <script>
     export default {
-        data() {
-            return {}
+      name: 'signup',
+      data () {
+        return {
         }
+      }
     }
 </script>
