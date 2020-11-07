@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "axios": "^0.21.0",
-    "bootstrap": "^4.0.0-beta.2",
+    "bootstrap": "^4.5.3",
     "bootstrap-vue": "latest",
     "jquery": "^3.5.1",
     "popper.js": "^1.12.9",
