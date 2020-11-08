@@ -1,26 +1,12 @@
 <template>
     <div class="vue-template vertical-center-edit inner-block">
         <form>
+    
+            <h3 style="text-align:center">Edit Your Profile</h3>
+         
             <br></br>
-             <br></br>
-              <br></br>
-            <h3>Edit Your Profile</h3>
-            <br></br>
-            <div class="form-group">
-                <label>Username</label>
-                <input type="text" class="form-control form-control-lg"/>
-            </div>
 
-            <div class="form-group">
-                <label>Email address</label>
-                <input type="email" class="form-control form-control-lg" />
-            </div>
-
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" class="form-control form-control-lg" />
-            </div>
-
+            <h3>Change Your Address</h3>
             <div class="form-group">
                 <label>Street</label>
                 <input type="address" class="form-control form-control-lg" />
@@ -33,7 +19,8 @@
                 <label>Country</label>
                 <input type="address" class="form-control form-control-lg" />
             </div>
-
+            <br></br>
+            <h3>Update Your Credentials</h3>
             <div class="form-group">
             
                 <label>Card Holder Name</label>
@@ -112,11 +99,19 @@ html,
   transform: translate(-50%, -50%);
   height: 100%;
 }
+
 .vertical-center-edit {
   display: flex;
   text-align: left;
   justify-content: center;
+  flex-direction: column;
+  position: absolute;
+  left: 50%;
+  top: 80%;
+  transform: translate(-50%, -50%);
+  height: 160%;
 }
+
 
 .inner-block {
   width: 450px;

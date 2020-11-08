@@ -103,7 +103,14 @@ html,
   display: flex;
   text-align: left;
   justify-content: center;
+  flex-direction: column;
+  position: absolute;
+  left: 50%;
+  top: 75%;
+  transform: translate(-50%, -50%);
+  height: 180%;
 }
+
 .inner-block {
   width: 450px;
   margin: auto;
