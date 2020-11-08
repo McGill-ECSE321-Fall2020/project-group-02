@@ -55,7 +55,7 @@
 <style>
 
 body {
-  background: #f0f2fa !important;
+  background: #f5f2eb !important;
   min-height: 100vh;
   display: flex;
   font-weight: 400;
