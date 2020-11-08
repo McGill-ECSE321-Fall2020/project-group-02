@@ -14,32 +14,29 @@
       </div>
     </div>
   </div>-->
-  <div class="bg-white shadow rounded pb-5 flex flex-col overflow-hidden">
-    <div class="block relative h-48 overflow-hidden">
-     <img
-        :src="null"
-        :alt="name"
-        class="object-cover object-center w-full h-full block bg-gray-500"
-      />
-    </div>
-    <div class="px-3 flex-1">
-      <h2 class="text-gray-900 text-base font-medium my-3 text-capitalize">{{ itemName }} Item Title</h2>
-      <h3 class="text-gray-900 text-white font-small my-3">{{ artistName }}</h3>
-      <p class="mb-3 text-lg font-bold text-orange">$1,000,000</p>
-    </div>
-    <div class="px-3">
-      <b-button :click="addToShoppingCart" class="btn-dark"> Add to my Cart</b-button>
-    </div>
-  </div>
+  <b-card
+    :title="itemName"
+    img-src="https://picsum.photos/300/300/?image=41"
+    img-alt="Image"
+    img-top
+    tag="article"
+    style="max-width: 15rem; max-height: 30rem; min-height: 30rem;"
+    class="mb-2  bg-white shadow rounded pb-5 flex flex-col overflow-hidden">
+      <b-card-text>{{ artistName }} </b-card-text>
+      <b-card-text>$1,000,000</b-card-text>
+      <b-card-footer>
+        <b-button bottom :click="addToShoppingCart" class="btn-dark"> Add to my Cart</b-button>
+      </b-card-footer>
+  </b-card>
 </template>
 
 <script>
 export default {
-  itemName: "Item",
+  name: "Item",
   props: {
     artistName: {
       type: String,
-      required: true
+     // required: true
     },
     itemName: {
       type: String,
@@ -47,11 +44,7 @@ export default {
     },
     itemImageUrl: {
       type: String,
-      required: true
-    },
-    collection: {
-      type: String,
-      required: true
+      //required: true
     }
   },
   methods: {
@@ -62,6 +55,13 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss" >
 
+.card-wrap {
+  margin: 30px;
+  cursor: pointer;
+  border-radius:30px;
+  overflow: hidden;
+
+}
 </style>

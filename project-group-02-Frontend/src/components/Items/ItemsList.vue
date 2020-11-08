@@ -1,7 +1,7 @@
 <template>
-  <div class="columns is-centered is-multiline">
-    <div class="card column is-one-quarter" v-for="item in items" :key="item.name">
-      <Item :name="item.name" @addToShoppingCart="addToShoppingCart"></Item>
+  <b-card-group columns class="container offset-4 container row">
+    <div v-for="item in items" :key="item.name">
+      <Item :itemName="item.itemName" :artistName="item.artistName" @addToShoppingCart="addToShoppingCart"></Item>
       <br>
     </div>
     <div class="section" v-if="items.length === 0">
@@ -10,7 +10,7 @@
     <div class="alert-danger" v-if="artworkError">
       <p> {{ artworkError }} </p>
     </div>
-  </div>
+  </b-card-group>
 </template>
 
 <script>
@@ -29,10 +29,14 @@ export default {
       artworkError: '',
       collection: 'The Secrets of the Intelligence',
       items: [
-        {name: "The Peaceful Mind"},
-        {name: "My Dear Mother"},
-        {name: "The Outside"},
-        {name: "Wondering Sherlock Hawkins"}
+        {itemName: "The Peaceful Mind", artistName: "Picasso"},
+        {itemName: "My Dear Mother", artistName: "Michelangelo"},
+        {itemName: "The Outside", artistName: "Leonardo Da Vinci"},
+        {itemName: "Wondering Sherlock Hawkins", artistName: "Michael De Sanjo"},
+        {itemName: "The Peaceful Mind", artistName: "Picasso"},
+        {itemName: "My Dear Mother", artistName: "Michelangelo"},
+        {itemName: "The Outside", artistName: "Leonardo Da Vinci"},
+        {itemName: "Wondering Sherlock Hawkins", artistName: "Michael De Sanjo"}
       ],
       filteredItems: [],
       sortedItems: []
@@ -61,5 +65,13 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  width: 100%;
+  margin-top: 20%;
+  margin-left: 10%;
 
+  display:flex;
+  height:100px;
+  flex-wrap:wrap;
+}
 </style>

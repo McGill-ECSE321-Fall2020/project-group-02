@@ -10,7 +10,7 @@
    <label>
 
    </label>
- <label class="cardnumber">Chose card:</label>
+ <label class="cardnumber">Choose card:</label>
   <select name="select card" id="userCard">
     <option value="Card1">1234 5678 9123 4567</option>
     <option value="Card2">1234 5678 9512 5879</option>
@@ -19,6 +19,7 @@
   <div class="receipt">
       <div class="row">
       <div class="column">
+        <b-icon-type-h3>Choose delivery:</b-icon-type-h3>
 <select class="delivery" name="delivery" id="delivery">
     <option value="delivery1">In store pickup</option>
     <option value="delivery2">Home delivery</option>
@@ -34,22 +35,23 @@
       </label>
       <h3>Total:</h3>
       </div>
-      </div> 
+      </div>
 
   </div>
 </div>
     </div>
 </template>
-<script>
-</script>
+
+
+
 <style>
 
 @import url('https://fonts.googleapis.com/css?family=Work+Sans');
 body{
 font-family: 'Work Sans', sans-serif;
-background: #00d2ff; 
-background: -webkit-linear-gradient(to right, #070642, #09213d); 
-background: linear-gradient(to right, #070642, #09213d); 
+background: #00d2ff;
+background: -webkit-linear-gradient(to right, #070642, #09213d);
+background: linear-gradient(to right, #070642, #09213d);
 }
 
 .card{
@@ -57,14 +59,20 @@ background: linear-gradient(to right, #070642, #09213d);
   padding:60px; padding-left:20px; padding-right:20px;box-shadow: 2px 10px 40px black; z-index:99;
 }
 
-.logo-card{max-width:50px; margin-bottom:15px; margin-top: -19px;}
+.logo-card{
+  max-width:50px; margin-bottom:15px; margin-top: -19px;
+}
 
-label{display:flex; font-size:10px; color:white; opacity:.4;}
+label{
+  display:flex; font-size:10px; color:white; opacity:.4;
+}
 
-select{padding-right:50px; font-size:20px; font-family: 'Work Sans', sans-serif; background:transparent; border:none; color:#dbdce09d; -webkit-appearance: none;
+select{
+  padding-right:50px; font-size:20px; font-family: 'Work Sans', sans-serif; background:transparent; border:none; color:#dbdce09d; -webkit-appearance: none;
     -moz-appearance: none;
     text-indent: 1px;
-    text-overflow: '';}
+    text-overflow: '';
+}
 select:focus{border-bottom:1px solid #1abc9c; outline:none;}
 
 .delivery{ background:#16181a00; border-radius:6px; color:#000000;box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.288);}
@@ -109,3 +117,20 @@ select:focus{border-bottom:1px solid #1abc9c; outline:none;}
   .col{display:block; margin:auto; width:100%; text-align:center;}
 }
 </style>
+
+<script>
+export default {
+  name: "Checkout",
+  props: {
+
+  },
+  data() {
+    return {
+
+    }
+  },
+  methods: {
+
+  }
+}
+</script>

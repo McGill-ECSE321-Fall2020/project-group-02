@@ -8,6 +8,8 @@ import ItemsList from "../components/Items/ItemsList";
 import CollectionsList from "../components/Collections/CollectionsList";
 import Profile from "../components/Profile/Profile";
 import Edit from "../components/Edit/Edit";
+import Checkout from "../components/Checkout/Checkout";
+import Header from "../components/Header/Header";
 
 Vue.use(Router)
 
@@ -35,6 +37,11 @@ export default new Router({
       component: ItemsList
     },
     {
+      path: '/checkout',
+      name: 'checkout',
+      component: Checkout
+    },
+    {
       path: '/profile',
       name: 'profile',
       component: Profile
@@ -43,6 +50,11 @@ export default new Router({
       path: '/edit',
       name: 'edit',
       component: Edit
+    },
+    {
+      path: '/header',
+      name: 'header',
+      component: Header
     }
   ]
 })
