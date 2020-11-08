@@ -166,7 +166,7 @@ h1+p, p+p {
   height: 320px;
   background-color: #333;
   overflow: hidden;
-  border-radius: 10px;
+  border-radius: 20px;
   box-shadow:
     rgba(black, 0.66) 0 30px 60px 0,
     inset #333 0 0 0 5px,

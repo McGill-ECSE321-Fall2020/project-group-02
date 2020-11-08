@@ -61,5 +61,13 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  width: 100%;
+  margin-top: 20%;
+  margin-left: 15%;
 
+  display:flex;
+  height:100px;
+  flex-wrap:wrap;
+}
 </style>

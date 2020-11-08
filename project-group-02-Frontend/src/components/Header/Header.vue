@@ -4,7 +4,7 @@
   <a href="#Profile">Profile</a>
   <input type="button" value="Logout">
   <a href="#about">About</a>
-</div> 
+</div>
 </template>
 <script>
 </script>
@@ -54,3 +54,21 @@
   color: white;
 }
 </style>
+
+
+<script>
+export default {
+  name: "Header",
+  props: {
+
+  },
+  data() {
+    return {
+
+    }
+  },
+  methods: {
+
+  }
+}
+</script>
