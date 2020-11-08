@@ -1,10 +1,10 @@
 <template>
-  <div class="row">
-    <div v-for="collection in collections" :key="collection.name" class="column">
+  <div class="container row">
+    <div v-for="collection in collections" :key="collection.name">
         <router-link
           :to="{ name: 'itemsList', params: { collection: collection.name } }"
           class="block no-underline p-3 text-grey-dark  text-capitalize">
-          <Collection :name="collection.name"></Collection>
+          <Collection :collection-name="collection.name" :collection-description="collection.description" collection-image-url="https://images.unsplash.com/photo-1479660656269-197ebb83b540?dpr=2&auto=compress,format&fit=crop&w=1199&h=798&q=80&cs=tinysrgb&crop="></Collection>
         </router-link>
     </div>
     <div class="section" v-if="collections.length === 0">
@@ -30,9 +30,9 @@ export default {
       noCollectionFound:'No collections were found',
       collectionError: '',
       collections: [
-        {name: "Dogs"},
-        {name: "Cats"},
-        {name: "Monkeys"}
+        {name: "Dogs", description: "Collection description"},
+        {name: "Cats", description: "Collection description"},
+        {name: "Monkeys", description: "Collection description"}
       ]
     }
   },
@@ -53,41 +53,15 @@ export default {
 </script>
 
 <style scoped>
-* {
-  box-sizing: border-box;
+
+.container {
+  width: 100%;
+
+  position: absolute;
+  top:100px;
+  left: 200px;
+  right: 0;
+
+  margin: auto;
 }
-
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-/* Float four columns side by side */
-.column {
-  float: left;
-  width: 25%;
-  padding: 0 10px;
-}
-
-/* Remove extra left and right margins, due to padding */
-.row {margin: 0 -5px;}
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-/* Responsive columns */
-@media screen and (max-width: 600px) {
-  .column {
-    width: 100%;
-    display: block;
-    margin-bottom: 20px;
-  }
-}
-
-
-
-
 </style>

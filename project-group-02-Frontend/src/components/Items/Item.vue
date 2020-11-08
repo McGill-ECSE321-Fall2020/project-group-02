@@ -1,4 +1,19 @@
 <template>
+ <!-- <div class="card-wrap"
+       @mousemove="handleMouseMove"
+       @mouseenter="handleMouseEnter"
+       @mouseleave="handleMouseLeave"
+       ref="card">
+    <div class="card"
+         :style="cardStyle">
+      <div class="card-bg" :style="[cardBgTransform, cardBgImage]"></div>
+      <div class="card-info">
+        <h1 name="header">{{ collectionName }}</h1>
+        <h2 name="content">{{ collectionDescription }}</h2>
+        <p name="price">$1,000,000 </p>
+      </div>
+    </div>
+  </div>-->
   <div class="bg-white shadow rounded pb-5 flex flex-col overflow-hidden">
     <div class="block relative h-48 overflow-hidden">
      <img
