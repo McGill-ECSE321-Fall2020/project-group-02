@@ -5,10 +5,13 @@ import BootstrapVue from "bootstrap-vue"
 import App from './App'
 import router from './router'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 import '@/assets/css/main.css'
 
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
+
+export const eventBus = new Vue(); // this is an event bus for handling events in a much easier fashion
 
 /* eslint-disable no-new */
 new Vue({
