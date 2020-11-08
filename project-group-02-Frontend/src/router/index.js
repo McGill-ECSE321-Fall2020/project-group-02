@@ -6,6 +6,8 @@ import Signup from '@/components/Signup/Signup'
 import Item from "../components/Items/Item";
 import ItemsList from "../components/Items/ItemsList";
 import CollectionsList from "../components/Collections/CollectionsList";
+import Profile from "../components/Profile/Profile";
+import Edit from "../components/Edit/Edit";
 
 Vue.use(Router)
 
@@ -31,6 +33,16 @@ export default new Router({
       path: '/collections/:collection',
       name: 'itemsList',
       component: ItemsList
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: Profile
+    },
+    {
+      path: '/edit',
+      name: 'edit',
+      component: Edit
     }
   ]
 })
