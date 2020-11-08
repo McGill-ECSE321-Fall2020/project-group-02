@@ -2,11 +2,11 @@
     <div class="vue-template vertical-center-edit inner-block">
         <form>
     
-            <h3 style="text-align:center">Edit Your Profile</h3>
+            <h1 style="text-align:center">Edit My Profile</h1>
          
             <br></br>
 
-            <h3>Change Your Address</h3>
+            <h3>Change My Address</h3>
             <div class="form-group">
                 <label>Street</label>
                 <input type="address" class="form-control form-control-lg" />
@@ -19,8 +19,8 @@
                 <label>Country</label>
                 <input type="address" class="form-control form-control-lg" />
             </div>
-            <br></br>
-            <h3>Update Your Credentials</h3>
+      <br></br>
+            <h3>Update My Credentials</h3>
             <div class="form-group">
             
                 <label>Card Holder Name</label>
@@ -28,9 +28,9 @@
                 <label>Credit Card Number</label>
                 <input type="text" class="form-control form-control-lg" />
                 <label>Expiration Date</label>
-                <input type="text" class="form-control form-control-lg" />
+                <input type="Date" class="form-control form-control-lg" />
                 <label>Card Verification Code</label>
-                <input type="text" class="form-control form-control-lg" />
+                <input type="password" class="form-control form-control-lg" />
             </div>
 
             <router-link :to="{name: 'Profile'}">
@@ -55,7 +55,7 @@
 <style>
 
 body {
-  background: #2554FF !important;
+  background: #f0f2fa !important;
   min-height: 100vh;
   display: flex;
   font-weight: 400;
