@@ -1,33 +1,4 @@
 <template>
-<!--
-  <div class="slick-slider">
-    <li>
-      <div class="full-card">
-
-        <div class="font-card robotoslab-card">
-          <h3 class="font&#45;&#45;robotoslab">Roboto Slab</h3>
-          <p class="font&#45;&#45;roboto">Roboto Slab is a slab serif in the Roboto family. It was designed by Christian Robertson.</p>
-          <a target="_blank" href="https://fonts.google.com/specimen/Roboto+Slab" class="explore-button">Explore</a>
-        </div>
-
-        <div class="font-card roboto-card">
-          <h3 class="font&#45;&#45;roboto">Roboto</h3>
-          <p class="font&#45;&#45;roboto">Roboto is a sans-serif typeface family developed for the mobile operating system, Android.</p>
-          <a target="_blank" href="https://fonts.google.com/specimen/Roboto" class="explore-button">Explore</a>
-        </div>
-
-        <div class="font-description">
-          <h2 class="font&#45;&#45;robotoslab">Roboto Slab<span class="font&#45;&#45;roboto">+Roboto</span></h2>
-          <p class="font&#45;&#45;roboto">Roboto has a dual nature. It has a mechanical skeleton and the forms are largely geometric. At the same time, the font features friendly and open curves.</p>
-        </div>
-
-      </div>
-    </li>
-
--->
-
-
-
   <b-card
     :title="itemName"
     img-src="https://picsum.photos/300/300/?image=41"
@@ -37,10 +8,10 @@
     style="max-width: 15rem; width:240px; max-height: 30rem; min-height: 30rem;"
     class="mb-2 bg-white shadow rounded pb-5 flex flex-col overflow-hidden">
     <b-card-body style=" display: flex; flex-direction: column;" class="d-flex flex-column">
-      <b-card-text>{{ artistName }} </b-card-text>
-      <b-card-text>$1,000,000</b-card-text>
+      <b-card-text>{{ artistName }}</b-card-text>
+      <b-card-text>{{ itemPrice }}</b-card-text>
     </b-card-body>
-      <b-button :click="addToShoppingCart" class="explore-button btn-dark mt-auto"> Add to my Cart</b-button>
+      <b-button :click="addToShoppingCart" class="shopping-cart-button btn-dark mt-auto"> Add to my Cart</b-button>
   </b-card>
 </template>
 
@@ -51,7 +22,7 @@ export default {
   props: {
     artistName: {
       type: String,
-     // required: true
+      required: true
     },
     itemName: {
       type: String,
@@ -59,7 +30,11 @@ export default {
     },
     itemImageUrl: {
       type: String,
-      //required: true
+      required: true
+    },
+    itemPrice: {
+      type: Number,
+      required: true
     }
   },
   methods: {
@@ -71,7 +46,7 @@ export default {
 </script>
 
 <style scoped lang="scss" >
-.explore-button {
+.shopping-cart-button {
   font-size: 0.9em;
   background: white;
   width: 100%;

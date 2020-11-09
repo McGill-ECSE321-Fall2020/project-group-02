@@ -8,7 +8,7 @@
             <div class="form-group">
                 <label>Username</label>
                 <input type="text" id="username" class="form-control form-control-lg" readonly />
-                
+
             </div>
 
             <div class="form-group">
@@ -38,7 +38,7 @@
             <p class="forgot-password text-right">
                 Edit your profile
                 <a href="/#/edit" >here</a>
-                
+
             </p>
         </form>
     </div>
@@ -48,8 +48,12 @@
 <script>
     export default {
         data() {
-            return {}
-        }
+            return {
+            }
+        },
+      created: function () {
+
+      }
     }
 </script>
 

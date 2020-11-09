@@ -174,6 +174,14 @@ h1+p, p+p {
   transition: 1s $returnEasing;
 }
 
+
+* {
+  box-sizing: content-box;
+}
+
+
+
+
 .card-bg {
   opacity: 0.5;
   position: absolute;

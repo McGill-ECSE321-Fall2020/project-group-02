@@ -42,7 +42,7 @@ export default new Router({
       component: Checkout
     },
     {
-      path: '/profile',
+      path: '/profile/:username',
       name: 'profile',
       component: Profile
     },
@@ -51,10 +51,5 @@ export default new Router({
       name: 'edit',
       component: Edit
     },
-    {
-      path: '/header',
-      name: 'header',
-      component: Header
-    }
   ]
 })

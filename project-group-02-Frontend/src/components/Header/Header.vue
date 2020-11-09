@@ -1,27 +1,36 @@
 <template>
-      <!--<div class="topnav">
-  <a class="active" href="#home">Home</a>
-  <a href="#Profile">Profile</a>
-  <input type="button" value="Logout">
-  <a href="#about">About</a>
-</div>-->
   <nav>
     <ul>
       <li>
-        <a href="#">Home</a>
+        <b-img src=""></b-img>
       </li>
       <li>
-        <a href="#">Collections</a>
+        <router-link to="/collections">
+          <a>Home</a>
+        </router-link>
       </li>
       <li>
-        <a href="#">My Account</a>
+        <router-link to="/shopping-cart">
+        <a>Shopping Cart</a>
+        </router-link>
+      </li>
+      <li>
+        <router-link :to="{ name:'profile', params: { username: $username }}">
+          <a>Account</a>
+        </router-link>
       </li>
     </ul>
   </nav>
 </template>
 
 <script>
-
+export default {
+  name: 'Header',
+  data() {
+    return {
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -36,7 +45,7 @@ nav {
   max-width: 960px;
   mask-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #ffffff 25%, #ffffff 75%, rgba(255, 255, 255, 0) 100%);
   margin: 0 auto;
-  padding: 60px 0;
+  padding: 1px 0;
 }
 
 nav ul {
@@ -64,13 +73,6 @@ nav ul li a:hover {
   background: rgba(255, 255, 255, 0.1);
   color: rgba(0, 35, 122, 0.7);
 }
-
-
-
-
-
-
-
 
 .topnav {
   background-color: #16181a;
