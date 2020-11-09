@@ -21,12 +21,12 @@
     img-top
     tag="article"
     style="max-width: 15rem; max-height: 30rem; min-height: 30rem;"
-    class="mb-2  bg-white shadow rounded pb-5 flex flex-col overflow-hidden">
+    class="mb-2 bg-white shadow rounded pb-5 flex flex-col overflow-hidden">
+    <b-card-body style=" display: flex; flex-direction: column;" class="d-flex flex-column">
       <b-card-text>{{ artistName }} </b-card-text>
       <b-card-text>$1,000,000</b-card-text>
-      <b-card-footer>
-        <b-button bottom :click="addToShoppingCart" class="btn-dark"> Add to my Cart</b-button>
-      </b-card-footer>
+        <b-button :click="addToShoppingCart" class="btn-dark mt-auto"> Add to my Cart</b-button>
+    </b-card-body>
   </b-card>
 </template>
 
