@@ -1,7 +1,8 @@
 <template>
   <div>
     <Header></Header>
-    <b-card-group deck class="container row">
+    <div class="offset-md-2">
+    <b-card-group deck>
       <div v-for="collection in collections" :key="collection.name">
         <router-link
           :to="{ name: 'itemsList', params: { collection: collection.name } }"
@@ -16,6 +17,7 @@
         <p> {{ collectionError }} </p>
       </div>
     </b-card-group>
+    </div>
   </div>
 
 </template>
@@ -64,23 +66,11 @@ export default {
 
 <style scoped>
 
-
-body {
-  margin: 40px 0;
-  font-family: "Raleway";
-  font-size: 14px;
-  font-weight: 500;
-  background-color: #BCAAA4;
-  -webkit-font-smoothing: antialiased;
+* {
+  box-sizing: content-box;
 }
 
-.container {
-  width: 100%;
-  margin-top: 0%;
-  margin-left: 15%;
 
-  display:flex;
-  height:100px;
-  flex-wrap:wrap;
-}
+
+
 </style>

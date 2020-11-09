@@ -30,7 +30,7 @@
 </script>
 
 
-<style>
+<style scoped>
 
 body {
   background: #2554FF !important;

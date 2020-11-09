@@ -1,26 +1,33 @@
 <template>
-  <b-card-group columns class="container offset-4 container row">
-    <div v-for="item in items" :key="item.name">
-      <Item :itemName="item.itemName" :artistName="item.artistName" @addToShoppingCart="addToShoppingCart"></Item>
-      <br>
+  <div>
+    <Header></Header>
+    <div class="offset-md-2 col-md-8">
+      <b-card-group deck class="container">
+        <div v-for="item in items" :key="item.name" style="margin:20px;">
+          <Item :itemName="item.itemName" :artistName="item.artistName" @addToShoppingCart="addToShoppingCart"></Item>
+          <br>
+        </div>
+        <div class="section" style="margin:auto;" v-if="items.length === 0">
+          <p>{{ noArtworkFound }}</p>
+        </div>
+        <div class="alert-danger" style="margin:auto;" v-if="artworkError">
+          <p> {{ artworkError }} </p>
+        </div>
+      </b-card-group>
     </div>
-    <div class="section" v-if="items.length === 0">
-      <p>{{ noArtworkFound }}</p>
-    </div>
-    <div class="alert-danger" v-if="artworkError">
-      <p> {{ artworkError }} </p>
-    </div>
-  </b-card-group>
+  </div>
 </template>
 
 <script>
 import Item from "./Item";
 import AXIOS from "../../App"
+import Header from "../Header/Header";
 
 export default {
   name: "ItemsList",
   components: {
-    Item
+    Item,
+    Header,
   },
   data() {
     return {
@@ -53,12 +60,12 @@ export default {
   },
   methods: {
     addToShoppingCart: function (artistUsername, itemName) {
-    /*  AXIOS.post('/'.concat(username) + '/shopping-cart/add-item/'.concat(itemName).concat(artistUsername))
-        .then(response => {
-        })
-      .catch(error => {
-        alert(error);
-      })*/
+      /*  AXIOS.post('/'.concat(username) + '/shopping-cart/add-item/'.concat(itemName).concat(artistUsername))
+          .then(response => {
+          })
+        .catch(error => {
+          alert(error);
+        })*/
     }
   }
 }
@@ -67,11 +74,10 @@ export default {
 <style scoped>
 .container {
   width: 100%;
-  margin-top: 20%;
-  margin-left: 10%;
+  margin-left: 0%;
 
-  display:flex;
-  height:100px;
-  flex-wrap:wrap;
+  display: flex;
+  height: 100px;
+  flex-wrap: wrap;
 }
 </style>
