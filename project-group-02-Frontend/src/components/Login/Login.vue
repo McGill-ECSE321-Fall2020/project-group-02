@@ -13,7 +13,9 @@
                 <input type="password" class="form-control form-control-lg" />
             </div>
 
-            <button type="submit" class="btn btn-dark btn-lg btn-block">Sign In</button>
+            <router-link :to="{name: 'profile'}">
+              <button type="submit" class="btn btn-dark btn-lg btn-block">Sign In</button>
+                 </router-link>
 
         </form>
     </div>
@@ -33,7 +35,7 @@
 <style>
 
 body {
-  background: #2554FF !important;
+  background: #fff !important;
   min-height: 100vh;
   display: flex;
   font-weight: 400;

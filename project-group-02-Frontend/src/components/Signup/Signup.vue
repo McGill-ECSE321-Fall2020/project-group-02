@@ -22,7 +22,7 @@
 
             <p class="forgot-password text-right">
                 Already registered
-                <router-link :to="{name: 'Login'}">sign in?</router-link>
+                <router-link :to="{name: 'login'}">sign in?</router-link>
             </p>
         </form>
     </div>
@@ -41,7 +41,7 @@
 <style>
 
 body {
-  background: #2554FF !important;
+  background: #fff !important;
   min-height: 100vh;
   display: flex;
   font-weight: 400;

@@ -1,7 +1,7 @@
 <template>
     <div class="vue-template vertical-center-edit inner-block">
         <form>
-    
+            <br></br>
             <h1 style="text-align:center">Edit My Profile</h1>
          
             <br></br>
@@ -33,8 +33,10 @@
                 <input type="password" class="form-control form-control-lg" />
             </div>
 
-            <router-link :to="{name: 'Profile'}">
-                <button type="submit" class="btn btn-dark btn-lg btn-block">Submit</button>
+            <router-link :to="{name: 'profile'}">
+
+                    <button type="submit" class="btn btn-dark btn-lg btn-block" >Submit</button>
+
             </router-link>
 
         </form>
@@ -55,7 +57,7 @@
 <style>
 
 body {
-  background: #f5f2eb !important;
+  background: #fff !important;
   min-height: 100vh;
   display: flex;
   font-weight: 400;
