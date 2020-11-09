@@ -1,7 +1,9 @@
 <template>
     <div class="vue-template vertical-center-profile inner-block">
         <form>
-            <h3>Your Profile</h3>
+           <br></br>
+            <h1 style="text-align:center">My Profile</h1>
+               <br></br>
 
             <div class="form-group">
                 <label>Username</label>
@@ -55,7 +57,7 @@
 <style>
 
 body {
-  background: #2554FF !important;
+  background: #f5f2eb !important;
   min-height: 100vh;
   display: flex;
   font-weight: 400;
