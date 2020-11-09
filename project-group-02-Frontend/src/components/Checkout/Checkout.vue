@@ -50,8 +50,8 @@
 body{
 font-family: 'Work Sans', sans-serif;
 background: #00d2ff;
-background: -webkit-linear-gradient(to right, #070642, #09213d);
-background: linear-gradient(to right, #070642, #09213d);
+background: -webkit-linear-gradient(to right, #fff, #fff);
+background: linear-gradient(to right, #fff, #fff);
 }
 
 .card{
@@ -87,7 +87,7 @@ select:focus{border-bottom:1px solid #1abc9c; outline:none;}
 .toleft{float:left;}
 .ccv{width:50px; margin-top:-5px; font-size:15px;}
 
-.receipt{background: #dbdce0; border-radius:4px; padding:5%; padding-top:250px; max-width:600px; margin:auto; margin-top:-180px;color:#000000;box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.288);}
+.receipt{background: #ffffff; border-radius:4px; padding:5%; padding-top:250px; max-width:600px; margin:auto; margin-top:-180px;color:#000000;box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.288);}
 
 .column {
   padding-left: 10%;

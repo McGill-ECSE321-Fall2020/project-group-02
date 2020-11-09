@@ -31,13 +31,14 @@
                 <input type="text" id="payment" class="form-control form-control-lg" readonly />
             </div>
 
-            <router-link :to="{name: 'Catalog'}">
+            <router-link :to="{name: 'collectionsList'}">
                 <button type="submit" class="btn btn-dark btn-lg btn-block">Visit Our Catalog</button>
             </router-link>
 
             <p class="forgot-password text-right">
                 Edit your profile
-                <router-link :to="{name: 'Edit'}">here</router-link>
+                <a href="/#/edit" >here</a>
+                
             </p>
         </form>
     </div>
@@ -57,7 +58,7 @@
 <style>
 
 body {
-  background: #f5f2eb !important;
+  background: #fff !important;
   min-height: 100vh;
   display: flex;
   font-weight: 400;
