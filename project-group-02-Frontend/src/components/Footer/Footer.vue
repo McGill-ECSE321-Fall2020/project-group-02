@@ -36,7 +36,7 @@
                 adipiscing elit, sed do eiusmod tempor <br>
                 incididunt ut labore et dolore magna aliqua</li>
               <li>+1-543-123-4567</li>
-              <li>example@huddle.com</li>
+              <li>info@kolibri.com</li>
             </ul>
           </div>
 
