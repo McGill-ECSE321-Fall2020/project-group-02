@@ -1,3 +1,6 @@
+<script src="./artGallery.js">
+</script>
+
 <template>
     <div class="vue-template vertical-center-profile inner-block">
         <form>

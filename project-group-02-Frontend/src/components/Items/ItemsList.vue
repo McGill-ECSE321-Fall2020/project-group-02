@@ -1,3 +1,6 @@
+<script src="./artGallery.js">
+</script>
+
 <template>
   <div style="position: relative;">
     <Header></Header>
