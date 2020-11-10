@@ -11,7 +11,7 @@ import Edit from "../components/Edit/Edit";
 import Checkout from "../components/Checkout/Checkout";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
-
+import UploadArt from "../components/UploadArt/UploadArt";
 Vue.use(Router)
 
 let CollectionsPage;
@@ -52,5 +52,20 @@ export default new Router({
       name: 'edit',
       component: Edit
     },
+    {
+      path: '/header',
+      name: 'header',
+      component: Header
+    },
+    {
+      path: '/footer',
+      name: 'footer',
+      component: Footer
+    },
+    {
+      path: '/upload_art',
+      name: 'UploadArt',
+      component: UploadArt
+    }
   ]
 })
