@@ -55,6 +55,7 @@ export default new Router({
       path: '/header',
       name: 'header',
       component: Header
-    }
+    },
+
   ]
 })

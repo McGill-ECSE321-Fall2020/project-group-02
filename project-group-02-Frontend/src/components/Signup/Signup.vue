@@ -3,12 +3,12 @@
         <form>
             <h3>Sign Up</h3>
 
-            <div class="form-group">
+            <div class="form-group ">
                 <label>Full Name</label>
                 <input type="text" class="form-control form-control-lg"/>
             </div>
 
-            <div class="form-group">
+            <div class="form-group ">
                 <label>Email address</label>
                 <input type="email" class="form-control form-control-lg" />
             </div>
@@ -16,6 +16,33 @@
             <div class="form-group">
                 <label>Password</label>
                 <input type="password" class="form-control form-control-lg" />
+            </div>
+
+            <div class="form-group inline-signup signup-right">
+                <label class="">Street</label>
+                <input type="text" class="form-control form-control-lg"/>
+
+                <label>City</label>
+                <input type="text" class="form-control form-control-lg"/>
+
+                <label>Country</label>
+                <input type="text" class="form-control form-control-lg"/>
+            </div>
+
+            <div class="form-group inline-signup">
+            <label class="">Postal Code</label>
+            <input type="text" class="form-control form-control-lg"/>
+
+            <label>Province</label>
+            <input type="text" class="form-control form-control-lg"/>
+
+            <div class="user-box">
+            <input type="checkbox" id="artist" name="user" value="artist">
+            <label for="artist">Artist</label><br>
+            <input type="checkbox" id="customer" name="user" value="customer">
+            <label for="customer">Customer</label><br>
+            </div>
+
             </div>
 
             <button type="submit" class="btn btn-dark btn-lg btn-block">Sign Up</button>
@@ -56,6 +83,7 @@ html,
   height: 100%;
 }
 
+
 .navbar-light {
   background-color: #ffffff;
   box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
@@ -74,13 +102,14 @@ html,
 }
 
 .inner-block {
-  width: 450px;
+  width: 60%;
   margin: auto;
   background: #ffffff;
   box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
   padding: 40px 55px 45px 55px;
   border-radius: 15px;
   transition: all .3s;
+  height: 90%;
 }
 
 .vertical-center .form-control:focus {
@@ -158,4 +187,16 @@ label {
   color: #222222;
 }
 
+.inline-signup{
+  display: inline-block;
+}
+
+.signup-right{
+padding-right: 100px;
+
+}
+
+.user-box{
+padding-top:15px;
+}
 </style>
