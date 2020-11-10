@@ -10,6 +10,7 @@ import Profile from "../components/Profile/Profile";
 import Edit from "../components/Edit/Edit";
 import Checkout from "../components/Checkout/Checkout";
 import Header from "../components/Header/Header";
+import Footer from "../components/Footer/Footer";
 
 Vue.use(Router)
 
@@ -42,7 +43,7 @@ export default new Router({
       component: Checkout
     },
     {
-      path: '/profile',
+      path: '/profile/:username',
       name: 'profile',
       component: Profile
     },
@@ -51,11 +52,5 @@ export default new Router({
       name: 'edit',
       component: Edit
     },
-    {
-      path: '/header',
-      name: 'header',
-      component: Header
-    },
-
   ]
 })

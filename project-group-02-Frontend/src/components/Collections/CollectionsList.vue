@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="collections-list">
     <Header></Header>
     <div class="offset-md-2">
     <b-card-group deck>
@@ -33,7 +33,7 @@ export default {
     Header,
    Collection
   },
-  data(){
+  data() {
     return {
       noCollectionFound:'No collections were found',
       collectionError: '',
@@ -58,19 +58,9 @@ export default {
       this.collectionError = error;
     })*/
   },
-  methods: {
-
-  },
 }
 </script>
 
 <style scoped>
-
-* {
-  box-sizing: content-box;
-}
-
-
-
 
 </style>
