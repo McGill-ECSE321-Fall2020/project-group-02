@@ -37,6 +37,8 @@
             <input type="text" class="form-control form-control-lg"/>
 
             <div class="user-box">
+            <label class="">Choose your role(s):</label>
+            <br>
             <input type="checkbox" id="artist" name="user" value="artist">
             <label for="artist">Artist</label><br>
             <input type="checkbox" id="customer" name="user" value="customer">
@@ -196,7 +198,4 @@ padding-right: 100px;
 
 }
 
-.user-box{
-padding-top:15px;
-}
 </style>
