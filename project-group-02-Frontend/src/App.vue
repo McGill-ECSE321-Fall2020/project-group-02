@@ -6,34 +6,38 @@
 
 <script>
 
-/*import axios from 'axios'
-let config = require('../../config')
+import axios from 'axios' 
+var config = require('../../config') 
+var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port 
+var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort 
+var AXIOS = axios.create({
+  ​​​​baseURL: backendUrl, 
+  headers: {​​​​'Access-Control-Allow-Origin': frontendUrl }​​​​ 
+  }​​​​); 
+  
+</script>
 
-var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
-let backendConfigurer = function(){
-  switch(process.env.NODE_ENV){
-    case 'development':
-      return 'http://' + config.dev.backendHost + ':' + config.dev.backendPort;
-    case 'production':
-      return 'https://' + config.build.backendHost + ':' + config.build.backendPort ;
-  }
-};
-
-let backendUrl = backendConfigurer();
-
-export let AXIOS = axios.create({
-  baseURL: backendUrl,
-  //headers: { 'Access-Control-Allow-Origin': frontendUrl }
-})*/
-
+<script>
 export default {
-  name: 'app'
-}
+  name: "app",
+
+  created: function () {
+    AXIOS.post(
+      '/art-gallery-system?street=Rue+Crescent&pc=H3G+2A9&province=Quebec&country=Canada&city=Montreal&adminUsername=Ahmad+Siddiqi&adminPassword=abcABC123&adminEmail=ahmad.siddiqi@hotmail.com'
+    )
+      .then((response) => {
+        
+      })
+      .catch((error) => {
+        
+      });
+  },
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

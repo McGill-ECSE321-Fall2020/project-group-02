@@ -1,12 +1,12 @@
-<script src="./registration.js">
+<script src="./artGallery.js">
 </script>
 
 <template>
     <div class="vue-template vertical-center-profile inner-block">
         <form>
-           <br></br>
+           <br>
             <h1 style="text-align:center">My Profile</h1>
-               <br></br>
+               <br>
 
             <div class="form-group">
                 <label>Username</label>
@@ -42,6 +42,9 @@
                 <a href="/#/edit" >here</a>
 
             </p>
+
+            <div v-if = "userError"> {{userError}} </div>
+
         </form>
     </div>
 </template>
@@ -52,10 +55,20 @@
         data() {
 
             return {
+              user: "",
+              userError: ""
             }
         },
       created: function () {
-
+        this.user = new ApplicationUserDTO()
+        
+        AXIOS.get('/user-by-name/' .concat($username))
+        .then(response => {
+          this.user = response.data;
+        })
+        .catch(error => {
+          this.userError = "There was a problem fetching the user information";
+        }) 
       }
     }
 </script>

@@ -56,22 +56,12 @@ export default new Router({
       component: Edit
     },
     {
-      path: '/header',
-      name: 'header',
-      component: Header
-    },
-    {
-      path: '/footer',
-      name: 'footer',
-      component: Footer
-    },
-    {
-      path: '/upload_art',
+      path: '/upload-art',
       name: 'UploadArt',
       component: UploadArt
     },
     {
-      path: '/create_collection',
+      path: '/create-collection',
       name: 'CreateCollection',
       component: CreateCollection
     },

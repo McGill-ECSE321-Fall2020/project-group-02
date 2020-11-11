@@ -68,14 +68,14 @@ public class ProjectGroup02RestController {
    * @throws Exception
    */
   @PostMapping(value = {
-      "/art-gallery-system/{street}/{pc}/{province}/{country}/{city}/{adminUsername}/{adminPassword}/{adminEmail}",
-      "/art-gallery-system/{street}/{pc}/{province}/{country}/{city}/{adminUsername}/{adminPassword}/{adminEmail}/"})
+      "/art-gallery-system",
+      "/art-gallery-system/"})
 
-  public ArtGallerySystemDTO createArtGallery(@PathVariable("street") String street,
-      @PathVariable("pc") String postalCode, @PathVariable("province") String province,
-      @PathVariable("country") String country, @PathVariable("city") String city,
-      @PathVariable("adminUsername") String adminUsername, @PathVariable("adminPassword") String adminPassword,
-      @PathVariable("adminEmail") String adminEmail) throws Exception {
+  public ArtGallerySystemDTO createArtGallery(@RequestParam("street") String street,
+		  @RequestParam("pc") String postalCode, @RequestParam("province") String province,
+		  @RequestParam("country") String country, @RequestParam("city") String city,
+		  @RequestParam("adminUsername") String adminUsername, @RequestParam("adminPassword") String adminPassword,
+		  @RequestParam("adminEmail") String adminEmail) throws Exception {
     ArtGallerySystem ags =
         service.createGallery(street, postalCode, province, country, city, adminUsername, adminPassword, adminEmail);
 
@@ -105,9 +105,9 @@ public class ProjectGroup02RestController {
    * @return userDTO
    * @throws Exception
    */
-  @PostMapping(value = {"/create-user/{name}/{email}/{pw}", "/create-user/{name}/{email}/{pw}/"})
-  public ApplicationUserDTO createUser(@PathVariable("name") String username, @PathVariable("email") String email,
-      @PathVariable("pw") String password) throws Exception {
+  @PostMapping(value = {"/create-user", "/create-user/"})
+  public ApplicationUserDTO createUser(@RequestParam("name") String username, @RequestParam("email") String email,
+		  @RequestParam("pw") String password) throws Exception {
     ApplicationUser user = service.createUser(username, email, password);
     agsDTO.getApplicationUsers().add(convertToDto(user));
     return convertToDto(user);

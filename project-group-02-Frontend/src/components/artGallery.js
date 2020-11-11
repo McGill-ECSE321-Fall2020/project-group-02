@@ -1,14 +1,3 @@
-import axios from 'axios'
-var config = require('../../config')
-
-var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
-var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
-
-var AXIOS = axios.create({
-  baseURL: backendUrl,
-  headers: { 'Access-Control-Allow-Origin': frontendUrl }
-})
-
 function AddressDTO(street, postalCode, province, city, country) {
     this.street = street;
     this.postalCode = postalCode;
@@ -97,38 +86,4 @@ function UserRoleDTO(id) {
     this.userRoleId = id;
 }
 
-export default {
-    name: 'artgallery',
-    data() {
-        return {
-            artgallery: '',
-            items: [],
-            shoppingCart: [],
-            collections: [],
-            artists: [],
-            customers: [],
-            error: ''
-        }
-    },
-
-    created: function () {
-        AXIOS.get(`/artgallery`)
-        .then(response => {
-          this.artgallery = response.data
-        })
-        .catch(e => {
-          this.error = e;
-        });
-        // TO-DO
-    },
-
-    methods: {
-       // createPerson: function (personName) {
-          // Create a new person and add it to the list of people
-        //  var p = new PersonDto(personName)
-        //  this.persons.push(p)
-          // Reset the name field for new people
-       //   this.newPerson = ''
-        }
-      }
 

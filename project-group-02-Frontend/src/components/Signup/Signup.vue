@@ -2,93 +2,146 @@
 </script>
 
 <template>
-    <div class="vue-template vertical-center inner-block">
-        <form>
-            <h3>Sign Up</h3>
+  <div class="vue-template vertical-center inner-block">
+    <form>
+      <h3>Sign Up</h3>
 
-            <div class="form-group ">
-                <label>Full Name</label>
-                <input type="text" class="form-control form-control-lg"/>
-            </div>
+      <div class="form-group">
+        <label>Full Name</label>
+        <input
+          v-model="userName"
+          type="text"
+          class="form-control form-control-lg"
+        />
+      </div>
 
-            <div class="form-group ">
-                <label>Email address</label>
-                <input type="email" class="form-control form-control-lg" />
-            </div>
+      <div class="form-group">
+        <label>Email address</label>
+        <input
+          v-model="userEmail"
+          type="email"
+          class="form-control form-control-lg"
+        />
+      </div>
 
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" class="form-control form-control-lg" />
-            </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input
+          v-model="userPassword"
+          type="password"
+          class="form-control form-control-lg"
+        />
+      </div>
 
+      <div class="row">
+        <div class="col">
+          <label class="">Street</label>
+          <input type="text" class="form-control form-control-lg" />
+        </div>
 
-            <div class="row">
-            <div class="col">
-            <label class="">Street</label>
-            <input type="text" class="form-control form-control-lg"/>
-            </div>
+        <div class="col">
+          <label class="">Postal Code</label>
+          <input type="text" class="form-control form-control-lg" />
+        </div>
+      </div>
 
-            <div class="col">
-            <label class="">Postal Code</label>
-            <input type="text" class="form-control form-control-lg"/>
-            </div>
+      <div class="row">
+        <div class="col">
+          <label>City</label>
+          <input type="text" class="form-control form-control-lg" />
+        </div>
 
-            </div>
+        <div class="col">
+          <label>Province</label>
+          <input type="text" class="form-control form-control-lg" />
+        </div>
+      </div>
 
-            <div class="row">
-            <div class="col">
-            <label>City</label>
-            <input type="text" class="form-control form-control-lg"/>
-            </div>
+      <div class="row">
+        <div class="col">
+          <label>Country</label>
+          <input type="text" class="form-control form-control-lg" />
+        </div>
 
-            <div class="col">
-            <label>Province</label>
-            <input type="text" class="form-control form-control-lg"/>
-            </div>
+        <div class="col">
+          <label>Choose your role(s):</label>
+          <br />
+          <input type="checkbox" id="artist" name="user" value="artist" />
+          <label for="artist">Artist</label><br />
+          <input type="checkbox" id="customer" name="user" value="customer" />
+          <label for="customer">Customer</label><br />
+        </div>
+      </div>
 
-            </div>
+      <router-link :to="{ name: 'login' }">
+      <button
+        @click="createUser"
+        type="submit"
+        class="btn btn-dark btn-lg btn-block"
+      >
+        Sign Up
+      </button>
+      </router-link>
 
-            <div class="row">
-            <div class="col">
-            <label>Country</label>
-            <input type="text" class="form-control form-control-lg"/>
-            </div>
-
-            <div class="col">
-            <label>Choose your role(s):</label>
-            <br>
-            <input type="checkbox" id="artist" name="user" value="artist">
-            <label for="artist">Artist</label><br>
-            <input type="checkbox" id="customer" name="user" value="customer">
-            <label for="customer">Customer</label><br>
-            </div>
-
-            </div>
-
-
-
-            <button type="submit" class="btn btn-dark btn-lg btn-block">Sign Up</button>
-
-            <p class="forgot-password text-right">
-                Already registered
-                <router-link :to="{name: 'login'}">sign in?</router-link>
-            </p>
-        </form>
-    </div>
+      <p class="forgot-password text-right">
+        Already registered
+        <router-link :to="{ name: 'login' }">sign in?</router-link>
+      </p>
+      <div v-if="userError">
+        {{ userError }}
+      </div>
+    </form>
+  </div>
 </template>
 
 <script>
-    export default {
-      name: 'signup',
-      data () {
-        return {
-        }
-      }
-    }
+
+import axios from 'axios' 
+var config = require('../../config') 
+var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port 
+var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort 
+var AXIOS = axios.create({
+  ​​​​baseURL: backendUrl, 
+  headers: {​​​​'Access-Control-Allow-Origin': frontendUrl }​​​​ 
+  }​​​​); 
+  
 </script>
 
-<style scoped>
+<script>
+export default {
+  name: "Signup",
+  data() {
+    return {
+      user: "",
+      userName: "",
+      userEmail: "",
+      userPassword: "",
+      userError: "",
+    };
+  },
+  methods: {
+    createUser: function () {
+      this.user = new ApplicationUserDTO();
 
+      AXIOS.post(
+        "/create-user?name=".concat(this.userName) +
+          "&email=".concat(this.userEmail) +
+          "&pw=".concat(this.userPassword)
+      )
+        .then((response) => {
+          this.user = response.data;
+        })
+        .catch((error) => {
+          this.userError = "There was a problem fetching the user information";
+        });
+    },
+  },
+};
+</script>
+
+
+
+<style scoped>
 body {
   background: #fff !important;
   min-height: 100vh;
@@ -104,7 +157,6 @@ html,
   width: 100%;
   height: 100%;
 }
-
 
 .navbar-light {
   background-color: #ffffff;
@@ -130,7 +182,7 @@ html,
   box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
   padding: 40px 55px 45px 55px;
   border-radius: 15px;
-  transition: all .3s;
+  transition: all 0.3s;
   height: 90%;
 }
 
@@ -209,13 +261,11 @@ label {
   color: #222222;
 }
 
-.inline-signup{
+.inline-signup {
   display: inline-block;
 }
 
-.signup-right{
-padding-right: 100px;
-
+.signup-right {
+  padding-right: 100px;
 }
-
 </style>
