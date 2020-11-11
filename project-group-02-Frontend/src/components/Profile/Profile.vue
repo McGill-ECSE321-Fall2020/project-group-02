@@ -1,4 +1,4 @@
-<script src="./artGallery.js">
+<script src="./registration.js">
 </script>
 
 <template>
@@ -11,7 +11,6 @@
             <div class="form-group">
                 <label>Username</label>
                 <input type="text" id="username" class="form-control form-control-lg" readonly />
-
             </div>
 
             <div class="form-group">
@@ -51,6 +50,7 @@
 <script>
     export default {
         data() {
+
             return {
             }
         },

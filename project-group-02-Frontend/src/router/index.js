@@ -43,7 +43,7 @@ export default new Router({
       component: Checkout
     },
     {
-      path: '/profile/:username',
+      path: '/profile',
       name: 'profile',
       component: Profile
     },

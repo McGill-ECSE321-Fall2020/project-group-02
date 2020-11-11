@@ -131,4 +131,4 @@ export default {
        //   this.newPerson = ''
         }
       }
-}
+
