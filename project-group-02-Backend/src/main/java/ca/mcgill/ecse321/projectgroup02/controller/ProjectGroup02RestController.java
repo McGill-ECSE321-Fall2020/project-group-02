@@ -183,11 +183,11 @@ public class ProjectGroup02RestController {
    * @return AddressDTO
    * @throws Exception
    */
-  @PostMapping(value = {"/update-user-address/{username}/{street}/{postalcode}/{province}/{country}/{city}",
-      "/update-user-address/{username}/{street}/{postalcode}/{province}/{country}/{city}/"})
-  public AddressDTO updateUserAddress(@PathVariable("username") String username, @PathVariable("street") String street,
-      @PathVariable("postalcode") String postalcode, @PathVariable("province") String province,
-      @PathVariable("country") String country, @PathVariable("city") String city) throws Exception {
+  @PostMapping(value = {"/update-user-address/{username}",
+      "/update-user-address//{username}/"})
+  public AddressDTO updateUserAddress(@PathVariable("username") String username, @RequestParam("street") String street,
+		  @RequestParam("postalcode") String postalcode, @RequestParam("province") String province,
+		  @RequestParam("country") String country, @RequestParam("city") String city) throws Exception {
     return convertToDto(service.updateUserAddress(username, street, postalcode, province, country, city));
   }
   
@@ -198,8 +198,8 @@ public class ProjectGroup02RestController {
    * @param pw
    * @return boolean
    */
-  @PostMapping(value = {"/user-login/{username}/{password}", "/user-login/{username}/{password}/"})
-  public boolean loginUser(@PathVariable("username") String username, @PathVariable("password") String pw) {
+  @PostMapping(value = {"/user-login", "/user-login/"})
+  public boolean loginUser(@RequestParam("username") String username, @RequestParam("password") String pw) {
     return service.loginUser(username, pw);
   }
   

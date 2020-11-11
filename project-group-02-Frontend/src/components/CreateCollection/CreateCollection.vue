@@ -76,13 +76,13 @@ export default {
 
   methods: {
     uploadCollection: function () {
-      /* AXIOS.post('/create-collection/'.concat(this.c_name) + '?collectionDescription' .concat(this.c_description) + '&collectionImageUrl' .concat(this.c_imageURL))
+      AXIOS.post('/create-collection/'.concat(this.c_name) + '?collectionDescription' .concat(this.c_description) + '&collectionImageUrl' .concat(this.c_imageURL))
          .then(response => {
           this.collection = response.data;
         })
         .catch(error => {
           this.collectionError = error;
-        }) */
+        }) 
     }
   }
 };
