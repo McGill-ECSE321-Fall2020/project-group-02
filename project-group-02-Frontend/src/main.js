@@ -15,6 +15,8 @@ Vue.prototype.$totalPrice = 0;
 
 export const eventBus = new Vue(); // this is an event bus for handling events in a much easier fashion
 
+
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
@@ -22,3 +24,4 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
+

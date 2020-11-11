@@ -16,7 +16,7 @@
                 <input type="password" class="form-control form-control-lg" />
             </div>
 
-            <router-link :to="{name: 'profile'}">
+            <router-link :to="{name: 'collections'}">
               <button type="submit" class="btn btn-dark btn-lg btn-block">Sign In</button>
                  </router-link>
 

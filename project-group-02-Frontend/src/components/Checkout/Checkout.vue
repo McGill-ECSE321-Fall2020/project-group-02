@@ -53,6 +53,7 @@
 
 
 
+
 <style>
 @import url("https://fonts.googleapis.com/css?family=Work+Sans");
 body {
@@ -234,8 +235,8 @@ export default {
   },
   data() {
     return {
-      deliveryMethode: '',
-      checkoutError = ''
+      deliveryMethod: '',
+      checkoutError: ''
     }
   },
   methods: {
