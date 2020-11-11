@@ -11,6 +11,7 @@ import '@/assets/css/main.css'
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false;
 Vue.prototype.$username = 'sss';
+Vue.prototype.$totalPrice = 0;
 
 export const eventBus = new Vue(); // this is an event bus for handling events in a much easier fashion
 
