@@ -74,7 +74,13 @@ public class ProjectGroup02Service {
   @Transactional
   public ArtGallerySystem createGallery(String street, String postalCode, String province, String country, String city,
       String adminUsername, String adminPassword, String adminEmail) throws Exception {
-    ArtGallerySystem gallery = new ArtGallerySystem();
+	  ArtGallerySystem gallery = artGallerySystemRepository.findByartGalleryId(1);
+	  
+	  if(gallery != null) {
+		  return gallery;
+	  }
+	  
+	gallery = new ArtGallerySystem();
 
     Address address = new Address();
     address.setCity(city);

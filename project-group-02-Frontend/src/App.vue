@@ -19,8 +19,20 @@ var AXIOS = axios.create({
 
 <script>
 export default {
-  name: 'app'
-}
+  name: "app",
+
+  created: function () {
+    AXIOS.post(
+      '/art-gallery-system?street=Rue+Crescent&pc=H3G+2A9&province=Quebec&country=Canada&city=Montreal&adminUsername=Ahmad+Siddiqi&adminPassword=abcABC123&adminEmail=ahmad.siddiqi@hotmail.com'
+    )
+      .then((response) => {
+        
+      })
+      .catch((error) => {
+        
+      });
+  },
+};
 </script>
 
 <style>

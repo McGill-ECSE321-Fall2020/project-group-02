@@ -4,9 +4,9 @@
 <template>
     <div class="vue-template vertical-center-profile inner-block">
         <form>
-           <br></br>
+           <br>
             <h1 style="text-align:center">My Profile</h1>
-               <br></br>
+               <br>
 
             <div class="form-group">
                 <label>Username</label>
