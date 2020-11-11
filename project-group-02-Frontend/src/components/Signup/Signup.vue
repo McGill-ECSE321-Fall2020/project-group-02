@@ -36,31 +36,51 @@
       <div class="row">
         <div class="col">
           <label class="">Street</label>
-          <input type="text" class="form-control form-control-lg" />
+          <input
+            v-model="userStreet"
+            type="text"
+            class="form-control form-control-lg"
+          />
         </div>
 
         <div class="col">
           <label class="">Postal Code</label>
-          <input type="text" class="form-control form-control-lg" />
+          <input
+            v-model="userPostalCode"
+            type="text"
+            class="form-control form-control-lg"
+          />
         </div>
       </div>
 
       <div class="row">
         <div class="col">
           <label>City</label>
-          <input type="text" class="form-control form-control-lg" />
+          <input
+            v-model="userCity"
+            type="text"
+            class="form-control form-control-lg"
+          />
         </div>
 
         <div class="col">
           <label>Province</label>
-          <input type="text" class="form-control form-control-lg" />
+          <input
+            v-model="userProvince"
+            type="text"
+            class="form-control form-control-lg"
+          />
         </div>
       </div>
 
       <div class="row">
         <div class="col">
           <label>Country</label>
-          <input type="text" class="form-control form-control-lg" />
+          <input
+            v-model="userCountry"
+            type="text"
+            class="form-control form-control-lg"
+          />
         </div>
 
         <div class="col">
@@ -74,13 +94,17 @@
       </div>
 
       <router-link :to="{ name: 'login' }">
-      <button
-        @click="createUser"
-        type="submit"
-        class="btn btn-dark btn-lg btn-block"
-      >
-        Sign Up
-      </button>
+        <button
+          @click="
+            createUser();
+            updateUserAddress();
+            updateUserRole();
+          "
+          type="submit"
+          class="btn btn-dark btn-lg btn-block"
+        >
+          Sign Up
+        </button>
       </router-link>
 
       <p class="forgot-password text-right">
@@ -116,6 +140,12 @@ export default {
       userName: "",
       userEmail: "",
       userPassword: "",
+      userStreet: "",
+      userPostalCode: "",
+      userProvince: "",
+      userCountry: "",
+      userCity: "",
+      userRoles: [],
       userError: "",
     };
   },
@@ -134,6 +164,31 @@ export default {
         .catch((error) => {
           this.userError = "There was a problem fetching the user information";
         });
+    },
+    updateUserAddress: function () {
+      AXIOS.post(
+        "/update-user-address/".concat(this.userName) +
+          "?street=".concat(this.userStreet) +
+          "&postalcode=".concat(this.userPostalCode) +
+          "&province=".concat(this.userProvince) +
+          "&country=".concat(this.userCountry) +
+          "&city=".concat(this.userCity)
+      )
+        .then((response) => {})
+        .catch((error) => {});
+    },
+    updateUserRole: function () {
+      if (document.getElementById("artist").checked) {
+        userRoles.push("artist");
+      } else if (document.getElementById("customer").checked) {
+        userRoles.push("customer");
+      }
+      AXIOS.post(
+        "/set-user-role/".concat(this.userName) +
+          "?roles=".concat(this.userRoles)
+      )
+        .then((response) => {})
+        .catch((error) => {});
     },
   },
 };
