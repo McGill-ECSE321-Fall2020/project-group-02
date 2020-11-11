@@ -1,4 +1,4 @@
-<script src="./artGallery.js">
+<script src="./registration.js">
 </script>
 
 <template>
