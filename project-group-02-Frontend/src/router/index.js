@@ -12,6 +12,9 @@ import Checkout from "../components/Checkout/Checkout";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import UploadArt from "../components/UploadArt/UploadArt";
+import CreateCollection from "../components/CreateCollection/CreateCollection";
+import ShoppingCart from "../components/ShoppingCart/ShoppingCart";
+
 Vue.use(Router)
 
 let CollectionsPage;
@@ -66,6 +69,16 @@ export default new Router({
       path: '/upload_art',
       name: 'UploadArt',
       component: UploadArt
+    },
+    {
+      path: '/create_collection',
+      name: 'CreateCollection',
+      component: CreateCollection
+    },
+    {
+      path: '/shopping-cart',
+      name: 'ShoppingCart',
+      component: ShoppingCart
     }
   ]
 })

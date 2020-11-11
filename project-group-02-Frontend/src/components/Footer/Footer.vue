@@ -13,9 +13,9 @@
 
   <body>
 
-    <footer>
+    <footer id="footer">
       <div class="container">
-        <div class="flex align-start">
+        <div class="flex">
           <div class="icons">
             <ul>
               <li>
@@ -36,7 +36,7 @@
                 adipiscing elit, sed do eiusmod tempor <br>
                 incididunt ut labore et dolore magna aliqua</li>
               <li>+1-543-123-4567</li>
-              <li>example@huddle.com</li>
+              <li>info@kolibri.com</li>
             </ul>
           </div>
 
@@ -189,6 +189,13 @@ footer p {
 footer p a {
   text-decoration: none;
 }
+
+  #footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 300px; /* Height of the footer */
+  }
 
 
 </style>
