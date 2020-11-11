@@ -13,9 +13,9 @@
 
   <body>
 
-    <footer>
+    <footer id="footer">
       <div class="container">
-        <div class="flex align-start">
+        <div class="flex">
           <div class="icons">
             <ul>
               <li>
@@ -189,6 +189,13 @@ footer p {
 footer p a {
   text-decoration: none;
 }
+
+  #footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 300px; /* Height of the footer */
+  }
 
 
 </style>

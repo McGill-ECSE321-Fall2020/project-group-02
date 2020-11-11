@@ -2,64 +2,71 @@
 </script>
 
 <template>
-<div style="position: relative;">
-  <Header></Header>
-  <div class="offset-md-7 viewport">
-    <div class="viewport__body">
-      <div class="btn-container">
-        <div class="btn-container__search ">
-          <span>Search</span>
-          <input type="text" ngModel="artistSearched" name="search-query">
+  <div>
+    <div style="position: relative;">
+      <Header></Header>
+      <div class="offset-md-7 viewport">
+        <div class="viewport__body">
+          <div class="btn-container">
+            <div class="btn-container__search ">
+              <span>Search</span>
+              <input type="text" ngModel="artistSearched" name="search-query">
 
-          <a @click="searchItemsByArtist" class="btn-search">
-            <svg width="100%" x="0px" y="0px" viewBox="336 204.5 318 323" enable-background="new 336 204.5 318 323" xml:space="preserve">
-              <g>
+              <a @click="searchItemsByArtist" class="btn-search">
+                <svg width="100%" x="0px" y="0px" viewBox="336 204.5 318 323" enable-background="new 336 204.5 318 323" xml:space="preserve">
+                <g>
                 <path class="icon-search" id="path12423" fill="#FFFFFF" d="M386.9,256.6c-43.3,43.3-43.4,114.2-0.1,157.4c36.7,36.7,93.2,42.2,135.9,16.8l76.3,74.2
       c10.5,10.2,27.1,9.8,37.1-0.8c10-10.7,9.8-27.4-0.7-37.6l-75.2-72.9c26.4-42.8,21-100-16-137.1C501,213.3,430.2,213.3,386.9,256.6
       L386.9,256.6z M418.7,288.3c26.1-26.1,67.7-26.1,93.8,0c26.1,26.1,26.1,67.7,0,93.8c-26.1,26.1-67.7,26.1-93.8,0
       C392.6,356.1,392.6,314.4,418.7,288.3z" />
+
+
+
               </g>
             </svg>
-          </a>
-        </div>
-        <div class="btn-container__filter">
-          <div class="filter-label"><span class="filter-text">Sort by...</span></div>
-          <span>Sort</span>
-          <div class="filter-button">
-            <svg class="filter-arrow" width="245px" height="154px" viewBox="0 0 245 154">
-              <g id="arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                <g id="-" transform="translate(-1.000000, 0.000000)" fill="#D8D8D8">
-                  <path d="M1,-0.311842754 L246,-0.311842754 L123.500004,153.654906 L1,-0.311842754 Z" class="the-arrow" id="arrow-1" sketch:type="MSShapeGroup"></path>
-                </g>
-              </g>
-            </svg>
+              </a>
+            </div>
+            <div class="btn-container__filter">
+              <div class="filter-label"><span class="filter-text">Sort by...</span></div>
+              <span>Sort</span>
+              <div class="filter-button">
+                <svg class="filter-arrow" width="245px" height="154px" viewBox="0 0 245 154">
+                  <g id="arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g id="-" transform="translate(-1.000000, 0.000000)" fill="#D8D8D8">
+                      <path d="M1,-0.311842754 L246,-0.311842754 L123.500004,153.654906 L1,-0.311842754 Z" class="the-arrow" id="arrow-1" sketch:type="MSShapeGroup"></path>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+              <ul class="filter-dropdown">
+                <li><a href="" @click="sortItemsByPriceDescending">Price Descending</a></li>
+                <li><a href="" @click="sortItemsByPriceAscending">Price Ascending</a></li>
+              </ul>
+            </div>
           </div>
-          <ul class="filter-dropdown">
-            <li><a href="" @click="sortItemsByPriceDescending">Price Descending</a></li>
-            <li><a href="" @click="sortItemsByPriceAscending">Price Ascending</a></li>
-          </ul>
         </div>
       </div>
+      <div class="offset-md-2 col-md-8">
+        <b-card-group deck class="container">
+          <div v-for="item in items" :key="item.name" style="margin:20px;">
+            <Item :itemName="item.itemName" :artistName="item.artistName" @addToShoppingCart="addToShoppingCart"></Item>
+            <br>
+          </div>
+          <div class="section" style="margin:auto;" v-if="items.length === 0">
+            <p>{{ noArtworkFound }}</p>
+          </div>
+          <div class="alert-danger" style="margin:auto;" v-if="artworkError">
+            <p> {{ artworkError }} </p>
+          </div>
+        </b-card-group>
+      </div>
+
+
     </div>
-  </div>
-  <div class="offset-md-2 col-md-8">
-    <b-card-group deck class="container">
-      <div v-for="item in items" :key="item.name" style="margin:20px;">
-        <Item :itemName="item.itemName" :artistName="item.artistName" @addToShoppingCart="addToShoppingCart"></Item>
-        <br>
-      </div>
-      <div class="section" style="margin:auto;" v-if="items.length === 0">
-        <p>{{ noArtworkFound }}</p>
-      </div>
-      <div class="alert-danger" style="margin:auto;" v-if="artworkError">
-        <p> {{ artworkError }} </p>
-      </div>
-    </b-card-group>
-  </div>
-  <div style= "position: fixed; bottom: 0;">
-    <Footer> </Footer>
-  </div>
-</div>
+
+      <Footer id="footer"> </Footer>
+    </div>
+
 </template>
 
 
@@ -556,5 +563,13 @@ html {
         height: auto;
         border-top: 0;
     }
+
+
 }
+  #footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 300px; /* Height of the footer */
+  }
 </style>

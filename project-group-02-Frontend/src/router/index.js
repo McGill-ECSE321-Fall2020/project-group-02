@@ -13,6 +13,7 @@ import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import UploadArt from "../components/UploadArt/UploadArt";
 import CreateCollection from "../components/CreateCollection/CreateCollection";
+import ShoppingCart from "../components/ShoppingCart/ShoppingCart";
 
 Vue.use(Router)
 
@@ -73,6 +74,11 @@ export default new Router({
       path: '/create_collection',
       name: 'CreateCollection',
       component: CreateCollection
+    },
+    {
+      path: '/shopping-cart',
+      name: 'ShoppingCart',
+      component: ShoppingCart
     }
   ]
 })

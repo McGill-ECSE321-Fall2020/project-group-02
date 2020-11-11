@@ -21,26 +21,41 @@
                 <input type="password" class="form-control form-control-lg" />
             </div>
 
-            <div class="form-group inline-signup signup-right">
-                <label class="">Street</label>
-                <input type="text" class="form-control form-control-lg"/>
 
-                <label>City</label>
-                <input type="text" class="form-control form-control-lg"/>
-
-                <label>Country</label>
-                <input type="text" class="form-control form-control-lg"/>
+            <div class="row">
+            <div class="col">
+            <label class="">Street</label>
+            <input type="text" class="form-control form-control-lg"/>
             </div>
 
-            <div class="form-group inline-signup">
+            <div class="col">
             <label class="">Postal Code</label>
             <input type="text" class="form-control form-control-lg"/>
+            </div>
 
+            </div>
+
+            <div class="row">
+            <div class="col">
+            <label>City</label>
+            <input type="text" class="form-control form-control-lg"/>
+            </div>
+
+            <div class="col">
             <label>Province</label>
             <input type="text" class="form-control form-control-lg"/>
+            </div>
 
-            <div class="user-box">
-            <label class="">Choose your role(s):</label>
+            </div>
+
+            <div class="row">
+            <div class="col">
+            <label>Country</label>
+            <input type="text" class="form-control form-control-lg"/>
+            </div>
+
+            <div class="col">
+            <label>Choose your role(s):</label>
             <br>
             <input type="checkbox" id="artist" name="user" value="artist">
             <label for="artist">Artist</label><br>
@@ -49,6 +64,8 @@
             </div>
 
             </div>
+
+
 
             <button type="submit" class="btn btn-dark btn-lg btn-block">Sign Up</button>
 
