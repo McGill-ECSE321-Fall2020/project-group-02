@@ -4,7 +4,7 @@
 <template>
   <div class="vue-template vertical-center inner-block">
     <form>
-      <h3>Sign Up</h3>
+      <h3 style="padding: 20px;">Sign Up</h3>
 
       <div class="form-group">
         <label>Full Name</label>
@@ -96,15 +96,15 @@
 
 <script>
 
-import axios from 'axios' 
-var config = require('../../config') 
-var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port 
-var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort 
+import axios from 'axios'
+var config = require('../../config')
+var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
+var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
 var AXIOS = axios.create({
-  ​​​​baseURL: backendUrl, 
-  headers: {​​​​'Access-Control-Allow-Origin': frontendUrl }​​​​ 
-  }​​​​); 
-  
+  baseURL: backendUrl,
+  headers: {'Access-Control-Allow-Origin': frontendUrl }
+  });
+
 </script>
 
 <script>

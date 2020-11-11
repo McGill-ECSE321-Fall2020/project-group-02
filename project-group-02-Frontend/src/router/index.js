@@ -57,12 +57,12 @@ export default new Router({
     },
     {
       path: '/upload-art',
-      name: 'UploadArt',
+      name: 'uploadArt',
       component: UploadArt
     },
     {
       path: '/create-collection',
-      name: 'CreateCollection',
+      name: 'createCollection',
       component: CreateCollection
     },
     {

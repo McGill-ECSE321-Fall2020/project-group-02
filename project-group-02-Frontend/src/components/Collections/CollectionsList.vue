@@ -22,7 +22,7 @@
           {{ noCollectionFound }}
         </div>
         <div class="alert-danger" v-if="collectionError">
-          <p>{{ collectionError }}</p>
+          <span>{{ collectionError }}</span>
         </div>
       </b-card-group>
     </div>
@@ -55,14 +55,14 @@ export default {
     };
   },
   created: function () {
-    /*AXIOS.get('/collections', {}, {})
+    AXIOS.get('/collections', {}, {})
     .then(response => {
       this.collections = response.data;
     })
     .catch(error => {
       console.log(error);
       this.collectionError = error;
-    })*/
+    })
   },
 };
 </script>

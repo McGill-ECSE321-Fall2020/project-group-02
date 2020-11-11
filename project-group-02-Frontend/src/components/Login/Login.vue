@@ -4,7 +4,7 @@
 <template>
     <div class="vue-template vertical-center inner-block">
         <form>
-            <h3>Sign In</h3>
+            <h3>Log In</h3>
 
             <div class="form-group">
                 <label>Email address</label>
@@ -16,9 +16,9 @@
                 <input type="password" class="form-control form-control-lg" />
             </div>
 
-            <router-link :to="{name: 'collections'}">
+            <router-link to='/collections'>
               <button type="submit" class="btn btn-dark btn-lg btn-block">Sign In</button>
-                 </router-link>
+            </router-link>
 
         </form>
     </div>
