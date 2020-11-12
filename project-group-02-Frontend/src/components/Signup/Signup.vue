@@ -3,7 +3,7 @@
 
 <template>
   <div class="vue-template vertical-center inner-block">
-    <form>
+    <form @submit.prevent="checkForm" @action="createUser()">
       <h3 style="padding: 20px">Sign Up</h3>
 
       <div class="form-group">
@@ -96,9 +96,6 @@
 
       <router-link :to="{ name: 'login' }">
         <button
-          @click="
-            createUser()
-          "
           type="submit"
           class="btn btn-dark btn-lg btn-block"
         >
@@ -145,9 +142,34 @@ export default {
       userCity: "",
       userRoles: [],
       userError: "",
+      formErrors: []
     };
   },
   methods: {
+    checkForm: function (e) {
+      this.formErrors = [];
+
+      if (!this.userName) {
+        this.errors.push('Name required.');
+      }
+      if (!this.userPassword) {
+        this.errors.push('Password is required.');
+      }
+      if (!this.userEmail) {
+        this.errors.push('Email required.');
+      } else if (!this.validEmail(this.userEmail)) {
+        this.errors.push('Valid email required.');
+      }
+      if (!this.formErrors.length) {
+        return true;
+      }
+
+      e.preventDefault();
+    },
+    validEmail: function (email) {
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    },
     createUser: function () {
       this.user = new ApplicationUserDTO();
 
