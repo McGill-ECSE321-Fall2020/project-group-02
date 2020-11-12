@@ -10,9 +10,22 @@ import '@/assets/css/main.css'
 
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false;
-Vue.prototype.$username = 'sss';
+Vue.prototype.$username = '';
 Vue.prototype.$totalPrice = 0;
-
+Vue.prototype.$user = {
+  username: '',
+  email: '',
+  password: '',
+  address: {
+    street: '',
+    postalCode: '',
+    province: '',
+    country: '',
+    city: ''
+  },
+  paymentCredentials: [],
+  userRole: []
+}
 export const eventBus = new Vue(); // this is an event bus for handling events in a much easier fashion
 
 
