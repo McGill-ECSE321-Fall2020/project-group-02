@@ -162,11 +162,11 @@ public class ProjectGroup02RestController {
    * @return payementCredentialDTO
    * @throws Exception
    */
-  @PostMapping(value = {"/update-payment-credentials/{username}/{cardname}/{ccnumber}/{expdate}/{cvc}",
-      "/update-payment-credentials/{username}/{cardname}/{ccnumber}/{expdate}/{cvc}/"})
+  @PostMapping(value = {"/update-payment-credentials/{username}",
+      "/update-payment-credentials/{username}/"})
   public PaymentCredentialsDTO updateUserCredentials(@PathVariable("username") String name,
-      @PathVariable("cardname") String cName, @PathVariable("ccnumber") String ccNumber,
-      @PathVariable("expdate") String eDate, @PathVariable("cvc") String cvc) throws Exception {
+      @RequestParam("cardname") String cName, @RequestParam("ccnumber") String ccNumber,
+      @RequestParam("expdate") String eDate, @RequestParam("cvc") String cvc) throws Exception {
     return convertToDto(service.updateUserCredentials(name, cName, ccNumber, eDate, cvc));
   }
 
