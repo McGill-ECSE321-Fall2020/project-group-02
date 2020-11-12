@@ -4,7 +4,7 @@
 <template>
   <div class="vue-template vertical-center inner-block">
     <form>
-      <h3 style="padding: 20px;">Sign Up</h3>
+      <h3 style="padding: 20px">Sign Up</h3>
 
       <div class="form-group">
         <label>Full Name</label>
@@ -85,20 +85,18 @@
 
         <div class="col">
           <label>Choose your role(s):</label>
-          <br />
-          <input type="checkbox" id="artist" name="user" value="artist" />
-          <label for="artist">Artist</label><br />
-          <input type="checkbox" id="customer" name="user" value="customer" />
-          <label for="customer">Customer</label><br />
+          <br>
+          <select name="roles" id="userrole">
+            <option value="artist" id="artist">Artist</option>
+            <option value="customer" id="customer">Customer</option>
+          </select>
         </div>
       </div>
 
       <router-link :to="{ name: 'login' }">
         <button
           @click="
-            createUser();
-            updateUserAddress();
-            updateUserRole();
+            createUser()
           "
           type="submit"
           class="btn btn-dark btn-lg btn-block"
@@ -107,7 +105,7 @@
         </button>
       </router-link>
 
-      <p class="forgot-password text-right" style="margin-bottom: 20px;">
+      <p class="forgot-password text-right" style="margin-bottom: 20px">
         Already registered
         <router-link :to="{ name: 'login' }">sign in?</router-link>
       </p>
@@ -119,16 +117,15 @@
 </template>
 
 <script>
-
-import axios from 'axios'
-var config = require('../../../config')
-var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
-var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
+import axios from "axios";
+var config = require("../../../config");
+var frontendUrl = "http://" + config.dev.host + ":" + config.dev.port;
+var backendUrl =
+  "http://" + config.dev.backendHost + ":" + config.dev.backendPort;
 var AXIOS = axios.create({
   baseURL: backendUrl,
-  headers: {'Access-Control-Allow-Origin': frontendUrl }
-  });
-
+  headers: { "Access-Control-Allow-Origin": frontendUrl },
+});
 </script>
 
 <script>
@@ -164,8 +161,7 @@ export default {
         .catch((error) => {
           this.userError = "There was a problem fetching the user information";
         });
-    },
-    updateUserAddress: function () {
+
       AXIOS.post(
         "/update-user-address/".concat(this.userName) +
           "?street=".concat(this.userStreet) +
@@ -176,13 +172,15 @@ export default {
       )
         .then((response) => {})
         .catch((error) => {});
-    },
-    updateUserRole: function () {
-      if (document.getElementById("artist").checked) {
+
+      var role = document.getElementById("userrole");
+      var selectedValue = role.options[role.selectedIndex].value;
+      if(selectedValue == "artist"){
         this.userRoles.push("artist");
-      } else if (document.getElementById("customer").checked) {
+      } else {
         this.userRoles.push("customer");
       }
+
       AXIOS.post(
         "/set-user-role/".concat(this.userName) +
           "?roles=".concat(this.userRoles)

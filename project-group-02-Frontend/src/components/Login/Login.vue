@@ -54,13 +54,12 @@ export default {
         .then((response) => {})
         .catch((error) => {});
 
-      this.user = new ApplicationUserDTO();
-
       AXIOS.get(
         "/user-by-name/" .concat(this.userName)
       )
       .then((response) => {
-        this.user = reponse.data;
+        this.$user = reponse.data;
+        this.$username = reponse.data.username;
       })
         .catch((error) => {
           this.userError = "There was a problem fetching the user information";
