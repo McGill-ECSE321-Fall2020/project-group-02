@@ -40,7 +40,7 @@ task integrationTest() {
     		}
     	exec {
       		workingDir '../'
-      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/art-gallery-system?street=Auclair&pc=H3G2A9&province=Quebec&country=Canada&city=Montreal&adminUsername=RyadAmmar&adminEmail=12345abcABC&adminEmail=ryad.ammar@hotmail.com'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/art-gallery-system?street=Auclair&pc=H3G2A9&province=Quebec&country=Canada&city=Montreal&adminUsername=RyadAmmar&adminPassword=12345abcABC&adminEmail=ryad.ammar@hotmail.com'
     		}
     		
     	exec {
@@ -71,7 +71,7 @@ task integrationTest() {
     		}
     	exec {
       		workingDir '../'
-      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/update-payment-credentials/AhmadSiddiqi?cardname=AhmadSiddiqi&ccnumber1253698&expdate=2020-10-29&cvc=666'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/update-payment-credentials?username=AhmadSiddiqi&cardname=AhmadSiddiqi&ccnumber=1253698&expdate=2020-10-29&cvc=666'
     		}
     	exec {
       		workingDir '../'
@@ -87,7 +87,7 @@ task integrationTest() {
     		}
     	exec {
       		workingDir '../'
-      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/user-login/AhmadSiddiqi/123abcABC'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/user-login?username=AhmadSiddiqi&password=123abcABC'
     		}	
     	exec {
       		workingDir '../'
