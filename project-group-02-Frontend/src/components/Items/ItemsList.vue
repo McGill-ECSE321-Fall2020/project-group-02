@@ -12,6 +12,9 @@ var AXIOS = axios.create({
 
 <template>
   <div>
+    <div>
+      {{$username}}
+    </div>
     <div style="position: relative;">
       <Header></Header>
       <div class="offset-md-7 viewport">
@@ -154,7 +157,7 @@ export default {
     }
   },
   created: function () {
-    AXIOS.get('/${collection}')
+    AXIOS.get('/'.concat(this.collection))
       .then(response => {
         this.items = response.data;
       })

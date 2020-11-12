@@ -48,7 +48,7 @@
 
           </div>
           <div class="col centering">
-            <div class="del" v-on:click="removeItem(item)">Remove</div>
+            <a href="" class="del" v-on:click.prevent="removeFromShoppingCart(item)">Remove</a>
           </div>
           <div class="col centering">
             <div class="totalprice">{{item.itemPrice}}</div>
@@ -69,7 +69,7 @@
 
       <div class="col">
 
-        <div>{{$totalPrice}}</div>
+        <div>{{totalPrice}}</div>
 
       </div>
 
@@ -90,8 +90,8 @@
 
 
   <script>
-
     import Header from "../Header/Header";
+    import AXIOS from "../../App";
 
     export default {
       name: "ShoppingCart",
@@ -124,24 +124,30 @@
               itemURL: "https://picsum.photos/300/300/?image=41",
               itemQty: 1,
             }
-
           ],
+          totalPrice: 0
 
 
         }
       },
       methods: {
-        removeItem: function (item) {
+        removeFromShoppingCart: function (item) {
           var index = this.items.indexOf(item);
           this.items.splice(index, 1);
-          $totalPrice -= item.itemPrice;
+          this.totalPrice -= item.itemPrice;
 
+          AXIOS.post('/'.concat(this.$username) + '/shopping-cart/remove-item/'.concat(item.name).concat(item.artist.username))
+            .then(response => {
+            })
+            .catch(error => {
+              this.artworkError = error;
+            })
         }
 
       },
       mounted: function(){
         for(let i = 0; i <this.items.length; i++) {
-          $totalPrice += this.items[i].itemPrice;
+          this.totalPrice += this.items[i].itemPrice;
         }
       }
 

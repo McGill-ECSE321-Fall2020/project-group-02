@@ -80,6 +80,7 @@
             v-model="userCountry"
             type="text"
             class="form-control form-control-lg"
+            style="margin-bottom: 10px;"
           />
         </div>
 
