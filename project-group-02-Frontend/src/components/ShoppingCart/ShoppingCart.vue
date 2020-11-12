@@ -100,7 +100,7 @@
       },
       data() {
         return {
-          
+
           collection: 'The Secrets of the Intelligence',
           items: [
             {
@@ -124,10 +124,10 @@
               itemURL: "https://picsum.photos/300/300/?image=41",
               itemQty: 1,
             }
- 
+
           ],
 
-          
+
         }
       },
       methods: {
@@ -135,21 +135,21 @@
           var index = this.items.indexOf(item);
           this.items.splice(index, 1);
           $totalPrice -= item.itemPrice;
-          
+
         }
 
       },
       mounted: function(){
         for(let i = 0; i <this.items.length; i++) {
-      $totalPrice += this.items[i].itemPrice;
+          $totalPrice += this.items[i].itemPrice;
         }
       }
-      
+
     }
   </script>
 
   <style scoped>
-  
+
     .images1{
       width: 100px;
       margin-bottom: 20px;
@@ -160,5 +160,5 @@
       width: 100px;
     }
 
-  
+
   </style>

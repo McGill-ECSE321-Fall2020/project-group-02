@@ -107,7 +107,7 @@
         </button>
       </router-link>
 
-      <p class="forgot-password text-right">
+      <p class="forgot-password text-right" style="margin-bottom: 20px;">
         Already registered
         <router-link :to="{ name: 'login' }">sign in?</router-link>
       </p>
@@ -121,7 +121,7 @@
 <script>
 
 import axios from 'axios'
-var config = require('../../config')
+var config = require('../../../config')
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
 var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
 var AXIOS = axios.create({
@@ -179,9 +179,9 @@ export default {
     },
     updateUserRole: function () {
       if (document.getElementById("artist").checked) {
-        userRoles.push("artist");
+        this.userRoles.push("artist");
       } else if (document.getElementById("customer").checked) {
-        userRoles.push("customer");
+        this.userRoles.push("customer");
       }
       AXIOS.post(
         "/set-user-role/".concat(this.userName) +
