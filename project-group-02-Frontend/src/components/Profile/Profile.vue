@@ -10,27 +10,27 @@
 
             <div class="form-group">
                 <label>Username</label>
-                <input type="text" id="username" class="form-control form-control-lg" readonly />
+                <input @click="findUsername" type="text" id="username" class="form-control form-control-lg" readonly />
             </div>
 
             <div class="form-group">
                 <label>Email address</label>
-                <input type="text" id="address" class="form-control form-control-lg" readonly />
+                <input @click="findUserEmail" type="text" id="address" class="form-control form-control-lg" readonly />
             </div>
 
             <div class="form-group">
                 <label>Password</label>
-                <input type="text" id="password" class="form-control form-control-lg" readonly />
+                <input @click="findUserPassword" type="text" id="password" class="form-control form-control-lg" readonly />
             </div>
 
             <div class="form-group">
                 <label>Address</label>
-                <input type="text" id="address" class="form-control form-control-lg" readonly />
+                <input @click="findUserAddress" type="text" id="address" class="form-control form-control-lg" readonly />
             </div>
 
             <div class="form-group">
                 <label>Payment Credentials</label>
-                <input type="text" id="payment" class="form-control form-control-lg" readonly />
+                <input @click="findUserCredentials" type="text" id="payment" class="form-control form-control-lg" readonly />
             </div>
 
             <router-link :to="{name: 'collectionsList'}">
@@ -49,29 +49,6 @@
     </div>
 </template>
 
-
-<script>
-    export default {
-        data() {
-
-            return {
-              user: "",
-              userError: ""
-            }
-        },
-      created: function () {
-        this.user = new ApplicationUserDTO()
-        
-        AXIOS.get('/user-by-name/' .concat($username))
-        .then(response => {
-          this.user = response.data;
-        })
-        .catch(error => {
-          this.userError = "There was a problem fetching the user information";
-        }) 
-      }
-    }
-</script>
 
 
 
@@ -225,7 +202,7 @@ label {
 <script>
 import axios from 'axios'
 import Profile from "./Profile";
-var config = require('../../config')
+var config = require('../../../config')
 
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
 var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
@@ -267,14 +244,15 @@ export default {
             address: '',
             password: '',
             paymentCredentials: '',
-            error: ''
+            error: '',
+            credentials: ''
         }
     },
 
     created: function () {
         AXIOS.get('/user-by-name' + '/'.concat($username))
             .then(response => {
-                this.user = response.data
+                this.user = $user
             })
             .catch(e => {
                 this.error = e;
@@ -283,36 +261,45 @@ export default {
 
     methods: {
         findUsername: function () {
-            AXIOS.get('/create-user' + '/'.concat($username))
+            AXIOS.get('/user-by-name' + '/'.concat($username))
                 .then(response => {
-                    this.username = response.data
+                    this.username = $username
                 })
                 .catch(e => {
                     this.error = e;
                 });
         },
         findUserEmail: function () {
-            AXIOS.get('/create-user' + '/'.concat($username) + '/email') // do /email??? or concat??
+            AXIOS.get('/user-by-name' + '/'.concat($username))
                 .then(response => {
-                    this.email = response.data
+                    this.email = $user.email
                 })
                 .catch(e => {
                     this.error = e;
                 });
         },
         findUserPassword: function () {
-            AXIOS.get('/create-user' + '/'.concat($username) + '/email/pw')
+            AXIOS.get('/user-by-name' + '/'.concat($username))
                 .then(response => {
-                    this.password = response.data
+                    this.password = $user.password
                 })
                 .catch(e => {
                     this.error = e;
                 });
         },
         findUserAddress: function () {
-            AXIOS.get('/update-user-address' + '/'.concat($username) + '/street/postalcode/province/country/city')
+            AXIOS.get('/user-by-name' + '/'.concat($username))
                 .then(response => {
-                    this.address = response.data
+                    this.address = $user.address
+                })
+                .catch(e => {
+                    this.error = e;
+                });
+        },
+        findUserCredentials: function () {
+            AXIOS.get('/user-by-name' + '/'.concat($username))
+                .then(response => {
+                    this.credentials = $user.credentials
                 })
                 .catch(e => {
                     this.error = e;

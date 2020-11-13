@@ -12,28 +12,28 @@
             <h3>Change My Address</h3>
             <div class="form-group">
                 <label>Street</label>
-                <input type="address" class="form-control form-control-lg" />
+                <input @click="changeUserAddress" type="address" class="form-control form-control-lg" />
                 <label>Postal Code</label>
-                <input type="address" class="form-control form-control-lg" />
+                <input @click="changeUserAddress" type="address" class="form-control form-control-lg" />
                 <label>City</label>
-                <input type="address" class="form-control form-control-lg" />
+                <input @click="changeUserAddress" type="address" class="form-control form-control-lg" />
                 <label>Province</label>
-                <input type="address" class="form-control form-control-lg" />
+                <input @click="changeUserAddress" type="address" class="form-control form-control-lg" />
                 <label>Country</label>
-                <input type="address" class="form-control form-control-lg" />
+                <input @click="changeUserAddress" type="address" class="form-control form-control-lg" />
             </div>
       <br></br>
             <h3>Update My Credentials</h3>
             <div class="form-group">
             
                 <label>Card Holder Name</label>
-                <input type="text" class="form-control form-control-lg"/>
+                <input @click="changeUserCredentials" type="text" class="form-control form-control-lg"/>
                 <label>Credit Card Number</label>
-                <input type="text" class="form-control form-control-lg" />
+                <input @click="changeUserCredentials" type="text" class="form-control form-control-lg" />
                 <label>Expiration Date</label>
-                <input type="Date" class="form-control form-control-lg" />
+                <input @click="changeUserCredentials" type="Date" class="form-control form-control-lg" />
                 <label>Card Verification Code</label>
-                <input type="password" class="form-control form-control-lg" />
+                <input @click="changeUserCredentials" type="password" class="form-control form-control-lg" />
             </div>
 
             <router-link :to="{name: 'profile'}">
@@ -255,14 +255,16 @@ export default {
             country: '',
             password: '',
             paymentCredentials: '',
-            error: ''
+            error: '',
+            credentials: '',
+            address: ''
         }
     },
 
     created: function () {
         AXIOS.get('/user-by-name' + '/'.concat($username))
             .then(response => {
-                this.user = response.data
+                this.user = $user
             })
             .catch(e => {
                 this.error = e;
@@ -270,73 +272,46 @@ export default {
     },
 
     methods: {
-        findUsername: function () {
+        changeUsername: function () {
             AXIOS.get('/create-user' + '/'.concat($username))
                 .then(response => {
-                    this.username = response.data
+                    $user.username = response.data.username
                 })
                 .catch(e => {
                     this.error = e;
                 });
         },
         findUserEmail: function () {
-            AXIOS.get('/create-user' + '/'.concat($username) + '/email') // do /email??? or concat??
+            AXIOS.get('/create-user' + '/'.concat($username)) // do /email??? or concat??
                 .then(response => {
-                    this.email = response.data
+                     $user.email = response.data.email
                 })
                 .catch(e => {
                     this.error = e;
                 });
         },
-        findUserPassword: function () {
-            AXIOS.get('/create-user' + '/'.concat($username) + '/email/pw')
+        changeUserPassword: function () {
+            AXIOS.get('/create-user' + '/'.concat($username))
                 .then(response => {
-                    this.password = response.data
+                     $user.password = response.data.password
                 })
                 .catch(e => {
                     this.error = e;
                 });
         },
-        findUserStreet: function () {
-            AXIOS.get('/update-user-address' + '/'.concat($username) + '/street')
+        changeUserAddress: function () {
+            AXIOS.get('/update-user-address' + '/'.concat($username))
                 .then(response => {
-                    this.street = response.data
+                    $user.address = response.data.address
                 })
                 .catch(e => {
                     this.error = e;
                 });
         },
-        findUserPostalCode: function () {
-            AXIOS.get('/update-user-address' + '/'.concat($username) + '/street/postalcode')
+         changeUserCredentials: function () {
+            AXIOS.get('/user-by-name' + '/'.concat($username))
                 .then(response => {
-                    this.postalCode = response.data
-                })
-                .catch(e => {
-                    this.error = e;
-                });
-        },
-        findUserProvince: function () {
-            AXIOS.get('/update-user-address' + '/'.concat($username) + '/street/postalcode/province')
-                .then(response => {
-                    this.province = response.data
-                })
-                .catch(e => {
-                    this.error = e;
-                });
-        },
-        findUserCountry: function () {
-            AXIOS.get('/update-user-address' + '/'.concat($username) + '/street/postalcode/province/country')
-                .then(response => {
-                    this.country = response.data
-                })
-                .catch(e => {
-                    this.error = e;
-                });
-        },
-        findUserCity: function () {
-            AXIOS.get('/update-user-address' + '/'.concat($username) + '/street/postalcode/province/country/city')
-                .then(response => {
-                    this.city = response.data
+                    this.credentials = $user.credentials
                 })
                 .catch(e => {
                     this.error = e;
