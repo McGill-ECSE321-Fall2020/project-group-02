@@ -91,13 +91,22 @@
         </div>
       </div>
 
-      <router-link :to="{ name: 'login' }">
-        <button
-          @click="createUser"
+
+      <button v-if="validate"
+          @click=" createUser"
           type="submit"
           class="btn btn-dark btn-lg btn-block"
         >
           Sign Up
+        </button>
+
+      <router-link :to="{ name: 'login' }">
+        <button v-if="!validate"
+          @click=" setAddress(); setUserRole();"
+          type="submit"
+          class="btn btn-dark btn-lg btn-block continue"
+        >
+          Continue
         </button>
       </router-link>
 
@@ -126,9 +135,10 @@ export default {
       userProvince: "",
       userCountry: "",
       userCity: "",
-      userRoles: [],
+      userRoles: "",
       userError: "",
-      formErrors: []
+      formErrors: [],
+      validate: true,
     };
   },
   methods: {
@@ -155,43 +165,52 @@ export default {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
     },
-    createUser: function () {
-
-      this.AXIOS.post(
+    createUser:  function () {
+       this.AXIOS.post(
         "/create-user?name=".concat(this.userName) +
           "&email=".concat(this.userEmail) +
           "&pw=".concat(this.userPassword)
       )
-        .then((response) => {})
+        .then((response) => {
+        })
         .catch((error) => {
           this.userError = "There was a problem fetching the user information";
         });
+
+        this.validate = false;
+        
+    },
+    setAddress: function() {
+      console.log(this.userCity, this.userCountry);
       this.AXIOS.post(
         "/update-user-address/".concat(this.userName) +
-          "?street=".concat(this.userStreet) +
-          "&postalcode=".concat(this.userPostalCode) +
-          "&province=".concat(this.userProvince) +
-          "&country=".concat(this.userCountry) +
-          "&city=".concat(this.userCity)
+        "?street=".concat(this.userStreet) +
+        "&postalcode=".concat(this.userPostalCode) +
+        "&province=".concat(this.userProvince) +
+        "&country=".concat(this.userCountry) +
+        "&city=".concat(this.userCity)
       )
-        .then((response) => {})
+        .then((response) => {
+        })
         .catch((error) => {});
-
+    },
+    setUserRole: function() {
       var role = document.getElementById("userrole");
       var selectedValue = role.options[role.selectedIndex].value;
       if(selectedValue == "artist"){
-        this.userRoles.push("artist");
+        this.userRoles = "artist";
       } else {
-        this.userRoles.push("customer");
+        this.userRoles = "customer";
       }
 
       this.AXIOS.post(
         "/set-user-role/".concat(this.userName) +
-          "?roles=".concat(this.userRoles)
+        "?roles=" .concat(this.userRoles)
       )
         .then((response) => {})
         .catch((error) => {});
     },
+ 
   },
 };
 </script>
@@ -324,5 +343,9 @@ label {
 
 .signup-right {
   padding-right: 100px;
+}
+
+.continue{
+  background-color:green;
 }
 </style>
