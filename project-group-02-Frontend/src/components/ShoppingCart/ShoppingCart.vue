@@ -69,19 +69,19 @@
 
       <div class="col">
 
-        <div>{{totalPrice}}</div>
+        <div>{{this.$totalPrice}}</div>
 
       </div>
 
     </div>
 
-    <router-link :to="{name: 'checkout'}">
-      <div class="row">
+   <router-link :to="{name: 'checkout'}">
 
-        <button style="margin-top: 50px" type="submit" class="btn btn-dark btn-lg btn-block">Checkout</button>
 
-      </div>
+        <button style="margin-top: 50px; margin-bottom: 50px" type="submit" class="btn btn-dark btn-lg">Checkout</button>
+
     </router-link>
+    <Footer></Footer>
   </div>
 
 </template>
@@ -92,11 +92,13 @@
   <script>
     import Header from "../Header/Header";
     import AXIOS from "../../App";
+    import Footer from "../Footer/Footer";
 
     export default {
       name: "ShoppingCart",
       components: {
         Header,
+        Footer,
       },
       data() {
         return {
@@ -125,7 +127,6 @@
               itemQty: 1,
             }
           ],
-          totalPrice: 0
 
 
         }
@@ -134,7 +135,7 @@
         removeFromShoppingCart: function (item) {
           var index = this.items.indexOf(item);
           this.items.splice(index, 1);
-          this.totalPrice -= item.itemPrice;
+          this.$totalPrice -= item.itemPrice;
 
           AXIOS.post('/'.concat(this.$username) + '/shopping-cart/remove-item/'.concat(item.name).concat(item.artist.username))
             .then(response => {
@@ -145,9 +146,9 @@
         }
 
       },
-      mounted: function(){
+      created: function(){
         for(let i = 0; i <this.items.length; i++) {
-          this.totalPrice += this.items[i].itemPrice;
+          this.$totalPrice += this.items[i].itemPrice;
         }
       }
 
@@ -166,5 +167,9 @@
       width: 100px;
     }
 
+    .btn {
+      width: 300px;
+      height: 60px;
+    }
 
   </style>

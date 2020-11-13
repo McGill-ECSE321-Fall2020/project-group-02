@@ -26,6 +26,7 @@
         </div>
       </b-card-group>
     </div>
+    <Footer></Footer>
   </div>
 </template>
 
@@ -33,12 +34,14 @@
 import Collection from "./Collection";
 import AXIOS from "../../App";
 import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
 
 export default {
   name: "CollectionsList",
   components: {
     Header,
     Collection,
+    Footer,
   },
   data() {
     return {

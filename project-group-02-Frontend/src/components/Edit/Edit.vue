@@ -344,4 +344,4 @@ export default {
         },
     }
 }
-<\script>
+</script>

@@ -119,10 +119,9 @@ p {
 }
 
 footer {
-  background-color: #14274e;
+  background-color: #0278ae;
   color: #fff;
   padding: 20px ;
-  margin-bottom: 10px;
 }
 
 footer ul {
@@ -160,6 +159,7 @@ footer ul li {
 .pa {
   width: 40%;
   margin-left: 0;
+  margin-top:55px;
 }
 
 .circle {
@@ -191,7 +191,7 @@ footer p a {
 }
 
   #footer {
-    position: absolute;
+    position: relative;
     bottom: 0;
     width: 100%;
     height: 300px; /* Height of the footer */
