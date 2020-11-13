@@ -5,7 +5,6 @@
   <div class="vue-template vertical-center inner-block">
     <form>
       <h3>Login</h3>
-
       <div class="form-group">
         <label>Username</label>
         <input
@@ -36,35 +35,47 @@
 <script>
 export default {
   name: "login",
+  created: function() {
+    this.AXIOS.get('/art-gallery-system')
+    .then(response => {
+      this.artGallerySystem = response.data;
+      }
+    )
+    .catch(error => {
+      this.userError = error;
+    })
+  },
   data() {
     return {
+      artGallerySystem:'',
       userName: "",
       userPassword: "",
       user: "",
       userError: "",
       LoggedIn: false,
+
     };
   },
   methods: {
     loginUser: function () {
-      AXIOS.post(
+      this.AXIOS.post(
         "/user-login?username=".concat(this.userName) +
           "&password=".concat(this.userPassword)
       )
         .then((response) => {})
         .catch((error) => {});
 
-      AXIOS.get(
+      this.AXIOS.get(
         "/user-by-name/" .concat(this.userName)
       )
       .then((response) => {
-        this.$user = reponse.data;
-        this.$username = reponse.data.username;
+        this.$user = response.data;
+        this.$username = response.data.username;
         this.$user.username = response.data.username;
         this.$user.email = response.data.email;
         this.$user.password = response.data.password;
         this.$user.address = response.data.address;
-        this.$user.userRole.push(response.data.userRoles);
+        this.$user.userRole = response.data.userRoles;
         this.$user.loggedIn = response.data.isLoggedIn
 
       })

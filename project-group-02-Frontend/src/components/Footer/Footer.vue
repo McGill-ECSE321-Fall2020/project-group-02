@@ -32,9 +32,9 @@
 
           <div class="pa">
             <ul>
-              <li>Lorem ipsum dolor sit amet, consectetur <br>
-                adipiscing elit, sed do eiusmod tempor <br>
-                incididunt ut labore et dolore magna aliqua</li>
+              <li>Welcome to the site that turns your deepest <br>
+                dreams into candy, abstract artwork and  <br>
+                if you are an artist, a money making machine.</li>
               <li>+1-543-123-4567</li>
               <li>info@kolibri.com</li>
             </ul>

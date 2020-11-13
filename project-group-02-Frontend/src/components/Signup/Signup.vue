@@ -7,7 +7,7 @@
       <h3 style="padding: 20px">Sign Up</h3>
 
       <div class="form-group">
-        <label>Full Name</label>
+        <label>Username</label>
         <input
           v-model="userName"
           type="text"
@@ -115,18 +115,6 @@
 </template>
 
 <script>
-import axios from "axios";
-var config = require("../../../config");
-var frontendUrl = "http://" + config.dev.host + ":" + config.dev.port;
-var backendUrl =
-  "http://" + config.dev.backendHost + ":" + config.dev.backendPort;
-var AXIOS = axios.create({
-  baseURL: backendUrl,
-  headers: { "Access-Control-Allow-Origin": frontendUrl },
-});
-</script>
-
-<script>
 export default {
   name: "Signup",
   data() {
@@ -163,7 +151,6 @@ export default {
       if (!this.formErrors.length) {
         return true;
       }
-
       e.preventDefault();
     },
     validEmail: function (email) {
@@ -173,7 +160,7 @@ export default {
     createUser: function () {
       this.user = new ApplicationUserDTO();
 
-      AXIOS.post(
+      this.AXIOS.post(
         "/create-user?name=".concat(this.userName) +
           "&email=".concat(this.userEmail) +
           "&pw=".concat(this.userPassword)
@@ -185,7 +172,7 @@ export default {
           this.userError = "There was a problem fetching the user information";
         });
 
-      AXIOS.post(
+      this.AXIOS.post(
         "/update-user-address/".concat(this.userName) +
           "?street=".concat(this.userStreet) +
           "&postalcode=".concat(this.userPostalCode) +
@@ -204,7 +191,7 @@ export default {
         this.userRoles.push("customer");
       }
 
-      AXIOS.post(
+      this.AXIOS.post(
         "/set-user-role/".concat(this.userName) +
           "?roles=".concat(this.userRoles)
       )

@@ -12,13 +12,23 @@
           <a>Home</a>
         </router-link>
       </li>
-      <li>
+      <li v-if="this.$user.userRole.includes('customer')">
         <router-link to="/shopping-cart">
         <a>Shopping Cart</a>
         </router-link>
       </li>
+      <li v-if="this.$user.userRole.includes('artist')">
+        <router-link to="/upload-art">
+        <a>Upload Artwork</a>
+        </router-link>
+      </li>
+      <li v-if="this.$user.email === 'ahmad.siddiqi@hotmail.com'">
+        <router-link to="/create-collection">
+        <a>Create Collection</a>
+        </router-link>
+      </li>
       <li>
-        <router-link :to="{ name:'profile', params: { username: $username }}">
+        <router-link :to="{ name:'profile', params: { username: this.$username }}">
           <a>Account</a>
         </router-link>
       </li>
@@ -136,7 +146,6 @@ export default {
     }
   },
   methods: {
-
   }
 }
 </script>

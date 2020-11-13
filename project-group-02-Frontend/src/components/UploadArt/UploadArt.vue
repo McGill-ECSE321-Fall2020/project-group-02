@@ -115,8 +115,6 @@
 </style>
 
 <script>
-import AXIOS from "../../App";
-
 export default {
   name: "UploadArt",
   data() {
@@ -130,14 +128,14 @@ export default {
       art_creation_date: "",
       art_price: "",
       art_collection_name: "",
-      art_imageURL,
+      art_imageURL:""
     };
   },
   methods: {
     uploadArt: function () {
-      AXIOS.post(
+      this.AXIOS.post(
         "/" +
-          $username +
+          this.$username +
           "/upload-artwork/".concat(this.art_collection_name) +
           "/".concat(this.art_name) +
           "?height=".concat(this.art_height) +

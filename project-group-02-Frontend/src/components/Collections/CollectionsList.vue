@@ -32,7 +32,6 @@
 
 <script>
 import Collection from "./Collection";
-import AXIOS from "../../App";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 
@@ -58,7 +57,7 @@ export default {
     };
   },
   created: function () {
-    AXIOS.get('/collections', {}, {})
+    this.AXIOS.get('/collections')
     .then(response => {
       this.collections = response.data;
     })

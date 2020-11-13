@@ -1,15 +1,3 @@
-<script src="./artGallery.js"/>
-<script>
-import axios from 'axios'
-var config = require('../../config')
-var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
-var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
-var AXIOS = axios.create({
-  baseURL: backendUrl,
-  headers: {'Access-Control-Allow-Origin': frontendUrl }
-});
-</script>
-
 <template>
   <div>
     <div>
@@ -87,7 +75,6 @@ var AXIOS = axios.create({
 
 <script>
 import Item from "./Item";
-import AXIOS from "../../App"
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 
@@ -103,61 +90,12 @@ export default {
       noArtworkFound: 'No art pieces were found',
       artworkError: '',
       collection: 'The Secrets of the Intelligence',
-      items: [
-        {
-          itemName: "The Peaceful Mind",
-          artistName: "Picasso",
-          itemImageUrl: "https://static01.nyt.com/images/2018/03/02/arts/design/02picasso-print/01picasso1-superJumbo.jpg",
-          itemPrice: "1,500,000"
-        },
-        {
-          itemName: "My Dear Mother",
-          artistName: "Michelangelo",
-          itemImageUrl: "https://static01.nyt.com/images/2018/03/02/arts/design/02picasso-print/01picasso1-superJumbo.jpg",
-          itemPrice: "1,500,000"
-        },
-        {
-          itemName: "The Outside",
-          artistName: "Leonardo Da Vinci",
-          itemImageUrl: "https://static01.nyt.com/images/2018/03/02/arts/design/02picasso-print/01picasso1-superJumbo.jpg",
-          itemPrice: "1,500,000"
-        },
-        {
-          itemName: "Wondering Sherlock Hawkins",
-          artistName: "Michael De Sanjo",
-          itemImageUrl: "https://static01.nyt.com/images/2018/03/02/arts/design/02picasso-print/01picasso1-superJumbo.jpg",
-          itemPrice: "1,500,000"
-        },
-        {
-          itemName: "The Peaceful Mind",
-          artistName: "Picasso",
-          itemImageUrl: "https://static01.nyt.com/images/2018/03/02/arts/design/02picasso-print/01picasso1-superJumbo.jpg",
-          itemPrice: "10,000,000"
-        },
-        {
-          itemName: "My Dear Mother",
-          artistName: "Michelangelo",
-          itemImageUrl: "https://static01.nyt.com/images/2018/03/02/arts/design/02picasso-print/01picasso1-superJumbo.jpg",
-          itemPrice: "500,000"
-        },
-        {
-          itemName: "The Outside",
-          artistName: "Leonardo Da Vinci",
-          itemImageUrl: "https://static01.nyt.com/images/2018/03/02/arts/design/02picasso-print/01picasso1-superJumbo.jpg",
-          itemPrice: "2,300,000"
-        },
-        {
-          itemName: "Wondering Sherlock Hawkins",
-          artistName: "Michael De Sanjo",
-          itemImageUrl: "https://static01.nyt.com/images/2018/03/02/arts/design/02picasso-print/01picasso1-superJumbo.jpg",
-          itemPrice: "1,700,000"
-        }
-      ],
+      items: [],
       artistSearched: ''
     }
   },
   created: function () {
-    AXIOS.get('/'.concat(this.collection))
+    this.AXIOS.get('/'.concat(this.collection))
       .then(response => {
         this.items = response.data;
       })
@@ -167,7 +105,7 @@ export default {
   },
   methods: {
     searchItemsByArtist: function () {
-      AXIOS.get('/'.concat(this.collection) + '/'.concat(this.artistSearched))
+      this.AXIOS.get('/'.concat(this.collection) + '/'.concat(this.artistSearched))
         .then(response => {
           this.items = response.data;
         })
@@ -176,7 +114,7 @@ export default {
         })
     },
     sortItemsByPriceAscending: function () {
-      AXIOS.get('/'.concat(this.collection) + '/sort-by-price-asc')
+      this.AXIOS.get('/'.concat(this.collection) + '/sort-by-price-asc')
         .then(response => {
           this.items = response.data;
         })
@@ -185,7 +123,7 @@ export default {
         })
     },
     sortItemsByPriceDescending: function () {
-      AXIOS.get('/'.concat(this.collection) + '/sort-by-price-desc')
+      this.AXIOS.get('/'.concat(this.collection) + '/sort-by-price-desc')
         .then(response => {
           this.items = response.data;
         })
@@ -194,7 +132,7 @@ export default {
         })
     },
     addToShoppingCart: function (artistUsername, itemName) {
-      AXIOS.post('/'.concat(this.$username) + '/shopping-cart/add-item/'.concat(itemName).concat(artistUsername))
+      this.AXIOS.post('/'.concat(this.$username) + '/shopping-cart/add-item/'.concat(itemName).concat(artistUsername))
         .then(response => {
         })
         .catch(error => {
@@ -202,7 +140,7 @@ export default {
         })
     },
     removeFromShoppingCart: function (artistUsername, itemName) {
-      AXIOS.post('/'.concat(this.$username) + '/shopping-cart/remove-item/'.concat(itemName).concat(artistUsername))
+      this.AXIOS.post('/'.concat(this.$username) + '/shopping-cart/remove-item/'.concat(itemName).concat(artistUsername))
         .then(response => {
         })
         .catch(error => {

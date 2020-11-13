@@ -151,7 +151,6 @@
           this.$totalPrice += this.items[i].itemPrice;
         }
       }
-
     }
   </script>
 

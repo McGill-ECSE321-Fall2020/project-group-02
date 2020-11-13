@@ -51,9 +51,6 @@
   </div>
 </template>
 
-
-
-
 <style>
 @import url("https://fonts.googleapis.com/css?family=Work+Sans");
 body {
@@ -244,9 +241,9 @@ export default {
       var deliv = document.getElementById("delivery");
       var selectedValue = deliv.options[deliv.selectedIndex].value;
       if(selectedValue == "delivery1"){
-        AXIOS.post('/'.concat($username) + '/'.concat("checkout") + '/'.concat("INSTOREPICKUP"))
+        this.AXIOS.post('/'.concat(this.$username) + '/'.concat("checkout") + '/'.concat("INSTOREPICKUP"))
       } else {
-        AXIOS.post('/'.concat($username) + '/'.concat("checkout") + '/'.concat("HOMEDELIVERY"))
+        this.this.AXIOS.post('/'.concat(this.$username) + '/'.concat("checkout") + '/'.concat("HOMEDELIVERY"))
       }
     }
   }

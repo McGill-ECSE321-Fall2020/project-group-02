@@ -6,7 +6,7 @@
         <form>
             <br>
             <h1 style="text-align:center">Edit My Profile</h1>
-         
+
             <br>
 
             <h3>Change My Address</h3>
@@ -25,7 +25,7 @@
       <br>
             <h3>Update My Credentials</h3>
             <div class="form-group">
-            
+
                 <label>Card Holder Name</label>
                 <input type="text" class="form-control form-control-lg"/>
                 <label>Credit Card Number</label>
@@ -208,40 +208,6 @@ label {
 
 
 <script>
-import axios from 'axios'
-import Profile from "../Profile/Profile";
-var config = require('../../../config')
-
-var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
-var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
-
-var AXIOS = axios.create({
-    baseURL: backendUrl,
-    headers: { 'Access-Control-Allow-Origin': frontendUrl }
-})
-
-function AddressDTO(street, postalCode, province, city, country) {
-    this.street = street;
-    this.postalCode = postalCode;
-    this.province = province;
-    this.city = city;
-    this.country = country;
-}
-
-function ApplicationUserDTO(accountCreationDate, username, email, password, phoneNumber, userRoles, isLoggedIn, ags, bal) {
-    this.accountCreationDate = accountCreationDate;
-    this.username = username;
-    this.email = email;
-    this.password = password;
-    this.phoneNumber = phoneNumber;
-    this.artGallerySystem = ags;
-    this.userRoles = ur;
-    this.isLoggedIn = isLoggedIn;
-    this.balance = bal;
-}
-
-
-
 export default {
     name: 'Profile',
     data() {
@@ -261,7 +227,7 @@ export default {
     },
 
     created: function () {
-        AXIOS.get('/user-by-name' + '/'.concat($username))
+        this.AXIOS.get('/user-by-name' + '/'.concat($username))
             .then(response => {
                 this.user = response.data
             })
@@ -272,7 +238,7 @@ export default {
 
     methods: {
         findUsername: function () {
-            AXIOS.get('/create-user' + '/'.concat($username))
+            this.AXIOS.get('/create-user' + '/'.concat($username))
                 .then(response => {
                     this.username = response.data
                 })
@@ -281,7 +247,7 @@ export default {
                 });
         },
         findUserEmail: function () {
-            AXIOS.get('/create-user' + '/'.concat($username) + '/email') // do /email??? or concat??
+            this.AXIOS.get('/create-user' + '/'.concat($username) + '/email') // do /email??? or concat??
                 .then(response => {
                     this.email = response.data
                 })
@@ -290,7 +256,7 @@ export default {
                 });
         },
         findUserPassword: function () {
-            AXIOS.get('/create-user' + '/'.concat($username) + '/email/pw')
+            this.AXIOS.get('/create-user' + '/'.concat($username) + '/email/pw')
                 .then(response => {
                     this.password = response.data
                 })
@@ -299,7 +265,7 @@ export default {
                 });
         },
         findUserStreet: function () {
-            AXIOS.get('/update-user-address' + '/'.concat($username) + '/street')
+            this.AXIOS.get('/update-user-address' + '/'.concat($username) + '/street')
                 .then(response => {
                     this.street = response.data
                 })
@@ -308,7 +274,7 @@ export default {
                 });
         },
         findUserPostalCode: function () {
-            AXIOS.get('/update-user-address' + '/'.concat($username) + '/street/postalcode')
+            this.AXIOS.get('/update-user-address' + '/'.concat($username) + '/street/postalcode')
                 .then(response => {
                     this.postalCode = response.data
                 })
@@ -317,7 +283,7 @@ export default {
                 });
         },
         findUserProvince: function () {
-            AXIOS.get('/update-user-address' + '/'.concat($username) + '/street/postalcode/province')
+            this.AXIOS.get('/update-user-address' + '/'.concat($username) + '/street/postalcode/province')
                 .then(response => {
                     this.province = response.data
                 })
@@ -326,7 +292,7 @@ export default {
                 });
         },
         findUserCountry: function () {
-            AXIOS.get('/update-user-address' + '/'.concat($username) + '/street/postalcode/province/country')
+            this.AXIOS.get('/update-user-address' + '/'.concat($username) + '/street/postalcode/province/country')
                 .then(response => {
                     this.country = response.data
                 })
@@ -335,7 +301,7 @@ export default {
                 });
         },
         findUserCity: function () {
-            AXIOS.get('/update-user-address' + '/'.concat($username) + '/street/postalcode/province/country/city')
+            this.AXIOS.get('/update-user-address' + '/'.concat($username) + '/street/postalcode/province/country/city')
                 .then(response => {
                     this.city = response.data
                 })
