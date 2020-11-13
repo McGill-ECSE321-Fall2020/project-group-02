@@ -1,9 +1,6 @@
-<script src="./artGallery.js">
-</script>
-
 <template>
   <div class="vue-template vertical-center inner-block">
-    <form @submit.prevent="checkForm" @action="createUser()">
+    <form>
       <h3 style="padding: 20px">Sign Up</h3>
 
       <div class="form-group">
@@ -96,6 +93,7 @@
 
       <router-link :to="{ name: 'login' }">
         <button
+          @click="createUser"
           type="submit"
           class="btn btn-dark btn-lg btn-block"
         >
@@ -158,20 +156,16 @@ export default {
       return re.test(email);
     },
     createUser: function () {
-      this.user = new ApplicationUserDTO();
 
       this.AXIOS.post(
         "/create-user?name=".concat(this.userName) +
           "&email=".concat(this.userEmail) +
           "&pw=".concat(this.userPassword)
       )
-        .then((response) => {
-          this.user = response.data;
-        })
+        .then((response) => {})
         .catch((error) => {
           this.userError = "There was a problem fetching the user information";
         });
-
       this.AXIOS.post(
         "/update-user-address/".concat(this.userName) +
           "?street=".concat(this.userStreet) +

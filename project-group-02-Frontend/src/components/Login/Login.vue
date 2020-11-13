@@ -1,6 +1,3 @@
-<script src="./artGallery.js">
-</script>
-
 <template>
   <div class="vue-template vertical-center inner-block">
     <form>
@@ -23,11 +20,13 @@
         />
       </div>
 
-      <router-link to='/collections'>
+      <span @click.capture="this.$user.loggedIn">
+      <router-link  to='/collections'>
         <button @click="loginUser()" type="submit" class="btn btn-dark btn-lg btn-block">
           Sign In
         </button>
       </router-link>
+      </span>
     </form>
   </div>
 </template>
