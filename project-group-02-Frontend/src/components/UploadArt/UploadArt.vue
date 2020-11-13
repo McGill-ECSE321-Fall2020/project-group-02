@@ -7,10 +7,11 @@
       <form class="" action="/compose" method="post">
         <div class="form-group">
           <label>Artwork Name</label>
-          <input class="txtbox form-control" type="text" name="postTitle" />
+          <input v-model="art_name" class="txtbox form-control" type="text" />
 
           <label>Description</label>
           <textarea
+            v-model="art_description"
             class="txtbox form-control"
             name="postContent"
             rows="8"
@@ -19,39 +20,68 @@
           <div class="row">
             <div class="col">
               <label class="sm">Height:</label>
-              <input class="txtbox form-control" type="text" name="postTitle" />
+              <input
+                v-model="art_height"
+                class="txtbox form-control"
+                type="text"
+              />
             </div>
 
             <div class="col">
               <label class="sm">Width:</label>
-              <input class="txtbox form-control" type="text" name="postTitle" />
+              <input
+                v-model="art_width"
+                class="txtbox form-control"
+                type="text"
+              />
             </div>
 
             <div class="col">
               <label class="sm">Breadth:</label>
-              <input class="txtbox form-control" type="text" name="postTitle" />
+              <input
+                v-model="art_breadth"
+                class="txtbox form-control"
+                type="text"
+              />
             </div>
 
             <div class="col">
               <label class="sm">Creation Date:</label>
-              <input type="Date" class="form-control" />
+              <input
+                v-model="art_creation_date"
+                type="Date"
+                class="form-control"
+              />
             </div>
           </div>
 
           <div class="row">
             <div class="col">
               <label>Price</label>
-              <input class="txtbox form-control" type="text" name="postTitle" />
+              <input
+                v-model="art_price"
+                class="txtbox form-control"
+                type="text"
+              />
             </div>
 
             <div class="col">
               <label>Collection Name</label>
-              <input class="txtbox form-control" type="text" name="postTitle" />
+              <input
+                v-model="art_collection_name"
+                class="txtbox form-control"
+                type="text"
+              />
             </div>
           </div>
 
           <div class="">
             <label for="exampleInputFile">File input</label>
+            <input
+              v-model="art_imageURL"
+              class="txtbox form-control"
+              type="text"
+            />
             <input
               type="file"
               class="form-control-file"
@@ -59,10 +89,16 @@
             />
           </div>
         </div>
-
-        <button class="btn btn-dark" type="submit" name="button">
-          Publish
-        </button>
+        <router-link :to="{ name: 'collectionsList'}">
+          <button
+            @click="uploadArt"
+            class="btn btn-dark"
+            type="submit"
+            name="button"
+          >
+            Publish
+          </button>
+        </router-link>
       </form>
     </div>
   </body>
@@ -77,6 +113,57 @@
   margin-bottom: 20px;
 }
 </style>
+
+<script>
+import AXIOS from "../../App";
+
+export default {
+  name: "UploadArt",
+  data() {
+    return {
+      artwork: "",
+      art_name: "",
+      art_description: "",
+      art_height: "",
+      art_breadth: "",
+      art_width: "",
+      art_creation_date: "",
+      art_price: "",
+      art_collection_name: "",
+      art_imageURL,
+    };
+  },
+  methods: {
+    uploadArt: function () {
+      AXIOS.post(
+        "/" +
+          $username +
+          "/upload-artwork/".concat(this.art_collection_name) +
+          "/".concat(this.art_name) +
+          "?height=".concat(this.art_height) +
+          "&width=".concat(this.art_width) +
+          "&breadth=".concat(this.art_breadth) +
+          "&creationDate=".concat(this.art_creation_date) +
+          "&description=".concat(this.art_description) +
+          "&price=".concat(this.art_price) +
+          "&imageURL=".concat(this.art_imageURL)
+      )
+        .then((response) => {
+          this.artwork = response.data;
+        })
+        .catch((error) => {});
+    },
+  },
+};
+</script>
+
+
+
+
+
+
+
+
 
 <script>
 function AddressDTO(street, postalCode, province, city, country) {

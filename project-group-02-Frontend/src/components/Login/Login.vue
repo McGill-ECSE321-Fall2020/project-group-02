@@ -2,42 +2,82 @@
 </script>
 
 <template>
-    <div class="vue-template vertical-center inner-block">
-        <form>
-            <h3>Sign In</h3>
+  <div class="vue-template vertical-center inner-block">
+    <form>
+      <h3>Login</h3>
 
-            <div class="form-group">
-                <label>Email address</label>
-                <input type="email" class="form-control form-control-lg" />
-            </div>
+      <div class="form-group">
+        <label>Username</label>
+        <input
+          v-model="userName"
+          type="text"
+          class="form-control form-control-lg"
+        />
+      </div>
 
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" class="form-control form-control-lg" />
-            </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input
+          v-model="userPassword"
+          type="password"
+          class="form-control form-control-lg"
+        />
+      </div>
 
-            <router-link :to="{name: 'collections'}">
-              <button type="submit" class="btn btn-dark btn-lg btn-block">Sign In</button>
-                 </router-link>
-
-        </form>
-    </div>
+      <router-link to='/collections'>
+        <button @click="loginUser()" type="submit" class="btn btn-dark btn-lg btn-block">
+          Sign In
+        </button>
+      </router-link>
+    </form>
+  </div>
 </template>
 
 <script>
-
 export default {
-      name: 'login',
-      data () {
-        return {
-        }
-      }
+  name: "login",
+  data() {
+    return {
+      userName: "",
+      userPassword: "",
+      user: "",
+      userError: "",
+      LoggedIn: false,
+    };
+  },
+  methods: {
+    loginUser: function () {
+      AXIOS.post(
+        "/user-login?username=".concat(this.userName) +
+          "&password=".concat(this.userPassword)
+      )
+        .then((response) => {})
+        .catch((error) => {});
+
+      AXIOS.get(
+        "/user-by-name/" .concat(this.userName)
+      )
+      .then((response) => {
+        this.$user = reponse.data;
+        this.$username = reponse.data.username;
+        this.$user.username = response.data.username;
+        this.$user.email = response.data.email;
+        this.$user.password = response.data.password;
+        this.$user.address = response.data.address;
+        this.$user.userRole.push(response.data.userRoles);
+        this.$user.loggedIn = response.data.isLoggedIn
+
+      })
+        .catch((error) => {
+          this.userError = "There was a problem fetching the user information";
+        });
     }
+  },
+};
 </script>
 
 
 <style scoped>
-
 body {
   background: #fff !important;
   min-height: 100vh;
@@ -78,7 +118,7 @@ html,
   box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
   padding: 40px 55px 45px 55px;
   border-radius: 15px;
-  transition: all .3s;
+  transition: all 0.3s;
 }
 
 .vertical-center .form-control:focus {
@@ -155,5 +195,4 @@ label {
   transition: none;
   color: #222222;
 }
-
 </style>

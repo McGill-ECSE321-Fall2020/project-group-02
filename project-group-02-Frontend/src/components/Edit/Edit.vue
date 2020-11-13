@@ -4,10 +4,10 @@
 <template>
     <div class="vue-template vertical-center-edit inner-block">
         <form>
-            <br></br>
+            <br>
             <h1 style="text-align:center">Edit My Profile</h1>
          
-            <br></br>
+            <br>
 
             <h3>Change My Address</h3>
             <div class="form-group">
@@ -22,7 +22,7 @@
                 <label>Country</label>
                 <input @click="changeUserAddress" type="address" class="form-control form-control-lg" />
             </div>
-      <br></br>
+      <br>
             <h3>Update My Credentials</h3>
             <div class="form-group">
             
@@ -47,6 +47,7 @@
 </template>
 
 <script>
+    name: "Edit"
     export default {
         data() {
             return {}
@@ -208,8 +209,8 @@ label {
 
 <script>
 import axios from 'axios'
-import Profile from "./Profile";
-var config = require('../../config')
+import Profile from "../Profile/Profile";
+var config = require('../../../config')
 
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
 var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
@@ -319,4 +320,4 @@ export default {
         },
     }
 }
-<\script>
+</script>

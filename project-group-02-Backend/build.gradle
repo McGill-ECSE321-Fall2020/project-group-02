@@ -40,7 +40,7 @@ task integrationTest() {
     		}
     	exec {
       		workingDir '../'
-      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/art-gallery-system/Auclair/H3G2A9/Quebec/Canada/Montreal/RyadAmmar/12345abcABC/ryad.ammar@hotmail.com'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/art-gallery-system?street=Auclair&pc=H3G2A9&province=Quebec&country=Canada&city=Montreal&adminUsername=RyadAmmar&adminPassword=12345abcABC&adminEmail=ryad.ammar@hotmail.com'
     		}
     		
     	exec {
@@ -50,12 +50,12 @@ task integrationTest() {
     	
     	exec {
       		workingDir '../'
-      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/create-user/AhmadSiddiqi/ahmadSiddiqi@gmail.com/123abcABC'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/create-user?name=AhmadSiddiqi&email=ahmadSiddiqi@gmail.com&pw=123abcABC'
     		}
     	
     	exec {
       		workingDir '../'
-      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/create-user/GURDYBOYSS/GURDYBOY@gmail.com/456abcABC'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/create-user?name=GURDYBOYSS&email=GURDYBOY@gmail.com&pw=456abcABC'
     		}		
     	exec {
       		workingDir '../'
@@ -71,7 +71,7 @@ task integrationTest() {
     		}
     	exec {
       		workingDir '../'
-      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/update-payment-credentials/AhmadSiddiqi/AhmadSiddiqi/1253698/2020-10-29/666'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/update-payment-credentials?username=AhmadSiddiqi&cardname=AhmadSiddiqi&ccnumber=1253698&expdate=2020-10-29&cvc=666'
     		}
     	exec {
       		workingDir '../'
@@ -79,7 +79,7 @@ task integrationTest() {
     		}
     	exec {
       		workingDir '../'
-      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/update-user-address/AhmadSiddiqi/RueAuclair/he4hf6/QC/Canada/Brossard'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/update-user-address/AhmadSiddiqi?street=RueAuclair&postalcode=he4hf6&province=QC&country=Canada&city=Brossard'
     		}
     	exec {
       		workingDir '../'
@@ -87,7 +87,7 @@ task integrationTest() {
     		}
     	exec {
       		workingDir '../'
-      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/user-login/AhmadSiddiqi/123abcABC'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/user-login?username=AhmadSiddiqi&password=123abcABC'
     		}	
     	exec {
       		workingDir '../'

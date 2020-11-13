@@ -3,8 +3,8 @@
 
 <template>
   <div class="vue-template vertical-center inner-block">
-    <form>
-      <h3>Sign Up</h3>
+    <form @submit.prevent="checkForm" @action="createUser()">
+      <h3 style="padding: 20px">Sign Up</h3>
 
       <div class="form-group">
         <label>Full Name</label>
@@ -36,54 +36,74 @@
       <div class="row">
         <div class="col">
           <label class="">Street</label>
-          <input type="text" class="form-control form-control-lg" />
+          <input
+            v-model="userStreet"
+            type="text"
+            class="form-control form-control-lg"
+          />
         </div>
 
         <div class="col">
           <label class="">Postal Code</label>
-          <input type="text" class="form-control form-control-lg" />
+          <input
+            v-model="userPostalCode"
+            type="text"
+            class="form-control form-control-lg"
+          />
         </div>
       </div>
 
       <div class="row">
         <div class="col">
           <label>City</label>
-          <input type="text" class="form-control form-control-lg" />
+          <input
+            v-model="userCity"
+            type="text"
+            class="form-control form-control-lg"
+          />
         </div>
 
         <div class="col">
           <label>Province</label>
-          <input type="text" class="form-control form-control-lg" />
+          <input
+            v-model="userProvince"
+            type="text"
+            class="form-control form-control-lg"
+          />
         </div>
       </div>
 
       <div class="row">
         <div class="col">
           <label>Country</label>
-          <input type="text" class="form-control form-control-lg" />
+          <input
+            v-model="userCountry"
+            type="text"
+            class="form-control form-control-lg"
+            style="margin-bottom: 10px;"
+          />
         </div>
 
         <div class="col">
           <label>Choose your role(s):</label>
-          <br />
-          <input type="checkbox" id="artist" name="user" value="artist" />
-          <label for="artist">Artist</label><br />
-          <input type="checkbox" id="customer" name="user" value="customer" />
-          <label for="customer">Customer</label><br />
+          <br>
+          <select name="roles" id="userrole">
+            <option value="artist" id="artist">Artist</option>
+            <option value="customer" id="customer">Customer</option>
+          </select>
         </div>
       </div>
 
       <router-link :to="{ name: 'login' }">
-      <button
-        @click="createUser"
-        type="submit"
-        class="btn btn-dark btn-lg btn-block"
-      >
-        Sign Up
-      </button>
+        <button
+          type="submit"
+          class="btn btn-dark btn-lg btn-block"
+        >
+          Sign Up
+        </button>
       </router-link>
 
-      <p class="forgot-password text-right">
+      <p class="forgot-password text-right" style="margin-bottom: 20px">
         Already registered
         <router-link :to="{ name: 'login' }">sign in?</router-link>
       </p>
@@ -95,16 +115,15 @@
 </template>
 
 <script>
-
-import axios from 'axios' 
-var config = require('../../config') 
-var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port 
-var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort 
+import axios from "axios";
+var config = require("../../../config");
+var frontendUrl = "http://" + config.dev.host + ":" + config.dev.port;
+var backendUrl =
+  "http://" + config.dev.backendHost + ":" + config.dev.backendPort;
 var AXIOS = axios.create({
-  ​​​​baseURL: backendUrl, 
-  headers: {​​​​'Access-Control-Allow-Origin': frontendUrl }​​​​ 
-  }​​​​); 
-  
+  baseURL: backendUrl,
+  headers: { "Access-Control-Allow-Origin": frontendUrl },
+});
 </script>
 
 <script>
@@ -116,10 +135,41 @@ export default {
       userName: "",
       userEmail: "",
       userPassword: "",
+      userStreet: "",
+      userPostalCode: "",
+      userProvince: "",
+      userCountry: "",
+      userCity: "",
+      userRoles: [],
       userError: "",
+      formErrors: []
     };
   },
   methods: {
+    checkForm: function (e) {
+      this.formErrors = [];
+
+      if (!this.userName) {
+        this.errors.push('Name required.');
+      }
+      if (!this.userPassword) {
+        this.errors.push('Password is required.');
+      }
+      if (!this.userEmail) {
+        this.errors.push('Email required.');
+      } else if (!this.validEmail(this.userEmail)) {
+        this.errors.push('Valid email required.');
+      }
+      if (!this.formErrors.length) {
+        return true;
+      }
+
+      e.preventDefault();
+    },
+    validEmail: function (email) {
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    },
     createUser: function () {
       this.user = new ApplicationUserDTO();
 
@@ -134,6 +184,32 @@ export default {
         .catch((error) => {
           this.userError = "There was a problem fetching the user information";
         });
+
+      AXIOS.post(
+        "/update-user-address/".concat(this.userName) +
+          "?street=".concat(this.userStreet) +
+          "&postalcode=".concat(this.userPostalCode) +
+          "&province=".concat(this.userProvince) +
+          "&country=".concat(this.userCountry) +
+          "&city=".concat(this.userCity)
+      )
+        .then((response) => {})
+        .catch((error) => {});
+
+      var role = document.getElementById("userrole");
+      var selectedValue = role.options[role.selectedIndex].value;
+      if(selectedValue == "artist"){
+        this.userRoles.push("artist");
+      } else {
+        this.userRoles.push("customer");
+      }
+
+      AXIOS.post(
+        "/set-user-role/".concat(this.userName) +
+          "?roles=".concat(this.userRoles)
+      )
+        .then((response) => {})
+        .catch((error) => {});
     },
   },
 };

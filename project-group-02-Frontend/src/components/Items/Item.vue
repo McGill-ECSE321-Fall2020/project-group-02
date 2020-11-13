@@ -3,18 +3,19 @@
 
 <template>
   <b-card
-    :title="itemName"
-    img-src="https://picsum.photos/300/300/?image=41"
-    img-alt="Image"
-    img-top
     tag="article"
     style="max-width: 15rem; width:240px; max-height: 30rem; min-height: 30rem;"
     class="mb-2 bg-white shadow rounded pb-5 flex flex-col overflow-hidden">
+    <img class="card-img-top" :src="itemImageUrl" :alt="itemName">
+    <br>
+    <br>
+    <h5 class="card-title">{{itemName}}</h5>
     <b-card-body style=" display: flex; flex-direction: column;" class="d-flex flex-column">
       <b-card-text>{{ artistName }}</b-card-text>
-      <b-card-text>{{ itemPrice }}</b-card-text>
+      <b-card-text>${{ itemPrice }} USD</b-card-text>
+      <b-button v-if="!addedToCart" @click="addToShoppingCart" class="shopping-cart-button btn-dark mt-auto"> Add to My Cart</b-button>
+      <b-button v-if="addedToCart" @click="removeFromShoppingCart" class="shopping-cart-button btn-danger mt-auto"> Remove From Cart</b-button>
     </b-card-body>
-      <b-button :click="addToShoppingCart" class="shopping-cart-button btn-dark mt-auto"> Add to my Cart</b-button>
   </b-card>
 </template>
 
@@ -38,11 +39,21 @@ export default {
     itemPrice: {
       type: Number,
       required: true
-    }
+    },
+  },
+  data() {
+    return {
+      addedToCart: false
+    };
   },
   methods: {
     addToShoppingCart: function() {
-      this.$emit('addToShoppingCart', {artistUsername: this.artistName, itemName: this.itemName});
+      this.addedToCart = true;
+      this.$emit('addtoshoppingcart', {artistUsername: this.artistName, itemName: this.itemName});
+    },
+    removeFromShoppingCart: function() {
+      this.addedToCart = false;
+      this.$emit('removefromshoppingcart', {artistUsername: this.artistName, itemName: this.itemName});
     }
   }
 }
@@ -67,5 +78,11 @@ export default {
     transform: translateY(-1px);
     color: #6f6f6f;
   }
+}
+
+.card-img-top {
+  width: 100%;
+  height: 12vw;
+  object-fit: cover;
 }
 </style>
