@@ -24,7 +24,8 @@ Vue.prototype.$user = {
     city: ''
   },
   paymentCredentials: [],
-  userRole: []
+  userRole: [],
+  loggedIn: false,
 }
 export const eventBus = new Vue(); // this is an event bus for handling events in a much easier fashion
 

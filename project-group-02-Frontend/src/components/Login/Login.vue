@@ -60,13 +60,18 @@ export default {
       .then((response) => {
         this.$user = reponse.data;
         this.$username = reponse.data.username;
+        this.$user.username = response.data.username;
+        this.$user.email = response.data.email;
+        this.$user.password = response.data.password;
+        this.$user.address = response.data.address;
+        this.$user.userRole.push(response.data.userRoles);
+        this.$user.loggedIn = response.data.isLoggedIn
+
       })
         .catch((error) => {
           this.userError = "There was a problem fetching the user information";
         });
-
-      /*this.LoggedIn = this.user*/
-    },
+    }
   },
 };
 </script>

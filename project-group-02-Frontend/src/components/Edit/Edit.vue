@@ -4,10 +4,10 @@
 <template>
     <div class="vue-template vertical-center-edit inner-block">
         <form>
-            <br></br>
+            <br>
             <h1 style="text-align:center">Edit My Profile</h1>
          
-            <br></br>
+            <br>
 
             <h3>Change My Address</h3>
             <div class="form-group">
@@ -22,7 +22,7 @@
                 <label>Country</label>
                 <input type="address" class="form-control form-control-lg" />
             </div>
-      <br></br>
+      <br>
             <h3>Update My Credentials</h3>
             <div class="form-group">
             
