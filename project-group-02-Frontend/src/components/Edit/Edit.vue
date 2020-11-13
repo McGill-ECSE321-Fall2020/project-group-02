@@ -47,6 +47,7 @@
 </template>
 
 <script>
+    name: "Edit"
     export default {
         data() {
             return {}
@@ -208,8 +209,8 @@ label {
 
 <script>
 import axios from 'axios'
-import Profile from "./Profile";
-var config = require('../../config')
+import Profile from "../Profile/Profile";
+var config = require('../../../config')
 
 var frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
 var backendUrl = 'http://' + config.dev.backendHost + ':' + config.dev.backendPort
