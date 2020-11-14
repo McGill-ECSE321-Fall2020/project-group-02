@@ -27,13 +27,8 @@
           class="btn btn-dark btn-lg btn-block"
           :disabled="!userName||!userPassword"
         >
-        <router-link  :to="loginRouter ? '/collections' : '/login'">
           Sign In
-          </router-link>
-
         </button>
-
-
     </form>
   </div>
 </template>
@@ -101,23 +96,15 @@ export default {
 
               this.$store.commit('setUser', user);
             })
-            .catch((error) => { });
+            .catch((error) => {
+              this.$router.push('/login')
+            });
+          this.$router.push('/collections')
         })
         .catch((error) => {
           alert("Such user does not exist");
+          this.$router.push('/login')
         });
-        return this.LoggedIn;
-    },
-    loginRouter: function () {
-      this.AXIOS.post(
-        "/user-login?username=".concat(this.userName) +
-        "&password=".concat(this.userPassword)
-      )
-        .then((response) => {
-        })
-        .catch((error) => {
-        });
-      return this.LoggedIn;
     },
   },
 };
