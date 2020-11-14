@@ -59,7 +59,7 @@ export default {
         this.collectionError = error;
       })
   },
-  mounted: function () {
+  beforeUpdate: function () {
     this.AXIOS.get('/collections')
     .then(response => {
       this.collections = response.data;

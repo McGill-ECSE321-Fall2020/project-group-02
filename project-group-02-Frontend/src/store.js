@@ -34,7 +34,7 @@ export const store = new Vuex.Store({
       store.state.user.email = user.email;
       store.state.user.password = user.password;
       store.state.user.address = user.address;
-      store.state.user.userRole = user.userRoles;
+      store.state.user.userRole = user.userRole;
       store.state.user.loggedIn = user.isLoggedIn;
     }
   },

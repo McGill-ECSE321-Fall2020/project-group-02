@@ -16,6 +16,7 @@
             type="text"
             name="c_name"
           />
+          <p>{{ c_name }}</p>
 
           <label>Collection Description</label>
           <textarea
@@ -39,7 +40,7 @@
           </div>
         </div>
 
-        <router-link :to="{ name: 'collectionsList'}">
+        <router-link :to="{ name: 'collectionsList' }">
           <button
             @click="uploadCollection"
             class="btn btn-dark"
@@ -74,13 +75,17 @@ export default {
 
   methods: {
     uploadCollection: function () {
-      this.AXIOS.post('/create-collection/'.concat(this.c_name) + '?collectionDescription=' .concat(this.c_description) + '&collectionImageUrl=' .concat(this.c_imageURL))
-         .then(response => {
+      this.AXIOS.post(
+        "/create-collection/".concat(this.c_name) +
+          "?collectionDescription=".concat(this.c_description) +
+          "&collectionImageUrl=".concat(this.c_imageURL)
+      )
+        .then((response) => {
           this.collection = response.data;
         })
-        .catch(error => {
+        .catch((error) => {
           this.collectionError = error;
-        })
+        });
     },
   },
 };

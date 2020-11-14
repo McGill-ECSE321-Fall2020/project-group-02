@@ -9,16 +9,16 @@
           <a>Home</a>
         </router-link>
       </li>
-<!--      <li v-if="this.$store.state.user.userRole.indexOf('customer') > -1">
+      <li v-if="this.$store.state.user.userRole[0].userRoleId === ((this.$store.state.user.username).concat('customer')).hashCode()">
         <router-link to="/shopping-cart">
         <a>Shopping Cart</a>
         </router-link>
       </li>
-      <li v-if="this.$store.state.user.userRole.indexOf('artist') > -1">
+      <li  v-if="this.$store.state.user.userRole[0].userRoleId === ((this.$store.state.user.username).concat('artist')).hashCode()">
         <router-link to="/upload-art">
         <a>Upload Artwork</a>
         </router-link>
-      </li>-->
+      </li>
       <li v-if="this.$store.state.user.email === 'ahmad.siddiqi@hotmail.com'">
         <router-link to="/create-collection">
         <a>Create Collection</a>
@@ -32,7 +32,9 @@
       <li>
           <a @click="logoutUser">
             <router-link to="/">
-              Logout
+            Logout
+            <!--{{this.$store.state.user}}
+              <!--{{this.$store.state.user.userRole[0].userRoleId}}-->
             </router-link>
             </a>
       </li>
@@ -45,38 +47,10 @@ import Login from "../Login/Login";
 
 export default {
   name: 'Header',
-  created() {
-    this.AXIOS.get("/user-by-name/".concat(this.$store.state.user.username))
-      .then((response) => {
-        let user = {
-          username: '',
-          email: '',
-          password: '',
-          address: {
-            street: '',
-            postalCode: '',
-            province: '',
-            country: '',
-            city: ''
-          },
-          paymentCredentials: [],
-          userRole: [],
-          loggedIn: false,
-        }
-        user = response.data;
-        user.username = response.data.username;
-        user.email = response.data.email;
-        user.password = response.data.password;
-        user.address = response.data.address;
-        user.userRole = response.data.userRoles;
-        user.loggedIn = response.data.isLoggedIn;
-
-        this.$store.commit('setUser', user);
-      })
-  },
+  
   data() {
     return {
-      userRole: []
+      response: {} 
     }
   },
   methods: {
