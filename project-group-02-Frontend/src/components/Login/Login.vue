@@ -20,13 +20,20 @@
         />
       </div>
 
-      <span @click.capture="this.$user.loggedIn">
-      <router-link  to='/collections'>
-        <button @click="loginUser()" type="submit" class="btn btn-dark btn-lg btn-block">
+      
+        <button
+          @click="loginUser"
+          type="submit"
+          class="btn btn-dark btn-lg btn-block"
+          :disabled="!userName||!userPassword"
+        >
+        <router-link  :to="LoggedIn ? '/collections' : '/login'">
           Sign In
+          </router-link>
+          
         </button>
-      </router-link>
-      </span>
+        
+      
     </form>
   </div>
 </template>
@@ -34,25 +41,23 @@
 <script>
 export default {
   name: "login",
-  created: function() {
-    this.AXIOS.get('/art-gallery-system')
-    .then(response => {
-      this.artGallerySystem = response.data;
-      }
-    )
-    .catch(error => {
-      this.userError = error;
-    })
+  created: function () {
+    this.AXIOS.get("/art-gallery-system")
+      .then((response) => {
+        this.artGallerySystem = response.data;
+      })
+      .catch((error) => {
+        this.userError = error;
+      });
   },
   data() {
     return {
-      artGallerySystem:'',
+      artGallerySystem: "",
       userName: "",
       userPassword: "",
       user: "",
       userError: "",
       LoggedIn: false,
-
     };
   },
   methods: {
@@ -61,27 +66,30 @@ export default {
         "/user-login?username=".concat(this.userName) +
           "&password=".concat(this.userPassword)
       )
-        .then((response) => {})
-        .catch((error) => {});
-
-      this.AXIOS.get(
-        "/user-by-name/" .concat(this.userName)
-      )
-      .then((response) => {
-        this.$user = response.data;
-        this.$username = response.data.username;
-        this.$user.username = response.data.username;
-        this.$user.email = response.data.email;
-        this.$user.password = response.data.password;
-        this.$user.address = response.data.address;
-        this.$user.userRole = response.data.userRoles;
-        this.$user.loggedIn = response.data.isLoggedIn
-
-      })
+        .then((response) => {
+          this.$user.loggedIn = response.data;
+          this.LoggedIn = response.data;
+          if(!this.$user.loggedIn){
+              alert("Invalid User Credentials");
+          }
+          this.AXIOS.get("/user-by-name/".concat(this.userName))
+            .then((response) => {
+              this.$user = response.data;
+              this.$user.username = response.data.username;
+              this.$user.email = response.data.email;
+              this.$user.password = response.data.password;
+              this.$user.address = response.data.address;
+              this.$user.userRole = response.data.userRoles;
+              this.$user.loggedIn = response.data.isLoggedIn;
+              console.log(this.$user);
+            })
+            .catch((error) => { });
+        })
         .catch((error) => {
-          this.userError = "There was a problem fetching the user information";
+          alert("Such user does not exist");
         });
-    }
+        return this.LoggedIn;
+    },
   },
 };
 </script>

@@ -28,21 +28,43 @@
         </router-link>
       </li>
       <li>
-        <router-link :to="{ name:'profile', params: { username: this.$username }}">
+        <router-link :to="{ name:'profile', params: { username: this.$user.username }}">
           <a>Account</a>
         </router-link>
+      </li>
+      <li>
+        
+          <a @click="logoutUser">
+            <router-link to="/">
+            {{$user}}
+            </router-link>
+            </a>
+        
       </li>
     </ul>
   </nav>
 </template>
 
 <script>
+import Login from "../Login/Login";
+
 export default {
   name: 'Header',
   data() {
     return {
     }
+  },
+  methods: {
+    logoutUser: function(){
+      this.AXIOS.post("/user-logout/" .concat($user.username))
+      .then((response) => {
+        $user.loggedIn = response.data;
+        console.log($user.loggedIn);
+      })
+      .catch((error) => {});
+      
   }
+}
 }
 </script>
 
@@ -132,20 +154,3 @@ nav ul li a:hover {
   color: white;
 }
 </style>
-
-
-<script>
-export default {
-  name: "Header",
-  props: {
-
-  },
-  data() {
-    return {
-
-    }
-  },
-  methods: {
-  }
-}
-</script>

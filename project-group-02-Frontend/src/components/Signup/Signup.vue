@@ -4,7 +4,7 @@
       <h3 style="padding: 20px">Sign Up</h3>
 
       <div class="form-group">
-        <label>Username</label>
+        <label>Username <b style="color:red;">*</b></label>
         <input
           v-model="userName"
           type="text"
@@ -13,7 +13,7 @@
       </div>
 
       <div class="form-group">
-        <label>Email address</label>
+        <label>Email address <b style="color:red;">*</b></label>
         <input
           v-model="userEmail"
           type="email"
@@ -22,17 +22,17 @@
       </div>
 
       <div class="form-group">
-        <label>Password</label>
+        <label>Password <b style="color:red;">*</b></label>
         <input
           v-model="userPassword"
           type="password"
           class="form-control form-control-lg"
         />
       </div>
-
+      
       <div class="row">
         <div class="col">
-          <label class="">Street</label>
+          <label class="">Street <b style="color:red;">*</b></label>
           <input
             v-model="userStreet"
             type="text"
@@ -41,7 +41,7 @@
         </div>
 
         <div class="col">
-          <label class="">Postal Code</label>
+          <label class="">Postal Code <b style="color:red;">*</b></label>
           <input
             v-model="userPostalCode"
             type="text"
@@ -52,7 +52,7 @@
 
       <div class="row">
         <div class="col">
-          <label>City</label>
+          <label>City <b style="color:red;">*</b></label>
           <input
             v-model="userCity"
             type="text"
@@ -61,7 +61,7 @@
         </div>
 
         <div class="col">
-          <label>Province</label>
+          <label>Province <b style="color:red;">*</b></label>
           <input
             v-model="userProvince"
             type="text"
@@ -72,41 +72,48 @@
 
       <div class="row">
         <div class="col">
-          <label>Country</label>
+          <label>Country <b style="color:red;">*</b></label>
           <input
             v-model="userCountry"
             type="text"
             class="form-control form-control-lg"
-            style="margin-bottom: 10px;"
+            style="margin-bottom: 10px"
           />
         </div>
 
         <div class="col">
           <label>Choose your role(s):</label>
-          <br>
+          <br />
           <select name="roles" id="userrole">
-            <option value="artist" id="artist">Artist</option>
             <option value="customer" id="customer">Customer</option>
+            <option value="artist" id="artist">Artist</option>
           </select>
         </div>
       </div>
 
-
-      <button v-if="validate"
-          @click=" createUser"
-          type="submit"
-          class="btn btn-dark btn-lg btn-block"
-        >
-          Sign Up
-        </button>
+      <button
+        v-if="validate"
+        @click="createUser"
+        type="submit"
+        class="btn btn-dark btn-lg btn-block"
+      >
+        Sign Up
+      </button>
 
       <router-link :to="{ name: 'login' }">
-        <button v-if="!validate"
-          @click=" setAddress(); setUserRole();"
+        
+        <button
+          v-if="!validate"
+          @click="
+            setAddress();
+            setUserRole();
+          "
+          :disabled="!userCity||!userStreet||!userPostalCode||!userProvince||!userCountry"
           type="submit"
           class="btn btn-dark btn-lg btn-block continue"
         >
-          Continue
+
+          Confirm
         </button>
       </router-link>
 
@@ -126,7 +133,6 @@ export default {
   name: "Signup",
   data() {
     return {
-      user: "",
       userName: "",
       userEmail: "",
       userPassword: "",
@@ -136,8 +142,6 @@ export default {
       userCountry: "",
       userCity: "",
       userRoles: "",
-      userError: "",
-      formErrors: [],
       validate: true,
     };
   },
@@ -146,15 +150,15 @@ export default {
       this.formErrors = [];
 
       if (!this.userName) {
-        this.errors.push('Name required.');
+        this.errors.push("Name required.");
       }
       if (!this.userPassword) {
-        this.errors.push('Password is required.');
+        this.errors.push("Password is required.");
       }
       if (!this.userEmail) {
-        this.errors.push('Email required.');
+        this.errors.push("Email required.");
       } else if (!this.validEmail(this.userEmail)) {
-        this.errors.push('Valid email required.');
+        this.errors.push("Valid email required.");
       }
       if (!this.formErrors.length) {
         return true;
@@ -165,39 +169,38 @@ export default {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
     },
-    createUser:  function () {
-       this.AXIOS.post(
+    createUser: function () {
+      this.AXIOS.post(
         "/create-user?name=".concat(this.userName) +
           "&email=".concat(this.userEmail) +
           "&pw=".concat(this.userPassword)
       )
         .then((response) => {
+          this.validate = false;
         })
         .catch((error) => {
-          this.userError = "There was a problem fetching the user information";
+          alert("Invalid Username or Email");
         });
-
-        this.validate = false;
-        
     },
-    setAddress: function() {
+    setAddress: function () {
       console.log(this.userCity, this.userCountry);
       this.AXIOS.post(
         "/update-user-address/".concat(this.userName) +
-        "?street=".concat(this.userStreet) +
-        "&postalcode=".concat(this.userPostalCode) +
-        "&province=".concat(this.userProvince) +
-        "&country=".concat(this.userCountry) +
-        "&city=".concat(this.userCity)
+          "?street=".concat(this.userStreet) +
+          "&postalcode=".concat(this.userPostalCode) +
+          "&province=".concat(this.userProvince) +
+          "&country=".concat(this.userCountry) +
+          "&city=".concat(this.userCity)
       )
-        .then((response) => {
-        })
-        .catch((error) => {});
+        .then((response) => {})
+        .catch((error) => {
+          alert("Please enter a valid address");
+        });
     },
-    setUserRole: function() {
+    setUserRole: function () {
       var role = document.getElementById("userrole");
       var selectedValue = role.options[role.selectedIndex].value;
-      if(selectedValue == "artist"){
+      if (selectedValue == "artist") {
         this.userRoles = "artist";
       } else {
         this.userRoles = "customer";
@@ -205,12 +208,11 @@ export default {
 
       this.AXIOS.post(
         "/set-user-role/".concat(this.userName) +
-        "?roles=" .concat(this.userRoles)
+          "?roles=".concat(this.userRoles)
       )
         .then((response) => {})
         .catch((error) => {});
     },
- 
   },
 };
 </script>
@@ -345,7 +347,7 @@ label {
   padding-right: 100px;
 }
 
-.continue{
-  background-color:green;
+.continue {
+  background-color: green;
 }
 </style>

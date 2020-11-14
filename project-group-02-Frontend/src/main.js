@@ -11,7 +11,6 @@ import axios from "axios";
 
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false;
-Vue.prototype.$username = '';
 Vue.prototype.$totalPrice = 0;
 Vue.prototype.$user = {
   username: '',
