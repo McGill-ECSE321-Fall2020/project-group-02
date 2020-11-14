@@ -50,7 +50,8 @@
           <div v-for="item in items" :key="item.name" style="margin:20px;">
             <Item :itemName="item.itemName" :artistName="item.artistName" :itemImageUrl="item.itemImageUrl"
                   :itemPrice="item.itemPrice" @removefromshoppingcart="(artistUsername, itemName)=>this.removeFromShoppingCart(artistUsername, itemName)"
-                  @addtoshoppingcart="(artistUsername, itemName)=>this.addToShoppingCart(artistUsername, itemName)"></Item>
+                  @addtoshoppingcart="(artistUsername, itemName)=>this.addToShoppingCart(artistUsername, itemName)"
+            @deleteitem="(artistUsername, itemName)=>this.deleteItem(artistUsername, itemName)"></Item>
             <br>
           </div>
           <div class="section" style="margin:auto;" v-if="items.length === 0">
@@ -90,11 +91,21 @@ export default {
       noArtworkFound: 'No art pieces were found',
       artworkError: '',
       collection: 'The Secrets of the Intelligence',
-      items: [],
+      items: [{
+      }],
       artistSearched: ''
     }
   },
   created: function () {
+    this.AXIOS.get('/'.concat(this.collection))
+      .then(response => {
+        this.items = response.data;
+      })
+      .catch(error => {
+        this.artworkError = error;
+      })
+  },
+  mounted: function () {
     this.AXIOS.get('/'.concat(this.collection))
       .then(response => {
         this.items = response.data;
@@ -146,6 +157,9 @@ export default {
         .catch(error => {
           this.artworkError = error;
         })
+    },
+    deleteItem: function (artistUsername, itemName) {
+      this.AXIOS.post('/'.concat(this.$store.state.user.username) + '/delete-item-from-gallery/'.concat(itemName) + '/' .concat(artistUsername));
     }
   }
 }

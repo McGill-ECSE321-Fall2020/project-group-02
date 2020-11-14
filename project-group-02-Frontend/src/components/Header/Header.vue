@@ -1,6 +1,3 @@
-<script src="./artGallery.js">
-</script>
-
 <template>
   <nav>
     <ul>
@@ -12,16 +9,16 @@
           <a>Home</a>
         </router-link>
       </li>
-      <!--     <li v-if="this.$store.state.user.userRole.indexOf('customer') > -1">
+      <li v-if="this.$store.state.user.userRole[0].userRoleId === ((this.$store.state.user.username).concat('customer')).hashCode()">
         <router-link to="/shopping-cart">
         <a>Shopping Cart</a>
         </router-link>
       </li>
-      <li v-if="this.$store.state.user.userRole.indexOf('artist') > -1">
+      <li  v-if="this.$store.state.user.userRole[0].userRoleId === ((this.$store.state.user.username).concat('artist')).hashCode()">
         <router-link to="/upload-art">
         <a>Upload Artwork</a>
         </router-link>
-      </li>-->
+      </li>
       <li v-if="this.$store.state.user.email === 'ahmad.siddiqi@hotmail.com'">
         <router-link to="/create-collection">
         <a>Create Collection</a>
@@ -33,13 +30,13 @@
         </router-link>
       </li>
       <li>
-
           <a @click="logoutUser">
             <router-link to="/">
-            {{this.$store.state.user}}
+            Logout
+            <!--{{this.$store.state.user}}
+              <!--{{this.$store.state.user.userRole[0].userRoleId}}-->
             </router-link>
             </a>
-
       </li>
     </ul>
   </nav>
@@ -50,8 +47,10 @@ import Login from "../Login/Login";
 
 export default {
   name: 'Header',
+  
   data() {
     return {
+      response: {} 
     }
   },
   methods: {
@@ -62,7 +61,6 @@ export default {
         console.log(this.$store.state.user.loggedIn);
       })
       .catch((error) => {});
-
   }
 }
 }

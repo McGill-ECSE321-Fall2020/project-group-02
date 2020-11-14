@@ -1,6 +1,3 @@
-<script src="./artGallery.js">
-</script>
-
 <template>
   <div class="card-wrap"
        @mousemove="handleMouseMove"

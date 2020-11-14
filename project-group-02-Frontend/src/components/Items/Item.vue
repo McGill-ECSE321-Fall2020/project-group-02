@@ -13,8 +13,9 @@
     <b-card-body style=" display: flex; flex-direction: column;" class="d-flex flex-column">
       <b-card-text>{{ artistName }}</b-card-text>
       <b-card-text>${{ itemPrice }} USD</b-card-text>
-      <b-button v-if="!addedToCart" @click="addToShoppingCart" class="shopping-cart-button btn-dark mt-auto"> Add to My Cart</b-button>
-      <b-button v-if="addedToCart" @click="removeFromShoppingCart" class="shopping-cart-button btn-danger mt-auto"> Remove From Cart</b-button>
+      <b-button v-if="!(this.$store.state.user.email === 'ahmad.siddiqi@hotmail.com')&!addedToCart" @click="addToShoppingCart" class="shopping-cart-button btn-dark mt-auto">Add to My Cart</b-button>
+      <b-button v-if="!(this.$store.state.user.email === 'ahmad.siddiqi@hotmail.com')&addedToCart" @click="removeFromShoppingCart" class="shopping-cart-button btn-danger mt-auto">Remove From Cart</b-button>
+      <b-button v-if="(this.$store.state.user.email === 'ahmad.siddiqi@hotmail.com')" @click="deleteItem" class="shopping-cart-button btn-danger mt-auto"> Delete From Gallery </b-button>
     </b-card-body>
   </b-card>
 </template>
@@ -54,6 +55,9 @@ export default {
     removeFromShoppingCart: function() {
       this.addedToCart = false;
       this.$emit('removefromshoppingcart', {artistUsername: this.artistName, itemName: this.itemName});
+    },
+    deleteItem: function() {
+      this.$emit('deleteitem', {artistUsername: this.artistName, itemName: this.itemName});
     }
   }
 }

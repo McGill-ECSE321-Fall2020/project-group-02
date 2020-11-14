@@ -100,8 +100,6 @@
         Sign Up
       </button>
 
-      <router-link :to="{ name: 'login' }">
-
         <button
           v-if="!validate"
           @click="
@@ -112,15 +110,16 @@
           type="submit"
           class="btn btn-dark btn-lg btn-block continue"
         >
-
           Confirm
         </button>
-      </router-link>
 
       <p class="forgot-password text-right" style="margin-bottom: 20px">
         Already registered
         <router-link :to="{ name: 'login' }">sign in?</router-link>
       </p>
+      <div v-if="userError">
+        {{ userError }}
+      </div>
     </form>
   </div>
 </template>
@@ -139,13 +138,13 @@ export default {
       userCountry: "",
       userCity: "",
       userRoles: "",
-      validate: true
+      validate: true,
+      userError:""
     };
   },
   methods: {
     checkForm: function (e) {
       this.formErrors = [];
-
       if (!this.userName) {
         this.errors.push("Name required.");
       }
@@ -169,8 +168,8 @@ export default {
     createUser: function () {
       this.AXIOS.post(
         "/create-user?name=".concat(this.userName) +
-          "&email=".concat(this.userEmail) +
-          "&pw=".concat(this.userPassword)
+        "&email=".concat(this.userEmail) +
+        "&pw=".concat(this.userPassword)
       )
         .then((response) => {
           this.validate = false;
@@ -180,16 +179,17 @@ export default {
         });
     },
     setAddress: function () {
-      console.log(this.userCity, this.userCountry);
       this.AXIOS.post(
         "/update-user-address/".concat(this.userName) +
-          "?street=".concat(this.userStreet) +
-          "&postalcode=".concat(this.userPostalCode) +
-          "&province=".concat(this.userProvince) +
-          "&country=".concat(this.userCountry) +
-          "&city=".concat(this.userCity)
+        "?street=".concat(this.userStreet) +
+        "&postalcode=".concat(this.userPostalCode) +
+        "&province=".concat(this.userProvince) +
+        "&country=".concat(this.userCountry) +
+        "&city=".concat(this.userCity)
       )
-        .then((response) => {})
+        .then((response) => {
+          this.$router.push('/login');
+        })
         .catch((error) => {
           alert("Please enter a valid address");
         });
@@ -202,12 +202,12 @@ export default {
       } else {
         this.userRoles = "customer";
       }
-
       this.AXIOS.post(
         "/set-user-role/".concat(this.userName) +
-          "?roles=".concat(this.userRoles)
+        "?roles=".concat(this.userRoles)
       )
-        .then((response) => {})
+        .then((response) => {
+        })
         .catch((error) => {});
     },
   },
@@ -223,7 +223,6 @@ body {
   display: flex;
   font-weight: 400;
 }
-
 body,
 html,
 .App,
@@ -232,12 +231,10 @@ html,
   width: 100%;
   height: 100%;
 }
-
 .navbar-light {
   background-color: #ffffff;
   box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
 }
-
 .vertical-center {
   display: flex;
   text-align: left;
@@ -249,7 +246,6 @@ html,
   transform: translate(-50%, -50%);
   height: 75%;
 }
-
 .inner-block {
   width: 60%;
   margin: auto;
@@ -260,23 +256,19 @@ html,
   transition: all 0.3s;
   height: 90%;
 }
-
 .vertical-center .form-control:focus {
   border-color: #2554FF;
   box-shadow: none;
 }
-
 .vertical-center h3 {
   text-align: center;
   margin: 0;
   line-height: 1;
   padding-bottom: 20px;
 }
-
 label {
   font-weight: 500;
 }
-
 .forgot-password,
 .forgot-password a {
   text-align: right;
@@ -285,11 +277,9 @@ label {
   color: #7a7a7a;
   margin: 0;
 }
-
 .forgot-password a {
   color: #2554FF;
 }
-
 .social-icons {
   text-align: center;
   font-family: "Open Sans";
@@ -297,7 +287,6 @@ label {
   font-size: 1.5em;
   color: #222222;
 }
-
 .social-icons ul {
   list-style: none;
   margin: 0;
@@ -315,7 +304,6 @@ label {
   margin-right: 5px;
   background: #f4f6ff;
 }
-
 .social-icons ul li a {
   display: block;
   font-size: 1.4em;
@@ -329,21 +317,17 @@ label {
   -ms-transition: all 0.2s ease-in;
   transition: all 0.2s ease-in;
 }
-
 .social-icons ul li a:focus i,
 .social-icons ul li a:active i {
   transition: none;
   color: #222222;
 }
-
 .inline-signup {
   display: inline-block;
 }
-
 .signup-right {
   padding-right: 100px;
 }
-
 .continue {
   background-color: green;
 }

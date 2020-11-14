@@ -20,15 +20,14 @@
         />
       </div>
 
-
-        <button
-          @click="loginUser"
-          type="submit"
-          class="btn btn-dark btn-lg btn-block"
-          :disabled="!userName||!userPassword"
-        >
-          Sign In
-        </button>
+      <button
+        @click="loginUser"
+        type="submit"
+        class="btn btn-dark btn-lg btn-block"
+        :disabled="!userName || !userPassword"
+      >
+        Sign In
+      </button>
     </form>
   </div>
 </template>
@@ -66,44 +65,46 @@ export default {
         .then((response) => {
           this.$store.state.user.loggedIn = response.data;
           this.LoggedIn = response.data;
-          if(!this.$store.state.user.loggedIn){
-              alert("Invalid User Credentials");
+          if (!this.$store.state.user.loggedIn) {
+            alert("Invalid User Credentials");
           } else {
-            this.$router.push('/collections')
-          }
-          this.AXIOS.get("/user-by-name/".concat(this.userName))
-            .then((response) => {
+            this.$router.push("/collections");
+            this.AXIOS.get(
+              "/user-by-name/".concat(this.userName)
+            ).then((response) => {
               let user = {
-                username: '',
-                email: '',
-                password: '',
+                username: "",
+                email: "",
+                password: "",
                 address: {
-                  street: '',
-                  postalCode: '',
-                  province: '',
-                  country: '',
-                  city: ''
+                  street: "",
+                  postalCode: "",
+                  province: "",
+                  country: "",
+                  city: "",
                 },
                 paymentCredentials: [],
                 userRole: [],
                 loggedIn: false,
-              }
+              };
               user = response.data;
               user.username = response.data.username;
               user.email = response.data.email;
               user.password = response.data.password;
-              user.address = response.data.address;
-              user.userRole = response.data.userRoles;
+              user.address = response.data.addresses;
+              user.userRole = response.data.userRole;
               user.loggedIn = response.data.isLoggedIn;
 
-              this.$store.commit('setUser', user);
-            })
-            .catch((error) => {
+              //this.response=response;
+              //this.response.data=response.data.json();
+
+              this.$store.commit("setUser", user);
+              
             });
+          }
         })
         .catch((error) => {
           alert("Such user does not exist");
-          this.$router.push('/login')
         });
     },
   },

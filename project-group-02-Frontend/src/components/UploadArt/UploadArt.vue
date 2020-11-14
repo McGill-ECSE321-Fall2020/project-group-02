@@ -3,6 +3,7 @@
   <body>
     <div class="container">
       <h1 class="heading">Upload Artwork</h1>
+      <div>{{ art_name }}</div>
 
       <form class="" action="/compose" method="post">
         <div class="form-group">
@@ -82,23 +83,19 @@
               class="txtbox form-control"
               type="text"
             />
-            <input
-              type="file"
-              class="form-control-file"
-              id="exampleInputFile"
-            />
           </div>
         </div>
-        <router-link :to="{ name: 'collectionsList'}">
-          <button
-            @click="uploadArt"
-            class="btn btn-dark"
-            type="submit"
-            name="button"
-          >
-            Publish
-          </button>
-        </router-link>
+
+        <!--<router-link :to="{ name: 'collectionsList' }"> -->
+        <button
+          @click="uploadArt"
+          class="btn btn-dark"
+          type="submit"
+          name="button"
+        >
+          Publish
+        </button>
+        <!--</router-link> -->
       </form>
     </div>
   </body>
@@ -128,26 +125,38 @@ export default {
       art_creation_date: "",
       art_price: "",
       art_collection_name: "",
-      art_imageURL:""
-    };
+      art_imageURL: ""
+    }
   },
   methods: {
     uploadArt: function () {
       this.AXIOS.post(
-        "/" +
-          this.$username +
+        "/".concat(this.$store.state.user.username) +
           "/upload-artwork/".concat(this.art_collection_name) +
-          "/".concat(this.art_name) +
-          "?height=".concat(this.art_height) +
+          "/".concat(this.art_name),
+        {},
+        {
+          params: {
+            height: this.art_height,
+            width: this.art_width,
+            breadth: this.art_breadth,
+            creationDate: this.art_creation_date,
+            description: this.art_description,
+            price: this.art_price,
+            imageUrl: this.art_imageUrl,
+          },
+        }
+        /*  "?height=".concat(this.art_height) +
           "&width=".concat(this.art_width) +
           "&breadth=".concat(this.art_breadth) +
           "&creationDate=".concat(this.art_creation_date) +
           "&description=".concat(this.art_description) +
           "&price=".concat(this.art_price) +
-          "&imageURL=".concat(this.art_imageURL)
+          "&imageUrl=".concat(this.art_imageURL) */
       )
         .then((response) => {
           this.artwork = response.data;
+          console.log(response.data);
         })
         .catch((error) => {});
     },

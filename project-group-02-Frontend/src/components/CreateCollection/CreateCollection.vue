@@ -25,14 +25,13 @@
             name="postContent"
             rows="8"
           ></textarea>
-          <p>{{ c_description }}</p>
 
           <div class="">
             <label for="exampleInputFile"
               >Upload Collection image <b>(URL Only)</b></label
             >
             <input
-              v-model="image_URL"
+              v-model="c_imageURL"
               id="exampleInputFile"
               class="txtbox form-control"
               type="text"
@@ -41,7 +40,7 @@
           </div>
         </div>
 
-        <router-link :to="{ name: 'collectionsList'}">
+        <router-link :to="{ name: 'collectionsList' }">
           <button
             @click="uploadCollection"
             class="btn btn-dark"
@@ -76,13 +75,17 @@ export default {
 
   methods: {
     uploadCollection: function () {
-      this.AXIOS.post('/create-collection/'.concat(this.c_name) + '?collectionDescription=' .concat(this.c_description) + '&collectionImageUrl=' .concat(this.c_imageURL))
-         .then(response => {
+      this.AXIOS.post(
+        "/create-collection/".concat(this.c_name) +
+          "?collectionDescription=".concat(this.c_description) +
+          "&collectionImageUrl=".concat(this.c_imageURL)
+      )
+        .then((response) => {
           this.collection = response.data;
         })
-        .catch(error => {
+        .catch((error) => {
           this.collectionError = error;
-        })
+        });
     },
   },
 };
