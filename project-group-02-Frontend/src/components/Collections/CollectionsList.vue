@@ -8,7 +8,7 @@
       <b-card-group deck>
         <div v-for="collection in collections" :key="collection.name">
           <router-link
-            :to="{ name: 'itemsList', params: { collection: collection.name } }"
+            :to="{ name: 'itemsList', params: { collection: collection.collectionName } }"
             class="block no-underline p-3 text-grey-dark text-capitalize"
           >
             <Collection

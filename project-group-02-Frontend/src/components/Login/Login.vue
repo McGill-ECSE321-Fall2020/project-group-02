@@ -99,7 +99,7 @@ export default {
               //this.response.data=response.data.json();
 
               this.$store.commit("setUser", user);
-              
+
             });
           }
         })

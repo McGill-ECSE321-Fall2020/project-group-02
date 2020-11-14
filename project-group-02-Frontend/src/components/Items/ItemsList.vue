@@ -1,7 +1,6 @@
 <template>
   <div>
     <div>
-      {{this.$store.state.user.usernamename}}
     </div>
     <div style="position: relative;">
       <Header></Header>
@@ -48,7 +47,7 @@
       <div class="offset-md-2 col-md-8">
         <b-card-group deck class="container">
           <div v-for="item in items" :key="item.name" style="margin:20px;">
-            <Item :itemName="item.itemName" :artistName="item.artistName" :itemImageUrl="item.itemImageUrl"
+            <Item :itemName="item.name" :artistName="item.artist.name" :itemImageUrl="item.pathToImage"
                   :itemPrice="item.itemPrice" @removefromshoppingcart="(artistUsername, itemName)=>this.removeFromShoppingCart(artistUsername, itemName)"
                   @addtoshoppingcart="(artistUsername, itemName)=>this.addToShoppingCart(artistUsername, itemName)"
             @deleteitem="(artistUsername, itemName)=>this.deleteItem(artistUsername, itemName)"></Item>
@@ -62,13 +61,7 @@
           </div>
         </b-card-group>
       </div>
-
-
     </div>
-
-<!--
-    <Footer id="footer"></Footer>
--->
   </div>
 
 </template>
@@ -90,14 +83,13 @@ export default {
     return {
       noArtworkFound: 'No art pieces were found',
       artworkError: '',
-      collection: 'The Secrets of the Intelligence',
-      items: [{
-      }],
+      collection: '',
+      items: [],
       artistSearched: ''
     }
   },
   created: function () {
-    this.AXIOS.get('/'.concat(this.collection))
+    this.AXIOS.get('/'.concat("Nights Over Board"))
       .then(response => {
         this.items = response.data;
       })
@@ -105,8 +97,8 @@ export default {
         this.artworkError = error;
       })
   },
-  mounted: function () {
-    this.AXIOS.get('/'.concat(this.collection))
+  beforeUpdate: function () {
+    this.AXIOS.get('/'.concat("Nights Over Board"))
       .then(response => {
         this.items = response.data;
       })
