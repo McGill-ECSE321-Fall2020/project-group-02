@@ -28,7 +28,7 @@ Table 1: Project Contributors', roles and hours contributed for the Deliverable 
 |                    | Project Documentation |                   |
 +--------------------+-----------------------+-------------------+
 
-pre>
+
 Table 2: Project Contributors', roles and hours contributed for the Deliverable 2 (see the table in Raw format)
 +--------------------+-----------------------+-------------------+
 |    Contributors    |         Roles         | Hours Contributed |
@@ -53,7 +53,27 @@ Table 2: Project Contributors', roles and hours contributed for the Deliverable 
 +--------------------+-----------------------+-------------------+
 
 
-
+Table 3: Project Contributors', roles and hours contributed for the Deliverable 2 (see the table in Raw format)
++--------------------+-----------------------+-------------------+
+|    Contributors    |         Roles         | Hours Contributed |
++--------------------+-----------------------+-------------------+
+| Mohamed Ryad Ammar |   Frontend Developer  |         30        |
+|                    | Technical Coordinator |                   |
++--------------------+-----------------------+-------------------+
+|   Asmaa Jerroumi   |   Frontend Developer  |         30        |
+|                    | Project Documentation |                   |
++--------------------+-----------------------+-------------------+
+|    Ahmad Siddiqi   |   Frontend Developer  |         30        |
+|                    |    Software Tester    |                   |
+|                    |    Project Manager    |                   |
++--------------------+-----------------------+-------------------+
+|  Gurdarshan Singh  |   Frontend Developer  |         30        |
+|                    |    Software Manager   |                   |
++--------------------+-----------------------+-------------------+
+|    Vadim Tuchila   |   Frontend Developer  |         38        |
+|                    | Project Documentation |                   |
+|                    |    Software Manager   |                   |
++--------------------+-----------------------+-------------------+
 
 <pre>
 
