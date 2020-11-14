@@ -29,7 +29,7 @@
           class="form-control form-control-lg"
         />
       </div>
-      
+
       <div class="row">
         <div class="col">
           <label class="">Street <b style="color:red;">*</b></label>
@@ -101,7 +101,7 @@
       </button>
 
       <router-link :to="{ name: 'login' }">
-        
+
         <button
           v-if="!validate"
           @click="
@@ -121,9 +121,6 @@
         Already registered
         <router-link :to="{ name: 'login' }">sign in?</router-link>
       </p>
-      <div v-if="userError">
-        {{ userError }}
-      </div>
     </form>
   </div>
 </template>
@@ -142,7 +139,7 @@ export default {
       userCountry: "",
       userCity: "",
       userRoles: "",
-      validate: true,
+      validate: true
     };
   },
   methods: {

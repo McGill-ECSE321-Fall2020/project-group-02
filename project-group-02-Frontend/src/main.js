@@ -8,25 +8,10 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import '@/assets/css/main.css'
 import axios from "axios";
+import {store} from './store';
 
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false;
-Vue.prototype.$totalPrice = 0;
-Vue.prototype.$user = {
-  username: '',
-  email: '',
-  password: '',
-  address: {
-    street: '',
-    postalCode: '',
-    province: '',
-    country: '',
-    city: ''
-  },
-  paymentCredentials: [],
-  userRole: [],
-  loggedIn: false,
-}
 export const eventBus = new Vue(); // this is an event bus for handling events in a much easier fashion
 
 
@@ -42,6 +27,7 @@ Vue.prototype.AXIOS = axios.create({
 new Vue({
   el: '#app',
   router,
+  store: store,
   template: '<App/>',
   components: { App }
 })

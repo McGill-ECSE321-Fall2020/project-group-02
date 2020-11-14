@@ -20,25 +20,27 @@
         />
       </div>
 
-      
+
         <button
           @click="loginUser"
           type="submit"
           class="btn btn-dark btn-lg btn-block"
           :disabled="!userName||!userPassword"
         >
-        <router-link  :to="LoggedIn ? '/collections' : '/login'">
+        <router-link  :to="loginRouter ? '/collections' : '/login'">
           Sign In
           </router-link>
-          
+
         </button>
-        
-      
+
+
     </form>
   </div>
 </template>
 
 <script>
+import Vue from "vue";
+
 export default {
   name: "login",
   created: function () {
@@ -67,21 +69,37 @@ export default {
           "&password=".concat(this.userPassword)
       )
         .then((response) => {
-          this.$user.loggedIn = response.data;
+          this.$store.state.user.loggedIn = response.data;
           this.LoggedIn = response.data;
-          if(!this.$user.loggedIn){
+          if(!this.$store.state.user.loggedIn){
               alert("Invalid User Credentials");
           }
           this.AXIOS.get("/user-by-name/".concat(this.userName))
             .then((response) => {
-              this.$user = response.data;
-              this.$user.username = response.data.username;
-              this.$user.email = response.data.email;
-              this.$user.password = response.data.password;
-              this.$user.address = response.data.address;
-              this.$user.userRole = response.data.userRoles;
-              this.$user.loggedIn = response.data.isLoggedIn;
-              console.log(this.$user);
+              let user = {
+                username: '',
+                email: '',
+                password: '',
+                address: {
+                  street: '',
+                  postalCode: '',
+                  province: '',
+                  country: '',
+                  city: ''
+                },
+                paymentCredentials: [],
+                userRole: [],
+                loggedIn: false,
+              }
+              user = response.data;
+              user.username = response.data.username;
+              user.email = response.data.email;
+              user.password = response.data.password;
+              user.address = response.data.address;
+              user.userRole = response.data.userRoles;
+              user.loggedIn = response.data.isLoggedIn;
+
+              this.$store.commit('setUser', user);
             })
             .catch((error) => { });
         })
@@ -89,6 +107,17 @@ export default {
           alert("Such user does not exist");
         });
         return this.LoggedIn;
+    },
+    loginRouter: function () {
+      this.AXIOS.post(
+        "/user-login?username=".concat(this.userName) +
+        "&password=".concat(this.userPassword)
+      )
+        .then((response) => {
+        })
+        .catch((error) => {
+        });
+      return this.LoggedIn;
     },
   },
 };

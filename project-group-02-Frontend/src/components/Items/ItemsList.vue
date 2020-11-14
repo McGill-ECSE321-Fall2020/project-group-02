@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      {{$username}}
+      {{this.$store.state.user.usernamename}}
     </div>
     <div style="position: relative;">
       <Header></Header>
@@ -132,7 +132,7 @@ export default {
         })
     },
     addToShoppingCart: function (artistUsername, itemName) {
-      this.AXIOS.post('/'.concat(this.$username) + '/shopping-cart/add-item/'.concat(itemName).concat(artistUsername))
+      this.AXIOS.post('/'.concat(this.this.$store.state.user.username) + '/shopping-cart/add-item/'.concat(itemName).concat(artistUsername))
         .then(response => {
         })
         .catch(error => {
@@ -140,7 +140,7 @@ export default {
         })
     },
     removeFromShoppingCart: function (artistUsername, itemName) {
-      this.AXIOS.post('/'.concat(this.$username) + '/shopping-cart/remove-item/'.concat(itemName).concat(artistUsername))
+      this.AXIOS.post('/'.concat(this.this.$store.state.user.username) + '/shopping-cart/remove-item/'.concat(itemName).concat(artistUsername))
         .then(response => {
         })
         .catch(error => {

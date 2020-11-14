@@ -12,34 +12,34 @@
           <a>Home</a>
         </router-link>
       </li>
-      <li v-if="this.$user.userRole.includes('customer')">
+      <!--     <li v-if="this.$store.state.user.userRole.indexOf('customer') > -1">
         <router-link to="/shopping-cart">
         <a>Shopping Cart</a>
         </router-link>
       </li>
-      <li v-if="this.$user.userRole.includes('artist')">
+      <li v-if="this.$store.state.user.userRole.indexOf('artist') > -1">
         <router-link to="/upload-art">
         <a>Upload Artwork</a>
         </router-link>
-      </li>
-      <li v-if="this.$user.email === 'ahmad.siddiqi@hotmail.com'">
+      </li>-->
+      <li v-if="this.$store.state.user.email === 'ahmad.siddiqi@hotmail.com'">
         <router-link to="/create-collection">
         <a>Create Collection</a>
         </router-link>
       </li>
       <li>
-        <router-link :to="{ name:'profile', params: { username: this.$user.username }}">
+        <router-link :to="{ name:'profile', params: { username: this.$store.state.user.username }}">
           <a>Account</a>
         </router-link>
       </li>
       <li>
-        
+
           <a @click="logoutUser">
             <router-link to="/">
-            {{$user}}
+            {{this.$store.state.user}}
             </router-link>
             </a>
-        
+
       </li>
     </ul>
   </nav>
@@ -56,13 +56,13 @@ export default {
   },
   methods: {
     logoutUser: function(){
-      this.AXIOS.post("/user-logout/" .concat($user.username))
+      this.AXIOS.post("/user-logout/" .concat(this.$store.state.user.username))
       .then((response) => {
-        $user.loggedIn = response.data;
-        console.log($user.loggedIn);
+        this.$store.state.user.loggedIn = response.data;
+        console.log(this.$store.state.user.loggedIn);
       })
       .catch((error) => {});
-      
+
   }
 }
 }
