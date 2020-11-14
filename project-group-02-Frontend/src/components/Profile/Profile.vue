@@ -44,7 +44,10 @@
 
       <p class="forgot-password text-right">
         Edit your profile
-        <a href="/#/edit">here</a>
+         <router-link :to="{name: 'edit'}">
+         <a href="/#/edit">here</a>
+      </router-link>
+      
 
       </p>
 
