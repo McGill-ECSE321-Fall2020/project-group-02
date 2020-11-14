@@ -10,28 +10,33 @@
 
       <div class="form-group">
         <label>Username</label>
-        <input @click="findUsername" type="text" id="username" class="form-control form-control-lg" readonly/>
+        <p>{{ $store.state.user.username }}</p>
+          
       </div>
 
       <div class="form-group">
         <label>Email address</label>
-        <input @click="findUserEmail" type="text" id="address" class="form-control form-control-lg" readonly/>
+           <p>{{ $store.state.user.email }}</p>
       </div>
 
       <div class="form-group">
         <label>Password</label>
-        <input @click="findUserPassword" type="text" id="password" class="form-control form-control-lg" readonly/>
+          <p>{{ $store.state.user.password }}</p>
       </div>
 
-      <div class="form-group">
+      <!-- <div v-if="this.$store.state.user.email != 'ahmad.siddiqi@hotmail.com'" class="form-group">
+       
         <label>Address</label>
-        <input @click="findUserAddress" type="text" id="address" class="form-control form-control-lg" readonly/>
+          <p>{{ $store.state.user.address.street }}
+         
+          </p>
+    
       </div>
 
-      <div class="form-group">
+         <div v-if="this.$store.state.user.userRole[0].userRoleId === ((this.$store.state.user.usernmae).concat('customer')).hashCode()" class="form-group">
         <label>Payment Credentials</label>
-        <input @click="findUserCredentials" type="text" id="payment" class="form-control form-control-lg" readonly/>
-      </div>
+        <p>{{ $store.state.user.paymentCredentials }}</p>
+      </div>-->
 
       <router-link :to="{name: 'collectionsList'}">
         <button type="submit" class="btn btn-dark btn-lg btn-block">Visit Our Catalog</button>

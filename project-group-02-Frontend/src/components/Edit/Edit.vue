@@ -12,48 +12,43 @@
             <h3>Change My Address</h3>
             <div class="form-group">
                 <label>Street</label>
-                <input @click="changeUserAddress" type="address" class="form-control form-control-lg" />
+                <input v-model="userStreet" type="address" class="form-control form-control-lg" />
                 <label>Postal Code</label>
-                <input @click="changeUserAddress" type="address" class="form-control form-control-lg" />
+                <input v-model="userPostalCode" type="address" class="form-control form-control-lg" />
                 <label>City</label>
-                <input @click="changeUserAddress" type="address" class="form-control form-control-lg" />
+                <input v-model="userCity" type="address" class="form-control form-control-lg" />
                 <label>Province</label>
-                <input @click="changeUserAddress" type="address" class="form-control form-control-lg" />
+                <input v-model="userProvince" type="address" class="form-control form-control-lg" />
                 <label>Country</label>
-                <input @click="changeUserAddress" type="address" class="form-control form-control-lg" />
+                <input v-model="userCountry" type="address" class="form-control form-control-lg" />
             </div>
       <br>
             <h3>Update My Credentials</h3>
             <div class="form-group">
 
                 <label>Card Holder Name</label>
-                <input @click="changeUserCredentials" type="text" class="form-control form-control-lg"/>
+                <input v-model="cardHolderName" type="text" class="form-control form-control-lg"/>
                 <label>Credit Card Number</label>
-                <input @click="changeUserCredentials" type="text" class="form-control form-control-lg" />
+                <input v-model="creditCardNumber" type="text" class="form-control form-control-lg" />
                 <label>Expiration Date</label>
-                <input @click="changeUserCredentials" type="Date" class="form-control form-control-lg" />
+                <input v-model="expirationDate" type="Date" class="form-control form-control-lg" />
                 <label>Card Verification Code</label>
-                <input @click="changeUserCredentials" type="password" class="form-control form-control-lg" />
+                <input v-model="cvc" type="password" class="form-control form-control-lg" />
             </div>
 
             <router-link :to="{name: 'profile'}">
 
-                    <button type="submit" class="btn btn-dark btn-lg btn-block" >Submit</button>
+                <button    
+                    @click="
+                   setAddress();
+                    setPaymentCredentials();"
+                   type="submit" class="btn btn-dark btn-lg btn-block" >Submit</button>
 
             </router-link>
 
         </form>
     </div>
 </template>
-
-<script>
-    name: "Edit"
-    export default {
-        data() {
-            return {}
-        }
-    }
-</script>
 
 
 
@@ -209,29 +204,28 @@ label {
 
 <script>
 export default {
-    name: 'Profile',
+    name: 'Edit',
     data() {
         return {
-            user: '',
-            email: '',
-            username: '',
-            street: '',
-            postalCode: '',
-            city: '',
-            province: '',
-            country: '',
-            password: '',
-            paymentCredentials: '',
-            error: '',
-            credentials: '',
-            address: ''
+          userName: '',
+            userStreet: '',
+            userPostalCode: '',
+            userProvince: '',
+            userCountry: '',
+            userCity: '',
+            cardHolderName: '',
+            creditCardNumber: '',
+            expirationDate: '',
+            cvc: '',
+            paymentError: ''
+            
         }
     },
 
     created: function () {
-        this.AXIOS.get('/user-by-name' + '/'.concat($username))
+        this.AXIOS.get('/user-by-name' + '/'.concat(this.$store.user.username))
             .then(response => {
-                this.user = $user
+
             })
             .catch(e => {
                 this.error = e;
@@ -239,6 +233,34 @@ export default {
     },
 
     methods: {
+     setAddress: function () {
+  
+      this.AXIOS.post(
+        "/update-user-address/".concat(this.userName) +
+          "?street=".concat(this.userStreet) +
+          "&postalcode=".concat(this.userPostalCode) +
+          "&province=".concat(this.userProvince) +
+          "&country=".concat(this.userCountry) +
+          "&city=".concat(this.userCity)
+      )
+        .then((response) => {})
+        .catch((error) => {
+          alert("Please enter a valid address");
+        });
+    },
+    setPaymentCredentials: function () {
+      this.AXIOS.post(
+        "/update-user-address/".concat(this.$store.state.user.username) +
+          "?cardHolderName=".concat(this.cardHolderName) +
+          "&creditCardNumber=".concat(this.creditCardNumber) +
+          "&expirationDate=".concat(this.expirationDate) +
+          "&cvc=".concat(this.cvc) 
+      )
+        .then((response) => {})
+        .catch((error) => {
+          paymentError = error;
+        });
+    },
     }
 }
 </script>
