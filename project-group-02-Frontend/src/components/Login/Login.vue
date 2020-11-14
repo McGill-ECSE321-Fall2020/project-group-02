@@ -68,6 +68,8 @@ export default {
           this.LoggedIn = response.data;
           if(!this.$store.state.user.loggedIn){
               alert("Invalid User Credentials");
+          } else {
+            this.$router.push('/collections')
           }
           this.AXIOS.get("/user-by-name/".concat(this.userName))
             .then((response) => {
@@ -97,9 +99,7 @@ export default {
               this.$store.commit('setUser', user);
             })
             .catch((error) => {
-              this.$router.push('/login')
             });
-          this.$router.push('/collections')
         })
         .catch((error) => {
           alert("Such user does not exist");
