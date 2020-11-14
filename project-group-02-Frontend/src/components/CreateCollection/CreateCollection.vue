@@ -16,7 +16,6 @@
             type="text"
             name="c_name"
           />
-          <p>{{ c_name }}</p>
 
           <label>Collection Description</label>
           <textarea
@@ -25,14 +24,13 @@
             name="postContent"
             rows="8"
           ></textarea>
-          <p>{{ c_description }}</p>
 
           <div class="">
             <label for="exampleInputFile"
               >Upload Collection image <b>(URL Only)</b></label
             >
             <input
-              v-model="image_URL"
+              v-model="c_imageURL"
               id="exampleInputFile"
               class="txtbox form-control"
               type="text"

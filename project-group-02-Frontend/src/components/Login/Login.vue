@@ -69,41 +69,12 @@ export default {
           if(!this.$store.state.user.loggedIn){
               alert("Invalid User Credentials");
           } else {
-            this.$router.push('/collections')
+            this.$router.push('/collections');
+            this.$store.state.user.username = this.userName;
           }
-          this.AXIOS.get("/user-by-name/".concat(this.userName))
-            .then((response) => {
-              let user = {
-                username: '',
-                email: '',
-                password: '',
-                address: {
-                  street: '',
-                  postalCode: '',
-                  province: '',
-                  country: '',
-                  city: ''
-                },
-                paymentCredentials: [],
-                userRole: [],
-                loggedIn: false,
-              }
-              user = response.data;
-              user.username = response.data.username;
-              user.email = response.data.email;
-              user.password = response.data.password;
-              user.address = response.data.address;
-              user.userRole = response.data.userRoles;
-              user.loggedIn = response.data.isLoggedIn;
-
-              this.$store.commit('setUser', user);
-            })
-            .catch((error) => {
-            });
         })
         .catch((error) => {
           alert("Such user does not exist");
-          this.$router.push('/login')
         });
     },
   },

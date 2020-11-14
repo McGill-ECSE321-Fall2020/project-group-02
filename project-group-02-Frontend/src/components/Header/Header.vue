@@ -1,6 +1,3 @@
-<script src="./artGallery.js">
-</script>
-
 <template>
   <nav>
     <ul>
@@ -12,7 +9,7 @@
           <a>Home</a>
         </router-link>
       </li>
-      <!--     <li v-if="this.$store.state.user.userRole.indexOf('customer') > -1">
+<!--      <li v-if="this.$store.state.user.userRole.indexOf('customer') > -1">
         <router-link to="/shopping-cart">
         <a>Shopping Cart</a>
         </router-link>
@@ -33,13 +30,11 @@
         </router-link>
       </li>
       <li>
-
           <a @click="logoutUser">
             <router-link to="/">
-            {{this.$store.state.user}}
+              Logout
             </router-link>
             </a>
-
       </li>
     </ul>
   </nav>
@@ -50,8 +45,38 @@ import Login from "../Login/Login";
 
 export default {
   name: 'Header',
+  created() {
+    this.AXIOS.get("/user-by-name/".concat(this.$store.state.user.username))
+      .then((response) => {
+        let user = {
+          username: '',
+          email: '',
+          password: '',
+          address: {
+            street: '',
+            postalCode: '',
+            province: '',
+            country: '',
+            city: ''
+          },
+          paymentCredentials: [],
+          userRole: [],
+          loggedIn: false,
+        }
+        user = response.data;
+        user.username = response.data.username;
+        user.email = response.data.email;
+        user.password = response.data.password;
+        user.address = response.data.address;
+        user.userRole = response.data.userRoles;
+        user.loggedIn = response.data.isLoggedIn;
+
+        this.$store.commit('setUser', user);
+      })
+  },
   data() {
     return {
+      userRole: []
     }
   },
   methods: {
@@ -62,7 +87,6 @@ export default {
         console.log(this.$store.state.user.loggedIn);
       })
       .catch((error) => {});
-
   }
 }
 }

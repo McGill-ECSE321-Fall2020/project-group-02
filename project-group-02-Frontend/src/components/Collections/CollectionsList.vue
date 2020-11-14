@@ -12,9 +12,9 @@
             class="block no-underline p-3 text-grey-dark text-capitalize"
           >
             <Collection
-              :collection-name="collection.name"
-              :collection-description="collection.description"
-              collection-image-url="https://images.unsplash.com/photo-1479660656269-197ebb83b540?dpr=2&auto=compress,format&fit=crop&w=1199&h=798&q=80&cs=tinysrgb&crop="
+              :collectionName="collection.collectionName"
+              :collectionDescription="collection.description"
+              :collectionImageUrl="collection.pathToImage"
             ></Collection>
           </router-link>
         </div>
@@ -46,17 +46,20 @@ export default {
     return {
       noCollectionFound: "No collections were found",
       collectionError: "",
-      collections: [
-        { name: "Dogs", description: "Collection description" },
-        { name: "Cats", description: "Collection description" },
-        { name: "Monkeys", description: "Collection description" },
-        { name: "Giraffes", description: "Collection description" },
-        { name: "Elephants", description: "Collection description" },
-        { name: "Lions", description: "Collection description" },
-      ],
+      collections: [],
     };
   },
   created: function () {
+    this.AXIOS.get('/collections')
+      .then(response => {
+        this.collections = response.data;
+      })
+      .catch(error => {
+        console.log(error);
+        this.collectionError = error;
+      })
+  },
+  mounted: function () {
     this.AXIOS.get('/collections')
     .then(response => {
       this.collections = response.data;
