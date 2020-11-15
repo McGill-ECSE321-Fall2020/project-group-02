@@ -39,11 +39,11 @@
         </router-link>
           </div>
           <div class="column">
-            <p>Subtotal: {{ $totalPrice * 0.85 }}</p>
-            <p>Taxes: {{ $totalPrice * 0.15 }}</p>
+            <p>Subtotal: {{ $store.state.totalPrice * 0.85 }}</p>
+            <p>Taxes: {{ $store.state.totalPrice * 0.15 }}</p>
             <p>____________________</p>
             <label> </label>
-            <h3>Total: {{ $totalPrice }}</h3>
+            <h3>Total: {{ $store.state.totalPrice }}</h3>
           </div>
         </div>
       </div>

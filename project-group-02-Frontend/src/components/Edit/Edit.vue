@@ -1,13 +1,10 @@
-<script src="./artGallery.js">
-</script>
-
 <template>
   <div class="vue-template vertical-center-edit inner-block">
     <form>
-      <br />
+      <br/>
       <h1 style="text-align: center">Edit My Profile</h1>
 
-      <br />
+      <br/>
 
       <h3>Change My Address</h3>
       <div class="form-group">
@@ -42,35 +39,117 @@
           class="form-control form-control-lg"
         />
       </div>
-      <br />
-      <!--<h3>Update My Credentials</h3>
-            <div class="form-group">
-
-                <label>Card Holder Name</label>
-                <input v-model="cardHolderName" type="text" class="form-control form-control-lg"/>
-                <label>Credit Card Number</label>
-                <input v-model="creditCardNumber" type="text" class="form-control form-control-lg" />
-                <label>Expiration Date</label>
-                <input v-model="expirationDate" type="Date" class="form-control form-control-lg" />
-                <label>Card Verification Code</label>
-                <input v-model="cvc" type="password" class="form-control form-control-lg" />
-            </div>-->
-
-      <!--<router-link :to="{ name: 'profile' }">-->
-        <button
-          @click="setAddress()"
-          :disabled="!userCity||!userStreet||!userPostalCode||!userProvince||!userCountry"
-          type="submit"
-          class="btn btn-dark btn-lg btn-block"
-        >
-          Submit
-        </button>
-     <!-- </router-link>-->
+      <br/>
+      <div v-if="
+          this.$store.state.user.userRole[0].userRoleId ===
+          this.$store.state.user.username.concat('customer').hashCode()
+        ">
+        <h3>Update My Credentials</h3>
+        <div class="form-group">
+          <label>Card Holder Name</label>
+          <input placeholder="Optional" v-model="cardHolderName" type="text" class="form-control form-control-lg"/>
+          <label>Credit Card Number</label>
+          <input placeholder="Optional" v-model="creditCardNumber" type="number" class="form-control form-control-lg"/>
+          <label>Expiration Date</label>
+          <input v-model="expirationDate" type="Date" class="form-control form-control-lg"/>
+          <label>Card Verification Code</label>
+          <input placeholder="Optional" v-model="cvc" type="number" class="form-control form-control-lg"/>
+        </div>
+      </div>
+      <button
+        @click="setAddress(); setPaymentCredentials();"
+        :disabled="!userCity||!userStreet||!userPostalCode||!userProvince||!userCountry"
+        type="submit"
+        class="btn btn-dark btn-lg btn-block"
+      >
+        Submit
+      </button>
     </form>
   </div>
 </template>
 
 
+<script>
+export default {
+  name: "Edit",
+  data() {
+    return {
+      userStreet: "",
+      userPostalCode: "",
+      userProvince: "",
+      userCountry: "",
+      userCity: "",
+      cardHolderName: "",
+      creditCardNumber: "",
+      expirationDate: "",
+      cvc: "",
+    };
+  },
+  methods: {
+    setAddress: function () {
+      this.AXIOS.post(
+        "/update-user-address/".concat(this.$store.state.user.username) +
+        "?street=".concat(this.userStreet) +
+        "&postalcode=".concat(this.userPostalCode) +
+        "&province=".concat(this.userProvince) +
+        "&country=".concat(this.userCountry) +
+        "&city=".concat(this.userCity)
+      )
+        .then((response) => {
+          this.$store.state.user.address[0] = response.data;
+        })
+        .catch((error) => {
+          alert("Please enter a valid address");
+        });
+    },
+    setPaymentCredentials: function () {
+      this.AXIOS.post(
+        '/update-payment-credentials', {},
+        {
+          params: {
+            username: this.$store.state.user.username,
+            cardname: this.cardHolderName,
+            ccnumber: this.creditCardNumber,
+            expdate: this.expirationDate,
+            cvc: this.cvc
+          }
+        }
+      )
+        .then((response) => {
+          // Store in a component data variable
+          let user = {
+            username: "",
+            email: "",
+            password: "",
+            address: {
+              street: "",
+              postalCode: "",
+              province: "",
+              country: "",
+              city: "",
+            },
+            paymentCredentials: {},
+            userRole: [],
+            loggedIn: false,
+          };
+          user = this.$store.state.user;
+          user.username = this.$store.state.user.username;
+          user.email = this.$store.state.user.email;
+          user.password = this.$store.state.user.password;
+          user.address = this.$store.state.user.address;
+          user.userRole = this.$store.state.user.userRole;
+          user.loggedIn = this.$store.state.user.isLoggedIn;
+          user.paymentCredentials = response.data;
+
+          this.$store.commit("setUser", user);
+        })
+        .catch((error) => {
+          alert('Enter valid payment credentials');
+        });
+    },
+  },
+};
+</script>
 
 
 <style>
@@ -126,14 +205,13 @@ html,
   flex-direction: column;
   position: absolute;
   left: 50%;
-  top: 80%;
+  top: 67%;
   transform: translate(-50%, -50%);
   height: 160%;
 }
 
 .inner-block {
   width: 450px;
-  margin: auto;
   background: #ffffff;
   box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
   padding: 40px 55px 45px 55px;
@@ -183,6 +261,7 @@ label {
   margin: 0;
   padding: 0;
 }
+
 .social-icons ul li {
   display: inline-block;
   zoom: 1;
@@ -202,6 +281,7 @@ label {
   margin: 0 5px;
   text-decoration: none;
 }
+
 .social-icons ul li a i {
   -webkit-transition: all 0.2s ease-in;
   -moz-transition: all 0.2s ease-in;
@@ -216,54 +296,3 @@ label {
   color: #222222;
 }
 </style>
-
-
-<script>
-export default {
-  name: "Edit",
-  data() {
-    return {
-      userName: "",
-      userStreet: "",
-      userPostalCode: "",
-      userProvince: "",
-      userCountry: "",
-      userCity: "",
-      cardHolderName: "",
-      creditCardNumber: "",
-      expirationDate: "",
-      cvc: "",
-      paymentError: "",
-    };
-  },
-  methods: {
-    setAddress: function () {
-      this.AXIOS.post(
-        "/update-user-address/".concat(this.userName) +
-          "?street=".concat(this.userStreet) +
-          "&postalcode=".concat(this.userPostalCode) +
-          "&province=".concat(this.userProvince) +
-          "&country=".concat(this.userCountry) +
-          "&city=".concat(this.userCity)
-      )
-        .then((response) => {})
-        .catch((error) => {
-          alert("Please enter a valid address");
-        });
-    },
-    /* setPaymentCredentials: function () {
-      this.AXIOS.post(
-        "/update-user-address/".concat(this.$store.state.user.username) +
-          "?cardHolderName=".concat(this.cardHolderName) +
-          "&creditCardNumber=".concat(this.creditCardNumber) +
-          "&expirationDate=".concat(this.expirationDate) +
-          "&cvc=".concat(this.cvc) 
-      )
-        .then((response) => {})
-        .catch((error) => {
-          paymentError = error;
-        });
-    },*/
-  },
-};
-</script>

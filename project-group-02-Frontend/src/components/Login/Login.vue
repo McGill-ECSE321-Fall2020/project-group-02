@@ -83,7 +83,7 @@ export default {
                   country: "",
                   city: "",
                 },
-                paymentCredentials: [],
+                paymentCredentials: {},
                 userRole: [],
                 loggedIn: false,
               };
@@ -95,11 +95,7 @@ export default {
               user.userRole = response.data.userRole;
               user.loggedIn = response.data.isLoggedIn;
 
-              //this.response=response;
-              //this.response.data=response.data.json();
-
               this.$store.commit("setUser", user);
-
             });
           }
         })
