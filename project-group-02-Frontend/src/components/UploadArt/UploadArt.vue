@@ -23,7 +23,8 @@
               <input
                 v-model="art_height"
                 class="txtbox form-control"
-                type="text"
+                type="number"
+                min="0"
               />
             </div>
 
@@ -32,7 +33,8 @@
               <input
                 v-model="art_width"
                 class="txtbox form-control"
-                type="text"
+                type="number"
+                min="0"
               />
             </div>
 
@@ -41,7 +43,8 @@
               <input
                 v-model="art_breadth"
                 class="txtbox form-control"
-                type="text"
+                type="number"
+                min="0"
               />
             </div>
 
@@ -61,7 +64,8 @@
               <input
                 v-model="art_price"
                 class="txtbox form-control"
-                type="text"
+                type="number"
+                min="0"
               />
             </div>
 
@@ -145,13 +149,6 @@ export default {
             imageUrl: this.art_imageURL,
           },
         }
-        /*  "?height=".concat(this.art_height) +
-          "&width=".concat(this.art_width) +
-          "&breadth=".concat(this.art_breadth) +
-          "&creationDate=".concat(this.art_creation_date) +
-          "&description=".concat(this.art_description) +
-          "&price=".concat(this.art_price) +
-          "&imageUrl=".concat(this.art_imageURL) */
       )
         .then((response) => {
           this.artwork = response.data;
