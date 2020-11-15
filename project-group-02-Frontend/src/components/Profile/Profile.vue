@@ -11,7 +11,7 @@
       <div class="form-group">
         <label>Username</label>
         <p>{{ $store.state.user.username }}</p>
-          
+
       </div>
 
       <div class="form-group">
@@ -25,12 +25,12 @@
       </div>
 
       <!-- <div v-if="this.$store.state.user.email != 'ahmad.siddiqi@hotmail.com'" class="form-group">
-       
+
         <label>Address</label>
           <p>{{ $store.state.user.address.street }}
-         
+
           </p>
-    
+
       </div>
 
          <div v-if="this.$store.state.user.userRole[0].userRoleId === ((this.$store.state.user.usernmae).concat('customer')).hashCode()" class="form-group">
@@ -47,7 +47,7 @@
          <router-link :to="{name: 'edit'}">
          <a href="/#/edit">here</a>
       </router-link>
-      
+
 
       </p>
 

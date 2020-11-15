@@ -33,7 +33,7 @@
           <a @click="logoutUser">
             <router-link to="/">
             Logout
-            <!--{{this.$store.state.user}}
+            <!--{{this.$store.state.user}}-->
               <!--{{this.$store.state.user.userRole[0].userRoleId}}-->
             </router-link>
             </a>
@@ -47,10 +47,10 @@ import Login from "../Login/Login";
 
 export default {
   name: 'Header',
-  
+
   data() {
     return {
-      response: {} 
+      response: {}
     }
   },
   methods: {

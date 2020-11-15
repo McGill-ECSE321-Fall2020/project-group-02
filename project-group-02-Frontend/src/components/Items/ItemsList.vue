@@ -47,8 +47,8 @@
       <div class="offset-md-2 col-md-8">
         <b-card-group deck class="container">
           <div v-for="item in items" :key="item.name" style="margin:20px;">
-            <Item :itemName="item.name" :artistName="item.artist.name" :itemImageUrl="item.pathToImage"
-                  :itemPrice="item.itemPrice" @removefromshoppingcart="(artistUsername, itemName)=>this.removeFromShoppingCart(artistUsername, itemName)"
+            <Item :itemName="item.name" :artistName="item.artist.username" :itemImageUrl="item.pathToImage"
+                  :itemPrice="item.price" @removefromshoppingcart="(artistUsername, itemName)=>this.removeFromShoppingCart(artistUsername, itemName)"
                   @addtoshoppingcart="(artistUsername, itemName)=>this.addToShoppingCart(artistUsername, itemName)"
             @deleteitem="(artistUsername, itemName)=>this.deleteItem(artistUsername, itemName)"></Item>
             <br>
@@ -89,22 +89,71 @@ export default {
     }
   },
   created: function () {
-    this.AXIOS.get('/'.concat("Nights Over Board"))
+    this.collection = this.$route.params.collection;
+    this.AXIOS.get('/'.concat(this.collection))
       .then(response => {
         this.items = response.data;
       })
       .catch(error => {
         this.artworkError = error;
       })
+
+    // Find the artists for each item, because item doesn't have a direct associate with a user.
+    // It only contains the username of the artist in the itemId encoded as a hashcode.
+    // Here we find the users and try to match the username in the itemId with the username of the found
+    // user which corresponds to the artist.
+
+    let allUsers = [];
+
+    this.AXIOS.get('/users')
+    .then(response => {
+      allUsers = response.data;
+
+      for (let item of this.items) {
+        for (let user of allUsers) {
+          if ((user.username + item.name).hashCode() === item.itemId) {
+            item.artist = user;
+          }
+        }
+      }
+    })
+    .catch(error => {
+     // alert('There was an error fetching the items on our part. Try to reload the page.');
+    });
   },
-  beforeUpdate: function () {
-    this.AXIOS.get('/'.concat("Nights Over Board"))
+  beforeMount: function () {
+    this.collection = this.$route.params.collection;
+    this.AXIOS.get('/'.concat(this.collection))
       .then(response => {
         this.items = response.data;
       })
       .catch(error => {
         this.artworkError = error;
       })
+
+
+    // Find the artists for each item, because item doesn't have a direct associate with a user.
+    // It only contains the username of the artist in the itemId encoded as a hashcode.
+    // Here we find the users and try to match the username in the itemId with the username of the found
+    // user which corresponds to the artist.
+
+    let allUsers = [];
+
+    this.AXIOS.get('/users')
+      .then(response => {
+        allUsers = response.data;
+
+        for (let item of this.items) {
+          for (let user of allUsers) {
+            if ((user.username + item.name).hashCode() === item.itemId) {
+              item.artist = user;
+            }
+          }
+        }
+      })
+      .catch(error => {
+      //  alert('There was an error fetching the items on our part. Try to reload the page.');
+      });
   },
   methods: {
     searchItemsByArtist: function () {

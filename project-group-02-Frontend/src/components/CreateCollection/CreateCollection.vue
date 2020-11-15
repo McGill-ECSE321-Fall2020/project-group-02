@@ -16,7 +16,6 @@
             type="text"
             name="c_name"
           />
-          <p>{{ c_name }}</p>
 
           <label>Collection Description</label>
           <textarea

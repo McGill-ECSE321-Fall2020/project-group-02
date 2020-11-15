@@ -22,7 +22,7 @@
       </div>
 
       <div class="form-group">
-        <label>Password <b style="color:red;">*</b></label>
+        <label>Password <b style="color:#ff0000;">*</b></label>
         <input
           v-model="userPassword"
           type="password"
