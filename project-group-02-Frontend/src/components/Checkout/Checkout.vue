@@ -21,10 +21,9 @@
 
         <label> </label>
         <label class="cardnumber">Choose card:</label>
-        <select name="select card" id="userCard">
-          <option value="Card1">1234 5678 9123 4567</option>
-          <option value="Card2">1234 5678 9512 5879</option>
-        </select>
+        <h2 class="CCN">
+          {{ $store.state.user.paymentCredentials.ccNumber }}
+        </h2>
       </div>
       <div class="receipt">
         <div class="row">
@@ -86,7 +85,7 @@ label {
   opacity: 0.4;
 }
 
-select {
+.CCN {
   padding-right: 50px;
   font-size: 20px;
   font-family: "Work Sans", sans-serif;
