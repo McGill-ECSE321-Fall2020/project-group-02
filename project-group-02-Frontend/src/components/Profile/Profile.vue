@@ -4,61 +4,115 @@
 <template>
   <div class="vue-template vertical-center-profile inner-block">
     <form>
-      <br>
-      <h1 style="text-align:center">My Profile</h1>
-      <br>
+      <br />
+      <h1 style="text-align: center">My Profile</h1>
+      <br />
 
       <div class="form-group">
         <label>Username</label>
-        <p>{{ $store.state.user.username }}</p>
-          
+        <input
+          :value="$store.state.user.username"
+          type="text"
+          id="username"
+          class="form-control form-control-lg"
+          readonly
+        />
       </div>
 
       <div class="form-group">
         <label>Email address</label>
-           <p>{{ $store.state.user.email }}</p>
+        <input
+          :value="$store.state.user.email"
+          type="text"
+          id="address"
+          class="form-control form-control-lg"
+          readonly
+        />
       </div>
 
       <div class="form-group">
         <label>Password</label>
-          <p>{{ $store.state.user.password }}</p>
+        <input
+          :value="$store.state.user.password"
+          type="text"
+          id="address"
+          class="form-control form-control-lg"
+          readonly
+        />
       </div>
 
-      <!-- <div v-if="this.$store.state.user.email != 'ahmad.siddiqi@hotmail.com'" class="form-group">
-       
+      <div
+        v-if="this.$store.state.user.email != 'ahmad.siddiqi@hotmail.com'"
+        class="form-group"
+      >
         <label>Address</label>
-          <p>{{ $store.state.user.address.street }}
-         
-          </p>
-    
+        <input
+          :value="
+            $store.state.user.addresses[0].street +
+            ', ' +
+            $store.state.user.addresses[0].postalCode
+          "
+          type="text"
+          id="address"
+          class="form-control form-control-lg"
+          readonly
+        />
+        <input
+          :value="
+            $store.state.user.addresses[0].city +
+            ', ' +
+            $store.state.user.addresses[0].province +
+            ', ' +
+            $store.state.user.addresses[0].country
+          "
+          type="text"
+          id="address"
+          class="form-control form-control-lg"
+          readonly
+        />
       </div>
 
-         <div v-if="this.$store.state.user.userRole[0].userRoleId === ((this.$store.state.user.usernmae).concat('customer')).hashCode()" class="form-group">
+      <div
+        v-if="
+          this.$store.state.user.userRole[0].userRoleId ===
+          this.$store.state.user.username.concat('customer').hashCode()
+        "
+        class="form-group"
+      >
         <label>Payment Credentials</label>
-        <p>{{ $store.state.user.paymentCredentials }}</p>
-      </div>-->
+        <input
+          :value="
+            $store.state.user.paymentCredentials
+          "
+          type="text"
+          id="address"
+          class="form-control form-control-lg"
+          readonly
+        />
+  
+      </div>
 
-      <router-link :to="{name: 'collectionsList'}">
-        <button type="submit" class="btn btn-dark btn-lg btn-block">Visit Our Catalog</button>
+      <router-link :to="{ name: 'collectionsList' }">
+        <button type="submit" class="btn btn-dark btn-lg btn-block">
+          Visit Our Catalog
+        </button>
       </router-link>
 
-      <p class="forgot-password text-right">
-        Edit your profile
-         <router-link :to="{name: 'edit'}">
-         <a href="/#/edit">here</a>
-      </router-link>
-      
+      <div v-if="this.$store.state.user.email != 'ahmad.siddiqi@hotmail.com'">
+        <p class="forgot-password text-right">
+          Edit your profile
+          <router-link :to="{ name: 'edit' }">
+            <a href="/#/edit">here</a>
+          </router-link>
+        </p>
+      </div>
 
-      </p>
-
-      <div v-if="userError"> {{ userError }}</div>
-
+      <div v-if="userError">{{ userError }}</div>
     </form>
   </div>
 </template>
 
 <style>
-
 body {
   background: #fff !important;
   min-height: 100vh;
@@ -92,7 +146,6 @@ html,
   height: 65%;
 }
 
-
 .vertical-center-profile {
   display: flex;
   text-align: left;
@@ -124,7 +177,7 @@ html,
   box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
   padding: 40px 55px 45px 55px;
   border-radius: 15px;
-  transition: all .3s;
+  transition: all 0.3s;
 }
 
 .vertical-center .form-control:focus {
@@ -203,84 +256,82 @@ label {
   transition: none;
   color: #222222;
 }
-
 </style>
 
 
 <script>
 export default {
-  name: 'Profile',
+  name: "Profile",
   data() {
     return {
-      user: '',
-      email: '',
-      username: '',
-      address: '',
-      password: '',
-      paymentCredentials: '',
-      error: '',
-      credentials: '',
-      userError: ""
-    }
+      user: "",
+      email: "",
+      username: "",
+      address: "",
+      password: "",
+      paymentCredentials: "",
+      error: "",
+      credentials: "",
+      userError: "",
+    };
   },
   created: function () {
-    this.user = new ApplicationUserDTO()
+    this.user = new ApplicationUserDTO();
 
-    AXIOS.get('/user-by-name/'.concat($username))
-      .then(response => {
+    AXIOS.get("/user-by-name/".concat($username))
+      .then((response) => {
         this.user = response.data;
       })
-      .catch(error => {
+      .catch((error) => {
         this.userError = "There was a problem fetching the user information";
-      })
+      });
   },
   methods: {
     findUsername: function () {
-      this.AXIOS.get('/user-by-name' + '/'.concat($username))
-        .then(response => {
-          this.username = $username
+      this.AXIOS.get("/user-by-name" + "/".concat($username))
+        .then((response) => {
+          this.username = $username;
         })
-        .catch(e => {
+        .catch((e) => {
           this.error = e;
         });
     },
     findUserEmail: function () {
-      this.AXIOS.get('/user-by-name' + '/'.concat($username))
-        .then(response => {
-          this.email = $user.email
+      this.AXIOS.get("/user-by-name" + "/".concat($username))
+        .then((response) => {
+          this.email = $user.email;
         })
-        .catch(e => {
+        .catch((e) => {
           this.error = e;
         });
     },
     findUserPassword: function () {
-      this.AXIOS.get('/user-by-name' + '/'.concat($username))
-        .then(response => {
-          this.password = $user.password
+      this.AXIOS.get("/user-by-name" + "/".concat($username))
+        .then((response) => {
+          this.password = $user.password;
         })
-        .catch(e => {
+        .catch((e) => {
           this.error = e;
         });
     },
     findUserAddress: function () {
-      this.AXIOS.get('/user-by-name' + '/'.concat($username))
-        .then(response => {
-          this.address = $user.address
+      this.AXIOS.get("/user-by-name" + "/".concat($username))
+        .then((response) => {
+          this.address = $user.address;
         })
-        .catch(e => {
+        .catch((e) => {
           this.error = e;
         });
     },
     findUserCredentials: function () {
-      this.AXIOS.get('/user-by-name' + '/'.concat($username))
-        .then(response => {
-          this.credentials = $user.credentials
+      this.AXIOS.get("/user-by-name" + "/".concat($username))
+        .then((response) => {
+          this.credentials = $user.credentials;
         })
-        .catch(e => {
+        .catch((e) => {
           this.error = e;
         });
     },
-  }
-}
-
+  },
+};
 </script>

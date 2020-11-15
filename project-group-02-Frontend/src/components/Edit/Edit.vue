@@ -2,28 +2,48 @@
 </script>
 
 <template>
-    <div class="vue-template vertical-center-edit inner-block">
-        <form>
-            <br>
-            <h1 style="text-align:center">Edit My Profile</h1>
+  <div class="vue-template vertical-center-edit inner-block">
+    <form>
+      <br />
+      <h1 style="text-align: center">Edit My Profile</h1>
 
-            <br>
+      <br />
 
-            <h3>Change My Address</h3>
-            <div class="form-group">
-                <label>Street</label>
-                <input v-model="userStreet" type="address" class="form-control form-control-lg" />
-                <label>Postal Code</label>
-                <input v-model="userPostalCode" type="address" class="form-control form-control-lg" />
-                <label>City</label>
-                <input v-model="userCity" type="address" class="form-control form-control-lg" />
-                <label>Province</label>
-                <input v-model="userProvince" type="address" class="form-control form-control-lg" />
-                <label>Country</label>
-                <input v-model="userCountry" type="address" class="form-control form-control-lg" />
-            </div>
-      <br>
-            <h3>Update My Credentials</h3>
+      <h3>Change My Address</h3>
+      <div class="form-group">
+        <label>Street</label>
+        <input
+          v-model="userStreet"
+          type="text"
+          class="form-control form-control-lg"
+        />
+        <label>Postal Code</label>
+        <input
+          v-model="userPostalCode"
+          type="text"
+          class="form-control form-control-lg"
+        />
+        <label>City</label>
+        <input
+          v-model="userCity"
+          type="text"
+          class="form-control form-control-lg"
+        />
+        <label>Province</label>
+        <input
+          v-model="userProvince"
+          type="text"
+          class="form-control form-control-lg"
+        />
+        <label>Country</label>
+        <input
+          v-model="userCountry"
+          type="text"
+          class="form-control form-control-lg"
+        />
+      </div>
+      <br />
+      <!--<h3>Update My Credentials</h3>
             <div class="form-group">
 
                 <label>Card Holder Name</label>
@@ -34,27 +54,26 @@
                 <input v-model="expirationDate" type="Date" class="form-control form-control-lg" />
                 <label>Card Verification Code</label>
                 <input v-model="cvc" type="password" class="form-control form-control-lg" />
-            </div>
+            </div>-->
 
-            <router-link :to="{name: 'profile'}">
-
-                <button    
-                    @click="
-                   setAddress();
-                    setPaymentCredentials();"
-                   type="submit" class="btn btn-dark btn-lg btn-block" >Submit</button>
-
-            </router-link>
-
-        </form>
-    </div>
+      <!--<router-link :to="{ name: 'profile' }">-->
+        <button
+          @click="setAddress()"
+          :disabled="!userCity||!userStreet||!userPostalCode||!userProvince||!userCountry"
+          type="submit"
+          class="btn btn-dark btn-lg btn-block"
+        >
+          Submit
+        </button>
+     <!-- </router-link>-->
+    </form>
+  </div>
 </template>
 
 
 
 
 <style>
-
 body {
   background: #fff !important;
   min-height: 100vh;
@@ -88,7 +107,6 @@ html,
   height: 65%;
 }
 
-
 .vertical-center-profile {
   display: flex;
   text-align: left;
@@ -113,7 +131,6 @@ html,
   height: 160%;
 }
 
-
 .inner-block {
   width: 450px;
   margin: auto;
@@ -121,7 +138,7 @@ html,
   box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
   padding: 40px 55px 45px 55px;
   border-radius: 15px;
-  transition: all .3s;
+  transition: all 0.3s;
 }
 
 .vertical-center .form-control:focus {
@@ -198,43 +215,29 @@ label {
   transition: none;
   color: #222222;
 }
-
 </style>
 
 
 <script>
 export default {
-    name: 'Edit',
-    data() {
-        return {
-          userName: '',
-            userStreet: '',
-            userPostalCode: '',
-            userProvince: '',
-            userCountry: '',
-            userCity: '',
-            cardHolderName: '',
-            creditCardNumber: '',
-            expirationDate: '',
-            cvc: '',
-            paymentError: ''
-            
-        }
-    },
-
-    created: function () {
-        this.AXIOS.get('/user-by-name' + '/'.concat(this.$store.user.username))
-            .then(response => {
-
-            })
-            .catch(e => {
-                this.error = e;
-            });
-    },
-
-    methods: {
-     setAddress: function () {
-  
+  name: "Edit",
+  data() {
+    return {
+      userName: "",
+      userStreet: "",
+      userPostalCode: "",
+      userProvince: "",
+      userCountry: "",
+      userCity: "",
+      cardHolderName: "",
+      creditCardNumber: "",
+      expirationDate: "",
+      cvc: "",
+      paymentError: "",
+    };
+  },
+  methods: {
+    setAddress: function () {
       this.AXIOS.post(
         "/update-user-address/".concat(this.userName) +
           "?street=".concat(this.userStreet) +
@@ -248,7 +251,7 @@ export default {
           alert("Please enter a valid address");
         });
     },
-    setPaymentCredentials: function () {
+    /* setPaymentCredentials: function () {
       this.AXIOS.post(
         "/update-user-address/".concat(this.$store.state.user.username) +
           "?cardHolderName=".concat(this.cardHolderName) +
@@ -260,7 +263,7 @@ export default {
         .catch((error) => {
           paymentError = error;
         });
-    },
-    }
-}
+    },*/
+  },
+};
 </script>
