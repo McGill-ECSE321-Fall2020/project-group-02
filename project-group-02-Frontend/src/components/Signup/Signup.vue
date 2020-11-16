@@ -91,18 +91,18 @@
         </div>
       </div>
 
-      <button
+      <a href=""
         v-if="validate"
-        @click="createUser"
+        @click.prevent="createUser"
         type="submit"
         class="btn btn-dark btn-lg btn-block"
       >
         Sign Up
-      </button>
+      </a>
 
-        <button
+        <a href=""
           v-if="!validate"
-          @click="
+          @click.prevent="
             setAddressAndUpdateBalance();
             setUserRole();
           "
@@ -111,7 +111,7 @@
           class="btn btn-dark btn-lg btn-block continue"
         >
           Confirm
-        </button>
+        </a>
 
       <p class="forgot-password text-right" style="margin-bottom: 20px">
         Already registered

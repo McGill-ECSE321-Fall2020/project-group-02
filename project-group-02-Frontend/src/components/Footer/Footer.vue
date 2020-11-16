@@ -19,13 +19,13 @@
           <div class="icons">
             <ul>
               <li>
-                <a class=" icon-location icons " href="#"> <i class="fas fa-map-marker-alt"></i> </a>
+                <a class="icon-location icons" href="#"> <i class="fas"></i> </a>
               </li>
               <li>
-                <a class="icon-phone icons " href="#"> <i class="fas fa-phone"></i> </a>
+                <a class="icon-phone icons" href="#"> <i class="fas fa-phone"></i> </a>
               </li>
               <li>
-                <a class="icon-email icons " href="#"> <i class="fas fa-envelope-square"></i> </a>
+                <a class="icon-email icons" href="#"> <i class="fas fa-envelope-square"></i> </a>
               </li>
             </ul>
           </div>

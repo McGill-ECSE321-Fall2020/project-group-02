@@ -359,12 +359,12 @@ public class ProjectGroup02Service {
     try {
       artist = artistRepository.findByuserRoleId((username + "artist").hashCode());
     } catch (Exception e) {
-      throw new Exception("User must be a artist");
+      throw new Exception("User must be an artist");
     }
 
     for (Item item : artist.getItem()) {
       if (item.getName().equals(artworkName))
-        throw new Exception("Artist's items' name must be unique");
+        throw new Exception("Item name must be unique");
     }
 
     Item item = new Item();

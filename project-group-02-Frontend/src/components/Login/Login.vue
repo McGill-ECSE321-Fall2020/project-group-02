@@ -20,14 +20,14 @@
         />
       </div>
 
-      <button
-        @click="loginUser"
+      <a href=""
+        @click.prevent="loginUser"
         type="submit"
         class="btn btn-dark btn-lg btn-block"
         :disabled="!userName || !userPassword"
       >
         Sign In
-      </button>
+      </a>
     </form>
   </div>
 </template>
