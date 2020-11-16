@@ -57,20 +57,20 @@ Table 3: Project Contributors', roles and hours contributed for the Deliverable 
 +--------------------+-----------------------+-------------------+
 |    Contributors    |         Roles         | Hours Contributed |
 +--------------------+-----------------------+-------------------+
-| Mohamed Ryad Ammar |   Frontend Developer  |         30        |
+| Mohamed Ryad Ammar |   Frontend Developer  |         44        |
 |                    | Technical Coordinator |                   |
 +--------------------+-----------------------+-------------------+
-|   Asmaa Jerroumi   |   Frontend Developer  |         30        |
+|   Asmaa Jerroumi   |   Frontend Developer  |         44        |
 |                    | Project Documentation |                   |
 +--------------------+-----------------------+-------------------+
-|    Ahmad Siddiqi   |   Frontend Developer  |         30        |
+|    Ahmad Siddiqi   |   Frontend Developer  |         44        |
 |                    |    Software Tester    |                   |
 |                    |    Project Manager    |                   |
 +--------------------+-----------------------+-------------------+
-|  Gurdarshan Singh  |   Frontend Developer  |         30        |
+|  Gurdarshan Singh  |   Frontend Developer  |         44        |
 |                    |    Software Manager   |                   |
 +--------------------+-----------------------+-------------------+
-|    Vadim Tuchila   |   Frontend Developer  |         38        |
+|    Vadim Tuchila   |   Frontend Developer  |         51        |
 |                    | Project Documentation |                   |
 |                    |    Software Manager   |                   |
 +--------------------+-----------------------+-------------------+
