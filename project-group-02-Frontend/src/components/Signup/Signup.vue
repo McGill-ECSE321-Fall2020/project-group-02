@@ -1,10 +1,10 @@
 <template>
   <div class="vue-template vertical-center inner-block">
-    <form>
+    <form >
       <h3 style="padding: 20px">Sign Up</h3>
 
       <div class="form-group">
-        <label>Username <b style="color:red;">*</b></label>
+        <label>Username <b style="color: red">*</b></label>
         <input
           v-model="userName"
           type="text"
@@ -13,7 +13,7 @@
       </div>
 
       <div class="form-group">
-        <label>Email address <b style="color:red;">*</b></label>
+        <label>Email address <b style="color: red">*</b></label>
         <input
           v-model="userEmail"
           type="email"
@@ -22,7 +22,7 @@
       </div>
 
       <div class="form-group">
-        <label>Password <b style="color:#ff0000;">*</b></label>
+        <label>Password <b style="color: #ff0000">*</b></label>
         <input
           v-model="userPassword"
           type="password"
@@ -32,7 +32,7 @@
 
       <div class="row">
         <div class="col">
-          <label class="">Street <b style="color:red;">*</b></label>
+          <label class="">Street <b style="color: red">*</b></label>
           <input
             v-model="userStreet"
             type="text"
@@ -41,7 +41,7 @@
         </div>
 
         <div class="col">
-          <label class="">Postal Code <b style="color:red;">*</b></label>
+          <label class="">Postal Code <b style="color: red">*</b></label>
           <input
             v-model="userPostalCode"
             type="text"
@@ -52,7 +52,7 @@
 
       <div class="row">
         <div class="col">
-          <label>City <b style="color:red;">*</b></label>
+          <label>City <b style="color: red">*</b></label>
           <input
             v-model="userCity"
             type="text"
@@ -61,7 +61,7 @@
         </div>
 
         <div class="col">
-          <label>Province <b style="color:red;">*</b></label>
+          <label>Province <b style="color: red">*</b></label>
           <input
             v-model="userProvince"
             type="text"
@@ -72,7 +72,7 @@
 
       <div class="row">
         <div class="col">
-          <label>Country <b style="color:red;">*</b></label>
+          <label>Country <b style="color: red">*</b></label>
           <input
             v-model="userCountry"
             type="text"
@@ -100,18 +100,24 @@
         Sign Up
       </button>
 
-        <button
-          v-if="!validate"
-          @click="
-            setAddress();
-            setUserRole();
-          "
-          :disabled="!userCity||!userStreet||!userPostalCode||!userProvince||!userCountry"
-          type="submit"
-          class="btn btn-dark btn-lg btn-block continue"
-        >
-          Confirm
-        </button>
+      <button
+        v-if="!validate"
+        @click="
+          setAddress();
+          setUserRole();
+        "
+        :disabled="
+          !userCity ||
+          !userStreet ||
+          !userPostalCode ||
+          !userProvince ||
+          !userCountry
+        "
+        type="submit"
+        class="btn btn-dark btn-lg btn-block continue"
+      >
+        Confirm
+      </button>
 
       <p class="forgot-password text-right" style="margin-bottom: 20px">
         Already registered
@@ -139,7 +145,7 @@ export default {
       userCity: "",
       userRoles: "",
       validate: true,
-      userError:""
+      userError: "",
     };
   },
   methods: {
@@ -168,8 +174,8 @@ export default {
     createUser: function () {
       this.AXIOS.post(
         "/create-user?name=".concat(this.userName) +
-        "&email=".concat(this.userEmail) +
-        "&pw=".concat(this.userPassword)
+          "&email=".concat(this.userEmail) +
+          "&pw=".concat(this.userPassword)
       )
         .then((response) => {
           this.validate = false;
@@ -181,14 +187,14 @@ export default {
     setAddress: function () {
       this.AXIOS.post(
         "/update-user-address/".concat(this.userName) +
-        "?street=".concat(this.userStreet) +
-        "&postalcode=".concat(this.userPostalCode) +
-        "&province=".concat(this.userProvince) +
-        "&country=".concat(this.userCountry) +
-        "&city=".concat(this.userCity)
+          "?street=".concat(this.userStreet) +
+          "&postalcode=".concat(this.userPostalCode) +
+          "&province=".concat(this.userProvince) +
+          "&country=".concat(this.userCountry) +
+          "&city=".concat(this.userCity)
       )
         .then((response) => {
-          this.$router.push('/login');
+          this.$router.push("/login");
         })
         .catch((error) => {
           alert("Please enter a valid address");
@@ -204,10 +210,9 @@ export default {
       }
       this.AXIOS.post(
         "/set-user-role/".concat(this.userName) +
-        "?roles=".concat(this.userRoles)
+          "?roles=".concat(this.userRoles)
       )
-        .then((response) => {
-        })
+        .then((response) => {})
         .catch((error) => {});
     },
   },

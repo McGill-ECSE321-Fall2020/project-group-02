@@ -1,6 +1,6 @@
 <template>
   <div class="vue-template vertical-center inner-block">
-    <form>
+    <form >
       <h3>Login</h3>
       <div class="form-group">
         <label>Username</label>
