@@ -21,10 +21,9 @@
 
         <label> </label>
         <label class="cardnumber">Choose card:</label>
-        <select name="select card" id="userCard">
-          <option value="Card1">1234 5678 9123 4567</option>
-          <option value="Card2">1234 5678 9512 5879</option>
-        </select>
+        <h2 class="CCN">
+          {{ $store.state.user.paymentCredentials.ccNumber }}
+        </h2>
       </div>
       <div class="receipt">
         <div class="row">
@@ -39,11 +38,11 @@
         </router-link>
           </div>
           <div class="column">
-            <p>Subtotal: {{ $totalPrice * 0.85 }}</p>
-            <p>Taxes: {{ $totalPrice * 0.15 }}</p>
+            <p>Subtotal: {{ $store.state.totalPrice * 0.85 }}</p>
+            <p>Taxes: {{ $store.state.totalPrice * 0.15 }}</p>
             <p>____________________</p>
             <label> </label>
-            <h3>Total: {{ $totalPrice }}</h3>
+            <h3>Total: {{ $store.state.totalPrice }}</h3>
           </div>
         </div>
       </div>
@@ -86,7 +85,7 @@ label {
   opacity: 0.4;
 }
 
-select {
+.CCN {
   padding-right: 50px;
   font-size: 20px;
   font-family: "Work Sans", sans-serif;

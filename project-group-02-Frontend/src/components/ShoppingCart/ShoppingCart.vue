@@ -69,7 +69,7 @@
 
       <div class="col">
 
-        <div>{{this.$totalPrice}}</div>
+        <div>{{ $store.state.totalPrice }}</div>
 
       </div>
 
@@ -133,22 +133,21 @@
       },
       methods: {
         removeFromShoppingCart: function (item) {
-          var index = this.items.indexOf(item);
+          let index = this.items.indexOf(item);
           this.items.splice(index, 1);
-          this.$totalPrice -= item.itemPrice;
+          this.$store.state.totalPrice -= item.itemPrice;
 
-          AXIOS.post('/'.concat(this.$username) + '/shopping-cart/remove-item/'.concat(item.name).concat(item.artist.username))
+          this.AXIOS.post('/'.concat(this.$store.state.user.username) + '/shopping-cart/remove-item/'.concat(item.name).concat(item.artist.username))
             .then(response => {
             })
             .catch(error => {
               this.artworkError = error;
             })
         }
-
       },
       created: function(){
         for(let i = 0; i <this.items.length; i++) {
-          this.$totalPrice += this.items[i].itemPrice;
+          this.$store.state.totalPrice += this.items[i].itemPrice;
         }
       }
     }
