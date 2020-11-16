@@ -103,7 +103,7 @@
         <button
           v-if="!validate"
           @click="
-            setAddress();
+            setAddressAndUpdateBalance();
             setUserRole();
           "
           :disabled="!userCity||!userStreet||!userPostalCode||!userProvince||!userCountry"
@@ -178,7 +178,13 @@ export default {
           alert("Invalid Username or Email");
         });
     },
-    setAddress: function () {
+    setAddressAndUpdateBalance: function () {
+      this.AXIOS.post('/set-balance/'.concat(this.userName) + '/100000000')
+        .then((response) => {
+        })
+        .catch((error) => {
+        });
+
       this.AXIOS.post(
         "/update-user-address/".concat(this.userName) +
         "?street=".concat(this.userStreet) +

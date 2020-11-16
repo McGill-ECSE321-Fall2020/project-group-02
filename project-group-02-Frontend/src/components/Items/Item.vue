@@ -15,10 +15,10 @@
     <b-card-body style=" display: flex; flex-direction: column;" class="d-flex flex-column">
       <b-card-text class="artist_text">By: {{ artistName }}</b-card-text>
       <b-card-text>{{ itemPrice }} USD</b-card-text>
-      <b-button v-if="!(this.$store.state.user.email === 'ahmad.siddiqi@hotmail.com')&!addedToCart"
+      <b-button v-if="!addedToCart&&this.$store.state.user.userRole[0].userRoleId === ((this.$store.state.user.username).concat('customer')).hashCode()"
                 @click="addToShoppingCart" class="shopping-cart-button btn-dark mt-auto">Add to My Cart
       </b-button>
-      <b-button v-if="!(this.$store.state.user.email === 'ahmad.siddiqi@hotmail.com')&addedToCart"
+      <b-button v-if="addedToCart&&this.$store.state.user.userRole[0].userRoleId === ((this.$store.state.user.username).concat('customer')).hashCode()"
                 @click="removeFromShoppingCart" class="shopping-cart-button btn-danger mt-auto">Remove From Cart
       </b-button>
       <b-button v-if="(this.$store.state.user.email === 'ahmad.siddiqi@hotmail.com')" @click="deleteItem"
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import { eventBus } from '../../main';
 
 export default {
   name: "Item",
@@ -58,14 +59,17 @@ export default {
   methods: {
     addToShoppingCart: function () {
       this.addedToCart = true;
-      this.$emit('addtoshoppingcart', {artistUsername: this.artistName, itemName: this.itemName});
+      eventBus.$emit('addtoshoppingcart', {artistUsername: this.artistName, itemName: this.itemName})
+      // this.$emit('addtoshoppingcart', {artistUsername: this.artistName, itemName: this.itemName});
     },
     removeFromShoppingCart: function () {
       this.addedToCart = false;
-      this.$emit('removefromshoppingcart', {artistUsername: this.artistName, itemName: this.itemName});
+      eventBus.$emit('removefromshoppingcart', {artistUsername: this.artistName, itemName: this.itemName})
+      // this.$emit('removefromshoppingcart', {artistUsername: this.artistName, itemName: this.itemName});
     },
     deleteItem: function () {
-      this.$emit('deleteitem', {artistUsername: this.artistName, itemName: this.itemName});
+      eventBus.$emit('deleteitem', {artistUsername: this.artistName, itemName: this.itemName})
+      // this.$emit('deleteitem', {artistUsername: this.artistName, itemName: this.itemName});
     }
   }
 }

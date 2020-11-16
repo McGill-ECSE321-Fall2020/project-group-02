@@ -12,6 +12,7 @@ import {store} from './store';
 
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false;
+
 export const eventBus = new Vue(); // this is an event bus for handling events in a much easier fashion
 
 

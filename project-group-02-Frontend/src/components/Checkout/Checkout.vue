@@ -1,11 +1,7 @@
-<script src="./artGallery.js">
-</script>
-
 <template>
   <div id="Checkout">
     <div class="container">
       <div class="card">
-        <router-link to="/collections">
           <button class="proceed" @click="checkout">
             <svg class="sendicon" width="24" height="24" viewBox="0 0 24 24">
               <path
@@ -13,15 +9,14 @@
               ></path>
             </svg>
           </button>
-        </router-link>
         <img
           src="https://seeklogo.com/images/V/VISA-logo-62D5B26FE1-seeklogo.com.png"
           class="logo-card"
         />
 
         <label> </label>
-        <label class="cardnumber">Choose card:</label>
-        <h2 class="CCN">
+        <label class="cardnumber">Card Number:</label>
+        <h2 class="CCN" style="color:white;">
           {{ $store.state.user.paymentCredentials.ccNumber }}
         </h2>
       </div>
@@ -38,11 +33,11 @@
         </router-link>
           </div>
           <div class="column">
-            <p>Subtotal: {{ $store.state.totalPrice * 0.85 }}</p>
+            <p>Subtotal: {{ $store.state.totalPrice }}</p>
             <p>Taxes: {{ $store.state.totalPrice * 0.15 }}</p>
             <p>____________________</p>
             <label> </label>
-            <h3>Total: {{ $store.state.totalPrice }}</h3>
+            <h3>Total: {{ $store.state.totalPrice + $store.state.totalPrice * 0.15 }}</h3>
           </div>
         </div>
       </div>
@@ -240,9 +235,15 @@ export default {
       var deliv = document.getElementById("delivery");
       var selectedValue = deliv.options[deliv.selectedIndex].value;
       if(selectedValue == "delivery1"){
-        this.AXIOS.post('/'.concat(this.$username) + '/'.concat("checkout") + '/'.concat("INSTOREPICKUP"))
+        this.AXIOS.post('/'.concat(this.$store.state.user.username) + '/'.concat("checkout") + '/'.concat("INSTOREPICKUP"))
+        .then((response) => {
+          this.$router.push('/collections');
+        })
+        .catch(error => {
+          alert(error);
+        })
       } else {
-        this.this.AXIOS.post('/'.concat(this.$username) + '/'.concat("checkout") + '/'.concat("HOMEDELIVERY"))
+        this.this.AXIOS.post('/'.concat(this.$store.state.user.username) + '/'.concat("checkout") + '/'.concat("HOMEDELIVERY"))
       }
     }
   }

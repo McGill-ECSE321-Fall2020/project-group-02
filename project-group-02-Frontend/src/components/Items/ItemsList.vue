@@ -36,8 +36,8 @@
                 </svg>
               </div>
               <ul class="filter-dropdown">
-                <li><a href="" v-on:click.prevent="sortItemsByPriceDescending">Price Descending</a></li>
-                <li><a href="" v-on:click.prevent="sortItemsByPriceAscending">Price Ascending</a></li>
+                <li><a href="" @click.prevent="sortItemsByPriceDescending">Price Descending</a></li>
+                <li><a href="" @click.prevent="sortItemsByPriceAscending">Price Ascending</a></li>
               </ul>
             </div>
           </div>
@@ -48,9 +48,8 @@
         <b-card-group deck class="container">
           <div v-for="item in items" :key="item.name" style="margin:20px;">
             <Item :itemName="item.name" :artistName="item.artist.username" :itemImageUrl="item.pathToImage"
-                  :itemPrice="item.price" @removefromshoppingcart="(artistUsername, itemName)=>this.removeFromShoppingCart(artistUsername, itemName)"
-                  @addtoshoppingcart="(artistUsername, itemName)=>this.addToShoppingCart(artistUsername, itemName)"
-            @deleteitem="(artistUsername, itemName)=>this.deleteItem(artistUsername, itemName)"></Item>
+                  :itemPrice="item.price"
+                  @deleteitem="(artistUsername, itemName)=>this.deleteItem(artistUsername, itemName)"></Item>
             <br>
           </div>
           <div class="section" style="margin:auto;" v-if="items.length === 0">
@@ -71,6 +70,7 @@
 import Item from "./Item";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
+import {eventBus} from "../../main";
 
 export default {
   name: "ItemsList",
@@ -92,45 +92,15 @@ export default {
     this.collection = this.$route.params.collection;
     this.AXIOS.get('/'.concat(this.collection))
       .then(response => {
-        this.items = response.data;
-      })
-      .catch(error => {
-        this.artworkError = error;
-      })
-
-    // Find the artists for each item, because item doesn't have a direct associate with a user.
-    // It only contains the username of the artist in the itemId encoded as a hashcode.
-    // Here we find the users and try to match the username in the itemId with the username of the found
-    // user which corresponds to the artist.
-
-    let allUsers = [];
-
-    this.AXIOS.get('/users')
-    .then(response => {
-      allUsers = response.data;
-
-      for (let item of this.items) {
-        for (let user of allUsers) {
-          if ((user.username + item.name).hashCode() === item.itemId) {
-            item.artist = user;
+        for (let item of response.data) {
+          if (item.inStock) {
+            this.items.push(item);
           }
         }
-      }
-    })
-    .catch(error => {
-     // alert('There was an error fetching the items on our part. Try to reload the page.');
-    });
-  },
-  beforeMount: function () {
-    this.collection = this.$route.params.collection;
-    this.AXIOS.get('/'.concat(this.collection))
-      .then(response => {
-        this.items = response.data;
       })
       .catch(error => {
         this.artworkError = error;
       })
-
 
     // Find the artists for each item, because item doesn't have a direct associate with a user.
     // It only contains the username of the artist in the itemId encoded as a hashcode.
@@ -152,14 +122,63 @@ export default {
         }
       })
       .catch(error => {
-      //  alert('There was an error fetching the items on our part. Try to reload the page.');
+        // alert('There was an error fetching the items on our part. Try to reload the page.');
       });
+  },
+  beforeMount: function () {
+    // Find the artists for each item, because item doesn't have a direct associate with a user.
+    // It only contains the username of the artist in the itemId encoded as a hashcode.
+    // Here we find the users and try to match the username in the itemId with the username of the found
+    // user which corresponds to the artist.
+
+    let allUsers = [];
+
+    this.AXIOS.get('/users')
+      .then(response => {
+        allUsers = response.data;
+
+        for (let item of this.items) {
+          for (let user of allUsers) {
+            if ((user.username + item.name).hashCode() === item.itemId) {
+              item.artist = user;
+            }
+          }
+        }
+      })
+      .catch(error => {
+      });
+  },
+  beforeUpdate: function () {
+    eventBus.$on('addtoshoppingcart', (data) => {
+      this.AXIOS.post('/'.concat(this.this.$store.state.user.username) + '/shopping-cart/add-item/'.concat(data.itemName) + '/'.concat(data.artistUsername))
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          this.artworkError = error;
+        })
+    });
+
+    eventBus.$on('removefromshoppingcart', (data) => {
+        this.AXIOS.post('/'.concat(this.$store.state.user.username) + '/shopping-cart/remove-item/'.concat(data.itemName) + '/'.concat(data.artistUsername))
+          .then(response => {
+          })
+          .catch(error => {
+            this.artworkError = error;
+          })
+      }
+    )
   },
   methods: {
     searchItemsByArtist: function () {
       this.AXIOS.get('/'.concat(this.collection) + '/'.concat(this.artistSearched))
         .then(response => {
-          this.items = response.data;
+          this.items = [];
+          for (let item of response.data) {
+            if (item.inStock) {
+              this.items.push(item);
+            }
+          }
         })
         .catch(error => {
           this.artworkError = error;
@@ -168,39 +187,32 @@ export default {
     sortItemsByPriceAscending: function () {
       this.AXIOS.get('/'.concat(this.collection) + '/sort-by-price-asc')
         .then(response => {
-          this.items = response.data;
+          this.items = [];
+          for (let item of response.data) {
+            if (item.inStock) {
+              this.items.push(item);
+            }
+          }
         })
         .catch(error => {
-          this.artworkError = error;
         })
     },
     sortItemsByPriceDescending: function () {
       this.AXIOS.get('/'.concat(this.collection) + '/sort-by-price-desc')
         .then(response => {
-          this.items = response.data;
-        })
-        .catch(error => {
-          this.artworkError = error;
-        })
-    },
-    addToShoppingCart: function (artistUsername, itemName) {
-      this.AXIOS.post('/'.concat(this.this.$store.state.user.username) + '/shopping-cart/add-item/'.concat(itemName).concat(artistUsername))
-        .then(response => {
-        })
-        .catch(error => {
-          this.artworkError = error;
-        })
-    },
-    removeFromShoppingCart: function (artistUsername, itemName) {
-      this.AXIOS.post('/'.concat(this.this.$store.state.user.username) + '/shopping-cart/remove-item/'.concat(itemName).concat(artistUsername))
-        .then(response => {
+          this.items = [];
+          for (let item of response.data) {
+            if (item.inStock) {
+              this.items.push(item);
+            }
+          }
         })
         .catch(error => {
           this.artworkError = error;
         })
     },
     deleteItem: function (artistUsername, itemName) {
-      this.AXIOS.post('/'.concat(this.$store.state.user.username) + '/delete-item-from-gallery/'.concat(itemName) + '/' .concat(artistUsername));
+      this.AXIOS.post('/'.concat(this.$store.state.user.username) + '/delete-item-from-gallery/'.concat(itemName) + '/'.concat(artistUsername));
     }
   }
 }

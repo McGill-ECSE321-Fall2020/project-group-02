@@ -29,7 +29,7 @@ export const store = new Vuex.Store({
       userRole: [],
       loggedIn: false,
     },
-    totalPrice: 0,
+    totalPrice: 0
   },
   mutations: {
     setUser: function (state, user) {

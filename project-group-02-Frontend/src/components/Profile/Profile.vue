@@ -79,8 +79,8 @@
         "
         class="form-group"
       >
-        <label>Card Number</label>
-        <input
+        <label v-if="$store.state.user.paymentCredentials">Card Number</label>
+        <input v-if="$store.state.user.paymentCredentials"
           :value="
             $store.state.user.paymentCredentials.ccNumber
           "

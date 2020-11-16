@@ -142,6 +142,8 @@ export default {
           user.paymentCredentials = response.data;
 
           this.$store.commit("setUser", user);
+
+          this.$router.push('/profile');
         })
         .catch((error) => {
           alert('Enter valid payment credentials');
