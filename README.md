@@ -53,7 +53,7 @@ Table 2: Project Contributors', roles and hours contributed for the Deliverable 
 +--------------------+-----------------------+-------------------+
 
 
-Table 3: Project Contributors', roles and hours contributed for the Deliverable 2 (see the table in Raw format)
+Table 3: Project Contributors', roles and hours contributed for the Deliverable 3 (see the table in Raw format)
 +--------------------+-----------------------+-------------------+
 |    Contributors    |         Roles         | Hours Contributed |
 +--------------------+-----------------------+-------------------+
