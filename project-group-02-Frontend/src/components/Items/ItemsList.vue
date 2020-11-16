@@ -1,43 +1,82 @@
 <template>
   <div>
-    <div>
-    </div>
-    <div style="position: relative;">
+    <div></div>
+    <div style="position: relative">
       <Header></Header>
       <div class="offset-md-7 viewport">
         <div class="viewport__body">
           <div class="btn-container">
-            <div class="btn-container__search ">
+            <div class="btn-container__search">
               <span>Search</span>
-              <input type="text" v-model="artistSearched" name="search-query">
+              <input type="text" v-model="artistSearched" name="search-query" />
               <a @click="searchItemsByArtist" class="btn-search">
-                <svg width="100%" x="0px" y="0px" viewBox="336 204.5 318 323" enable-background="new 336 204.5 318 323"
-                     xml:space="preserve">
-                <g>
-                <path class="icon-search" id="path12423" fill="#FFFFFF" d="M386.9,256.6c-43.3,43.3-43.4,114.2-0.1,157.4c36.7,36.7,93.2,42.2,135.9,16.8l76.3,74.2
+                <svg
+                  width="100%"
+                  x="0px"
+                  y="0px"
+                  viewBox="336 204.5 318 323"
+                  enable-background="new 336 204.5 318 323"
+                  xml:space="preserve"
+                >
+                  <g>
+                    <path
+                      class="icon-search"
+                      id="path12423"
+                      fill="#FFFFFF"
+                      d="M386.9,256.6c-43.3,43.3-43.4,114.2-0.1,157.4c36.7,36.7,93.2,42.2,135.9,16.8l76.3,74.2
       c10.5,10.2,27.1,9.8,37.1-0.8c10-10.7,9.8-27.4-0.7-37.6l-75.2-72.9c26.4-42.8,21-100-16-137.1C501,213.3,430.2,213.3,386.9,256.6
       L386.9,256.6z M418.7,288.3c26.1-26.1,67.7-26.1,93.8,0c26.1,26.1,26.1,67.7,0,93.8c-26.1,26.1-67.7,26.1-93.8,0
-      C392.6,356.1,392.6,314.4,418.7,288.3z"/>
-              </g>
-            </svg>
+      C392.6,356.1,392.6,314.4,418.7,288.3z"
+                    />
+                  </g>
+                </svg>
               </a>
             </div>
             <div class="btn-container__filter">
-              <div class="filter-label"><span class="filter-text">Sort by...</span></div>
+              <div class="filter-label">
+                <span class="filter-text">Sort by...</span>
+              </div>
               <span>Sort</span>
               <div class="filter-button">
-                <svg class="filter-arrow" width="245px" height="154px" viewBox="0 0 245 154">
-                  <g id="arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                    <g id="-" transform="translate(-1.000000, 0.000000)" fill="#D8D8D8">
-                      <path d="M1,-0.311842754 L246,-0.311842754 L123.500004,153.654906 L1,-0.311842754 Z"
-                            class="the-arrow" id="arrow-1" sketch:type="MSShapeGroup"></path>
+                <svg
+                  class="filter-arrow"
+                  width="245px"
+                  height="154px"
+                  viewBox="0 0 245 154"
+                >
+                  <g
+                    id="arrow"
+                    stroke="none"
+                    stroke-width="1"
+                    fill="none"
+                    fill-rule="evenodd"
+                  >
+                    <g
+                      id="-"
+                      transform="translate(-1.000000, 0.000000)"
+                      fill="#D8D8D8"
+                    >
+                      <path
+                        d="M1,-0.311842754 L246,-0.311842754 L123.500004,153.654906 L1,-0.311842754 Z"
+                        class="the-arrow"
+                        id="arrow-1"
+                        sketch:type="MSShapeGroup"
+                      ></path>
                     </g>
                   </g>
                 </svg>
               </div>
               <ul class="filter-dropdown">
-                <li><a href="" @click.prevent="sortItemsByPriceDescending">Price Descending</a></li>
-                <li><a href="" @click.prevent="sortItemsByPriceAscending">Price Ascending</a></li>
+                <li>
+                  <a href="" v-on:click.prevent="sortItemsByPriceDescending()"
+                    >Price Descending</a
+                  >
+                </li>
+                <li>
+                  <a href="" v-on:click.prevent="sortItemsByPriceAscending"
+                    >Price Ascending</a
+                  >
+                </li>
               </ul>
             </div>
           </div>
@@ -46,23 +85,29 @@
 
       <div class="offset-md-2 col-md-8">
         <b-card-group deck class="container">
-          <div v-for="item in items" :key="item.name" style="margin:20px;">
-            <Item :itemName="item.name" :artistName="item.artist.username" :itemImageUrl="item.pathToImage"
-                  :itemPrice="item.price"
-                  @deleteitem="(artistUsername, itemName)=>this.deleteItem(artistUsername, itemName)"></Item>
-            <br>
+          <div v-for="item in items" :key="item.name" style="margin: 20px">
+            <Item
+              :itemName="item.name"
+              :artistName="item.artist.username"
+              :itemImageUrl="item.pathToImage"
+              :itemPrice="item.price"
+              @deleteitem="
+                (artistUsername, itemName) =>
+                  this.deleteItem(artistUsername, itemName)
+              "
+            ></Item>
+            <br />
           </div>
-          <div class="section" style="margin:auto;" v-if="items.length === 0">
+          <div class="section" style="margin: auto" v-if="items.length === 0">
             <p>{{ noArtworkFound }}</p>
           </div>
-          <div class="alert-danger" style="margin:auto;" v-if="artworkError">
+          <div class="alert-danger" style="margin: auto" v-if="artworkError">
             <span> {{ artworkError }} </span>
           </div>
         </b-card-group>
       </div>
     </div>
   </div>
-
 </template>
 
 
@@ -70,37 +115,38 @@
 import Item from "./Item";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import {eventBus} from "../../main";
+import { eventBus } from "../../main";
 
 export default {
   name: "ItemsList",
   components: {
     Item,
     Header,
-    Footer
+    Footer,
   },
   data() {
     return {
-      noArtworkFound: 'No art pieces were found',
-      artworkError: '',
-      collection: '',
+      noArtworkFound: "No art pieces were found",
+      artworkError: "",
+      collection: "",
       items: [],
-      artistSearched: ''
-    }
+      artistSearched: "",
+      idNumber: 0,
+    };
   },
   created: function () {
     this.collection = this.$route.params.collection;
-    this.AXIOS.get('/'.concat(this.collection))
-      .then(response => {
+    this.AXIOS.get("/".concat(this.collection))
+      .then((response) => {
         for (let item of response.data) {
           if (item.inStock) {
             this.items.push(item);
           }
         }
       })
-      .catch(error => {
+      .catch((error) => {
         this.artworkError = error;
-      })
+      });
 
     // Find the artists for each item, because item doesn't have a direct associate with a user.
     // It only contains the username of the artist in the itemId encoded as a hashcode.
@@ -109,8 +155,8 @@ export default {
 
     let allUsers = [];
 
-    this.AXIOS.get('/users')
-      .then(response => {
+    this.AXIOS.get("/users")
+      .then((response) => {
         allUsers = response.data;
 
         for (let item of this.items) {
@@ -121,7 +167,7 @@ export default {
           }
         }
       })
-      .catch(error => {
+      .catch((error) => {
         // alert('There was an error fetching the items on our part. Try to reload the page.');
       });
   },
@@ -133,8 +179,8 @@ export default {
 
     let allUsers = [];
 
-    this.AXIOS.get('/users')
-      .then(response => {
+    this.AXIOS.get("/users")
+      .then((response) => {
         allUsers = response.data;
 
         for (let item of this.items) {
@@ -145,34 +191,62 @@ export default {
           }
         }
       })
-      .catch(error => {
-      });
+      .catch((error) => {});
   },
   beforeUpdate: function () {
-    eventBus.$on('addtoshoppingcart', (data) => {
-      this.AXIOS.post('/'.concat(this.this.$store.state.user.username) + '/shopping-cart/add-item/'.concat(data.itemName) + '/'.concat(data.artistUsername))
-        .then(response => {
+    eventBus.$on("addtoshoppingcart", (data) => {
+      this.AXIOS.post(
+        "/".concat(this.this.$store.state.user.username) +
+          "/shopping-cart/add-item/".concat(data.itemName) +
+          "/".concat(data.artistUsername)
+      )
+        .then((response) => {
           console.log(response.data);
         })
-        .catch(error => {
+        .catch((error) => {
           this.artworkError = error;
-        })
+        });
     });
 
-    eventBus.$on('removefromshoppingcart', (data) => {
-        this.AXIOS.post('/'.concat(this.$store.state.user.username) + '/shopping-cart/remove-item/'.concat(data.itemName) + '/'.concat(data.artistUsername))
-          .then(response => {
-          })
-          .catch(error => {
-            this.artworkError = error;
-          })
-      }
-    )
+    eventBus.$on("removefromshoppingcart", (data) => {
+      this.AXIOS.post(
+        "/".concat(this.$store.state.user.username) +
+          "/shopping-cart/remove-item/".concat(data.itemName) +
+          "/".concat(data.artistUsername)
+      )
+        .then((response) => {})
+        .catch((error) => {
+          this.artworkError = error;
+        });
+    });
+
+    eventBus.$on("deleteitem", (data) => {
+      this.AXIOS.post(
+        "/".concat(this.$store.state.user.username) +
+          "/delete-item-from-gallery/".concat(data.itemName) +
+          "/".concat(data.artistUsername)
+      )
+        .then((response) => {
+          for (item in this.items) {
+            if (item.name == data.itemName) {
+              let index = this.items.indexOf(item);
+              this.items.splice(index, 1);
+              console.log(this.items);
+            }
+          }
+          this.$forceUpdate();
+        })
+        .catch((error) => {
+          this.artworkError = error;
+        });
+    });
   },
   methods: {
     searchItemsByArtist: function () {
-      this.AXIOS.get('/'.concat(this.collection) + '/'.concat(this.artistSearched))
-        .then(response => {
+      this.AXIOS.get(
+        "/".concat(this.collection) + "/".concat(this.artistSearched)
+      )
+        .then((response) => {
           this.items = [];
           for (let item of response.data) {
             if (item.inStock) {
@@ -180,26 +254,29 @@ export default {
             }
           }
         })
-        .catch(error => {
+        .catch((error) => {
           this.artworkError = error;
-        })
+        });
     },
+
     sortItemsByPriceAscending: function () {
-      this.AXIOS.get('/'.concat(this.collection) + '/sort-by-price-asc')
-        .then(response => {
-          this.items = [];
-          for (let item of response.data) {
-            if (item.inStock) {
-              this.items.push(item);
+      this.items = [];
+      let self = this;
+      this.AXIOS.get("/".concat(this.collection) + "/sort-by-price-asc")
+        .then(function (response) {
+          for (let i = 0; i < response.data.length; i++) {
+            if (response.data[i].inStock) {
+              self.items.push(response.data[i]);
             }
           }
+
+          console.log(self.items);
         })
-        .catch(error => {
-        })
+        .catch((error) => {});
     },
     sortItemsByPriceDescending: function () {
-      this.AXIOS.get('/'.concat(this.collection) + '/sort-by-price-desc')
-        .then(response => {
+      this.AXIOS.get("/".concat(this.collection) + "/sort-by-price-desc")
+        .then((response) => {
           this.items = [];
           for (let item of response.data) {
             if (item.inStock) {
@@ -207,15 +284,20 @@ export default {
             }
           }
         })
-        .catch(error => {
+        .catch((error) => {
           this.artworkError = error;
-        })
+        });
     },
     deleteItem: function (artistUsername, itemName) {
-      this.AXIOS.post('/'.concat(this.$store.state.user.username) + '/delete-item-from-gallery/'.concat(itemName) + '/'.concat(artistUsername));
-    }
-  }
-}
+      this.AXIOS.post(
+        "/".concat(this.$store.state.user.username) +
+          "/delete-item-from-gallery/".concat(itemName) +
+          "/".concat(artistUsername)
+      );
+    },
+  },
+  computed: {},
+};
 </script>
 
 
@@ -231,9 +313,9 @@ export default {
 
 // Note: Swap to 3d transforms for hardware acceleration & improved performance
 // Setup some variables
-$speed: '0.5s';
-$hard-transition: all #{$speed} cubic-bezier(0, 0, .10, 1) 0s;
-$soft-transition: all #{$speed} cubic-bezier(0, 0, .50, 1) 0s;
+$speed: "0.5s";
+$hard-transition: all #{$speed} cubic-bezier(0, 0, 0.1, 1) 0s;
+$soft-transition: all #{$speed} cubic-bezier(0, 0, 0.5, 1) 0s;
 $button-height: 3rem;
 
 // Some defaults & resets
@@ -309,7 +391,6 @@ html {
     }
 
     &:first-child {
-
       // Adds a separator after the first button. Animation settings for this are in the search class.
 
       &:after {
@@ -326,9 +407,7 @@ html {
       span {
         transition-delay: 0.25s;
       }
-
     }
-
   }
 
   // Search Button Interaction
@@ -385,13 +464,12 @@ html {
 
     .icon-search {
       width: 50%;
-      transform: scale(.5) translateX(165%) translateY(120%);
+      transform: scale(0.5) translateX(165%) translateY(120%);
     }
 
     // Search Button Hover State
 
     &:hover {
-
       // Widen the Search button
 
       width: 100%;
@@ -432,7 +510,6 @@ html {
         transition: transform 0s linear 1s;
       }
     }
-
   }
 
   // Filter Button Interaction
@@ -466,9 +543,8 @@ html {
 
       .the-arrow {
         transform-origin: center center;
-        transition: all #{$speed} cubic-bezier(0, 0, .50, 1) 0s;
+        transition: all #{$speed} cubic-bezier(0, 0, 0.5, 1) 0s;
       }
-
     }
 
     // The actual box for the dropdown selector.
@@ -504,7 +580,6 @@ html {
     // Filter Label is the dropdown's default "selection" area.
 
     .filter-label {
-
       overflow: hidden;
       position: absolute;
       top: 0;
@@ -529,7 +604,6 @@ html {
     // Filter Button Hover Changes
 
     &:hover {
-
       // Expand the Filter Button
 
       width: 100%;
@@ -544,7 +618,7 @@ html {
 
         .the-arrow {
           transform: rotate(180deg);
-          transition: #{$speed} cubic-bezier(0, 0, .50, 1) 1.35s;
+          transition: #{$speed} cubic-bezier(0, 0, 0.5, 1) 1.35s;
         }
       }
 
@@ -565,9 +639,7 @@ html {
       .filter-dropdown {
         animation: filter-open #{$speed} 1s ease 1 forwards;
       }
-
     }
-
   }
 }
 
@@ -604,8 +676,6 @@ html {
     height: auto;
     border-top: 0;
   }
-
-
 }
 
 #footer {

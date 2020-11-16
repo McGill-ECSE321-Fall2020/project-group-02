@@ -100,7 +100,7 @@
         Sign Up
       </a>
 
-<<<<<<< HEAD
+
         <a href=""
           v-if="!validate"
           @click.prevent="
@@ -113,39 +113,8 @@
         >
           Confirm
         </a>
-||||||| 7931904
-        <button
-          v-if="!validate"
-          @click="
-            setAddress();
-            setUserRole();
-          "
-          :disabled="!userCity||!userStreet||!userPostalCode||!userProvince||!userCountry"
-          type="submit"
-          class="btn btn-dark btn-lg btn-block continue"
-        >
-          Confirm
-        </button>
-=======
-      <button
-        v-if="!validate"
-        @click="
-          setAddress();
-          setUserRole();
-        "
-        :disabled="
-          !userCity ||
-          !userStreet ||
-          !userPostalCode ||
-          !userProvince ||
-          !userCountry
-        "
-        type="submit"
-        class="btn btn-dark btn-lg btn-block continue"
-      >
-        Confirm
-      </button>
->>>>>>> 94fc6720877c03b9068459d73201a24d1e370ddb
+
+
 
       <p class="forgot-password text-right" style="margin-bottom: 20px">
         Already registered
