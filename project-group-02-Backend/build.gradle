@@ -1,0 +1,185 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.4.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'java'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	runtimeOnly 'org.postgresql:postgresql'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	testImplementation 'org.mockito:mockito-core:2.+'
+	testImplementation 'org.mockito:mockito-junit-jupiter:2.18.3'
+
+}
+
+test {
+	useJUnitPlatform()
+}
+
+
+
+//integrationTests
+
+task integrationTest() {
+	doLast{
+		exec {
+			workingDir '../'
+			commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080'
+    		}
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/art-gallery-system?street=Auclair&pc=H3G2A9&province=Quebec&country=Canada&city=Montreal&adminUsername=RyadAmmar&adminPassword=12345abcABC&adminEmail=ryad.ammar@hotmail.com'
+    		}
+    		
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/art-gallery-system'
+    		}
+    	
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/create-user?name=AhmadSiddiqi&email=ahmadSiddiqi@gmail.com&pw=123abcABC'
+    		}
+    	
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/create-user?name=GURDYBOYSS&email=GURDYBOY@gmail.com&pw=456abcABC'
+    		}		
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/users'
+    		}
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/set-user-role/AhmadSiddiqi?roles=Customer'
+    		}
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/set-user-role/GURDYBOYSS?roles=Artist'
+    		}
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/update-payment-credentials?username=AhmadSiddiqi&cardname=AhmadSiddiqi&ccnumber=1253698&expdate=2020-10-29&cvc=666'
+    		}
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/user-by-name/AhmadSiddiqi'
+    		}
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/update-user-address/AhmadSiddiqi?street=RueAuclair&postalcode=he4hf6&province=QC&country=Canada&city=Brossard'
+    		}
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/user-by-name/AhmadSiddiqi'
+    		}
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/user-login?username=AhmadSiddiqi&password=123abcABC'
+    		}	
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/user-by-name/AhmadSiddiqi'
+    		}	
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/user-logout/AhmadSiddiqi'
+    		}
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/set-balance/AhmadSiddiqi/400000000'
+    		}
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/user-by-name/AhmadSiddiqi'
+    		}		
+       	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/create-collection/Spider-spoons?collectionDescription=Marvellous+Collection&collectionImageUrl=https://plasticspoon.com'
+    	}	
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/GURDYBOYSS/upload-artwork/Spider-spoons/PlasticSpoon?height=20&width=30&breadth=5&creationDate=2020-10-31&description=This+is+not+a+plastic+spoon&price=35000&imageUrl=https://artimage.com'
+    	}	
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/AhmadSiddiqi/shopping-cart/add-item/PlasticSpoon/GURDYBOYSS'
+    		}	
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/AhmadSiddiqi/shopping-cart'
+    		}	
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/AhmadSiddiqi/shopping-cart/remove-item/PlasticSpoon/GURDYBOYSS'
+    		}	
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/RyadAmmar/delete-item-from-gallery/PlasticSpoon/GURDYBOYSS'
+    		}	
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/AhmadSiddiqi/checkout/HOMEDELIVERY'
+    		}	
+    	exec {
+      		workingDir '../'
+      		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/user-by-name/AhmadSiddiqi'
+    		}	
+    		
+    		exec {
+	      		workingDir '../'
+	      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/GURDYBOYSS/upload-artwork/Spider-spoons/PlasticSpoon?height=20&width=30&breadth=5&creationDate=2020-10-31&description=This+is+not+a+plastic+spoon&price=35000&imageUrl=https://artimage.com'
+	    	}	
+	    	exec {
+	      		workingDir '../'
+	      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/GURDYBOYSS/upload-artwork/Spider-spoons/MetalMartian?height=20&width=30&breadth=5&creationDate=2020-10-31&description=This+is+a+metal+alien&price=67000&imageUrl=https://artimage.com'
+	    	}	
+	    	exec {
+	      		workingDir '../'
+	      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/GURDYBOYSS/upload-artwork/Spider-spoons/UraniumMusk?height=20&width=30&breadth=5&creationDate=2030-09-31&description=Mind+desintegration+is+key&price=110000&imageUrl=https://artimage.com'
+	    	}	
+    		exec {
+	      		workingDir '../'
+	      		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/Spider-spoons'
+    		}	
+    		exec {
+	      		workingDir '../'
+	      		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/Spider-spoons/sort-by-price-asc'
+    		}	
+    		exec {
+	      		workingDir '../'
+	      		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/Spider-spoons/sort-by-price-desc'
+    		}	
+    		exec {
+	      		workingDir '../'
+	      		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/Spider-spoons/0/70000'
+    		}
+    		exec {
+	      		workingDir '../'
+	      		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/Spider-spoons/GURDYBOYSS'
+    		}
+    		exec {
+	      		workingDir '../'
+	      		commandLine 'curl', '-s', '-X', 'GET', 'http://localhost:8080/collections'
+    		}
+    		
+    	}
+	
+}
+
+
+
+
+	
