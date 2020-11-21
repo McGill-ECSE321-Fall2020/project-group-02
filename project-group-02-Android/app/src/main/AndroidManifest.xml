@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.project_group_02_android">
+    package="com.example.projectgroup02">
 
-    <?xml version="1.0" encoding="utf-8"?>
+   <!--
+   <?xml version="1.0" encoding="utf-8"?>
     <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        package="ca.mcgill.ecse321.eventregistration">
+        package="com.example.projectgroup02">
 
-        <uses-permission android:name="android.permission.INTERNET"/>
-        <!-- Existing content with <application> tag -->
+        <user-permission android:name="android.permission.INTERNET"/>
+        &lt;!&ndash; Existing content with <application> tag &ndash;&gt;
     </manifest>
+    -->
 
     <application
         android:allowBackup="true"
@@ -18,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Projectgroup02Android">
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.projectgroup02.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.Projectgroup02Android.NoActionBar">
             <intent-filter>

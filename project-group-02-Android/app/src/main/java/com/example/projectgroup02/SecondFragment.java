@@ -1,4 +1,4 @@
-package com.example.project_group_02_android;
+package com.example.projectgroup02;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
