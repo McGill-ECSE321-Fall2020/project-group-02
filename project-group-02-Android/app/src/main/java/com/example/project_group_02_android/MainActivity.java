@@ -15,21 +15,15 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        toolbar=findViewById(R.id.GalleryHeader);
+        setSupportActionBar(toolbar);
     }
 
     @Override
@@ -47,7 +41,22 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.home) {
+            return true;
+        }
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.shoppingcart) {
+            return true;
+        }
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.profile) {
+            return true;
+        }
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.logout) {
             return true;
         }
 

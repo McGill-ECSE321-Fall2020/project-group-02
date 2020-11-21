@@ -1,10 +1,19 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.project_group_02_android.MainActivity">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:title="Home"
+        android:id="@+id/home"/>
+        android:icon="@drawable/ic_baseline_home_24"
+    <item
+        android:title="Profile"
+        android:id="@+id/profile"/>
+        android:icon="@drawable/ic_baseline_edit_24"
+    <item
+        android:title="Shopping Cart"
+        android:id="@+id/shoppingcart"/>
+        android:icon="@drawable/ic_baseline_shopping_cart_24"
+    <item
+        android:title="Logout"
+        android:id="@+id/logout"/>
+        android:icon="@drawable/ic_baseline_exit_to_app_24"
 </menu>
