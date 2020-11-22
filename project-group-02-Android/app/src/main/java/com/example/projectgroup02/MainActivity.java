@@ -1,5 +1,6 @@
 package com.example.projectgroup02;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,8 +19,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         toolbar=findViewById(R.id.GalleryHeader);
         setSupportActionBar(toolbar);
+
+        Intent intent = new Intent(this, CreateCollectionActivity.class);
+        startActivity(intent);
+
 
     }
 
