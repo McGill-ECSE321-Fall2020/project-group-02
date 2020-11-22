@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/heading"
+        android:layout_width="360dp"
+        android:layout_height="70dp"
+        android:text="@string/create_collection"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="31dp"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text=""
+        android:textColor="#FF0000"
+        tools:ignore="MissingConstraints" />
+        <!--tools:layout_editor_absoluteX="26dp"
+        tools:layout_editor_absoluteY="117dp"-->
+
+
+    <EditText
+        android:id="@+id/collection_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/collection_name"
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="170dp"
+        tools:ignore="MissingConstraints"
+        android:autofillHints="" />
+
+    <EditText
+        android:id="@+id/collection_description"
+        android:layout_width="211dp"
+        android:layout_height="54dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:text="@string/collection_description"
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="270dp"
+        tools:ignore="MissingConstraints"
+        android:autofillHints="" />
+
+    <EditText
+        android:id="@+id/collection_image_URL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/collection_image_url"
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="370dp"
+        tools:ignore="MissingConstraints"
+        android:autofillHints="" />
+
+    <Button
+        android:id="@+id/create_collection_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#00BCD4"
+        android:text="@string/create_collection"
+        app:rippleColor="#F40303"
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="470dp"
+        tools:ignore="MissingConstraints" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
