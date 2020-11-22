@@ -14,4 +14,5 @@
     <string name="collection_image_url">Collection Image URL</string>
     <string name="create_collection">Create Collection</string>
     <string name="title_activity_upload_art">uploadArt</string>
+    <string name="title_activity_login">LoginActivity</string>
 </resources>

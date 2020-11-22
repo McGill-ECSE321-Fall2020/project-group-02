@@ -9,6 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Projectgroup02Android">
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login"
+            android:theme="@style/Theme.Projectgroup02Android.NoActionBar"></activity>
         <activity android:name=".CreateCollectionActivity" />
         <activity
             android:name=".MainActivity"
