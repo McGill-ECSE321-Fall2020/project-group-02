@@ -2,15 +2,15 @@ package com.example.projectgroup02;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
+
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
+import android.view.View;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import cz.msebera.android.httpclient.Header;
 
 public class ItemsPageActivity extends AppCompatActivity {
+
     private Toolbar toolbar;
     private String error = "";
     public static String collection;
@@ -26,7 +27,7 @@ public class ItemsPageActivity extends AppCompatActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.items_page);
+        setContentView(R.layout.content_items_page);
 
         toolbar=findViewById(R.id.GalleryHeader);
         setSupportActionBar(toolbar);
@@ -110,5 +111,4 @@ public class ItemsPageActivity extends AppCompatActivity {
             tvError.setVisibility(View.VISIBLE);
         }
     }*/
-
 }

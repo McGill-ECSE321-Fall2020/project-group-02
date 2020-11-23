@@ -10,9 +10,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Projectgroup02Android">
         <activity
+            android:name=".BrowseCollectionsPageActivity"
+            android:label="@string/title_activity_browse_collections_page"
+            android:theme="@style/Theme.Projectgroup02Android.NoActionBar"></activity>
+        <activity
+            android:name=".ItemsPageActivity"
+            android:label="@string/title_activity_item_page"
+            android:theme="@style/Theme.Projectgroup02Android.NoActionBar" />
+        <activity
+            android:name=".SignupActivity"
+            android:label="@string/title_activity_signup"
+            android:theme="@style/Theme.Projectgroup02Android.NoActionBar" />
+        <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/Theme.Projectgroup02Android.NoActionBar"></activity>
+            android:theme="@style/Theme.Projectgroup02Android.NoActionBar" />
         <activity android:name=".CreateCollectionActivity" />
         <activity
             android:name=".MainActivity"

@@ -15,4 +15,7 @@
     <string name="create_collection">Create Collection</string>
     <string name="title_activity_upload_art">uploadArt</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_signup">SignupActivity</string>
+    <string name="title_activity_item_page">ItemPageActivity</string>
+    <string name="title_activity_browse_collections_page">BrowseCollectionsPageActivity</string>
 </resources>
