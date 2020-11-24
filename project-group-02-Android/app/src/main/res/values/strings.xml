@@ -18,4 +18,5 @@
     <string name="title_activity_signup">SignupActivity</string>
     <string name="title_activity_item_page">ItemPageActivity</string>
     <string name="title_activity_browse_collections_page">BrowseCollectionsPageActivity</string>
+    <string name="title_activity_checkout">CheckoutActivity</string>
 </resources>
