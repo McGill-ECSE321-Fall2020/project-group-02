@@ -16,19 +16,19 @@
         tools:ignore="MissingConstraints" />
 
     <EditText
-        android:id="@+id/editTextUsername"
+        android:id="@+id/loginUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
-        android:layout_above="@+id/editTextPassword"
+        android:layout_above="@+id/loginPassword"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
         tools:ignore="MissingConstraints" />
 
     <EditText
-        android:id="@+id/editTextPassword"
+        android:id="@+id/loginPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"

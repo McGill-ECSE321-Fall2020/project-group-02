@@ -40,23 +40,39 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(View v) {
-        final TextView tvUsername = (TextView) findViewById(R.id.editTextUsername);
-        final TextView tvPassword = (TextView) findViewById(R.id.editTextPassword);
+        final TextView tvUsername = (TextView) findViewById(R.id.loginUsername);
+        final TextView tvPassword = (TextView) findViewById(R.id.loginPassword);
 
-        HttpUtils.post("user-login/" + tvUsername.getText().toString() + "/" + tvPassword.getText().toString(), new RequestParams(), new JsonHttpResponseHandler() {
+        // Setup the request parameters
+        RequestParams params = new RequestParams();
+        params.add("username", tvUsername.getText().toString());
+        params.add("password", tvPassword.getText().toString());
 
+        HttpUtils.post("user-login", params, new JsonHttpResponseHandler() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                tvUsername.setText("");
-                tvPassword.setText("");
-                //MainActivity.username = response;
-                Intent intent = new Intent(v.getContext(), MainActivity.class);
-                startActivity(intent);
-            }
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 try {
-                    error = errorResponse.get("message").toString();
-                } catch (JSONException e) {
+                    tvUsername.setText("");
+                    tvPassword.setText("");
+                    MainActivity.username = tvUsername.getText().toString();
+                    Intent intent = new Intent(v.getContext(), BrowseCollectionsPageActivity.class);
+                    startActivity(intent);
+
+                } catch (Exception e) {
+                    error = e.getMessage();
+                }
+            }
+
+            // returns the correct data here, but why in this method and not in onSuccess()?
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                try {
+                    tvUsername.setText("");
+                    tvPassword.setText("");
+                    MainActivity.username = tvUsername.getText().toString();
+                    Intent intent = new Intent(v.getContext(), BrowseCollectionsPageActivity.class);
+                    startActivity(intent);
+                } catch (Exception e) {
                     error = e.getMessage();
                 }
             }

@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,7 +23,7 @@ public class ItemsPageActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private String error = "";
     public static String collection;
-    private Object[] items;
+    private JSONArray items;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,8 +43,28 @@ public class ItemsPageActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 error = "";
-                //items = response;
-            }
+
+                try {
+                    items = response.getJSONArray("items"); // get the array that represents the whole JSON data returned from the backend
+
+                    for (int i = 0; i < items.length(); i++) {
+                        JSONObject item = items.getJSONObject(i); // get the item from the JSON data
+
+                        // Extract item properties
+                        String itemName = item.getString("name");
+                        double itemHeight = item.getDouble("height");
+                        double itemWidth = item.getDouble("width");
+                        double itemBreadth = item.getDouble("breadth");
+                        String itemCreationDate = item.getString("creationDate");
+                        String itemDescription = item.getString("description");
+                        double itemPrice = item.getDouble("price");
+                        String itemImageUrl = item.getString("imageUrl");
+                        boolean itemIsInStock = item.getBoolean("inStock");
+                        JSONObject artist = item.getJSONObject("artist");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }            }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 try {

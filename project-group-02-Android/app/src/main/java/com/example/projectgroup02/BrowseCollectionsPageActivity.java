@@ -13,7 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
+import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,7 +25,7 @@ public class BrowseCollectionsPageActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private String error = "";
-    private JSONObject collections;
+    private JSONArray collections;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,18 +35,37 @@ public class BrowseCollectionsPageActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.GalleryHeader);
         setSupportActionBar(toolbar);
 
+        getAllCollections();
     }
     /**
      * Get all collections from the database.
      *
-     * @param v View
      */
-    public void getAllCollections(View v) {
+    public void getAllCollections() {
         HttpUtils.get("collections", new RequestParams(), new JsonHttpResponseHandler() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 error = "";
-                collections = response;
+                try {
+                    collections = response;
+
+                    for (int i = 0; i < collections.length(); i++) {
+                        JSONObject collection = collections.getJSONObject(i);
+
+                        String collectionName = collection.getString("collectionName");
+                        String collectionDescription = collection.getString("description");
+                        String collectionPathToImage = collection.getString("pathToImage");
+                        JSONArray items = collection.getJSONArray("items");
+
+                       /* For testing -> Getting the Collection Works!
+                       if (collectionName.equalsIgnoreCase("Picasso Nightmares")) {
+                            TextView tv = (TextView) findViewById(R.id.collection_name_1);
+                            tv.setText(collectionName);
+                        }*/
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -63,9 +84,8 @@ public class BrowseCollectionsPageActivity extends AppCompatActivity {
      *
      * @param v View
      */
-    public void enterCollection(View v) {
+    public void clickCollection(View v) {
         String collectionName = "";
-        //  ItemsPageActivity.collection = clickedCollection;
         Intent intent = new Intent(v.getContext(), ItemsPageActivity.class); // create new intent to navigate to the ItemsPage for the given collection
         intent.putExtra("ITEMS_PAGE_COLLECTION_NAME", collectionName);
         startActivity(intent);

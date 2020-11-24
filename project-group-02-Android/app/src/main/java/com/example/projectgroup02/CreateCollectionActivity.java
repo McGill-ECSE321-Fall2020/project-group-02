@@ -39,7 +39,7 @@ public class CreateCollectionActivity extends AppCompatActivity {
                     cDescription.setText("");
                     cImageURL.setText("");
                     //MainActivity.username = response;
-                    Intent intent = new Intent(v.getContext(), MainActivity.class);
+                    Intent intent = new Intent(v.getContext(), BrowseCollectionsPageActivity.class);
                     startActivity(intent);
                 }
 
