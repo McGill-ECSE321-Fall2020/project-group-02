@@ -12,9 +12,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Projectgroup02Android">
         <activity
+            android:name=".EditProfileActivity"
+            android:label="@string/title_activity_edit_profile"
+            android:theme="@style/Theme.Projectgroup02Android.NoActionBar"></activity>
+        <activity
+            android:name=".ShoppingCartActivity"
+            android:label="@string/title_activity_shopping_cart"
+            android:theme="@style/Theme.Projectgroup02Android.NoActionBar" />
+        <activity
+            android:name=".CheckoutActivity"
+            android:label="@string/title_activity_checkout"
+            android:theme="@style/Theme.Projectgroup02Android.NoActionBar" />
+        <activity
             android:name=".BrowseCollectionsPageActivity"
             android:label="@string/title_activity_browse_collections_page"
-            android:theme="@style/Theme.Projectgroup02Android.NoActionBar"></activity>
+            android:theme="@style/Theme.Projectgroup02Android.NoActionBar" />
         <activity
             android:name=".ItemsPageActivity"
             android:label="@string/title_activity_item_page"

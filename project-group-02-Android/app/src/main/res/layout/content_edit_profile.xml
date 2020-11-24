@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/Title"
+        android:layout_width="360dp"
+        android:layout_height="70dp"
+        android:text="Edit Profile"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Title"
+        android:text="Change my Address : "
+        android:layout_marginLeft="10dp"
+        tools:ignore="MissingConstraints" />
+
+
+
+    <EditText
+        android:id="@+id/street"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Street"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/address"
+        android:layout_marginBottom="10dp"
+        tools:ignore="MissingConstraints"
+        android:autofillHints="" />
+
+    <EditText
+        android:id="@+id/postalCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Postal Code"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/street"
+        android:layout_marginBottom="10dp"
+        tools:ignore="MissingConstraints"
+        android:autofillHints="" />
+
+    <EditText
+        android:id="@+id/city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="City"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/postalCode"
+        android:layout_marginBottom="10dp"
+        tools:ignore="MissingConstraints"
+        android:autofillHints="" />
+
+    <EditText
+        android:id="@+id/province"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Province"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/city"
+        android:layout_marginBottom="10dp"
+        tools:ignore="MissingConstraints"
+        android:autofillHints="" />
+
+    <EditText
+        android:id="@+id/country"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Country"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/province"
+        android:layout_marginBottom="30dp"
+        tools:ignore="MissingConstraints"
+        android:autofillHints="" />
+
+    <TextView
+        android:id="@+id/credentials"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/country"
+        android:text="Update My Credentials : "
+        android:layout_marginLeft="10dp"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/cardName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Card Holder Name"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/credentials"
+        android:layout_marginBottom="10dp"
+        tools:ignore="MissingConstraints"
+        android:autofillHints="" />
+
+    <EditText
+        android:id="@+id/creditCardNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Credit Card Number"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/cardName"
+        android:layout_marginBottom="10dp"
+        tools:ignore="MissingConstraints"
+        android:autofillHints="" />
+
+    <EditText
+        android:id="@+id/expirationDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Expiration Date"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/creditCardNumber"
+        android:layout_marginBottom="10dp"
+        tools:ignore="MissingConstraints"
+        android:autofillHints="" />
+
+    <EditText
+        android:id="@+id/cvc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Card Verification Code"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/expirationDate"
+        android:layout_marginBottom="10dp"
+        tools:ignore="MissingConstraints"
+        android:autofillHints="" />
+
+    <Button
+        android:id="@+id/update_credentials_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#00BCD4"
+        android:text="Submit"
+        app:rippleColor="#F40303"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/cvc"
+        android:layout_marginBottom="20dp"
+        tools:ignore="MissingConstraints" />
+
+</RelativeLayout>
+</ScrollView>
