@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar=findViewById(R.id.GalleryHeader);
         setSupportActionBar(toolbar);
 
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, EditProfileActivity.class);
         startActivity(intent);
 
 

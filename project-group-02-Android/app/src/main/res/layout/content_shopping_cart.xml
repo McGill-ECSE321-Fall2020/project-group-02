@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/Title"
+        android:layout_width="360dp"
+        android:layout_height="70dp"
+        android:text="Shopping Cart"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        tools:ignore="MissingConstraints" />
+    <TextView
+        android:id="@+id/itemColumn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Item"
+        android:layout_marginStart="10dp"
+        android:layout_below="@+id/Title"
+        android:layout_marginTop="50dp"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/quantityColumn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quantity"
+        android:layout_marginStart="10dp"
+        android:layout_below="@+id/Title"
+        android:layout_marginTop="50dp"
+        android:layout_toEndOf="@+id/img1"
+        tools:ignore="MissingConstraints" />
+
+
+    <TextView
+        android:id="@+id/priceColumn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Price"
+        android:layout_marginLeft="160dp"
+        android:layout_below="@+id/Title"
+        android:layout_marginTop="50dp"
+        android:layout_toRightOf="@+id/quantityColumn"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/img1"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_baseline_shopping_cart_24"
+        android:contentDescription="This is an item"
+        android:layout_below="@+id/itemColumn"
+        android:layout_marginTop="30dp"
+        />
+
+    <TextView
+        android:id="@+id/itemName1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Item Name 1"
+        android:layout_below="@+id/img1"
+        android:layout_marginLeft="10dp"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/itemQuantity1"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:layout_toRightOf="@+id/img1"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/itemColumn"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/itemRemove1"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:text="Remove"
+        android:layout_toRightOf="@+id/quantityColumn"
+        android:layout_marginLeft="20dp"
+        android:layout_below="@+id/itemColumn"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="#00BCD4"
+        app:rippleColor="#F40303"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/itemPrice1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="100$"
+        android:layout_toRightOf="@+id/quantityColumn"
+        android:layout_marginLeft="160dp"
+        android:layout_below="@+id/itemColumn"
+        android:layout_marginTop="50dp"
+        tools:ignore="MissingConstraints" />
+
+
+
+
+
+
+    <Button
+        android:id="@+id/create_collection_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#00BCD4"
+        android:onClick="createCollection"
+        android:text="Checkout"
+        app:rippleColor="#F40303"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        tools:ignore="MissingConstraints" />
+
+</RelativeLayout>
