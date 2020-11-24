@@ -21,4 +21,7 @@
     <string name="title_activity_checkout">CheckoutActivity</string>
     <string name="title_activity_shopping_cart">ShoppingCartActivity</string>
     <string name="title_activity_edit_profile">EditProfileActivity</string>
+    <string name="please_confirm_your_purchase">Please confirm your purchase</string>
+    <string name="checkout">checkout</string>
+    <string name="home_delivery">Home delivery</string>
 </resources>
