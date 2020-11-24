@@ -32,10 +32,6 @@
             android:label="@string/title_activity_item_page"
             android:theme="@style/Theme.Projectgroup02Android.NoActionBar" />
         <activity
-            android:name=".SignupActivity"
-            android:label="@string/title_activity_signup"
-            android:theme="@style/Theme.Projectgroup02Android.NoActionBar" />
-        <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/Theme.Projectgroup02Android.NoActionBar" />

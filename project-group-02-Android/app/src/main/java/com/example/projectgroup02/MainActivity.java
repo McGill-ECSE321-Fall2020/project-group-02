@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     public static String username; // user's username
+    public static boolean loggedIn; // logged in
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar=findViewById(R.id.GalleryHeader);
         setSupportActionBar(toolbar);
 
-        Intent intent = new Intent(this, EditProfileActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 
@@ -42,22 +43,26 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.home) {
+            if (loggedIn) {
+                Intent intent = new Intent(this, BrowseCollectionsPageActivity.class);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+            }
             return true;
         }
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.shoppingcart) {
-            return true;
-        }
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.profile) {
-            return true;
+            Intent intent = new Intent(this, ShoppingCartActivity.class);
+            startActivity(intent);
         }
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.logout) {
-            return true;
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

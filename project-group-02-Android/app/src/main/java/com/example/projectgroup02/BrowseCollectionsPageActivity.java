@@ -57,11 +57,11 @@ public class BrowseCollectionsPageActivity extends AppCompatActivity {
                         String collectionPathToImage = collection.getString("pathToImage");
                         JSONArray items = collection.getJSONArray("items");
 
-                       /* For testing -> Getting the Collection Works!
+                       // For testing -> Getting the Collection Works!
                        if (collectionName.equalsIgnoreCase("Picasso Nightmares")) {
                             TextView tv = (TextView) findViewById(R.id.collection_name_1);
                             tv.setText(collectionName);
-                        }*/
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -52,9 +52,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 try {
+                    MainActivity.username = tvUsername.getText().toString();
+                    MainActivity.loggedIn = tvUsername.getText().toString() != null ? true : false;
                     tvUsername.setText("");
                     tvPassword.setText("");
-                    MainActivity.username = tvUsername.getText().toString();
                     Intent intent = new Intent(v.getContext(), BrowseCollectionsPageActivity.class);
                     startActivity(intent);
 
@@ -67,9 +68,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 try {
+                    MainActivity.username = tvUsername.getText().toString();
+                    MainActivity.loggedIn = tvUsername.getText().toString() != null ? true : false;
                     tvUsername.setText("");
                     tvPassword.setText("");
-                    MainActivity.username = tvUsername.getText().toString();
                     Intent intent = new Intent(v.getContext(), BrowseCollectionsPageActivity.class);
                     startActivity(intent);
                 } catch (Exception e) {

@@ -7,11 +7,6 @@
         app:showAsAction="always"
         android:id="@+id/home"/>
     <item
-        android:title="Profile"
-        android:icon="@drawable/ic_baseline_edit_24"
-        app:showAsAction="always"
-        android:id="@+id/profile"/>
-    <item
         android:title="Shopping Cart"
         android:icon="@drawable/ic_baseline_shopping_cart_24"
         app:showAsAction="always"
