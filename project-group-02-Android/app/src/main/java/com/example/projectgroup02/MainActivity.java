@@ -23,8 +23,8 @@ public class MainActivity extends AppCompatActivity {
         toolbar=findViewById(R.id.GalleryHeader);
         setSupportActionBar(toolbar);
 
-        //Intent intent = new Intent(this, MainActivity.class);
-        //startActivity(intent);
+        Intent intent = new Intent(this, CheckoutActivity.class);
+        startActivity(intent);
     }
 
     @Override
