@@ -1,10 +1,9 @@
 package com.example.projectgroup02;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -16,11 +15,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -29,32 +29,36 @@ public class BrowseCollectionsPageActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private String error = "";
     private JSONArray collections;
-    private String[] collectionNames = new String[100];
-    private String[] collectionDescriptions = new String[100];
-    private String[] collectionImages = new String[100];
+    private ArrayList<String> collectionNames = new ArrayList<>();
+    private ArrayList<String> collectionDescriptions = new ArrayList<>();
+    private ArrayList<String> collectionImages = new ArrayList<>();
+    private ListView listView;
+
+    private static Context context;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_browse_collections_page);
 
-        toolbar = findViewById(R.id.GalleryHeader);
-        setSupportActionBar(toolbar);
+        // set the context for later use
+        context = getApplicationContext();
+
+        // Get and setup the list of collections to be displayed
+        listView = (ListView) findViewById(R.id.listview_collections);
 
         // Retrieve the collections from the database
         getAllCollections();
 
-        // Get and setup the list of collections to be displayed
-        ListView listView = (ListView) findViewById(R.id.listview_collections);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, collectionNames);
-        listView.setAdapter(adapter);
+
+        //listView.setAdapter
 
         // Listen to which collection was clicked by the user
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(view.getContext(), ItemsPageActivity.class);
-                intent.putExtra("ITEMS_PAGE_COLLECTION_NAME", collectionNames[position]);
+                intent.putExtra("ITEMS_PAGE_COLLECTION_NAME", collectionNames.get(position));
                 startActivity(intent);
             }
         });
@@ -62,7 +66,6 @@ public class BrowseCollectionsPageActivity extends AppCompatActivity {
     }
     /**
      * Get all collections from the database.
-     *
      */
     public void getAllCollections() {
         HttpUtils.get("collections", new RequestParams(), new JsonHttpResponseHandler() {
@@ -75,11 +78,21 @@ public class BrowseCollectionsPageActivity extends AppCompatActivity {
                     for (int i = 0; i < collections.length(); i++) {
                         JSONObject collection = collections.getJSONObject(i);
 
-                        collectionNames = new String[] {"apple", "dragon fruit", "flydig"};
-                        // collectionNames[i] = (collection.getString("collectionName"));
-                        collectionDescriptions[i] = (collection.getString("description"));
-                        collectionImages[i] = (collection.getString("pathToImage"));
+                        collectionNames.add(collection.getString("collectionName"));
+                        collectionDescriptions.add(collection.getString("description"));
+                        collectionImages.add(collection.getString("pathToImage"));
+
+                     /* API test
+
+                      if (collection.getString("collectionName").equalsIgnoreCase("Picasso Nightmares")) {
+                            TextView tv = (TextView) findViewById(R.id.collections_page_title);
+                            tv.setText(collectionNames.get(0));
+                        }*/
                     }
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.unitary_item_layout, R.id.collection_name_label, collectionNames);
+                    listView.setAdapter(adapter);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

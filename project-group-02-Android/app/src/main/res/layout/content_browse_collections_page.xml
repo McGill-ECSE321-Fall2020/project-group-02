@@ -5,8 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/collections_page_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:accessibilityLiveRegion="none"
+        android:background="#FFFFFF"
+        android:text="Choose a Collection"
+        android:textSize="30sp" />
+
     <ListView
         android:id="@+id/listview_collections"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="120dp">
+
+    </ListView>
 </RelativeLayout>

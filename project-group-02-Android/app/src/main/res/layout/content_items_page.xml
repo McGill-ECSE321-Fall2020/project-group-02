@@ -7,11 +7,12 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/item_page_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
         android:text="Welcome to Our Wold"
-        android:textSize="30sp" />
+        android:textSize="35sp" />
 
 </RelativeLayout>

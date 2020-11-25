@@ -1,5 +1,6 @@
 package com.example.projectgroup02;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -11,10 +12,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -24,22 +30,35 @@ public class ItemsPageActivity extends AppCompatActivity {
     private String error = "";
     public static String collection;
     private JSONArray items;
+    private static Context context;
+    private ListView listView;
+    private ArrayList<String> itemNames = new ArrayList<>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_items_page);
 
-        toolbar=findViewById(R.id.GalleryHeader);
-        setSupportActionBar(toolbar);
+        // set the context for later use
+        context = getApplicationContext();
 
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
         collection = intent.getStringExtra("ITEMS_PAGE_COLLECTION_NAME");
+
+        // Get and setup the list of collections to be displayed
+        listView = (ListView) findViewById(R.id.listview_collections);
+
+        // Retrieve from the database the items inside the current collection
+        getAllItems();
+
+        // Set the name of the collection at the top of the items' page
+        TextView tv = (TextView) findViewById(R.id.item_page_label);
+        tv.setText(collection);
     }
 
-    public void getAllItems(View v) {
-        HttpUtils.get(collection + "/", new RequestParams(), new JsonHttpResponseHandler() {
+    public void getAllItems() {
+        HttpUtils.get(collection, new RequestParams(), new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 error = "";
@@ -51,17 +70,21 @@ public class ItemsPageActivity extends AppCompatActivity {
                         JSONObject item = items.getJSONObject(i); // get the item from the JSON data
 
                         // Extract item properties
-                        String itemName = item.getString("name");
-                        double itemHeight = item.getDouble("height");
+                        itemNames.add(item.getString("name"));
+
+                        /*double itemHeight = item.getDouble("height");
                         double itemWidth = item.getDouble("width");
                         double itemBreadth = item.getDouble("breadth");
                         String itemCreationDate = item.getString("creationDate");
                         String itemDescription = item.getString("description");
                         double itemPrice = item.getDouble("price");
                         String itemImageUrl = item.getString("imageUrl");
-                        boolean itemIsInStock = item.getBoolean("inStock");
-                        JSONObject artist = item.getJSONObject("artist");
+                        boolean itemIsInStock = item.getBoolean("inStock");*/
                     }
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.unitary_item_layout, R.id.collection_name_label, itemNames);
+                    listView.setAdapter(adapter);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }            }
