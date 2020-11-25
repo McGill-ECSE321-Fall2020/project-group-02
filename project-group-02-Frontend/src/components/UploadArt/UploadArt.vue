@@ -80,7 +80,7 @@
           </div>
 
           <div class="">
-            <label for="exampleInputFile">Image Url</label>
+            <label>Image Url</label>
             <input
               v-model="art_imageURL"
               class="txtbox form-control"
@@ -154,7 +154,9 @@ export default {
           this.artwork = response.data;
           console.log(response.data);
         })
-        .catch((error) => {});
+        .catch((error) => {
+          alert("There was a problem uploading the artwork")
+        });
     },
   },
 };

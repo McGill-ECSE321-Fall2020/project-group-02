@@ -99,7 +99,7 @@ export default {
           this.$store.state.user.address[0] = response.data;
         })
         .catch((error) => {
-          alert("Please enter a valid address");
+          alert("There was a problem updating the address");
         });
     },
     setPaymentCredentials: function () {
@@ -146,7 +146,7 @@ export default {
           this.$router.push('/profile');
         })
         .catch((error) => {
-          alert('Enter valid payment credentials');
+          alert('There was a problem registering the payment credentials. Try to enter another set of payment credentials');
         });
     },
   },

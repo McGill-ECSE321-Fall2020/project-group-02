@@ -51,7 +51,7 @@
         </router-link>
 
         <div v-if="collectionError">
-          <p>{{ collectionError }}</p>
+          <p style="color: red;">{{ collectionError }}</p>
         </div>
       </form>
     </div>

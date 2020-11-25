@@ -178,11 +178,11 @@ export default {
           this.validate = false;
         })
         .catch((error) => {
-          alert("Invalid Username or Email");
+          alert("The username must be at least 8 characters long or this username is already taken");
         });
     },
     setAddressAndUpdateBalance: function () {
-      this.AXIOS.post('/set-balance/'.concat(this.userName) + '/100000000')
+      this.AXIOS.post('/set-balance/'.concat(this.userName) + '/100000000') // give the user a balance
         .then((response) => {
         })
         .catch((error) => {
@@ -200,7 +200,7 @@ export default {
           this.$router.push("/login");
         })
         .catch((error) => {
-          alert("Please enter a valid address");
+          alert("There was an error retrieving the address. Choose another address");
         });
     },
     setUserRole: function () {
@@ -216,7 +216,9 @@ export default {
           "?roles=".concat(this.userRoles)
       )
         .then((response) => {})
-        .catch((error) => {});
+        .catch((error) => {
+          alert("There was an error registering the role you have chosen");
+        });
     },
   },
 };
