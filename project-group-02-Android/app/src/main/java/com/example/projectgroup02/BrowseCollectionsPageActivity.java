@@ -33,6 +33,7 @@ public class BrowseCollectionsPageActivity extends AppCompatActivity {
     private ArrayList<String> collectionDescriptions = new ArrayList<>();
     private ArrayList<String> collectionImages = new ArrayList<>();
     private ListView listView;
+    ArrayList<SubjectData> collectionsData = new ArrayList<SubjectData>();
 
     private static Context context;
 
@@ -82,17 +83,21 @@ public class BrowseCollectionsPageActivity extends AppCompatActivity {
                         collectionDescriptions.add(collection.getString("description"));
                         collectionImages.add(collection.getString("pathToImage"));
 
-                     /* API test
-
-                      if (collection.getString("collectionName").equalsIgnoreCase("Picasso Nightmares")) {
-                            TextView tv = (TextView) findViewById(R.id.collections_page_title);
-                            tv.setText(collectionNames.get(0));
-                        }*/
+                        // Add the collections data to the array list of collections
+                        //collectionsData.add(new SubjectData(collection.getString("collectionName"), collection.getString("pathToImage")));
                     }
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.unitary_item_layout, R.id.collection_name_label, collectionNames);
-                    listView.setAdapter(adapter);
+                    // Test with hard-coded images
+                    collectionsData.add(new SubjectData("JAVA", "https://www.tutorialspoint.com/java/images/java-mini-logo.jpg"));
+                    collectionsData.add(new SubjectData("Python", "https://www.tutorialspoint.com/python/images/python-mini.jpg"));
+                    collectionsData.add(new SubjectData("Javascript", "https://www.tutorialspoint.com/javascript/images/javascript-mini-logo.jpg"));
 
+                    CustomAdapter customAdapter = new CustomAdapter(context, collectionsData);
+                    listView.setAdapter(customAdapter);
+
+                   /* ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.unitary_item_layout, R.id.collection_name_label, collectionNames);
+                    listView.setAdapter(adapter);
+*/
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
