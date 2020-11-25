@@ -8,5 +8,5 @@
     android:background="@color/design_default_color_primary_variant"
     android:id="@+id/GalleryHeader"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    app1:logo="@drawable/ic_baseline_menu_24"
-    app1:title=""/>
+    app1:title=""
+    />
