@@ -13,6 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -26,6 +29,9 @@ public class BrowseCollectionsPageActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private String error = "";
     private JSONArray collections;
+    private String[] collectionNames = new String[100];
+    private String[] collectionDescriptions = new String[100];
+    private String[] collectionImages = new String[100];
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,7 +41,24 @@ public class BrowseCollectionsPageActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.GalleryHeader);
         setSupportActionBar(toolbar);
 
+        // Retrieve the collections from the database
         getAllCollections();
+
+        // Get and setup the list of collections to be displayed
+        ListView listView = (ListView) findViewById(R.id.listview_collections);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, collectionNames);
+        listView.setAdapter(adapter);
+
+        // Listen to which collection was clicked by the user
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(view.getContext(), ItemsPageActivity.class);
+                intent.putExtra("ITEMS_PAGE_COLLECTION_NAME", collectionNames[position]);
+                startActivity(intent);
+            }
+        });
+
     }
     /**
      * Get all collections from the database.
@@ -52,16 +75,10 @@ public class BrowseCollectionsPageActivity extends AppCompatActivity {
                     for (int i = 0; i < collections.length(); i++) {
                         JSONObject collection = collections.getJSONObject(i);
 
-                        String collectionName = collection.getString("collectionName");
-                        String collectionDescription = collection.getString("description");
-                        String collectionPathToImage = collection.getString("pathToImage");
-                        JSONArray items = collection.getJSONArray("items");
-
-                       // For testing -> Getting the Collection Works!
-                       if (collectionName.equalsIgnoreCase("Picasso Nightmares")) {
-                            TextView tv = (TextView) findViewById(R.id.collection_name_1);
-                            tv.setText(collectionName);
-                        }
+                        collectionNames = new String[] {"apple", "dragon fruit", "flydig"};
+                        // collectionNames[i] = (collection.getString("collectionName"));
+                        collectionDescriptions[i] = (collection.getString("description"));
+                        collectionImages[i] = (collection.getString("pathToImage"));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -77,18 +94,6 @@ public class BrowseCollectionsPageActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    /**
-     * Navigate to the page that displays all artworks of the selected collection.
-     *
-     * @param v View
-     */
-    public void clickCollection(View v) {
-        String collectionName = "";
-        Intent intent = new Intent(v.getContext(), ItemsPageActivity.class); // create new intent to navigate to the ItemsPage for the given collection
-        intent.putExtra("ITEMS_PAGE_COLLECTION_NAME", collectionName);
-        startActivity(intent);
     }
 
    /* private void refreshErrorMessage() {
