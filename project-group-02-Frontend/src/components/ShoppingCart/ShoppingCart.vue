@@ -118,7 +118,7 @@ export default {
       allUsers: [],
     };
   },
-  created: function () {
+  mounted: function () {
     // Fetch all items in the user's shopping cart
     this.AXIOS.get(
       "/".concat(this.$store.state.user.username) + "/shopping-cart"
@@ -131,25 +131,25 @@ export default {
         for (let item of response.data) {
           this.$store.state.totalPrice += item.price;
         }
+
+        // Associate an artist with every item
+        this.AXIOS.get("/users")
+          .then((response) => {
+            this.allUsers = response.data;
+
+            for (let item of this.items) {
+              for (let user of this.allUsers) {
+                if ((user.username + item.name).hashCode() == item.itemId) {
+                  item.artist = user;
+                }
+              }
+            }
+          })
+          .catch((error) => {});
       })
       .catch((error) => {
         this.artworkError = error;
       });
-
-    // Associate an artist with every item
-    this.AXIOS.get("/users")
-      .then((response) => {
-        this.allUsers = response.data;
-
-        for (let item of this.items) {
-          for (let user of this.allUsers) {
-            if ((user.username + item.name).hashCode() === item.itemId) {
-              item.artist = user;
-            }
-          }
-        }
-      })
-      .catch((error) => {});
   },
   methods: {
     removeFromShoppingCart: function (item) {
@@ -157,6 +157,10 @@ export default {
       this.items.splice(index, 1);
       this.$store.state.totalPrice -= item.price;
 
+
+console.log(this.$store.state.user.username);
+console.log(item.name);
+console.log(item.artist.username);
       let i = 35;
       while (i > 0) {
         this.AXIOS.post(
