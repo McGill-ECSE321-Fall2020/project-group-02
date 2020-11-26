@@ -170,31 +170,8 @@ export default {
       .catch((error) => {
         // alert('There was an error fetching the items on our part. Try to reload the page.');
       });
-  },
-  beforeMount: function () {
-    // Find the artists for each item, because item doesn't have a direct associate with a user.
-    // It only contains the username of the artist in the itemId encoded as a hashcode.
-    // Here we find the users and try to match the username in the itemId with the username of the found
-    // user which corresponds to the artist.
 
-    let allUsers = [];
-
-    this.AXIOS.get("/users")
-      .then((response) => {
-        allUsers = response.data;
-
-        for (let item of this.items) {
-          for (let user of allUsers) {
-            if ((user.username + item.name).hashCode() === item.itemId) {
-              item.artist = user;
-            }
-          }
-        }
-      })
-      .catch((error) => {});
-  },
-  beforeUpdate: function () {
-    eventBus.$on("addtoshoppingcart", (data) => {
+      eventBus.$on("addtoshoppingcart", (data) => {
       this.AXIOS.post(
         "/".concat(this.$store.state.user.username) +
           "/shopping-cart/add-item/".concat(data.itemName) +
@@ -240,6 +217,31 @@ export default {
           this.artworkError = error;
         });
     });
+  },
+  beforeMount: function () {
+    // Find the artists for each item, because item doesn't have a direct associate with a user.
+    // It only contains the username of the artist in the itemId encoded as a hashcode.
+    // Here we find the users and try to match the username in the itemId with the username of the found
+    // user which corresponds to the artist.
+
+    let allUsers = [];
+
+    this.AXIOS.get("/users")
+      .then((response) => {
+        allUsers = response.data;
+
+        for (let item of this.items) {
+          for (let user of allUsers) {
+            if ((user.username + item.name).hashCode() === item.itemId) {
+              item.artist = user;
+            }
+          }
+        }
+      })
+      .catch((error) => {});
+  },
+  beforeUpdate: function () {
+    
   },
   methods: {
     searchItemsByArtist: function () {
