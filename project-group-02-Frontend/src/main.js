@@ -7,7 +7,7 @@ import router from './router'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import '@/assets/css/main.css'
-import axios from "axios";
+import axios from 'axios';
 import {store} from './store';
 
 Vue.use(BootstrapVue)

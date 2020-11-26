@@ -243,7 +243,7 @@ export default {
           alert(error);
         })
       } else {
-        this.this.AXIOS.post('/'.concat(this.$store.state.user.username) + '/'.concat("checkout") + '/'.concat("HOMEDELIVERY"))
+        this.AXIOS.post('/'.concat(this.$store.state.user.username) + '/'.concat("checkout") + '/'.concat("HOMEDELIVERY"))
       }
     }
   }
