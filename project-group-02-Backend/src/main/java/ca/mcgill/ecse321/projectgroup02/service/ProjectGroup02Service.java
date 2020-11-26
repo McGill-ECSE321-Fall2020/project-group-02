@@ -546,7 +546,7 @@ public class ProjectGroup02Service {
       throw new Exception("User must be a customer");
     }
     
-    ArrayList<Item> items = toList(customer.getShoppingCart().getItem());
+    ArrayList<Item> items = (ArrayList<Item>) toList(customer.getShoppingCart().getItem());
     for(int i = 0; i < items.size(); i++){
       if(items.get(i).getItemId() == item.getItemId())
       customer.getShoppingCart().getItem().remove(items.get(i).getItemId());
