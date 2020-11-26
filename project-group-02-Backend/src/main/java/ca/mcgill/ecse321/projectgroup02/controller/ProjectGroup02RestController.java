@@ -78,7 +78,7 @@ public class ProjectGroup02RestController {
     ArtGallerySystem ags =
         service.createGallery(street, postalCode, province, country, city, adminUsername, adminPassword, adminEmail);
     
-    agsDTO = convertToDto(service.getGallery());
+    agsDTO = convertToDto(ags);
 
     return convertToDto(ags);
   }
