@@ -42,6 +42,9 @@ public class BrowseCollectionsPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_browse_collections_page);
 
+        toolbar=findViewById(R.id.GalleryHeader);
+        setSupportActionBar(toolbar);
+
         // set the context for later use
         context = getApplicationContext();
 
@@ -125,4 +128,69 @@ public class BrowseCollectionsPageActivity extends AppCompatActivity {
             tvError.setVisibility(View.VISIBLE);
         }
     }*/
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.home) {
+            if (loggedIn) {
+                Intent intent = new Intent(this, BrowseCollectionsPageActivity.class);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+            }
+            return true;
+        }
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.shoppingcart) {
+            Intent intent = new Intent(this, ShoppingCartActivity.class);
+            startActivity(intent);
+        }
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.logout) {
+            logout();
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void logout() {
+        try {
+            HttpUtils.post("/checkout/" + MainActivity.username, new RequestParams(), new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    refreshErrorMessage();
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    try {
+                        error += errorResponse.get("message").toString();
+                    } catch (JSONException e) {
+                        error += e.getMessage();
+                    }
+                    refreshErrorMessage();
+                }
+            });
+        }catch (Exception e) {
+
+        }
+    }
 }

@@ -33,6 +33,7 @@ public class CheckoutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
+
         Toolbar toolbar=findViewById(R.id.GalleryHeader);
         setSupportActionBar(toolbar);
 
@@ -48,9 +49,9 @@ public class CheckoutActivity extends AppCompatActivity {
         delivery.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    deliveryMethod = "HOME";
+                    deliveryMethod = "HOMEDELIVERY";
                 } else {
-                    deliveryMethod = "STORE";
+                    deliveryMethod = "INSTOREPICKUP";
                 }
             }
         });
@@ -92,6 +93,7 @@ public class CheckoutActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -108,7 +110,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.home) {
-            if (MainActivity.loggedIn) {
+            if (loggedIn) {
                 Intent intent = new Intent(this, BrowseCollectionsPageActivity.class);
                 startActivity(intent);
             } else {
@@ -126,11 +128,35 @@ public class CheckoutActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.logout) {
+            logout();
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void logout() {
+        try {
+            HttpUtils.post("/checkout/" + MainActivity.username, new RequestParams(), new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    refreshErrorMessage();
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    try {
+                        error += errorResponse.get("message").toString();
+                    } catch (JSONException e) {
+                        error += e.getMessage();
+                    }
+                    refreshErrorMessage();
+                }
+            });
+        }catch (Exception e) {
+
+        }
     }
 
 }

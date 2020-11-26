@@ -32,12 +32,15 @@ public class ItemsPageActivity extends AppCompatActivity {
     private JSONArray items;
     private static Context context;
     private ListView listView;
-    private ArrayList<String> itemNames = new ArrayList<>();
+    ArrayList<SubjectData> items = new ArrayList<SubjectData>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_items_page);
+
+        toolbar=findViewById(R.id.GalleryHeader);
+        setSupportActionBar(toolbar);
 
         // set the context for later use
         context = getApplicationContext();
@@ -70,7 +73,7 @@ public class ItemsPageActivity extends AppCompatActivity {
                         JSONObject item = items.getJSONObject(i); // get the item from the JSON data
 
                         // Extract item properties
-                        itemNames.add(item.getString("name"));
+                        itemsData.add(new SubjectData(item.getString("name"), item.getString("imageUrl"));
 
                         /*double itemHeight = item.getDouble("height");
                         double itemWidth = item.getDouble("width");
@@ -82,9 +85,8 @@ public class ItemsPageActivity extends AppCompatActivity {
                         boolean itemIsInStock = item.getBoolean("inStock");*/
                     }
 
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.unitary_item_layout, R.id.collection_name_label, itemNames);
-                    listView.setAdapter(adapter);
-
+                    CustomAdapter customAdapter = new CustomAdapter(context, itemsData);
+                    listView.setAdapter(customAdapter);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }            }
@@ -155,4 +157,69 @@ public class ItemsPageActivity extends AppCompatActivity {
             tvError.setVisibility(View.VISIBLE);
         }
     }*/
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.home) {
+            if (loggedIn) {
+                Intent intent = new Intent(this, BrowseCollectionsPageActivity.class);
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+            }
+            return true;
+        }
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.shoppingcart) {
+            Intent intent = new Intent(this, ShoppingCartActivity.class);
+            startActivity(intent);
+        }
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.logout) {
+            logout();
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void logout() {
+        try {
+            HttpUtils.post("/checkout/" + MainActivity.username, new RequestParams(), new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    refreshErrorMessage();
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    try {
+                        error += errorResponse.get("message").toString();
+                    } catch (JSONException e) {
+                        error += e.getMessage();
+                    }
+                    refreshErrorMessage();
+                }
+            });
+        }catch (Exception e) {
+
+        }
+    }
 }
