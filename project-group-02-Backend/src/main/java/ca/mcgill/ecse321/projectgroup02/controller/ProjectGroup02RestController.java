@@ -760,7 +760,11 @@ public class ProjectGroup02RestController {
       }
     }
     itemsags.add(iDTO);
-    convertToDto(service.getGallery()).setItem(itemsags);
+    try {
+		convertToDto(service.getGallery()).setItem(itemsags);
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
 
     return iDTO;
   }
