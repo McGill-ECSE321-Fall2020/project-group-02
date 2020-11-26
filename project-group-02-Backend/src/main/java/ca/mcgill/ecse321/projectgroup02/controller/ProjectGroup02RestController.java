@@ -92,7 +92,7 @@ public class ProjectGroup02RestController {
    */
   @GetMapping(value = {"/art-gallery-system", "/art-gallery-system/"})
   public ArtGallerySystemDTO getArtGallerySystem() throws Exception {
-    return agsDTO;
+	 return convertToDto(service.getGallery());
   }
 
   /**
