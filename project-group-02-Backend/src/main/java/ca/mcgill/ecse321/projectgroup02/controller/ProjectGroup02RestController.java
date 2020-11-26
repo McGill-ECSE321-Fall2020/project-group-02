@@ -78,10 +78,10 @@ public class ProjectGroup02RestController {
 		  @RequestParam("adminEmail") String adminEmail) throws Exception {
     ArtGallerySystem ags =
         service.createGallery(street, postalCode, province, country, city, adminUsername, adminPassword, adminEmail);
+    
+    agsDTO = convertToDto(service.getGallery());
 
-    agsDTO = convertToDto(ags);
-
-    return agsDTO;
+    return convertToDto(ags);
   }
   
   /**
@@ -109,7 +109,7 @@ public class ProjectGroup02RestController {
   public ApplicationUserDTO createUser(@RequestParam("name") String username, @RequestParam("email") String email,
 		  @RequestParam("pw") String password) throws Exception {
     ApplicationUser user = service.createUser(username, email, password);
-    agsDTO.getApplicationUsers().add(convertToDto(user));
+    convertToDto(service.getGallery()).getApplicationUsers().add(convertToDto(user));
     return convertToDto(user);
   }
   
