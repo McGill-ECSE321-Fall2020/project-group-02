@@ -42,7 +42,6 @@ import ca.mcgill.ecse321.projectgroup02.model.UserRole;
 import ca.mcgill.ecse321.projectgroup02.service.ProjectGroup02Service;
 
 
-
 @CrossOrigin(origins = "*")
 @RestController
 public class ProjectGroup02RestController {
@@ -78,10 +77,10 @@ public class ProjectGroup02RestController {
 		  @RequestParam("adminEmail") String adminEmail) throws Exception {
     ArtGallerySystem ags =
         service.createGallery(street, postalCode, province, country, city, adminUsername, adminPassword, adminEmail);
-
+    
     agsDTO = convertToDto(ags);
 
-    return agsDTO;
+    return convertToDto(ags);
   }
   
   /**
@@ -92,7 +91,7 @@ public class ProjectGroup02RestController {
    */
   @GetMapping(value = {"/art-gallery-system", "/art-gallery-system/"})
   public ArtGallerySystemDTO getArtGallerySystem() throws Exception {
-    return agsDTO;
+	 return convertToDto(service.getGallery());
   }
 
   /**
@@ -109,7 +108,7 @@ public class ProjectGroup02RestController {
   public ApplicationUserDTO createUser(@RequestParam("name") String username, @RequestParam("email") String email,
 		  @RequestParam("pw") String password) throws Exception {
     ApplicationUser user = service.createUser(username, email, password);
-    agsDTO.getApplicationUsers().add(convertToDto(user));
+    convertToDto(service.getGallery()).getApplicationUsers().add(convertToDto(user));
     return convertToDto(user);
   }
   
@@ -761,7 +760,11 @@ public class ProjectGroup02RestController {
       }
     }
     itemsags.add(iDTO);
-    agsDTO.setItem(itemsags);
+    try {
+		convertToDto(service.getGallery()).setItem(itemsags);
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
 
     return iDTO;
   }

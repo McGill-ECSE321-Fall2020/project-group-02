@@ -196,7 +196,7 @@ export default {
   beforeUpdate: function () {
     eventBus.$on("addtoshoppingcart", (data) => {
       this.AXIOS.post(
-        "/".concat(this.this.$store.state.user.username) +
+        "/".concat(this.$store.state.user.username) +
           "/shopping-cart/add-item/".concat(data.itemName) +
           "/".concat(data.artistUsername)
       )

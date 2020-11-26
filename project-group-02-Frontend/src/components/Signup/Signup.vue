@@ -178,7 +178,8 @@ export default {
           this.validate = false;
         })
         .catch((error) => {
-          alert("The username must be at least 8 characters long or this username is already taken");
+          alert(error);
+          //alert("The username must be at least 8 characters long or this username is already taken");
         });
     },
     setAddressAndUpdateBalance: function () {
