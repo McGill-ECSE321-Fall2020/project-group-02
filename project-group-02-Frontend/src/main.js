@@ -18,7 +18,7 @@ export const eventBus = new Vue(); // this is an event bus for handling events i
 
 let config = require('../config')
 let frontendUrl = 'http://' + config.dev.host + ':' + config.dev.port
-let backendUrl = 'https://' + config.dev.backendHost + ':' + config.dev.backendPort
+let backendUrl = 'https://' + config.build.backendHost
 Vue.prototype.AXIOS = axios.create({
   baseURL: backendUrl,
   headers: {'Access-Control-Allow-Origin': frontendUrl}

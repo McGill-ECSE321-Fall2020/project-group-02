@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script>
+<script>/*
 export default {
   name: "app",
 
@@ -17,7 +17,7 @@ export default {
       .catch((error) => {
       });
   },
-};
+};*/
 </script>
 
 <style>
