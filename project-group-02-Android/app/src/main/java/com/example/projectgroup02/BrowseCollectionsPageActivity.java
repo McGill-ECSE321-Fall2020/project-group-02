@@ -84,13 +84,13 @@ public class BrowseCollectionsPageActivity extends AppCompatActivity {
                         collectionImages.add(collection.getString("pathToImage"));
 
                         // Add the collections data to the array list of collections
-                        //collectionsData.add(new SubjectData(collection.getString("collectionName"), collection.getString("pathToImage")));
+                        collectionsData.add(new SubjectData(collection.getString("collectionName"), collection.getString("pathToImage")));
                     }
 
                     // Test with hard-coded images
-                    collectionsData.add(new SubjectData("JAVA", "https://www.tutorialspoint.com/java/images/java-mini-logo.jpg"));
-                    collectionsData.add(new SubjectData("Python", "https://www.tutorialspoint.com/python/images/python-mini.jpg"));
-                    collectionsData.add(new SubjectData("Javascript", "https://www.tutorialspoint.com/javascript/images/javascript-mini-logo.jpg"));
+                    //collectionsData.add(new SubjectData("JAVA", "https://www.tutorialspoint.com/java/images/java-mini-logo.jpg"));
+                    //collectionsData.add(new SubjectData("Python", "https://www.tutorialspoint.com/python/images/python-mini.jpg"));
+                    //collectionsData.add(new SubjectData("Javascript", "https://www.tutorialspoint.com/javascript/images/javascript-mini-logo.jpg"));
 
                     CustomAdapter customAdapter = new CustomAdapter(context, collectionsData);
                     listView.setAdapter(customAdapter);
