@@ -549,7 +549,7 @@ public class ProjectGroup02Service {
     ArrayList<Item> items = (ArrayList<Item>) toList(customer.getShoppingCart().getItem());
     for(int i = 0; i < items.size(); i++){
       if(items.get(i).getItemId() == item.getItemId())
-      customer.getShoppingCart().getItem().remove(items.get(i).getItemId());
+      customer.getShoppingCart().getItem().remove(items.get(i));
     }
       
     shoppingCartRepository.save(customer.getShoppingCart());
