@@ -42,7 +42,6 @@ import ca.mcgill.ecse321.projectgroup02.model.UserRole;
 import ca.mcgill.ecse321.projectgroup02.service.ProjectGroup02Service;
 
 
-
 @CrossOrigin(origins = "*")
 @RestController
 public class ProjectGroup02RestController {
