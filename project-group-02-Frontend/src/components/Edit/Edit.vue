@@ -56,14 +56,14 @@
           <input placeholder="Optional" v-model="cvc" type="number" class="form-control form-control-lg"/>
         </div>
       </div>
-      <button
-        @click="setAddress(); setPaymentCredentials();"
+      <a href=""
+        @click.prevent="setAddress(); setPaymentCredentials();"
         :disabled="!userCity||!userStreet||!userPostalCode||!userProvince||!userCountry"
         type="submit"
         class="btn btn-dark btn-lg btn-block"
       >
         Submit
-      </button>
+      </a>
     </form>
   </div>
 </template>

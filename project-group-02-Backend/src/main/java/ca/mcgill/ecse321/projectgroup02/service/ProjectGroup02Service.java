@@ -3,6 +3,7 @@ package ca.mcgill.ecse321.projectgroup02.service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -544,11 +545,13 @@ public class ProjectGroup02Service {
     } catch (Exception e) {
       throw new Exception("User must be a customer");
     }
-
-    for (Item item2 : customer.getShoppingCart().getItem())
-      if (item2.getItemId() == item.getItemId())
-        customer.getShoppingCart().getItem().remove(item2);
-
+    
+    ArrayList<Item> items = toList(customer.getShoppingCart().getItem());
+    for(int i = 0; i < items.size(); i++){
+      if(items.get(i).getItemId() == item.getItemId())
+      customer.getShoppingCart().getItem().remove(items.get(i).getItemId());
+    }
+      
     shoppingCartRepository.save(customer.getShoppingCart());
     customerRepository.save(customer);
     applicationUserRepository.save(user);
