@@ -546,11 +546,11 @@ public class ProjectGroup02Service {
       throw new Exception("User must be a customer");
     }
     
-    for (Item item2 : customer.getShoppingCart().getItem())
-        if (item2.getItemId() == item.getItemId()) {
-          customer.getShoppingCart().getItem().remove(item2);
-          break;
-        }
+    ArrayList<Item> items = (ArrayList<Item>) toList(customer.getShoppingCart().getItem());
+    for(int i = 0; i < items.size(); i++){
+      if(items.get(i).getItemId() == item.getItemId())
+      customer.getShoppingCart().getItem().remove(items.get(i));
+    }
       
     shoppingCartRepository.save(customer.getShoppingCart());
     customerRepository.save(customer);
