@@ -76,7 +76,9 @@ public class ShoppingCartActivity extends AppCompatActivity {
                     for (int i = 0; i < items.length(); i++) {
                         JSONObject item = items.getJSONObject(i);
 
-                        shoppingCartItems.add(new SubjectData(item.getString("name"), item.getString("pathToImage") ));
+                        if(item.getString("inStock").equals("true")) {
+                            shoppingCartItems.add(new SubjectData(item.getString("name"), item.getString("pathToImage") ));
+                        }
                     }
 
                     CustomAdapter customAdapter = new CustomAdapter(context, shoppingCartItems);
@@ -117,20 +119,14 @@ public class ShoppingCartActivity extends AppCompatActivity {
             JSONObject item = items.getJSONObject(i);
 
             totalPrice += item.getDouble("price");
-
-
         }
-
         TextView text = (TextView) findViewById(R.id.totalPrice);
         text.setText("Total Price: " + totalPrice.toString() + "$");
-
     }
 
     public void goToCheckout(View v) {
-
         Intent intent = new Intent(v.getContext(), CheckoutActivity.class);
         startActivity(intent);
-
     }
 
     private void refreshErrorMessage() {
@@ -144,7 +140,6 @@ public class ShoppingCartActivity extends AppCompatActivity {
             tvError.setVisibility(View.VISIBLE);
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -162,7 +157,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.home) {
-            if (MainActivity.loggedIn) {
+            if(MainActivity.loggedIn) {
                 Intent intent = new Intent(this, BrowseCollectionsPageActivity.class);
                 startActivity(intent);
             } else {

@@ -68,15 +68,17 @@ public class ItemsPageActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 addItemToShoppingCart(itemsData.get(position));
-                Intent intent = new Intent(context, ShoppingCartActivity.class);
-                startActivity(intent);
+
+                if (itemsData.get(position).getInStock()) {
+                    Intent intent = new Intent(context, ShoppingCartActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
     }
 
     public void getAllItems() {
-
         // Fetch all the users in order to find the artist
         HttpUtils.get("users", new RequestParams(), new JsonHttpResponseHandler() {
             @Override
@@ -119,11 +121,17 @@ public class ItemsPageActivity extends AppCompatActivity {
                     for (int i = 0; i < response.length(); i++) {
                         JSONObject item = response.getJSONObject(i); // get the item from the JSON data
 
-                        // Extract item properties
-                        SubjectData itemSubject = new SubjectData("Add to Shopping Cart", item.getString("pathToImage"));
+                        SubjectData itemSubject;
+
+                        if(item.getString("inStock").equals("true")) {
+                            itemSubject = new SubjectData("Add to Shopping Cart", item.getString("pathToImage"));
+                        } else {
+                            itemSubject = new SubjectData("Out of stock", item.getString("pathToImage"));
+                        }
 
                         String itemId = item.getString("itemId"); // get the item's id
                         itemSubject.setItemId(Integer.parseInt(itemId));
+                        itemSubject.setInStock(item.getString("inStock"));
 
                         // set the item's artist by checking if the generated id is equal to the actual id of the item
                         for (String username : allUsernames) {
@@ -131,9 +139,8 @@ public class ItemsPageActivity extends AppCompatActivity {
                                 itemSubject.setArtistUsername(username);
                             }
                         }
-
-                        // add the item to the item arraylist (for every item)
-                        itemsData.add(itemSubject);
+                         // add the item to the item arraylist (for every item)
+                            itemsData.add(itemSubject);
                     }
 
                     CustomAdapter customAdapter = new CustomAdapter(context, itemsData);
@@ -165,8 +172,10 @@ public class ItemsPageActivity extends AppCompatActivity {
             HttpUtils.post((MainActivity.username + "/shopping-cart/add-item/" + item.getSubjectName() + "/" + item.getArtistUsername()).replaceAll(" ", "%20"), new RequestParams(), new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    Intent intent = new Intent(context, ShoppingCartActivity.class);
-                    startActivity(intent);
+                    if(item.getInStock()) {
+                        Intent intent = new Intent(context, ShoppingCartActivity.class);
+                        startActivity(intent);
+                    }
                 }
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {

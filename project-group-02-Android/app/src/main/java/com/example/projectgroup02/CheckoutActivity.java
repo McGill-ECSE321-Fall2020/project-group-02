@@ -26,7 +26,7 @@ import org.json.JSONObject;
 import cz.msebera.android.httpclient.Header;
 
 public class CheckoutActivity extends AppCompatActivity {
-    public String deliveryMethod = "";
+    public String deliveryMethod = "HOMEDELIVERY";
     private String error = "";
 
     @Override
@@ -45,13 +45,16 @@ public class CheckoutActivity extends AppCompatActivity {
             }
         });
 
-        Switch delivery = (Switch) findViewById(R.id.delivery);
-        delivery.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        Switch deliverySwitchButton = (Switch) findViewById(R.id.delivery);
+
+        deliverySwitchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    deliveryMethod = "HOMEDELIVERY";
-                } else {
+                    deliverySwitchButton.setText("In-Store Pickup");
                     deliveryMethod = "INSTOREPICKUP";
+                } else {
+                    deliverySwitchButton.setText("Home Delivery");
+                    deliveryMethod = "HOMEDELIVERY";
                 }
             }
         });
@@ -68,6 +71,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    startActivity(new Intent(CheckoutActivity.this, BrowseCollectionsPageActivity.class));
                     try {
                         error += errorResponse.get("message").toString();
                     } catch (JSONException e) {

@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true">
 
+
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -22,6 +23,7 @@
         android:text="Shopping Cart"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         tools:ignore="MissingConstraints" />
+
     <TextView
         android:id="@+id/itemColumn"
         android:layout_width="wrap_content"
@@ -38,32 +40,43 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/itemColumn"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="80dp"/>
 
-    <TextView
-        android:id="@+id/totalPrice"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/listview_shopping_cart"
-        android:layout_marginTop="20dp"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        >
 
-        />
+        <TextView
+            android:text="Shopping Cart"
+            android:textSize="25dp"
+            android:id="@+id/totalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
 
-    <Button
-        android:id="@+id/create_collection_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#00BCD4"
-        android:text="Checkout"
-        app:rippleColor="#F40303"
-        android:layout_below="@+id/totalPrice"
-        android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        tools:ignore="MissingConstraints"
-        android:onClick="goToCheckout"
-        />
+            />
+
+        <Button
+            android:id="@+id/checkout_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00BCD4"
+            android:text="Checkout"
+            app:rippleColor="#F40303"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            tools:ignore="MissingConstraints"
+            android:onClick="goToCheckout"
+            />
+
+    </LinearLayout>
 
 </RelativeLayout>
 </ScrollView>

@@ -5,6 +5,7 @@ public class SubjectData {
     String image;
     int itemId = 0;
     String artistUsername = "";
+    boolean inStock = true;
 
     public SubjectData(String subjectName, String image) {
         this.subjectName = subjectName;
@@ -33,5 +34,13 @@ public class SubjectData {
 
     public void setArtistUsername(String username) {
         this.artistUsername = username;
+    }
+
+    public boolean getInStock() {
+        return this.inStock;
+    }
+
+    public void setInStock(String inStock) {
+        this.inStock = inStock.equalsIgnoreCase("True");
     }
 }
