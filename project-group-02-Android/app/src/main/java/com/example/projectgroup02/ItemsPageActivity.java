@@ -68,6 +68,8 @@ public class ItemsPageActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 addItemToShoppingCart(itemsData.get(position));
+                Intent intent = new Intent(context, ShoppingCartActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -118,7 +120,7 @@ public class ItemsPageActivity extends AppCompatActivity {
                         JSONObject item = response.getJSONObject(i); // get the item from the JSON data
 
                         // Extract item properties
-                        SubjectData itemSubject = new SubjectData(item.getString("name"), item.getString("pathToImage"));
+                        SubjectData itemSubject = new SubjectData("Add to Shopping Cart", item.getString("pathToImage"));
 
                         String itemId = item.getString("itemId"); // get the item's id
                         itemSubject.setItemId(Integer.parseInt(itemId));

@@ -10,8 +10,8 @@
         android:id="@+id/collection_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxWidth="100dp"
-        android:maxHeight="100dp"
+        android:maxWidth="10dp"
+        android:maxHeight="10dp"
         android:src="@mipmap/ic_launcher_round" />
 
     <TextView
