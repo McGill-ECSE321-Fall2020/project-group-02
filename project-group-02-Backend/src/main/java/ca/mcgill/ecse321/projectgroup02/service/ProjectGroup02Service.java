@@ -635,16 +635,27 @@ public class ProjectGroup02Service {
     if (customer.getApplicationUser().getBalance() < (1 + taxPercentage) * totalPrice)
       throw new Exception("Insufficient funds");
 
-    for (Item item : customer.getShoppingCart().getItem()) {
-      removeFromShoppingCart(username, item.getName(), item.getArtist().getApplicationUser().getUsername());
-      item.setInStock(false);
-      addToBalance(item.getArtist().getApplicationUser(), (1 - commissionPercentage) * item.getPrice());
-      addToBalance(artGallerySystem, commissionPercentage * item.getPrice());
-      artistRepository.save(item.getArtist());
-      applicationUserRepository.save(item.getArtist().getApplicationUser());
-      order.getItem().add(item);
-      itemRepository.save(item);
+
+    ArrayList<Item> convertedItems = (ArrayList<Item>) toList(customer.getShoppingCart().getItem());
+    
+    for (Iterator<Item> it = convertedItems.iterator(); it.hasNext();) {
+    	  Item item = it.next();
+	      removeFromShoppingCart(username, item.getName(), item.getArtist().getApplicationUser().getUsername());
+	      item.setInStock(false);
+	      addToBalance(item.getArtist().getApplicationUser(), (1 - commissionPercentage) * item.getPrice());
+	      addToBalance(artGallerySystem, commissionPercentage * item.getPrice());
+	      artistRepository.save(item.getArtist());
+	      applicationUserRepository.save(item.getArtist().getApplicationUser());
+	      order.getItem().add(item);
+	      itemRepository.save(item);
     }
+    
+    // Reconvert the converted items to a Set object
+    Set<Item> items = new HashSet<Item>(convertedItems);
+    
+    // Set the items to the customer's shopping cart
+    customer.getShoppingCart().setItem(items);
+
 
     addToBalance(customer.getApplicationUser(), -(1 + taxPercentage) * totalPrice); // reduce customer's balance
 
