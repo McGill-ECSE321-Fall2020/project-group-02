@@ -3,6 +3,7 @@ package ca.mcgill.ecse321.projectgroup02.service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -632,8 +633,10 @@ public class ProjectGroup02Service {
     if (customer.getApplicationUser().getBalance() < (1 + taxPercentage) * totalPrice)
       throw new Exception("Insufficient funds");
 
-    for (Item item : customer.getShoppingCart().getItem()) {
-      removeFromShoppingCart(username, item.getName(), item.getArtist().getApplicationUser().getUsername());
+    Iterator<Item> iter = customer.getShoppingCart().getItem().iterator();
+
+    while(iter.hasNext()){
+      Item item = iter.next();
       item.setInStock(false);
       addToBalance(item.getArtist().getApplicationUser(), (1 - commissionPercentage) * item.getPrice());
       addToBalance(artGallerySystem, commissionPercentage * item.getPrice());
@@ -641,7 +644,10 @@ public class ProjectGroup02Service {
       applicationUserRepository.save(item.getArtist().getApplicationUser());
       order.getItem().add(item);
       itemRepository.save(item);
+      removeFromShoppingCart(username, item.getName(), item.getArtist().getApplicationUser().getUsername());
     }
+
+    customer.getShoppingCart().setItem(new HashSet<Item>());
 
     addToBalance(customer.getApplicationUser(), -(1 + taxPercentage) * totalPrice); // reduce customer's balance
 
