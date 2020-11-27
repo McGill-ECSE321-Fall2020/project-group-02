@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                     MainActivity.loggedIn = tvUsername.getText().toString() != null ? true : false;
                     tvUsername.setText("");
                     tvPassword.setText("");
-                    Intent intent = new Intent(v.getContext(), BrowseCollectionsPageActivity.class);
+                    Intent intent = new Intent(v.getContext(), ShoppingCartActivity.class);
                     startActivity(intent);
 
                 } catch (Exception e) {
@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                     MainActivity.loggedIn = tvUsername.getText().toString() != null ? true : false;
                     tvUsername.setText("");
                     tvPassword.setText("");
-                    Intent intent = new Intent(v.getContext(), BrowseCollectionsPageActivity.class);
+                    Intent intent = new Intent(v.getContext(), ShoppingCartActivity.class);
                     startActivity(intent);
                 } catch (Exception e) {
                     error = e.getMessage();
