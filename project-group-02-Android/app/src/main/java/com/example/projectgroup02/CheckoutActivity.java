@@ -110,7 +110,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.home) {
-            if (loggedIn) {
+            if (MainActivity.loggedIn) {
                 Intent intent = new Intent(this, BrowseCollectionsPageActivity.class);
                 startActivity(intent);
             } else {

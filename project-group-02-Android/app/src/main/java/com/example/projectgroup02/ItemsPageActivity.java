@@ -11,10 +11,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,17 +33,17 @@ public class ItemsPageActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private String error = "";
     public static String collection;
-    private JSONArray items;
     private static Context context;
     private ListView listView;
-    ArrayList<SubjectData> items = new ArrayList<SubjectData>();
+    ArrayList<SubjectData> itemsData = new ArrayList<SubjectData>(); // contains all the items from the specified collection
+    ArrayList<String> allUsernames = new ArrayList<String>(); // contains all usernames of the database in order to retrieve the artist
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_items_page);
 
-        toolbar=findViewById(R.id.GalleryHeader);
+        toolbar = findViewById(R.id.GalleryHeader);
         setSupportActionBar(toolbar);
 
         // set the context for later use
@@ -50,7 +54,7 @@ public class ItemsPageActivity extends AppCompatActivity {
         collection = intent.getStringExtra("ITEMS_PAGE_COLLECTION_NAME");
 
         // Get and setup the list of collections to be displayed
-        listView = (ListView) findViewById(R.id.listview_collections);
+        listView = (ListView) findViewById(R.id.listview_items_page);
 
         // Retrieve from the database the items inside the current collection
         getAllItems();
@@ -58,105 +62,131 @@ public class ItemsPageActivity extends AppCompatActivity {
         // Set the name of the collection at the top of the items' page
         TextView tv = (TextView) findViewById(R.id.item_page_label);
         tv.setText(collection);
+
+        // Listen to which item was clicked by the user
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                addItemToShoppingCart(itemsData.get(position));
+            }
+        });
+
     }
 
     public void getAllItems() {
-        HttpUtils.get(collection, new RequestParams(), new JsonHttpResponseHandler() {
+
+        // Fetch all the users in order to find the artist
+        HttpUtils.get("users", new RequestParams(), new JsonHttpResponseHandler() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 error = "";
 
                 try {
-                    items = response.getJSONArray("items"); // get the array that represents the whole JSON data returned from the backend
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject user = response.getJSONObject(i); // get the item from the JSON data
 
-                    for (int i = 0; i < items.length(); i++) {
-                        JSONObject item = items.getJSONObject(i); // get the item from the JSON data
+                        // get the users' username
+                        allUsernames.add(user.getString("username"));
+                    }
+                } catch (JSONException e) {
+                    Toast.makeText(ItemsPageActivity.this, e.getMessage(),
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                try {
+                    error = errorResponse.get("message").toString(); // display the error message
+                    Toast.makeText(ItemsPageActivity.this, error,
+                            Toast.LENGTH_LONG).show();
+                } catch (JSONException e) {
+                    Toast.makeText(ItemsPageActivity.this, e.getMessage(),
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        // Fetch all the items
+        HttpUtils.get(collection, new RequestParams(), new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                error = "";
+
+                try {
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject item = response.getJSONObject(i); // get the item from the JSON data
 
                         // Extract item properties
-                        itemsData.add(new SubjectData(item.getString("name"), item.getString("imageUrl"));
+                        SubjectData itemSubject = new SubjectData(item.getString("name"), item.getString("pathToImage"));
 
-                        /*double itemHeight = item.getDouble("height");
-                        double itemWidth = item.getDouble("width");
-                        double itemBreadth = item.getDouble("breadth");
-                        String itemCreationDate = item.getString("creationDate");
-                        String itemDescription = item.getString("description");
-                        double itemPrice = item.getDouble("price");
-                        String itemImageUrl = item.getString("imageUrl");
-                        boolean itemIsInStock = item.getBoolean("inStock");*/
+                        String itemId = item.getString("itemId"); // get the item's id
+                        itemSubject.setItemId(Integer.parseInt(itemId));
+
+                        // set the item's artist by checking if the generated id is equal to the actual id of the item
+                        for (String username : allUsernames) {
+                            if ((username + item.getString("name")).hashCode() == Integer.parseInt(itemId)) {
+                                itemSubject.setArtistUsername(username);
+                            }
+                        }
+
+                        // add the item to the item arraylist (for every item)
+                        itemsData.add(itemSubject);
                     }
 
                     CustomAdapter customAdapter = new CustomAdapter(context, itemsData);
                     listView.setAdapter(customAdapter);
+
                 } catch (JSONException e) {
-                    e.printStackTrace();
-                }            }
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                try {
-                    error = errorResponse.get("message").toString();
-                } catch (JSONException e) {
-                    error = e.getMessage();
+                    Toast.makeText(ItemsPageActivity.this, e.getMessage(),
+                            Toast.LENGTH_LONG).show();
                 }
-            }
-        });
-    }
-
-    public void addItemToShoppingCart(View v) {
-        Object item = ""; // selected item
-        final JSONObject allUsers; // all the users in the database used to find the artist using the hashcode
-
-        HttpUtils.get("/users", new RequestParams(), new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                error = "";
-            /*    allUsers = response;
-
-                for (Item item: items) {
-                    for (User user : allUsers) {
-                        if ((user.username + item.name).hashCode() == item.itemId) {
-                            item.artist = user;
-                        }
-                    }
-                }*/
-
-             /*   HttpUtils.get("/" + MainActivity.username + "/shopping-cart/add-item/" + item.getName() + "/" + item.artist, new RequestParams(), new JsonHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                        error = "";
-                    }
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                        try {
-                            error = errorResponse.get("message").toString();
-                        } catch (JSONException e) {
-                            error = e.getMessage();
-                        }
-                    }
-                });*/
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 try {
                     error = errorResponse.get("message").toString();
+                    Toast.makeText(ItemsPageActivity.this, error,
+                            Toast.LENGTH_LONG).show();
                 } catch (JSONException e) {
                     error = e.getMessage();
+                    Toast.makeText(ItemsPageActivity.this, error,
+                            Toast.LENGTH_LONG).show();
                 }
             }
         });
     }
 
-   /* private void refreshErrorMessage() {
-        // set the error message
-        TextView tvError = (TextView) findViewById(R.id.error);
-        tvError.setText(error);
-
-        if (error == null || error.length() == 0) {
-            tvError.setVisibility(View.GONE);
-        } else {
-            tvError.setVisibility(View.VISIBLE);
+    public void addItemToShoppingCart(SubjectData item) {
+        try {
+            HttpUtils.post((MainActivity.username + "/shopping-cart/add-item/" + item.getSubjectName() + "/" + item.getArtistUsername()).replaceAll(" ", "%20"), new RequestParams(), new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                    Intent intent = new Intent(context, ShoppingCartActivity.class);
+                    startActivity(intent);
+                }
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                    try {
+                        error = errorResponse.get("message").toString();
+                        Toast.makeText(ItemsPageActivity.this, error,
+                                Toast.LENGTH_LONG).show();
+                    } catch (JSONException e) {
+                        error = e.getMessage();
+                        Toast.makeText(ItemsPageActivity.this, error,
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        } catch(Exception e) {
+          /*  Intent intent = new Intent(context, ShoppingCartActivity.class);
+            startActivity(intent);*/
+            error = e.getMessage();
+            Toast.makeText(ItemsPageActivity.this, error,
+                    Toast.LENGTH_LONG).show();
         }
-    }*/
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -174,7 +204,7 @@ public class ItemsPageActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.home) {
-            if (loggedIn) {
+            if (MainActivity.loggedIn) {
                 Intent intent = new Intent(this, BrowseCollectionsPageActivity.class);
                 startActivity(intent);
             } else {
@@ -205,7 +235,6 @@ public class ItemsPageActivity extends AppCompatActivity {
             HttpUtils.post("/checkout/" + MainActivity.username, new RequestParams(), new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    refreshErrorMessage();
                 }
 
                 @Override
@@ -215,11 +244,22 @@ public class ItemsPageActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         error += e.getMessage();
                     }
-                    refreshErrorMessage();
                 }
             });
-        }catch (Exception e) {
-
+        } catch (Exception e) {
         }
+    }
+
+    /**
+     * Helper method to generate Java hashcode
+     * @param value
+     * @return
+     */
+    public static int hashCode(byte[] value) {
+        int h = 0;
+        for (byte v : value) {
+            h = 31 * h + (v & 0xff);
+        }
+        return h;
     }
 }

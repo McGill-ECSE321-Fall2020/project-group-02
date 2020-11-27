@@ -9,11 +9,20 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.entity.mime.Header;
+
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     public static String username; // user's username
     public static boolean loggedIn; // logged in
+    private String error = ""; // error to display
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar=findViewById(R.id.GalleryHeader);
         setSupportActionBar(toolbar);
 
-        Intent intent = new Intent(this, CheckoutActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 
@@ -70,25 +79,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void logout() {
-        try {
             HttpUtils.post("/checkout/" + MainActivity.username, new RequestParams(), new JsonHttpResponseHandler() {
                 @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    refreshErrorMessage();
+                public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, JSONObject response) {
+                    //refreshErrorMessage();
                 }
 
                 @Override
-                public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, Throwable throwable, JSONObject errorResponse) {
                     try {
                         error += errorResponse.get("message").toString();
                     } catch (JSONException e) {
                         error += e.getMessage();
                     }
-                    refreshErrorMessage();
-                }
+                    //  refreshErrorMessage();
+                    }
             });
-        }catch (Exception e) {
-
-        }
     }
 }

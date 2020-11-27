@@ -37,7 +37,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getAllUserItems();
-        retrieveItemArtist();
+      //  retrieveItemArtist();
     }
     /*
     Retrieve all of the items in the user's shopping cart
@@ -55,12 +55,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
                         JSONObject item = shoppingCartItems.getJSONObject(i);
 
                         itemNames.add(item.getString("name"));
-
-
-
                     }
-
-                 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -101,14 +96,6 @@ public class ShoppingCartActivity extends AppCompatActivity {
                             String itemName = item.getString("name");
 
                             int itemID = item.getInt("itemId");
-
-                            JSONObject artist = item.getJSONObject("artist");
-
-                            if((username + itemName).hashCode() == itemID){
-                                artist = user;
-                            }
-
-
                         }
 
                     }
