@@ -69,10 +69,10 @@ public class ItemsPageActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 addItemToShoppingCart(itemsData.get(position));
 
-                if (itemsData.get(position).getInStock()) {
+               /* if (itemsData.get(position).getInStock()) {
                     Intent intent = new Intent(context, ShoppingCartActivity.class);
                     startActivity(intent);
-                }
+                }*/
             }
         });
 
@@ -124,7 +124,7 @@ public class ItemsPageActivity extends AppCompatActivity {
                         SubjectData itemSubject;
 
                         if(item.getString("inStock").equals("true")) {
-                            itemSubject = new SubjectData("Add to Shopping Cart", item.getString("pathToImage"));
+                            itemSubject = new SubjectData(item.getString("name"), item.getString("pathToImage"));
                         } else {
                             itemSubject = new SubjectData("Out of stock", item.getString("pathToImage"));
                         }
@@ -172,10 +172,10 @@ public class ItemsPageActivity extends AppCompatActivity {
             HttpUtils.post((MainActivity.username + "/shopping-cart/add-item/" + item.getSubjectName() + "/" + item.getArtistUsername()).replaceAll(" ", "%20"), new RequestParams(), new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    if(item.getInStock()) {
+                   /* if(item.getInStock()) {
                         Intent intent = new Intent(context, ShoppingCartActivity.class);
                         startActivity(intent);
-                    }
+                    }*/
                 }
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
