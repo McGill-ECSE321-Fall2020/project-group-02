@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+    <include layout="@layout/appbar"/>
+
     <TextView
         android:id="@+id/item_page_label"
         android:layout_width="wrap_content"

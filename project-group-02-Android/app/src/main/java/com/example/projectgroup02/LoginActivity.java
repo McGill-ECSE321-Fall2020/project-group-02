@@ -29,14 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
     }
 
     public void login(View v) {
@@ -56,9 +49,11 @@ public class LoginActivity extends AppCompatActivity {
                     MainActivity.loggedIn = tvUsername.getText().toString() != null ? true : false;
                     tvUsername.setText("");
                     tvPassword.setText("");
-                    Intent intent = new Intent(v.getContext(), ShoppingCartActivity.class);
-                    startActivity(intent);
 
+                    if(responseString.equalsIgnoreCase("true")) {
+                        Intent intent = new Intent(v.getContext(), BrowseCollectionsPageActivity.class);
+                        startActivity(intent);
+                    }
                 } catch (Exception e) {
                     error = e.getMessage();
                 }
@@ -72,8 +67,10 @@ public class LoginActivity extends AppCompatActivity {
                     MainActivity.loggedIn = tvUsername.getText().toString() != null ? true : false;
                     tvUsername.setText("");
                     tvPassword.setText("");
-                    Intent intent = new Intent(v.getContext(), ShoppingCartActivity.class);
-                    startActivity(intent);
+                    if(responseString.equalsIgnoreCase("true")) {
+                        Intent intent = new Intent(v.getContext(), BrowseCollectionsPageActivity.class);
+                        startActivity(intent);
+                    }
                 } catch (Exception e) {
                     error = e.getMessage();
                 }
