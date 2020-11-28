@@ -35,7 +35,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="be31dce3-0a7a-47b0-81a9-529ffabd6597" name="Default Changelist" comment="" />
+    <list default="true" id="a26f1a7e-d236-4a0c-9cd8-473bdaec3fba" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../project-group-02-Backend/src/main/java/ca/mcgill/ecse321/projectgroup02/controller/ProjectGroup02RestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../project-group-02-Backend/src/main/java/ca/mcgill/ecse321/projectgroup02/controller/ProjectGroup02RestController.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
