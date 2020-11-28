@@ -4,7 +4,7 @@
       <h3 style="padding: 20px">Sign Up</h3>
 
       <div class="form-group">
-        <label>Username <b style="color: red">*</b></label>
+        <label>Username <b style="color: red">*</b> (At least 8 characters) </label>
         <input
           v-model="userName"
           type="text"
