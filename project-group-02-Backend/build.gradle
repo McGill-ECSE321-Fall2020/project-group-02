@@ -40,7 +40,7 @@ task integrationTest() {
     		}
     	exec {
       		workingDir '../'
-      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/art-gallery-system?street=Auclair&pc=H3G2A9&province=Quebec&country=Canada&city=Montreal&adminUsername=RyadAmmar&adminPassword=12345abcABC&adminEmail=ryad.ammar@hotmail.com'
+      		commandLine 'curl', '-s', '-X', 'POST', 'http://localhost:8080/art-gallery-system?street=Auclair&pc=H3G2A9&province=Quebec&country=Canada&city=Montreal&adminUsername=Ahmad+Siddiqi&adminPassword=abcABC123&adminEmail=ahmad.siddiqi@hotmail.com'
     		}
     		
     	exec {
