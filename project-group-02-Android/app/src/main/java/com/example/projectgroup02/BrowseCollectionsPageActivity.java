@@ -27,6 +27,9 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * Activity to browse collections.
+ */
 public class BrowseCollectionsPageActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
@@ -42,6 +45,7 @@ public class BrowseCollectionsPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_browse_collections_page);
 
+        // get the toolbar
         toolbar=findViewById(R.id.GalleryHeader);
         setSupportActionBar(toolbar);
 
@@ -96,6 +100,7 @@ public class BrowseCollectionsPageActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 try {
+                    // display the error
                     error = errorResponse.get("message").toString();
                     Toast.makeText(BrowseCollectionsPageActivity.this, error,
                             Toast.LENGTH_LONG).show();
@@ -108,18 +113,6 @@ public class BrowseCollectionsPageActivity extends AppCompatActivity {
         });
     }
 
-   /* private void refreshErrorMessage() {
-        // set the error message
-        TextView tvError = (TextView) findViewById(R.id.error);
-        tvError.setText(error);
-
-        if (error == null || error.length() == 0) {
-            tvError.setVisibility(View.GONE);
-        } else {
-            tvError.setVisibility(View.VISIBLE);
-        }
-    }*/
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -127,6 +120,11 @@ public class BrowseCollectionsPageActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Select options from the app header
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -134,7 +132,7 @@ public class BrowseCollectionsPageActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        // home action
         if (id == R.id.home) {
             if (MainActivity.loggedIn) {
                 Intent intent = new Intent(this, BrowseCollectionsPageActivity.class);
@@ -146,13 +144,13 @@ public class BrowseCollectionsPageActivity extends AppCompatActivity {
             return true;
         }
 
-        //noinspection SimplifiableIfStatement
+        // go to shopping cart action
         if (id == R.id.shoppingcart) {
             Intent intent = new Intent(this, ShoppingCartActivity.class);
             startActivity(intent);
         }
 
-        //noinspection SimplifiableIfStatement
+        // logout action
         if (id == R.id.logout) {
             logout();
             Intent intent = new Intent(this, LoginActivity.class);
@@ -162,6 +160,7 @@ public class BrowseCollectionsPageActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // logout activity
     private void logout() {
         try {
             HttpUtils.post("user-logout/" + MainActivity.username, new RequestParams(), new JsonHttpResponseHandler() {

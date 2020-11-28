@@ -29,6 +29,9 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * Activity that displays the items that the user has added to his shopping cart
+ */
 public class ShoppingCartActivity extends AppCompatActivity {
 
     private String error = "";
@@ -61,7 +64,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
 
     }
-    /*
+    /**
     Retrieve all of the items in the user's shopping cart
      */
     public void getAllUserItems() {
@@ -113,6 +116,11 @@ public class ShoppingCartActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Calculate the total for the items in the user's shopping cart
+     *
+     * @throws JSONException
+     */
     public void calculateTotal() throws JSONException {
 
         for (int i = 0; i < items.length(); i++) {
@@ -124,11 +132,18 @@ public class ShoppingCartActivity extends AppCompatActivity {
         text.setText("Total Price: " + totalPrice.toString() + "$");
     }
 
+    /**
+     * Navigate to the checkout page
+     * @param v
+     */
     public void goToCheckout(View v) {
         Intent intent = new Intent(v.getContext(), CheckoutActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Refresh the error on the page
+     */
     private void refreshErrorMessage() {
         // set the error message
         TextView tvError = (TextView) findViewById(R.id.errorcheckout);
@@ -141,6 +156,11 @@ public class ShoppingCartActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Create options in the header menu
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -148,6 +168,11 @@ public class ShoppingCartActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Select the option from the header
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -167,13 +192,11 @@ public class ShoppingCartActivity extends AppCompatActivity {
             return true;
         }
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.shoppingcart) {
             Intent intent = new Intent(this, ShoppingCartActivity.class);
             startActivity(intent);
         }
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.logout) {
             logout();
             Intent intent = new Intent(this, LoginActivity.class);

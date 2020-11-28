@@ -4,6 +4,9 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+/**
+ * Class that enables the use of RESTful requests in the app
+ */
 public class HttpUtils {
     public static final String DEFAULT_BASE_URL = "https://project-group-02-backend-666.herokuapp.com/";
 

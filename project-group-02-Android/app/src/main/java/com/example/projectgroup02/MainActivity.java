@@ -17,6 +17,9 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.entity.mime.Header;
 
+/**
+ * Main activity of the app
+ */
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;

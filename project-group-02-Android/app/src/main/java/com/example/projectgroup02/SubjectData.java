@@ -1,5 +1,8 @@
 package com.example.projectgroup02;
 
+/**
+ * Template class for the data to be displayed in the Listview
+ */
 public class SubjectData {
     String subjectName;
     String image;

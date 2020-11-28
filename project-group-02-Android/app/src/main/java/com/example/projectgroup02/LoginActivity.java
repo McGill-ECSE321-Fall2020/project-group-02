@@ -19,6 +19,9 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * Activity that logins the user
+ */
 public class LoginActivity extends AppCompatActivity {
     private String error = "";
 
@@ -32,6 +35,10 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Login the user using an API request
+     * @param v
+     */
     public void login(View v) {
         final TextView tvUsername = (TextView) findViewById(R.id.loginUsername);
         final TextView tvPassword = (TextView) findViewById(R.id.loginPassword);

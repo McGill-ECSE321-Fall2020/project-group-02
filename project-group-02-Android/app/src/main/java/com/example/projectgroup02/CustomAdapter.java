@@ -13,6 +13,10 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+/**
+ * Custom adapter for the Listview in the app to display the subject data
+ */
 class CustomAdapter implements ListAdapter {
     ArrayList<SubjectData> arrayList;
     Context context;

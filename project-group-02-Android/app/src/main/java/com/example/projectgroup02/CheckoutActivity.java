@@ -25,6 +25,9 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * Activity to checkout the user's order
+ */
 public class CheckoutActivity extends AppCompatActivity {
     public String deliveryMethod = "HOMEDELIVERY";
     private String error = "";
@@ -34,9 +37,11 @@ public class CheckoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
 
+        // get the toolbar from the view
         Toolbar toolbar=findViewById(R.id.GalleryHeader);
         setSupportActionBar(toolbar);
 
+        // get the checkout button from the view
         Button checkout = (Button) findViewById(R.id.checkout);
         checkout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +65,9 @@ public class CheckoutActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Checkout the user's order.
+     */
     private void checkout() {
         try {
             HttpUtils.post(MainActivity.username + "/checkout/" + deliveryMethod, new RequestParams(), new JsonHttpResponseHandler() {
@@ -85,6 +93,9 @@ public class CheckoutActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Refreshes the error message
+     */
     private void refreshErrorMessage() {
         // set the error message
         TextView tvError = (TextView) findViewById(R.id.errorcheckout);
@@ -98,6 +109,11 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Create options for the main menu (app bar)
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -105,6 +121,11 @@ public class CheckoutActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Select options from the header of the app
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -140,6 +161,9 @@ public class CheckoutActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * logout the user
+     */
     private void logout() {
         try {
             HttpUtils.post("user-logout/" + MainActivity.username, new RequestParams(), new JsonHttpResponseHandler() {
